@@ -1,3 +1,3 @@
 module ZOrder
-  Background, Player, UI = *0..2
+  Background, Food, Player, UI = *0..3
 end

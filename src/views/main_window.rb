@@ -1,29 +1,54 @@
 # coding: UTF-8
-require 'gosu'
-require 'z_order'
-require 'modelviews/player'
 
 class MainWindow < Gosu::Window
   WIDTH = 800
   HEIGHT = 500
 
+  # 每秒产生一个食物
+  FOOD_GEN_PER_SECOND = 1
+
   def initialize
     super WIDTH, HEIGHT
-    self.caption = '我的世界'
-    @bg_image = Gosu::Image.new("media/img/ground/001.jpg", :tileable => true)
-    @bg_scale_x = WIDTH * 1.0 / @bg_image.width
-    @bg_scale_y = HEIGHT * 1.0 / @bg_image.height
-
+    self.caption = '童年游戏-野菜部落'
+    @ground = Ground.new(WIDTH, HEIGHT)
     @player = Player.new(100, 80)
+    @foods = []
+    @gen_food_timestamp = Gosu::milliseconds
+    @font = Gosu::Font.new(20)
   end
 
   def update
+    direction = Control::Direction::NONE
+    if Gosu::button_down? Gosu::KbUp
+      direction |= Control::Direction::UP
+    elsif Gosu::button_down? Gosu::KbDown
+      direction |= Control::Direction::DOWN
+    end
 
+    if Gosu::button_down? Gosu::KbLeft
+      direction |= Control::Direction::LEFT
+    elsif Gosu::button_down? Gosu::KbRight
+      direction |= Control::Direction::RIGHT
+    end
+
+    @player.move direction
+
+    seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
+    gen_count = seconds * FOOD_GEN_PER_SECOND
+    @gen_food_timestamp += seconds * 1000
+
+    0.upto(gen_count - 1).each do
+      @foods << Food.new(rand * WIDTH, rand * HEIGHT)
+    end
+
+    @player.collect_foods @foods
   end
 
   def draw
-    @bg_image.draw(0, 0, ZOrder::Background, @bg_scale_x, @bg_scale_y)
+    @ground.draw
     @player.draw
+    @foods.each { |food| food.draw }
+    @font.draw("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
   end
 end
 
