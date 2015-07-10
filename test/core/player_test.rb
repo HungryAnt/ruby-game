@@ -1,7 +1,10 @@
-$:.unshift(File.join(File.dirname(__FILE__), '..', 'src'))
 
+#$:.unshift(File.join(File.dirname(__FILE__), '..', 'src'))
+#$:.unshift(File.dirname(__FILE__).gsub '/test', '/src')
+
+require '../test_help'
 require 'test/unit'
-require 'player'
+require 'core/player'
 
 class PlayerTest < Test::Unit::TestCase
 

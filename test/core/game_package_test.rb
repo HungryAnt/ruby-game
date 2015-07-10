@@ -1,6 +1,7 @@
-$:.unshift(File.join(File.dirname(__FILE__), '..', 'src'))
+#$:.unshift(File.join(File.dirname(__FILE__), '..', 'src/core'))
+require '../test_help'
 require 'test/unit'
-require 'game_package'
+require 'core/game_package'
 
 class GamePackageTest < Test::Unit::TestCase
 
