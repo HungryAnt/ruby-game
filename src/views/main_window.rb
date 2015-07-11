@@ -31,6 +31,10 @@ class MainWindow < Gosu::Window
       direction |= Direction::RIGHT
     end
 
+    # if direction != Direction::NONE
+    #
+    # end
+
     @player.move direction
 
     seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
