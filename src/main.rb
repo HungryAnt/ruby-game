@@ -3,7 +3,8 @@ $:.unshift(File.dirname(__FILE__))
 require 'gosu'
 require 'utils/media_util'
 require 'z_order'
-require 'control'
+require 'engine/direction'
+require 'engine/animation'
 
 require 'modelviews/player'
 require 'modelviews/ground'

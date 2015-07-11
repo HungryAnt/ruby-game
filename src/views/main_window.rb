@@ -18,17 +18,17 @@ class MainWindow < Gosu::Window
   end
 
   def update
-    direction = Control::Direction::NONE
+    direction = Direction::NONE
     if Gosu::button_down? Gosu::KbUp
-      direction |= Control::Direction::UP
+      direction |= Direction::UP
     elsif Gosu::button_down? Gosu::KbDown
-      direction |= Control::Direction::DOWN
+      direction |= Direction::DOWN
     end
 
     if Gosu::button_down? Gosu::KbLeft
-      direction |= Control::Direction::LEFT
+      direction |= Direction::LEFT
     elsif Gosu::button_down? Gosu::KbRight
-      direction |= Control::Direction::RIGHT
+      direction |= Direction::RIGHT
     end
 
     @player.move direction

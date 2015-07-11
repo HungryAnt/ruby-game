@@ -3,6 +3,8 @@ class Ground
     @image = MediaUtil::get_tileable_img('ground/001.jpg')
     @scale_x = view_width * 1.0 / @image.width
     @scale_y = view_height * 1.0 / @image.height
+    @song = MediaUtil::get_song('ground_001.ogg')
+    @song.play(true)
   end
 
   def draw
