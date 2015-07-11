@@ -1,4 +1,6 @@
 class Map
+  attr_reader :areas
+
   def initialize(areas)
     ArgumentError "wrong areas #{areas}" if areas.nil? || areas.size == 0
     @areas = areas

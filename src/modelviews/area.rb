@@ -1,4 +1,6 @@
 class Area
+  attr_reader :image
+
   def initialize(image_path, song_path)
     @image = MediaUtil::get_tileable_img(image_path)
     @scale_x = GameConfig::WIDTH * 1.0 / @image.width

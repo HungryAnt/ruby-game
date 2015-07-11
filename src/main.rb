@@ -13,6 +13,8 @@ require 'modelviews/area'
 require 'modelviews/map'
 require 'modelviews/food'
 
+require 'views/game_map_view'
+require 'views/map_editor_view'
 require 'views/main_window'
 
 require 'config/game_config'
