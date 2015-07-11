@@ -3,7 +3,6 @@ class Player
 
   def initialize(x, y)
     @x, @y = x, y
-    @image = MediaUtil::get_img("role/001.jpg")
     @beep = MediaUtil::get_sample("pickup.wav")
     @speed = 2.0
     @score = 0

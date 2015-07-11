@@ -1,7 +1,7 @@
 class Animation
   def initialize images, interval, scale_x = 1, scale_y = 1
-    railse ArgumentError "nil images" if images.nil?
-    railse ArgumentError "wrong interval #{interval}" if interval <= 0
+    raise ArgumentError "nil images" if images.nil?
+    raise ArgumentError "wrong interval #{interval}" if interval <= 0
     @images = images
     @interval = interval
     @scale_x = scale_x

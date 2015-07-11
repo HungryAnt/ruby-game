@@ -1,16 +1,12 @@
 # coding: UTF-8
 
 class MainWindow < Gosu::Window
-  WIDTH = 800
-  HEIGHT = 500
-
   # 每秒产生一个食物
   FOOD_GEN_PER_SECOND = 1
 
   def initialize
-    super WIDTH, HEIGHT
+    super GameConfig::WIDTH, GameConfig::HEIGHT
     self.caption = '童年游戏-野菜部落'
-    @ground = Ground.new(WIDTH, HEIGHT)
     @player = Player.new(100, 80)
     @foods = []
     @gen_food_timestamp = Gosu::milliseconds
@@ -42,17 +38,26 @@ class MainWindow < Gosu::Window
     @gen_food_timestamp += seconds * 1000
 
     0.upto(gen_count - 1).each do
-      @foods << Food.new(rand * WIDTH, rand * HEIGHT)
+      @foods << Food.new(rand * GameConfig::WIDTH, rand * GameConfig::HEIGHT)
     end
 
     @player.collect_foods @foods
   end
 
   def draw
-    @ground.draw
+    MapManager.draw_map
     @player.draw
     @foods.each { |food| food.draw }
     @font.draw("Score: #{@player.score}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+  end
+
+  def button_down(id)
+    case id
+      when Gosu::KbF1
+        MapManager.switch_map :hill
+      when Gosu::KbF2
+        MapManager.switch_map :school
+    end
   end
 end
 
