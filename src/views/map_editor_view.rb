@@ -1,4 +1,12 @@
+module Tiles
+  None = 0
+  Earth = 1
+end
+
 class MapEditorView
+
+  GRID_WIDTH = 10
+  GRID_HEIGHT = 10
 
   def initialize
     maps = MapManager::all_maps
@@ -12,14 +20,48 @@ class MapEditorView
 
     @img_index = 0
     @current_img = @imgs[@img_index]
+
+
+    @raw_count = GameConfig::HEIGHT / GRID_WIDTH
+    @col_count = GameConfig::WIDTH / GRID_WIDTH
+
+    @tiles = Array.new(@raw_count)
+    0.upto(@raw_count) do |row|
+      @tiles[row] = Array.new(@col_count)
+      0.upto(@col_count) do |col|
+        @tiles[row][col] = Tiles::None
+      end
+    end
+
   end
 
   def update
-
   end
 
   def draw
     @current_img.draw(0, 0, ZOrder::Background, 1, 1)
+
+    0.upto(@raw_count) do |row|
+      0.upto(@col_count) do |col|
+        tile = @tiles[row][col]
+        if tile == Tiles::None
+          next
+        end
+        Gosu::draw_rect GRID_WIDTH * col, GRID_HEIGHT * row,
+                        GRID_WIDTH, GRID_HEIGHT, 0x88_0000FF
+      end
+    end
+
+    0.upto(@raw_count) do |row|
+      Gosu::draw_line 0, GRID_HEIGHT * row, 0x88_000000,
+                      GameConfig::WIDTH, GRID_HEIGHT * row, 0x88_000000
+    end
+
+    0.upto(@col_count) do |col|
+      Gosu::draw_line GRID_WIDTH * col, 0, 0x88_000000,
+                      GRID_WIDTH * col, GameConfig::HEIGHT, 0x88_000000
+    end
+
   end
 
   def button_down(id)
