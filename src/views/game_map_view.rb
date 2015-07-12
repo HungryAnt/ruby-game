@@ -40,7 +40,8 @@ class GameMapView < ViewBase
       @gen_food_timestamp += seconds * 1000
 
       0.upto(gen_count - 1).each do
-        @foods << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
+        # @foods << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
+        @foods << Food.new(*MapManager::current_map.random_available_position)
       end
     end
     @player.collect_foods @foods
@@ -65,7 +66,7 @@ class GameMapView < ViewBase
       when Gosu::Kb2
         MapManager.switch_map :school
       when Gosu::MsRight
-        MapManager.current_map.target(@window.mouse_x, @window.mouse_y) unless MapManager.current_map.nil?
+        MapManager.current_map.mark_target(@window.mouse_x, @window.mouse_y) unless MapManager.current_map.nil?
     end
   end
 

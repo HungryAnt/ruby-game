@@ -13,6 +13,7 @@ class Area
 
     lines = File.readlines(tiles_path).map { |line| line.chomp }
     init_tails lines
+    init_available_positions
   end
 
   def init_tails(lines)
@@ -29,6 +30,19 @@ class Area
       end
     end
     # print "tiles.size #{@tiles.size} tiles[0].size #{@tiles[0].size}"
+  end
+
+  def init_available_positions
+    # 记录所有有效位置
+    @available_positions = []
+
+    0.upto(@row_count-1) do |row|
+      0.upto(@col_count-1) do |col|
+        if @tiles[row][col] == Tiles::None
+          @available_positions << [GRID_WIDTH * col + GRID_WIDTH / 2, GRID_HEIGHT * row + GRID_HEIGHT / 2]
+        end
+      end
+    end
   end
 
   def tile_block?(x, y)
@@ -52,9 +66,14 @@ class Area
     SongManager.play_song @song_path
   end
 
-  def target(x, y)
+  def mark_target(x, y)
     anim = AnimationManager::get_anim :area_click
-    anim_holder = AnimationHolder.new anim, x, y, ZOrder::Background, false, 1
+    anim_holder = AnimationHolder.new anim, x, y, ZOrder::UI, false, 1
     @anim_container.add_anim anim_holder
   end
+
+  def random_available_position
+    @available_positions[rand @available_positions.size]
+  end
+
 end

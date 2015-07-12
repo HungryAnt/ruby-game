@@ -19,11 +19,15 @@ class Map
     @current_area.activate
   end
 
-  def target(x, y)
-    @current_area.target x, y
+  def mark_target(x, y)
+    @current_area.mark_target x, y
   end
 
   def tile_block?(x, y)
     @current_area.tile_block? x, y
+  end
+
+  def random_available_position
+    @current_area.random_available_position
   end
 end
