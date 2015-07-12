@@ -1,6 +1,6 @@
-# 角色动画
-
 anim_interval = 150
+
+# ================角色动画================
 role_pattern = 'role/wangye/WanGye_#{num}.bmp'
 
 AnimationManager.new_anims do
@@ -39,10 +39,12 @@ AnimationManager.new_anims do
   }
 end
 
+
+# ================点击动画================
 AnimationManager.new_anim(:area_click) do
   pattern = 'ui/click/CursorShadow_#{num}.bmp'
   nums = 0.upto(6)
-  [pattern, nums, 200]
+  [pattern, nums, 120]
 end
 
 

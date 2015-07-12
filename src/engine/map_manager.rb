@@ -16,6 +16,14 @@ class MapManager
     end
   end
 
+  def self::current_map
+    @@current_map
+  end
+
+  def self::update_map
+    @@current_map.update unless @@current_map.nil?
+  end
+
   def self::draw_map
     @@current_map.draw unless @@current_map.nil?
   end

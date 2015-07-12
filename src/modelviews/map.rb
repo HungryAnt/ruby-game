@@ -7,11 +7,19 @@ class Map
     @current_area = @areas[0]
   end
 
-  def activate
-    @current_area.activate
+  def update
+    @current_area.update
   end
 
   def draw
     @current_area.draw
+  end
+
+  def activate
+    @current_area.activate
+  end
+
+  def target(x, y)
+    @current_area.target x, y
   end
 end

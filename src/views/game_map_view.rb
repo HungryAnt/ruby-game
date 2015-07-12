@@ -13,6 +13,8 @@ class GameMapView
   end
 
   def update
+    MapManager.update_map
+
     direction = Direction::NONE
     if Gosu::button_down? Gosu::KbUp
       direction |= Direction::UP
@@ -62,7 +64,7 @@ class GameMapView
       when Gosu::Kb2
         MapManager.switch_map :school
       when Gosu::MsRight
-
+        MapManager.current_map.target(@window.mouse_x, @window.mouse_y) unless MapManager.current_map.nil?
     end
   end
 

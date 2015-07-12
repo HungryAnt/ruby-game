@@ -4,8 +4,8 @@ class AnimationHolder
     @anim, @x, @y, @z = anim, x, y, z
     @loop_forever = loop_forever
     unless loop_forever
-      @duraion = interval *images.size * loop_count
-      @start_timestamp = Guso::milliseconds
+      @duraion = anim.interval * anim.img_count * loop_count
+      @start_timestamp = Gosu::milliseconds
     end
   end
 
@@ -15,6 +15,6 @@ class AnimationHolder
 
   def finish?
     return false if @loop_forever
-    Guso::milliseconds > @start_timestamp + @duraion
+    Gosu::milliseconds > @start_timestamp + @duraion
   end
 end
