@@ -12,11 +12,13 @@ require 'engine/song_manager'
 require 'engine/map_manager'
 require 'engine/animation_manager'
 
+require 'modelviews/tiles'
 require 'modelviews/player'
 require 'modelviews/area'
 require 'modelviews/map'
 require 'modelviews/food'
 
+require 'views/view_base'
 require 'views/status_bar_view'
 require 'views/game_map_view'
 require 'views/map_editor_view'

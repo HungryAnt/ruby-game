@@ -1,5 +1,5 @@
 class MapConfig
-  hill_area = Area.new('map/hill/01.jpg', 'map/hill.ogg')
+  hill_area = Area.new('map/hill/grass_wood_back.bmp', 'map/hill.ogg')
   hill = Map.new([hill_area])
 
   school_ground = Area.new('map/school/school_ground.bmp', 'map/school_ground.ogg')

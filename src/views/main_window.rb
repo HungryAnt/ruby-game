@@ -15,10 +15,10 @@ class MainWindow < Gosu::Window
 
   def initialize
     super GameConfig::MAP_WIDTH,
-          GameConfig::STATUS_BAR_Y + GameConfig::STATUS_BAR_HEIGHT
+          GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT
     self.caption = '童年游戏-野菜部落'
     @game_map_view = GameMapView.new(self)
-    @map_editor_view = MapEditorView.new
+    @map_editor_view = MapEditorView.new(self)
     @current_view = @game_map_view
     # @mouse = Mouse.new
   end
@@ -41,6 +41,10 @@ class MainWindow < Gosu::Window
       when Gosu::KbF2
         @current_view = @map_editor_view
     end
+  end
+
+  def button_up(id)
+    @current_view.button_up id
   end
 
   def needs_cursor?
