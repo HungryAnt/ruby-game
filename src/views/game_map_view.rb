@@ -2,11 +2,13 @@ class GameMapView
   # 每秒产生一个食物
   FOOD_GEN_PER_SECOND = 1
 
-  def initialize
+  def initialize(window)
+    @window = window
     @player = Player.new(100, 80)
     @foods = []
     @gen_food_timestamp = Gosu::milliseconds
     @font = Gosu::Font.new(20)
+    @status_bar_view = StatusBarView.new
     MapManager.switch_map :hill
   end
 
@@ -35,7 +37,7 @@ class GameMapView
     @gen_food_timestamp += seconds * 1000
 
     0.upto(gen_count - 1).each do
-      @foods << Food.new(rand * GameConfig::WIDTH, rand * GameConfig::HEIGHT)
+      @foods << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
     end
 
     @player.collect_foods @foods
@@ -47,6 +49,10 @@ class GameMapView
     @foods.each { |food| food.draw }
     @font.draw("Score: #{@player.score}", 10, 10,
                ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+
+    @window.translate(0, GameConfig::STATUS_BAR_Y) do
+      @status_bar_view.draw
+    end
   end
 
   def button_down(id)
@@ -55,6 +61,12 @@ class GameMapView
         MapManager.switch_map :hill
       when Gosu::Kb2
         MapManager.switch_map :school
+      when Gosu::MsRight
+
     end
+  end
+
+  def needs_cursor?
+    true
   end
 end

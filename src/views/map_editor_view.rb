@@ -22,8 +22,8 @@ class MapEditorView
     @current_img = @imgs[@img_index]
 
 
-    @raw_count = GameConfig::HEIGHT / GRID_WIDTH
-    @col_count = GameConfig::WIDTH / GRID_WIDTH
+    @raw_count = GameConfig::MAP_HEIGHT / GRID_WIDTH
+    @col_count = GameConfig::MAP_WIDTH / GRID_WIDTH
 
     @tiles = Array.new(@raw_count)
     0.upto(@raw_count) do |row|
@@ -54,12 +54,12 @@ class MapEditorView
 
     0.upto(@raw_count) do |row|
       Gosu::draw_line 0, GRID_HEIGHT * row, 0x88_000000,
-                      GameConfig::WIDTH, GRID_HEIGHT * row, 0x88_000000
+                      GameConfig::MAP_WIDTH, GRID_HEIGHT * row, 0x88_000000
     end
 
     0.upto(@col_count) do |col|
       Gosu::draw_line GRID_WIDTH * col, 0, 0x88_000000,
-                      GRID_WIDTH * col, GameConfig::HEIGHT, 0x88_000000
+                      GRID_WIDTH * col, GameConfig::MAP_HEIGHT, 0x88_000000
     end
 
   end
@@ -75,5 +75,9 @@ class MapEditorView
     @img_index = [@imgs.size - 1, @img_index].min
     @img_index = [0, @img_index].max
     @current_img = @imgs[@img_index]
+  end
+
+  def needs_cursor?
+    true
   end
 end

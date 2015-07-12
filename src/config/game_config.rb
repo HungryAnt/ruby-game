@@ -1,6 +1,8 @@
 class GameConfig
-  WIDTH = 800
-  HEIGHT = 500
+  MAP_WIDTH = 800
+  MAP_HEIGHT = 500
 
-
+  STATUS_BAR_Y = 500 - 21
+  STATUS_BAR_WIDTH = 800
+  STATUS_BAR_HEIGHT = 58
 end
