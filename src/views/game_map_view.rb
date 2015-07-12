@@ -4,7 +4,7 @@ class GameMapView < ViewBase
 
   def initialize(window)
     @window = window
-    @player = Player.new(100, 80)
+    @player = Player.new(100, 300)
     @foods = []
     @gen_food_timestamp = Gosu::milliseconds
     @font = Gosu::Font.new(20)
@@ -32,7 +32,7 @@ class GameMapView < ViewBase
     #
     # end
 
-    @player.move direction
+    @player.move direction, MapManager::current_map
 
     seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
     gen_count = (seconds * FOOD_GEN_PER_SECOND).to_i

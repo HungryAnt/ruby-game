@@ -22,4 +22,8 @@ class Map
   def target(x, y)
     @current_area.target x, y
   end
+
+  def tile_block?(x, y)
+    @current_area.tile_block? x, y
+  end
 end

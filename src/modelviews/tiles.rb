@@ -2,6 +2,7 @@ module Tiles
   None = 0 # 空旷区 可移动
   Block = 1 # 禁止移动区
   Gateway = 2 # 传送
+  Init = 3 # 人物初始位置
 
   def self.color(tile)
     case tile

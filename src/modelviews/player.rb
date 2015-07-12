@@ -67,17 +67,25 @@ class Player
     @direction & direction == direction
   end
 
-  def move direction
+  def move direction, map
     if direction != Direction::NONE
-      @standing = false
+      @direction = direction
+
       angle = Direction::to_angle direction
 
       speed = @running ? @speed * 2 : @speed
 
-      @x += Gosu::offset_x(angle, speed)
-      @y += Gosu::offset_y(angle, speed)
-      @move_timestamp = Gosu::milliseconds
-      @direction = direction
+      x = @x + Gosu::offset_x(angle, speed)
+      y = @y + Gosu::offset_y(angle, speed)
+
+      if map.tile_block? x, y
+        @standing = true
+      else
+        @standing = false
+        @x = x
+        @y = y
+        @move_timestamp = Gosu::milliseconds
+      end
     else
       @standing = true
     end
