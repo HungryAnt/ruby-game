@@ -13,53 +13,25 @@ class Player
     @running = true
   end
 
+  private def get_anim key
+    AnimationManager.get_anim key
+  end
+
   def init_animations
-    anim_interval = 150
+    @anim_walk_laft = get_anim :walk_left
+    @anim_walk_right = get_anim :walk_right
+    @anim_walk_up = get_anim :walk_up
+    @anim_walk_down = get_anim :walk_down
 
-    h_walk_img_nums = [32, 31, 30, 31, 32, 33, 34, 33]
-    @anim_walk_laft = get_animation(h_walk_img_nums, anim_interval)
-    @anim_walk_right = get_animation(h_walk_img_nums, anim_interval, -1)
+    @anim_stand_left = get_anim :stand_left
+    @anim_stand_right = get_anim :stand_right
+    @anim_stand_up = get_anim :stand_up
+    @anim_stand_down = get_anim :stand_down
 
-    up_walk_img_nums = [22, 21, 20, 21, 22, 23, 24, 23]
-    @anim_walk_up = get_animation(up_walk_img_nums, anim_interval)
-
-    down_walk_img_nums = [7, 6, 5, 6, 7, 8, 9, 8]
-    @anim_walk_down = get_animation(down_walk_img_nums, anim_interval)
-
-
-    h_stand_img_nums = [27, 26, 25, 26, 27, 28, 29, 28]
-    @anim_stand_left = get_animation(h_stand_img_nums, anim_interval)
-    @anim_stand_right = get_animation(h_stand_img_nums, anim_interval, -1)
-
-    up_stand_img_nums = [17, 16, 15, 16, 17, 18, 19, 18]
-    @anim_stand_up = get_animation(up_stand_img_nums, anim_interval)
-
-    down_stand_img_nums = [2, 1, 0, 1, 2, 3, 4, 3]
-    @anim_stand_down = get_animation(down_stand_img_nums, anim_interval)
-
-
-    h_run_img_nums = [52, 51, 50, 51, 52, 53, 54, 53]
-    @anim_run_left = get_animation(h_run_img_nums, anim_interval)
-    @anim_run_right = get_animation(h_run_img_nums, anim_interval, -1)
-
-    up_run_img_nums = [47, 46, 45, 46, 47, 48, 49, 48]
-    @anim_run_up = get_animation(up_run_img_nums, anim_interval)
-
-    down_run_img_nums = [42, 41, 40, 41, 42, 43, 44, 43]
-    @anim_run_down = get_animation(down_run_img_nums, anim_interval)
-  end
-
-  private def get_animation(nums, interval, scale_x = 1, scale_y = 1)
-    images = []
-    nums.each do |num|
-      images << get_img(num)
-    end
-    Animation.new(images, interval, scale_x, scale_y)
-  end
-
-  private def get_img(num)
-    path = "role/wangye/WanGye_#{num}.bmp"
-    MediaUtil::get_img(path)
+    @anim_run_left = get_anim :run_left
+    @anim_run_right = get_anim :run_right
+    @anim_run_up = get_anim :run_up
+    @anim_run_down = get_anim :run_down
   end
 
   def draw
