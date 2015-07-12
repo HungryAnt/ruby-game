@@ -79,19 +79,24 @@ class Player
       y = @y + Gosu::offset_y(angle, speed)
 
       if map.tile_block? x, y
+        # 继续单方向检测
         @standing = true
+        do_move(x, @y) unless map.tile_block? x, @y
+        do_move(@x, y) unless map.tile_block? @x, y
       else
-        @standing = false
-        @x = x
-        @y = y
-        @move_timestamp = Gosu::milliseconds
+        do_move(x, y)
       end
     else
       @standing = true
     end
   end
 
-
+  def do_move(x, y)
+    @standing = false
+    @x = x
+    @y = y
+    @move_timestamp = Gosu::milliseconds
+  end
 
   def collect_foods(foods)
     foods.reject! do |food|
