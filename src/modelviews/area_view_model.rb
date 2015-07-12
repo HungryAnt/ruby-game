@@ -1,4 +1,4 @@
-class Area
+class AreaViewModel
   GRID_WIDTH = 10
   GRID_HEIGHT = 10
 

@@ -4,7 +4,7 @@ class GameMapView < ViewBase
 
   def initialize(window)
     @window = window
-    @player = Player.new(100, 300)
+    @player = PlayerViewModel.new(100, 300)
     @foods = []
     @gen_food_timestamp = Gosu::milliseconds
     @font = Gosu::Font.new(20)
@@ -41,7 +41,7 @@ class GameMapView < ViewBase
 
       0.upto(gen_count - 1).each do
         # @foods << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
-        @foods << Food.new(*MapManager::current_map.random_available_position)
+        @foods << FoodViewModel.new(*MapManager::current_map.random_available_position)
       end
     end
     @player.collect_foods @foods

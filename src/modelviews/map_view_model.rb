@@ -1,4 +1,4 @@
-class Map
+class MapViewModel
   attr_reader :areas
 
   def initialize(areas)

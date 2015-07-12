@@ -1,4 +1,4 @@
-class Food
+class FoodViewModel
   attr_reader :x, :y
 
   def initialize(x, y)

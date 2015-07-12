@@ -1,4 +1,4 @@
-class Player
+class PlayerViewModel
   attr_reader :score
 
   def initialize(x, y)
