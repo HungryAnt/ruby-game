@@ -1,7 +1,8 @@
 class PlayerViewModel
   attr_reader :score
 
-  def initialize(x, y)
+  def initialize(player, x, y)
+    @player = player
     @x, @y = x, y
     @beep = MediaUtil::get_sample("pickup.wav")
     @speed = 2.0

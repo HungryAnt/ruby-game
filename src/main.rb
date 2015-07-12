@@ -8,13 +8,14 @@ require 'engine/animation'
 require 'engine/animation_holder'
 require 'engine/animation_container'
 require 'engine/animation_util'
-require 'engine/song_manager'
-require 'engine/map_manager'
 require 'engine/animation_manager'
-require 'engine/game_manager'
 
 require 'models/player'
 require 'models/tiles'
+
+require 'services/song_manager'
+require 'services/map_manager'
+require 'services/game_manager'
 
 require 'modelviews/player_view_model'
 require 'modelviews/area_view_model'

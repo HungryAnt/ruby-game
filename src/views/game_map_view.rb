@@ -4,7 +4,8 @@ class GameMapView < ViewBase
 
   def initialize(window)
     @window = window
-    @player = PlayerViewModel.new(100, 300)
+    player = GameManager.player_service.player
+    @player_view_model = PlayerViewModel.new(player, 100, 300)
     @foods = []
     @gen_food_timestamp = Gosu::milliseconds
     @font = Gosu::Font.new(20)
@@ -32,7 +33,7 @@ class GameMapView < ViewBase
     #
     # end
 
-    @player.move direction, MapManager::current_map
+    @player_view_model.move direction, MapManager::current_map
 
     seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
     gen_count = (seconds * FOOD_GEN_PER_SECOND).to_i
@@ -44,14 +45,14 @@ class GameMapView < ViewBase
         @foods << FoodViewModel.new(*MapManager::current_map.random_available_position)
       end
     end
-    @player.collect_foods @foods
+    @player_view_model.collect_foods @foods
   end
 
   def draw
     MapManager.draw_map
-    @player.draw
+    @player_view_model.draw
     @foods.each { |food| food.draw }
-    @font.draw("Score: #{@player.score}", 10, 10,
+    @font.draw("Score: #{@player_view_model.score}", 10, 10,
                ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
 
     @window.translate(0, GameConfig::STATUS_BAR_Y) do
