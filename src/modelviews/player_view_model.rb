@@ -1,9 +1,8 @@
 class PlayerViewModel
   attr_reader :score
 
-  def initialize(player, x, y)
+  def initialize(player)
     @player = player
-    @x, @y = x, y
     @beep = MediaUtil::get_sample("pickup.wav")
     @speed = 2.0
     @score = 0
@@ -66,14 +65,14 @@ class PlayerViewModel
       end
     end
 
-    anim.draw(@x, @y, ZOrder::Player)
+    anim.draw(@player.x, @player.y, ZOrder::Player)
   end
 
   def is_direct_to(direction)
     @direction & direction == direction
   end
 
-  def move direction, map
+  def move(direction, map)
     if direction != Direction::NONE
       @direction = direction
 
@@ -83,15 +82,15 @@ class PlayerViewModel
 
       speed = @running ? @speed * 2 : @speed
 
-      x = @x + Gosu::offset_x(angle, speed)
-      y = @y + Gosu::offset_y(angle, speed)
+      x = @player.x + Gosu::offset_x(angle, speed)
+      y = @player.y + Gosu::offset_y(angle, speed)
 
       if map.tile_block? x, y
         # 继续单方向检测
         @running = false
         @standing = true
-        do_move(x, @y) unless map.tile_block? x, @y
-        do_move(@x, y) unless map.tile_block? @x, y
+        do_move(x, @player.y) unless map.tile_block? x, @y
+        do_move(@player.x, y) unless map.tile_block? @x, y
       else
         do_move(x, y)
       end
@@ -108,17 +107,19 @@ class PlayerViewModel
 
   def do_move(x, y)
     @standing = false
-    @x = x
-    @y = y
+    @player.x = x
+    @player.y = y
     @move_timestamp = Gosu::milliseconds
     @player.dec_hp(0.2) if @running
   end
 
-  def collect_foods(foods)
-    foods.reject! do |food|
-      if Gosu::distance(@x, @y, food.x, food.y) < 60
+  def collect_foods(food_mvs)
+    food_mvs.reject! do |food_mv|
+      food = food_mv.food
+      if Gosu::distance(@player.x, @player.y, food.x, food.y) < 60
         @score += 1
         @player.inc_exp 50
+        @player.add food
         @beep.play
         true
       else

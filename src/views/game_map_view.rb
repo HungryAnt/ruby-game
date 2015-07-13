@@ -3,8 +3,8 @@ class GameMapView < ViewBase
   def initialize(window)
     @window = window
     player = GameManager.player_service.player
-    @player_view_model = PlayerViewModel.new(player, 100, 300)
-    @foods = []
+    @player_view_model = PlayerViewModel.new(player)
+    @food_view_models = []
     @gen_food_timestamp = Gosu::milliseconds
     @font = Gosu::Font.new(20)
     @status_bar_view = StatusBarView.new
@@ -41,17 +41,18 @@ class GameMapView < ViewBase
       @gen_food_timestamp += seconds * 1000
 
       0.upto(gen_count - 1).each do
-        # @foods << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
-        @foods << FoodViewModel.new(*MapManager::current_map.random_available_position)
+        # @food_view_models << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
+        food = Food.new(*MapManager::current_map.random_available_position)
+        @food_view_models << FoodViewModel.new(food)
       end
     end
-    @player_view_model.collect_foods @foods
+    @player_view_model.collect_foods @food_view_models #.map {|food_mv| food_mv.food}
   end
 
   def draw
     MapManager.draw_map
     @player_view_model.draw
-    @foods.each { |food| food.draw }
+    @food_view_models.each { |food_vm| food_vm.draw }
     @font.draw("Score: #{@player_view_model.score}", 10, 10,
                ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
 

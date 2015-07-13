@@ -10,6 +10,7 @@ require 'engine/animation_container'
 require 'engine/animation_util'
 require 'engine/animation_manager'
 
+require 'models/food'
 require 'models/player'
 require 'models/tiles'
 

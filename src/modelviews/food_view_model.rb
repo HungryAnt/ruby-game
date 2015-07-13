@@ -1,12 +1,12 @@
 class FoodViewModel
-  attr_reader :x, :y
+  attr_reader :food
 
-  def initialize(x, y)
-    @x, @y = x, y
+  def initialize(food)
+    @food = food
     @image = MediaUtil::get_img("food/001.bmp")
   end
 
   def draw
-    @image.draw_rot(@x, @y, ZOrder::Food, 0)
+    @image.draw_rot(@food.x, @food.y, ZOrder::Food, 0)
   end
 end
