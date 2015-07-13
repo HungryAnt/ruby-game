@@ -33,6 +33,11 @@ class PlayerViewModel
     @anim_run_right = get_anim :run_right
     @anim_run_up = get_anim :run_up
     @anim_run_down = get_anim :run_down
+
+    @anim_eat_left = get_anim :eat_left
+    @anim_eat_right = get_anim :eat_right
+    @anim_eat_up = get_anim :eat_up
+    @anim_eat_down = get_anim :eat_down
   end
 
   def draw
@@ -73,7 +78,7 @@ class PlayerViewModel
       @direction = direction
 
       angle = Direction::to_angle direction
-      
+
       @running = @player.hp > 0
 
       speed = @running ? @speed * 2 : @speed

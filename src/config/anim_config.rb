@@ -39,6 +39,18 @@ AnimationManager.new_anims do
   }
 end
 
+AnimationManager.new_anims do
+  h_nums = [67, 66, 65, 66, 67, 68, 69, 68]
+  up_nums = [62, 61, 60, 61, 62, 63, 64, 63]
+  down_nums = [57, 56, 55, 56, 57, 58, 59, 58]
+  {
+      :eat_left => [role_pattern, h_nums, anim_interval],
+      :eat_right => [role_pattern, h_nums, anim_interval, -1],
+      :eat_up => [role_pattern, up_nums, anim_interval],
+      :eat_down => [role_pattern, down_nums, anim_interval]
+  }
+end
+
 
 # ================µã»÷¶¯»­================
 AnimationManager.new_anim(:area_click) do
