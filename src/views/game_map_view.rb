@@ -1,6 +1,4 @@
 class GameMapView < ViewBase
-  # 每秒产生一个食物
-  FOOD_GEN_PER_SECOND = 0.2
 
   def initialize(window)
     @window = window
@@ -38,7 +36,7 @@ class GameMapView < ViewBase
     @player_view_model.move direction, MapManager::current_map
 
     seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
-    gen_count = (seconds * FOOD_GEN_PER_SECOND).to_i
+    gen_count = (seconds * GameConfig::FOOD_GEN_PER_SECOND).to_i
     if gen_count > 0
       @gen_food_timestamp += seconds * 1000
 

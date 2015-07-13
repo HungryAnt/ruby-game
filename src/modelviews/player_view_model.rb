@@ -73,8 +73,7 @@ class PlayerViewModel
       @direction = direction
 
       angle = Direction::to_angle direction
-
-      puts "hp: #{@player.hp}"
+      
       @running = @player.hp > 0
 
       speed = @running ? @speed * 2 : @speed
@@ -114,6 +113,7 @@ class PlayerViewModel
     foods.reject! do |food|
       if Gosu::distance(@x, @y, food.x, food.y) < 60
         @score += 1
+        @player.inc_exp 50
         @beep.play
         true
       else

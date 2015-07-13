@@ -7,4 +7,7 @@ class GameConfig
   STATUS_BAR_Y = 600 - 21
   STATUS_BAR_WIDTH = 800
   STATUS_BAR_HEIGHT = 58
+
+  # 每秒产生食物个数
+  FOOD_GEN_PER_SECOND = 1
 end
