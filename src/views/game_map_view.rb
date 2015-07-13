@@ -69,6 +69,8 @@ class GameMapView < ViewBase
         MapManager.switch_map :school
       when Gosu::MsRight
         MapManager.current_map.mark_target(@window.mouse_x, @window.mouse_y) unless MapManager.current_map.nil?
+      when Gosu::KbE
+        @player_view_model.eat_food
     end
   end
 

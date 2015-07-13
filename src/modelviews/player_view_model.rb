@@ -11,6 +11,7 @@ class PlayerViewModel
     @move_timestamp = Gosu::milliseconds
     @standing = true
     @running = true
+    @eating = false # todo refactor to status
   end
 
   private def get_anim key
@@ -37,35 +38,66 @@ class PlayerViewModel
     @anim_eat_right = get_anim :eat_right
     @anim_eat_up = get_anim :eat_up
     @anim_eat_down = get_anim :eat_down
+
+    @current_anim = @anim_stand_down
+  end
+
+  def change_anim
+    anim = @anim_stand_down
+
+    act = ''
+
+    if @eating
+      act = 'eat'
+    elsif @standing
+      act = 'stand'
+    elsif @running
+      act = 'run'
+    else
+      act = 'walk'
+    end
+
+    direction = ''
+    if is_direct_to Direction::LEFT
+      direction = 'left'
+    elsif is_direct_to Direction::RIGHT
+      direction = 'right'
+    elsif is_direct_to Direction::UP
+      direction = 'up'
+    elsif is_direct_to Direction::DOWN
+      direction = 'down'
+    end
+
+    anim = self.instance_variable_get("@anim_#{act}_#{direction}")
+
+    # if @standing
+    #   if is_direct_to Direction::LEFT
+    #     anim = @anim_stand_left
+    #   elsif is_direct_to Direction::RIGHT
+    #     anim = @anim_stand_right
+    #   elsif is_direct_to Direction::UP
+    #     anim = @anim_stand_up
+    #   elsif is_direct_to Direction::DOWN
+    #     anim = @anim_stand_down
+    #   end
+    # else
+    #   if is_direct_to Direction::LEFT
+    #     anim = @running ? @anim_run_left : @anim_walk_laft
+    #   elsif is_direct_to Direction::RIGHT
+    #     anim = @running ? @anim_run_right : @anim_walk_right
+    #   elsif is_direct_to Direction::UP
+    #     anim = @running ? @anim_run_up : @anim_walk_up
+    #   elsif is_direct_to Direction::DOWN
+    #     anim = @running ? @anim_run_down : @anim_walk_down
+    #   end
+    # end
+
+    @current_anim = anim
   end
 
   def draw
     #@image.draw_rot(@x, @y, ZOrder::Player, 0)
-    anim = @anim_stand_down
-
-    if @standing
-      if is_direct_to Direction::LEFT
-        anim = @anim_stand_left
-      elsif is_direct_to Direction::RIGHT
-        anim = @anim_stand_right
-      elsif is_direct_to Direction::UP
-        anim = @anim_stand_up
-      elsif is_direct_to Direction::DOWN
-        anim = @anim_stand_down
-      end
-    else
-      if is_direct_to Direction::LEFT
-        anim = @running ? @anim_run_left : @anim_walk_laft
-      elsif is_direct_to Direction::RIGHT
-        anim = @running ? @anim_run_right : @anim_walk_right
-      elsif is_direct_to Direction::UP
-        anim = @running ? @anim_run_up : @anim_walk_up
-      elsif is_direct_to Direction::DOWN
-        anim = @running ? @anim_run_down : @anim_walk_down
-      end
-    end
-
-    anim.draw(@player.x, @player.y, ZOrder::Player)
+    @current_anim.draw(@player.x, @player.y, ZOrder::Player)
   end
 
   def is_direct_to(direction)
@@ -99,6 +131,8 @@ class PlayerViewModel
     end
 
     have_a_rest if @standing
+
+    change_anim
   end
 
   def have_a_rest
@@ -119,12 +153,17 @@ class PlayerViewModel
       if Gosu::distance(@player.x, @player.y, food.x, food.y) < 60
         @score += 1
         @player.inc_exp 50
-        @player.add food
+        @player.package << food
         @beep.play
         true
       else
         false
       end
     end
+  end
+
+  def eat_food
+    food = @player.package[0] if @player.package.size > 0
+    @eating = true
   end
 end

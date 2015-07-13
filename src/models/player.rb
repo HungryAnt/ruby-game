@@ -7,12 +7,14 @@ class Player
   include Location
   include Hp
   include Exp
-  include Package
+
+  attr_reader :package
 
   def initialize(x, y)
     init_location x, y
     init_hp
     init_exp
-    init_package 100
+
+    @package = Package.new 100
   end
 end

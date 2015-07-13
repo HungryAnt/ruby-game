@@ -1,13 +1,15 @@
-module Package
+class Package
   attr_reader :items
   attr_reader :capacity
 
-  def init_package(capacity)
+  def initialize(capacity)
     @capacity = capacity
     @items = []
   end
 
-  private :init_package
+  def size
+    @items.size
+  end
 
   def add(item)
     @items << item
