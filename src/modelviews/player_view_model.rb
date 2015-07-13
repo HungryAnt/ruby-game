@@ -74,6 +74,9 @@ class PlayerViewModel
 
       angle = Direction::to_angle direction
 
+      puts "hp: #{@player.hp}"
+      @running = @player.hp > 0
+
       speed = @running ? @speed * 2 : @speed
 
       x = @x + Gosu::offset_x(angle, speed)
@@ -81,6 +84,7 @@ class PlayerViewModel
 
       if map.tile_block? x, y
         # 继续单方向检测
+        @running = false
         @standing = true
         do_move(x, @y) unless map.tile_block? x, @y
         do_move(@x, y) unless map.tile_block? @x, y
@@ -90,6 +94,12 @@ class PlayerViewModel
     else
       @standing = true
     end
+
+    have_a_rest if @standing
+  end
+
+  def have_a_rest
+    @player.inc_hp(0.05)
   end
 
   def do_move(x, y)
@@ -97,6 +107,7 @@ class PlayerViewModel
     @x = x
     @y = y
     @move_timestamp = Gosu::milliseconds
+    @player.dec_hp(0.2) if @running
   end
 
   def collect_foods(foods)

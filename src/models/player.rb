@@ -6,6 +6,8 @@ class Player
   include Exp
 
   def initialize
-    super
+    init_hp
+    init_exp
+    puts @hp
   end
 end

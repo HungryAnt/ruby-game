@@ -1,11 +1,12 @@
 module Exp
   attr_reader :lv, :exp, :max_exp
 
-  def initialize
+  def init_exp
     @lv = 1
     @exp = 0
     @max_exp = lv_max_exp
   end
+  private :init_exp
 
   def lv_max_exp
     @lv * 100

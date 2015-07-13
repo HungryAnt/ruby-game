@@ -14,6 +14,8 @@ class GameMapView < ViewBase
   end
 
   def update
+    @status_bar_view.update
+
     MapManager.update_map
 
     direction = Direction::NONE
