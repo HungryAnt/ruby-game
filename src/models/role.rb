@@ -3,7 +3,7 @@ require_relative 'hp'
 require_relative 'exp'
 require_relative 'package'
 
-class Player
+class Role
   include Location
   include Hp
   include Exp
@@ -16,5 +16,14 @@ class Player
     init_exp
 
     @package = Package.new 100
+    @eating_food = nil
+  end
+
+  def eat(food)
+    @eating_food = food
+  end
+
+  def eating
+    !@eating_food.nil?
   end
 end

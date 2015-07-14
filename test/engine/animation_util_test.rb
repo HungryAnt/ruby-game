@@ -1,5 +1,5 @@
+require_relative '../test_help'
 require 'test/unit'
-require '../test_help'
 require 'engine/animation_util'
 
 class AnimationUtilTest < Test::Unit::TestCase

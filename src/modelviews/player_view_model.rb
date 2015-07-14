@@ -47,7 +47,7 @@ class PlayerViewModel
 
     act = ''
 
-    if @eating
+    if @player.eating
       act = 'eat'
     elsif @standing
       act = 'stand'
@@ -121,8 +121,8 @@ class PlayerViewModel
         # 继续单方向检测
         @running = false
         @standing = true
-        do_move(x, @player.y) unless map.tile_block? x, @y
-        do_move(@player.x, y) unless map.tile_block? @x, y
+        do_move(x, @player.y) unless map.tile_block? x, @player.y
+        do_move(@player.x, y) unless map.tile_block? @player.x, y
       else
         do_move(x, y)
       end
@@ -163,7 +163,7 @@ class PlayerViewModel
   end
 
   def eat_food
-    food = @player.package[0] if @player.package.size > 0
-    @eating = true
+    food = @player.package.items.find {|item| item.respond_to? :eatable?}
+    @player.eat food unless food.nil?
   end
 end

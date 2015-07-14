@@ -11,7 +11,7 @@ require 'engine/animation_util'
 require 'engine/animation_manager'
 
 require 'models/food'
-require 'models/player'
+require 'models/role'
 require 'models/tiles'
 
 require 'services/song_manager'

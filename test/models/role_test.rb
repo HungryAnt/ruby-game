@@ -1,10 +1,10 @@
+require_relative '../test_help'
 require 'test/unit'
-require '../test_help'
-require 'models/player'
+require 'models/role'
 
-class PlayerTest < Test::Unit::TestCase
+class RoleTest < Test::Unit::TestCase
   def setup
-    @player = Player.new
+    @player = Role.new(100, 100)
   end
 
   def teardown

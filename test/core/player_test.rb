@@ -2,7 +2,7 @@
 #$:.unshift(File.join(File.dirname(__FILE__), '..', 'src'))
 #$:.unshift(File.dirname(__FILE__).gsub '/test', '/src')
 
-require '../test_help'
+require_relative '../test_help'
 require 'test/unit'
 require 'core/player'
 

@@ -1,5 +1,5 @@
 #$:.unshift(File.join(File.dirname(__FILE__), '..', 'src/core'))
-require '../test_help'
+require_relative '../test_help'
 require 'test/unit'
 require 'core/game_package'
 
