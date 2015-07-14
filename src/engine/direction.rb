@@ -32,4 +32,25 @@ class Direction
     end
   end
 
+  # todo refactor
+  def self.is_direct_to_left(direction)
+    is_direct_to(direction, LEFT)
+  end
+
+  def self.is_direct_to_right(direction)
+    is_direct_to(direction, RIGHT)
+  end
+
+  def self.is_direct_to_up(direction)
+    is_direct_to(direction, UP)
+  end
+
+  def self.is_direct_to_down(direction)
+    is_direct_to(direction, DOWN)
+  end
+
+  private
+  def self.is_direct_to(direction, target_direction)
+    direction & target_direction == target_direction
+  end
 end

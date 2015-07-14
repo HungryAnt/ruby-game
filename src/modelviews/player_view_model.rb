@@ -11,7 +11,7 @@ class PlayerViewModel
     @move_timestamp = Gosu::milliseconds
     @standing = true
     @running = true
-    @eating = false # todo refactor to status
+    @eating_food_vm = nil
   end
 
   private def get_anim key
@@ -19,26 +19,6 @@ class PlayerViewModel
   end
 
   def init_animations
-    # @anim_walk_left = get_anim :walk_left
-    # @anim_walk_right = get_anim :walk_right
-    # @anim_walk_up = get_anim :walk_up
-    # @anim_walk_down = get_anim :walk_down
-    #
-    # @anim_stand_left = get_anim :stand_left
-    # @anim_stand_right = get_anim :stand_right
-    # @anim_stand_up = get_anim :stand_up
-    # @anim_stand_down = get_anim :stand_down
-    #
-    # @anim_run_left = get_anim :run_left
-    # @anim_run_right = get_anim :run_right
-    # @anim_run_up = get_anim :run_up
-    # @anim_run_down = get_anim :run_down
-    #
-    # @anim_eat_left = get_anim :eat_left
-    # @anim_eat_right = get_anim :eat_right
-    # @anim_eat_up = get_anim :eat_up
-    # @anim_eat_down = get_anim :eat_down
-
     %w(stand walk run eat).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
@@ -49,36 +29,54 @@ class PlayerViewModel
     @current_anim = @anim_stand_down
   end
 
+  def change_state
+    if @player.eating
+      if @standing
+        @player.state = Role::State::EATING
+      else
+        @player.state = Role::State::EATING
+      end
+    else
+      if @standing
+        @player.state = Role::State::STANDING
+      else
+        @player.state = @running ? Role::State::RUNNING : Role::State::WALKING
+      end
+    end
+  end
+
   def change_anim
     state = @player.state.to_s
 
     direction = ''
-    if is_direct_to Direction::LEFT
+    if Direction::is_direct_to_left(@direction)
       direction = 'left'
-    elsif is_direct_to Direction::RIGHT
+    elsif Direction::is_direct_to_right(@direction)
       direction = 'right'
-    elsif is_direct_to Direction::UP
+    elsif Direction::is_direct_to_up(@direction)
       direction = 'up'
-    elsif is_direct_to Direction::DOWN
+    elsif Direction::is_direct_to_down(@direction)
       direction = 'down'
     end
 
     @current_anim = self.instance_variable_get("@anim_#{state}_#{direction}")
   end
 
+  def update
+    @player.update_eating_food
+  end
+
   def draw
     # @image.draw_rot(@x, @y, ZOrder::Player, 0)
     # puts "@player.state: #{@player.state} @current_anim: #{@current_anim}"
     @current_anim.draw(@player.x, @player.y, ZOrder::Player)
-  end
-
-  def is_direct_to(direction)
-    @direction & direction == direction
+    @eating_food_vm.draw unless @eating_food_vm.nil?
   end
 
   def move(direction, map)
     if direction != Direction::NONE
       @direction = direction
+      @player.direction = direction
 
       angle = Direction::to_angle direction
 
@@ -95,17 +93,16 @@ class PlayerViewModel
         @standing = true
         do_move(x, @player.y) unless map.tile_block? x, @player.y
         do_move(@player.x, y) unless map.tile_block? @player.x, y
-        @player.state = Role::State::STANDING if @standing
       else
         do_move(x, y)
       end
     else
       @standing = true
-      @player.state = Role::State::STANDING
     end
 
     have_a_rest if @standing
 
+    change_state
     change_anim
   end
 
@@ -115,7 +112,6 @@ class PlayerViewModel
 
   def do_move(x, y)
     @standing = false
-    @player.state = @running ? Role::State::RUNNING : Role::State::WALKING
     @player.x = x
     @player.y = y
     @move_timestamp = Gosu::milliseconds
@@ -139,6 +135,9 @@ class PlayerViewModel
 
   def eat_food
     food = @player.package.items.find {|item| item.respond_to? :eatable?}
-    @player.eat food unless food.nil?
+    unless food.nil?
+      @player.eat food
+      @eating_food_vm = FoodViewModel.new food
+    end
   end
 end

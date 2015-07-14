@@ -7,6 +7,9 @@ class FoodViewModel
   end
 
   def draw
-    @image.draw_rot(@food.x, @food.y, ZOrder::Food, 0)
+    if @food.visible
+      z_order = @food.eating ? ZOrder::Player : ZOrder::Food
+      @image.draw_rot(@food.x, @food.y, z_order, 0)
+    end
   end
 end

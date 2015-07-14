@@ -47,6 +47,8 @@ class GameMapView < ViewBase
       end
     end
     @player_view_model.collect_foods @food_view_models #.map {|food_mv| food_mv.food}
+
+    @player_view_model.update
   end
 
   def draw
