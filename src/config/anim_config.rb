@@ -51,6 +51,18 @@ AnimationManager.new_anims do
   }
 end
 
+AnimationManager.new_anims do
+  h_nums = [77, 76, 77, 78]
+  up_nums = [74, 73, 74, 75]
+  down_nums = [71, 70, 71, 72]
+  {
+      :hold_food_left => [role_pattern, h_nums, anim_interval],
+      :hold_food_right => [role_pattern, h_nums, anim_interval, -1],
+      :hold_food_up => [role_pattern, up_nums, anim_interval],
+      :hold_food_down => [role_pattern, down_nums, anim_interval]
+  }
+end
+
 
 # ================µã»÷¶¯»­================
 AnimationManager.new_anim(:area_click) do

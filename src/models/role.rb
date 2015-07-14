@@ -43,10 +43,19 @@ class Role
   def update_eating_food
     food = @eating_food
     return if food.nil?
+
+    if holding_food
+      food.visible = true
+      food.x, food.y = @x, @y-25
+      food.covered = @direction == Direction::UP
+      return
+    end
+
     if @direction == Direction::UP
       food.visible = false
     else
       food.visible = true
+
       if Direction::is_direct_to_down @direction
         food.x, food.y = @x, @y+25
       end
@@ -59,5 +68,9 @@ class Role
         food.x, food.y = @x+35, @y+23
       end
     end
+  end
+
+  def holding_food
+    @state == State::HOLDING_FOOD
   end
 end

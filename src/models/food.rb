@@ -5,12 +5,13 @@ class Food
   include Location
   include Visible
 
-  attr_accessor :eating
+  attr_accessor :eating, :covered
 
   def initialize(x, y)
     init_location x, y
     init_visible
     @eating = false
+    @covered = false
   end
 
   def eatable?

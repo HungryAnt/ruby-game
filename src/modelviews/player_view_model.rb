@@ -19,7 +19,7 @@ class PlayerViewModel
   end
 
   def init_animations
-    %w(stand walk run eat).each do |state|
+    %w(stand walk run eat hold_food).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
                                    get_anim("#{state}_#{direction}".to_sym))
@@ -34,7 +34,7 @@ class PlayerViewModel
       if @standing
         @player.state = Role::State::EATING
       else
-        @player.state = Role::State::EATING
+        @player.state = Role::State::HOLDING_FOOD
       end
     else
       if @standing
