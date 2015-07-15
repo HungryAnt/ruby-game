@@ -1,3 +1,4 @@
+# coding: UTF-8
 $:.unshift(File.dirname(__FILE__))
 
 require 'gosu'
@@ -17,6 +18,7 @@ require 'models/tiles'
 require 'services/song_manager'
 require 'services/map_manager'
 require 'services/game_manager'
+require 'services/food_factory'
 
 require 'modelviews/player_view_model'
 require 'modelviews/area_view_model'
@@ -32,6 +34,7 @@ require 'views/main_window'
 require 'config/game_config'
 require 'config/anim_config'
 require 'config/map_config'
+require 'config/food_config'
 
 window = MainWindow.new
 window.show

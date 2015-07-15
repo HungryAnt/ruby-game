@@ -3,7 +3,7 @@ class FoodViewModel
 
   def initialize(food)
     @food = food
-    @image = MediaUtil::get_img("food/001.bmp")
+    @image = MediaUtil::get_img(food.image_path)
   end
 
   def draw

@@ -42,7 +42,7 @@ class GameMapView < ViewBase
 
       0.upto(gen_count - 1).each do
         # @food_view_models << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
-        food = Food.new(*MapManager::current_map.random_available_position)
+        food = FoodFactory.random_food(*MapManager::current_map.random_available_position)
         @food_view_models << FoodViewModel.new(food)
       end
     end
