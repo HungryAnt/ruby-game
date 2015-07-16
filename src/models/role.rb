@@ -28,7 +28,8 @@ class Role
     @eating_food = nil
     @state = State::STANDING
     @direction = Direction::DOWN
-    @intake = 1
+    @intake = 0.5
+    @temp_exp = 0
   end
 
   def start_eat(food)
@@ -41,7 +42,8 @@ class Role
     if eating?
       intake = @eating_food.eat @intake
       if intake > 0
-        inc_exp intake
+        # inc_exp intake
+        @temp_exp += intake
       else
         # 食物已经吃完
         @eating_food = nil
@@ -85,5 +87,12 @@ class Role
 
   def holding_food
     @state == State::HOLDING_FOOD
+  end
+
+  def refresh_exp
+    if @temp_exp > 0
+      inc_exp(@temp_exp)
+      @temp_exp = 0
+    end
   end
 end

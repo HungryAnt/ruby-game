@@ -10,7 +10,7 @@ class Food
 
   attr_accessor :eating, :covered
 
-  attr_reader :food_type
+  attr_reader :food_type, :energy, :max_energy
 
   def initialize(x, y, food_type)
     init_location x, y
@@ -18,7 +18,7 @@ class Food
     @food_type = food_type
     @eating = false
     @covered = false
-    @energy = 100
+    @max_energy = @energy = food_type.energy
   end
 
   def eatable?

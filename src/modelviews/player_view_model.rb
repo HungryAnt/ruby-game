@@ -12,6 +12,7 @@ class PlayerViewModel
     @standing = true
     @running = true
     @eating_food_vm = nil
+    @update_times = 0
   end
 
   private def get_anim key
@@ -64,6 +65,17 @@ class PlayerViewModel
 
   def update
     @player.update_eating_food
+
+    have_a_rest if @standing
+
+    change_state
+    change_anim
+
+    eat if @standing
+
+    @player.refresh_exp if @update_times % 60 == 0
+
+    @update_times += 1
   end
 
   def draw
@@ -99,13 +111,6 @@ class PlayerViewModel
     else
       @standing = true
     end
-
-    have_a_rest if @standing
-
-    change_state
-    change_anim
-
-    eat if @standing
   end
 
   def have_a_rest
