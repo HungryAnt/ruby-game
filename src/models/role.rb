@@ -59,7 +59,7 @@ class Role
     food = @eating_food
     return if food.nil?
 
-    if holding_food
+    if holding_food?
       food.visible = true
       food.x, food.y = @x, @y-25
       food.covered = @direction == Direction::UP
@@ -85,7 +85,7 @@ class Role
     end
   end
 
-  def holding_food
+  def holding_food?
     @state == State::HOLDING_FOOD
   end
 
@@ -94,5 +94,21 @@ class Role
       inc_exp(@temp_exp)
       @temp_exp = 0
     end
+  end
+
+  def discard
+    if eating?
+      item = @eating_food
+      @eating_food = nil
+      return item
+    end
+
+    if package.size > 0
+      item = package[0]
+      package.discard item
+      return item
+    end
+
+    nil
   end
 end
