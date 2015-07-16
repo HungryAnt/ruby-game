@@ -28,15 +28,28 @@ class Role
     @eating_food = nil
     @state = State::STANDING
     @direction = Direction::DOWN
+    @intake = 1
   end
 
-  def eat(food)
+  def start_eat(food)
     @eating_food = food
     food.eating = true
-    @state = State::EATING
+    # @state = State::EATING
   end
 
-  def eating
+  def eat
+    if eating?
+      intake = @eating_food.eat @intake
+      if intake > 0
+        inc_exp intake
+      else
+        # 食物已经吃完
+        @eating_food = nil
+      end
+    end
+  end
+
+  def eating?
     !@eating_food.nil?
   end
 

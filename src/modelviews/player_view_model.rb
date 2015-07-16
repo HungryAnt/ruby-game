@@ -30,7 +30,7 @@ class PlayerViewModel
   end
 
   def change_state
-    if @player.eating
+    if @player.eating?
       if @standing
         @player.state = Role::State::EATING
       else
@@ -104,6 +104,8 @@ class PlayerViewModel
 
     change_state
     change_anim
+
+    eat if @standing
   end
 
   def have_a_rest
@@ -123,7 +125,7 @@ class PlayerViewModel
       food = food_mv.food
       if Gosu::distance(@player.x, @player.y, food.x, food.y) < 60
         @score += 1
-        @player.inc_exp 50
+        # @player.inc_exp 50
         @player.package << food
         @beep.play
         true
@@ -133,11 +135,18 @@ class PlayerViewModel
     end
   end
 
-  def eat_food
+  def start_eat_food
+    return if @player.eating?
     food = @player.package.items.find {|item| item.respond_to? :eatable?}
     unless food.nil?
-      @player.eat food
+      @player.start_eat food
       @eating_food_vm = FoodViewModel.new food
+      @player.package.discard food
     end
+  end
+
+  def eat
+    @player.eat
+    @eating_food_vm = nil unless @player.eating?
   end
 end

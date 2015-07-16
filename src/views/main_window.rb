@@ -21,15 +21,30 @@ class MainWindow < Gosu::Window
     @map_editor_view = MapEditorView.new(self)
     @current_view = @game_map_view
     # @mouse = Mouse.new
+
+    @begin_times = Gosu::milliseconds
+    @update_times = 0
+    @draw_times = 0
+    @font = Gosu::Font.new(20)
   end
 
   def update
     @current_view.update
+    @update_times += 1
   end
 
   def draw
     @current_view.draw
-    # @mouse.draw mouse_x, mouse_y
+    @draw_times += 1
+
+    diff = Gosu::milliseconds - @begin_times
+    update_rate = @update_times * 1000 / diff
+    @font.draw("update_rate: #{update_rate} per second", 10, 30,
+               ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+
+    draw_rate = @draw_times * 1000 / diff
+    @font.draw("draw_rate: #{draw_rate} per second", 10, 50,
+               ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
   end
 
   def button_down(id)
