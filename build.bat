@@ -1,0 +1,1 @@
+ocra --icon ant.ico src/main.rb media src/resource

@@ -1,6 +1,6 @@
 
 def get_tail_path(name)
-  "resource/map/#{name}.txt"
+  File.join(@base_src_dir, "resource/map/#{name}.txt")
 end
 
 def create_area(image_path, song_path, tiles_path)

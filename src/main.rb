@@ -1,8 +1,12 @@
 # coding: UTF-8
 $:.unshift(File.dirname(__FILE__))
+@base_src_dir = File.dirname(__FILE__)
 
 require 'gosu'
 require 'utils/media_util'
+
+MediaUtil.init_base_media_path(File.join(@base_src_dir, '../media'))
+
 require 'z_order'
 require 'engine/direction'
 require 'engine/animation'
