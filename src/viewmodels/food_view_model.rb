@@ -1,9 +1,10 @@
-class FoodViewModel
+class FoodViewModel < ItemViewModel
   attr_reader :food
 
   ENERGY_BAR_WIDTH = 40
 
   def initialize(food)
+    super food
     @food = food
     @image = MediaUtil::get_img(food.image_path)
   end

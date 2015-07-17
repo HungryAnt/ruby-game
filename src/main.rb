@@ -21,6 +21,7 @@ require 'services/map_manager'
 require 'services/game_manager'
 require 'services/food_factory'
 
+require 'viewmodels/item_view_model'
 require 'viewmodels/player_view_model'
 require 'viewmodels/area_view_model'
 require 'viewmodels/map_view_model'

@@ -10,4 +10,7 @@ class GameConfig
 
   # 每秒产生食物个数
   FOOD_GEN_PER_SECOND = 1
+
+  RUNNING_HP_DEC = 0.2
+  REST_HP_INC = 0.05
 end

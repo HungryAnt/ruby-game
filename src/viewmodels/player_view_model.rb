@@ -1,8 +1,8 @@
 class PlayerViewModel
-  attr_reader :score
+  attr_reader :score, :role
 
   def initialize(player)
-    @player = player
+    @player = @role = player
     @beep = MediaUtil::get_sample("pickup.wav")
     @speed = 2.0
     @score = 0
@@ -114,7 +114,7 @@ class PlayerViewModel
   end
 
   def have_a_rest
-    @player.inc_hp(0.05)
+    @player.inc_hp(GameConfig::REST_HP_INC)
   end
 
   def do_move(x, y)
@@ -122,9 +122,19 @@ class PlayerViewModel
     @player.x = x
     @player.y = y
     @move_timestamp = Gosu::milliseconds
-    @player.dec_hp(0.2) if @running
+    @player.dec_hp(GameConfig::RUNNING_HP_DEC) if @running
   end
 
+  def pick_up(item_vm)
+    item = item_vm.item
+    @score += 1
+    @beep.play
+    if item.respond_to? :eatable?
+      eat_food item
+    end
+  end
+
+  # ×Ô¶¯Ê°È¡
   def collect_foods(food_mvs)
     food_mvs.reject! do |food_mv|
       food = food_mv.food
@@ -140,28 +150,32 @@ class PlayerViewModel
     end
   end
 
-  def start_eat_food
-    return if @player.eating?
-    food = @player.package.items.find {|item| item.respond_to? :eatable?}
-    unless food.nil?
-      @player.start_eat food
-      @eating_food_vm = FoodViewModel.new food
-      @player.package.discard food
-    end
-  end
-
-  def eat
-    @player.eat
-    @eating_food_vm = nil unless @player.eating?
-  end
+  # def start_eat_food
+  #   return if @player.eating?
+  #   food = @player.package.items.find {|item| item.respond_to? :eatable?}
+  #   unless food.nil?
+  #     eat_food food
+  #   end
+  # end
 
   def discard(food_vms)
-    area = MapManager.current_map.current_area.area
-    item = @player.discard area
+    item = @player.discard
     return if item.nil?
     if item.respond_to? :eatable?
       food_vm = FoodViewModel.new item
       food_vms << food_vm
     end
+  end
+
+  private
+  def eat_food food
+    @player.start_eat food
+    @eating_food_vm = FoodViewModel.new food
+    @player.package.discard food
+  end
+
+  def eat
+    @player.eat
+    @eating_food_vm = nil unless @player.eating?
   end
 end

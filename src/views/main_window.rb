@@ -11,6 +11,23 @@
 #   end
 # end
 
+# class MyGuiState < Fidgit::GuiState
+#   def initialize
+#     super
+#
+#     # Create a vertically packed section, centred in the window.
+#     vertical align: :center do
+#       # Create a label with a dark green background.
+#       my_label = label "Hello world!", background_color: Gosu::Color.rgb(0, 100, 0)
+#
+#       # Create a button that, when clicked, changes the label.
+#       button("Goodbye", align_h: :center, tip: "Press me and be done with it!") do
+#         my_label.text = "Goodbye cruel world!"
+#       end
+#     end
+#   end
+# end
+
 class MainWindow < Gosu::Window
 
   def initialize

@@ -17,15 +17,15 @@ class GameMapView < ViewBase
     MapManager.update_map
 
     direction = Direction::NONE
-    if Gosu::button_down? Gosu::KbUp
+    if Gosu::button_down?(Gosu::KbUp) || Gosu::button_down?(Gosu::KbW)
       direction |= Direction::UP
-    elsif Gosu::button_down? Gosu::KbDown
+    elsif Gosu::button_down?(Gosu::KbDown) || Gosu::button_down?(Gosu::KbS)
       direction |= Direction::DOWN
     end
 
-    if Gosu::button_down? Gosu::KbLeft
+    if Gosu::button_down?(Gosu::KbLeft) || Gosu::button_down?(Gosu::KbA)
       direction |= Direction::LEFT
-    elsif Gosu::button_down? Gosu::KbRight
+    elsif Gosu::button_down?(Gosu::KbRight) || Gosu::button_down?(Gosu::KbD)
       direction |= Direction::RIGHT
     end
 
@@ -46,7 +46,8 @@ class GameMapView < ViewBase
         @food_view_models << FoodViewModel.new(food)
       end
     end
-    @player_view_model.collect_foods @food_view_models #.map {|food_mv| food_mv.food}
+
+    # @player_view_model.collect_foods @food_view_models #.map {|food_mv| food_mv.food}
 
     @player_view_model.update
   end
@@ -69,12 +70,24 @@ class GameMapView < ViewBase
         MapManager.switch_map :hill
       when Gosu::Kb2
         MapManager.switch_map :school
+      when Gosu::MsLeft
+        pick_up @window.mouse_x, @window.mouse_y
       when Gosu::MsRight
         MapManager.current_map.mark_target(@window.mouse_x, @window.mouse_y) unless MapManager.current_map.nil?
-      when Gosu::KbE
-        @player_view_model.start_eat_food
-      when Gosu::KbD
+      # when Gosu::KbE
+      #   @player_view_model.start_eat_food
+      when Gosu::KbF
         @player_view_model.discard @food_view_models
+    end
+  end
+
+  def pick_up(mouse_x, mouse_y)
+    @food_view_models.each do |food_vm|
+      if food_vm.mouse_touch?(mouse_x, mouse_y) && food_vm.can_pick_up?(@player_view_model.role)
+        @food_view_models.reject! { |item| item == food_vm }
+        @player_view_model.pick_up food_vm
+        break
+      end
     end
   end
 

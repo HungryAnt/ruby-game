@@ -96,19 +96,14 @@ class Role
     end
   end
 
-  def discard area
+  def discard
     item = nil
-
     if eating?
       item = @eating_food
       @eating_food = nil
+      item.visible = true
+      item.x, item.y = @x, @y+25
     end
-
-    if package.size > 0
-      item = package[0]
-      package.discard item
-    end
-
     item
   end
 end
