@@ -155,10 +155,13 @@ class PlayerViewModel
     @eating_food_vm = nil unless @player.eating?
   end
 
-  def discard(food_viewmodels)
-    item = @player.discard
+  def discard(food_vms)
+    area = MapManager.current_map.current_area.area
+    item = @player.discard area
+    return if item.nil?
     if item.respond_to? :eatable?
-
+      food_vm = FoodViewModel.new item
+      food_vms << food_vm
     end
   end
 end

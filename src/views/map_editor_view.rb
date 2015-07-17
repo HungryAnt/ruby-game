@@ -24,8 +24,8 @@ class MapEditorView
   end
 
   def init_tile_grid
-    @row_count = GameConfig::MAP_HEIGHT / AreaViewModel::GRID_WIDTH
-    @col_count = GameConfig::MAP_WIDTH / AreaViewModel::GRID_WIDTH
+    @row_count = GameConfig::MAP_HEIGHT / Area::GRID_WIDTH
+    @col_count = GameConfig::MAP_WIDTH / Area::GRID_WIDTH
 
     @tiles = Array.new(@row_count)
     0.upto(@row_count-1) do |row|
@@ -67,19 +67,19 @@ class MapEditorView
     0.upto(@row_count-1) do |row|
       0.upto(@col_count-1) do |col|
         color = Tiles.color(@tiles[row][col])
-        Gosu::draw_rect AreaViewModel::GRID_WIDTH * col, AreaViewModel::GRID_HEIGHT * row,
-                        AreaViewModel::GRID_WIDTH, AreaViewModel::GRID_HEIGHT, color
+        Gosu::draw_rect Area::GRID_WIDTH * col, Area::GRID_HEIGHT * row,
+                        Area::GRID_WIDTH, Area::GRID_HEIGHT, color
       end
     end
 
     0.upto(@row_count-1) do |row|
-      Gosu::draw_line 0, AreaViewModel::GRID_HEIGHT * row, 0x88_000000,
-                      GameConfig::MAP_WIDTH, AreaViewModel::GRID_HEIGHT * row, 0x88_000000
+      Gosu::draw_line 0, Area::GRID_HEIGHT * row, 0x88_000000,
+                      GameConfig::MAP_WIDTH, Area::GRID_HEIGHT * row, 0x88_000000
     end
 
     0.upto(@col_count-1) do |col|
-      Gosu::draw_line AreaViewModel::GRID_WIDTH * col, 0, 0x88_000000,
-                      AreaViewModel::GRID_WIDTH * col, GameConfig::MAP_HEIGHT, 0x88_000000
+      Gosu::draw_line Area::GRID_WIDTH * col, 0, 0x88_000000,
+                      Area::GRID_WIDTH * col, GameConfig::MAP_HEIGHT, 0x88_000000
     end
   end
 
@@ -87,8 +87,8 @@ class MapEditorView
      x = @window.mouse_x.to_i
      y = @window.mouse_y.to_i
      if @editing && @current_tile
-       rows = [@origin_row, y / AreaViewModel::GRID_HEIGHT]
-       cols = [@origin_col, x / AreaViewModel::GRID_WIDTH]
+       rows = [@origin_row, y / Area::GRID_HEIGHT]
+       cols = [@origin_col, x / Area::GRID_WIDTH]
        r_min, r_max = rows.min().to_i, rows.max().to_i
        c_min, c_max = cols.min().to_i, cols.max().to_i
        return if r_min > @row_count-1 || r_max < 0
@@ -123,8 +123,8 @@ class MapEditorView
         # ¿ªÊ¼±à¼­µØÍ¼
         unless @current_tile.nil?
           @editing = true
-          @origin_row = @window.mouse_y / AreaViewModel::GRID_HEIGHT
-          @origin_col = @window.mouse_x / AreaViewModel::GRID_WIDTH
+          @origin_row = @window.mouse_y / Area::GRID_HEIGHT
+          @origin_col = @window.mouse_x / Area::GRID_WIDTH
         end
       end
     end

@@ -1,5 +1,5 @@
 class MapViewModel
-  attr_reader :areas
+  attr_reader :areas, :current_area
 
   def initialize(areas)
     ArgumentError "wrong areas #{areas}" if areas.nil? || areas.size == 0
