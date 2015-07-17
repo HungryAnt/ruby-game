@@ -16,7 +16,7 @@ class FoodViewModel
       if @food.energy < @food.max_energy
         energy_bar_width = ENERGY_BAR_WIDTH * @food.energy / @food.max_energy
         Gosu::draw_rect @food.x-energy_bar_width/2, @food.y+18,
-                        energy_bar_width, 4, 0xFF_FF5D00
+                        energy_bar_width, 4, 0xFF_0090F7
       end
     end
   end

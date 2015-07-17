@@ -13,7 +13,7 @@ class StatusBarView
 
   def draw
     @img.draw(0, 0, ZOrder::UI)
-    Gosu::draw_rect(480, 31, @hp_width, 6, 0xFF_FF1111, ZOrder::UI)
-    Gosu::draw_rect(480, 43, @exp_width, 6, 0xFF_FFD800, ZOrder::UI)
+    Gosu::draw_rect(480, 32, @hp_width, 5, 0xFF_0090F7, ZOrder::UI)
+    Gosu::draw_rect(480, 44, @exp_width, 5, 0xFF_F4003D, ZOrder::UI)
   end
 end

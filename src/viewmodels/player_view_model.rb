@@ -155,7 +155,7 @@ class PlayerViewModel
     @eating_food_vm = nil unless @player.eating?
   end
 
-  def discard(map)
+  def discard(food_viewmodels)
     item = @player.discard
     if item.respond_to? :eatable?
 
