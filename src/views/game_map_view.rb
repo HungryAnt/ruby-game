@@ -73,7 +73,7 @@ class GameMapView < ViewBase
       when Gosu::MsLeft
         pick_up @window.mouse_x, @window.mouse_y
       when Gosu::MsRight
-        MapManager.current_map.mark_target(@window.mouse_x, @window.mouse_y) unless MapManager.current_map.nil?
+        set_destination @window.mouse_x, @window.mouse_y
       # when Gosu::KbE
       #   @player_view_model.start_eat_food
       when Gosu::KbF
@@ -88,6 +88,14 @@ class GameMapView < ViewBase
         @player_view_model.pick_up food_vm
         break
       end
+    end
+  end
+
+  def set_destination(mouse_x, mouse_y)
+    map_vm = MapManager.current_map
+    unless map_vm.tile_block? mouse_x, mouse_y
+      map_vm.mark_target(mouse_x, mouse_y) unless MapManager.current_map.nil?
+      @player_view_model.set_destination mouse_x, mouse_y
     end
   end
 

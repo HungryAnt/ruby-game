@@ -61,7 +61,7 @@ class Role
 
     if holding_food?
       food.visible = true
-      food.x, food.y = @x, @y-25
+      food.x, food.y = @x, @y-51
       food.covered = @direction == Direction::UP
       return
     end
@@ -72,15 +72,15 @@ class Role
       food.visible = true
 
       if Direction::is_direct_to_down @direction
-        food.x, food.y = @x, @y+25
+        food.x, food.y = @x, @y
       end
 
       if Direction::is_direct_to_left @direction
-        food.x, food.y = @x-35, @y+23
+        food.x, food.y = @x-35, @y
       end
 
       if Direction::is_direct_to_right @direction
-        food.x, food.y = @x+35, @y+23
+        food.x, food.y = @x+35, @y
       end
     end
   end
@@ -102,7 +102,7 @@ class Role
       item = @eating_food
       @eating_food = nil
       item.visible = true
-      item.x, item.y = @x, @y+25
+      item.x, item.y = @x, @y
     end
     item
   end
