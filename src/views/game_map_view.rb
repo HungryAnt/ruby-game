@@ -4,7 +4,6 @@ class GameMapView < ViewBase
     @window = window
     player = GameManager.player_service.player
     @player_view_model = PlayerViewModel.new(player)
-    @food_view_models = []
     @gen_food_timestamp = Gosu::milliseconds
     @status_bar_view = StatusBarView.new
     MapManager.switch_map :hill
@@ -39,10 +38,11 @@ class GameMapView < ViewBase
     if gen_count > 0
       @gen_food_timestamp += seconds * 1000
 
+      food_vms = get_food_vms
       0.upto(gen_count - 1).each do
         # @food_view_models << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
         food = FoodFactory.random_food(*MapManager::current_map.random_available_position)
-        @food_view_models << FoodViewModel.new(food)
+        food_vms << FoodViewModel.new(food)
       end
     end
 
@@ -54,7 +54,7 @@ class GameMapView < ViewBase
   def draw
     MapManager.draw_map
     @player_view_model.draw
-    @food_view_models.each { |food_vm| food_vm.draw }
+    get_food_vms.each { |food_vm| food_vm.draw }
     @window.translate(0, GameConfig::STATUS_BAR_Y) do
       @status_bar_view.draw
     end
@@ -73,14 +73,15 @@ class GameMapView < ViewBase
       # when Gosu::KbE
       #   @player_view_model.start_eat_food
       when Gosu::KbF
-        @player_view_model.discard @food_view_models
+        @player_view_model.discard get_food_vms
     end
   end
 
   def pick_up(mouse_x, mouse_y)
-    @food_view_models.each do |food_vm|
+    food_vms = get_food_vms
+    food_vms.each do |food_vm|
       if food_vm.mouse_touch?(mouse_x, mouse_y) && food_vm.can_pick_up?(@player_view_model.role)
-        @food_view_models.reject! { |item| item == food_vm }
+        food_vms.reject! { |item| item == food_vm }
         @player_view_model.pick_up food_vm
         break
       end
@@ -97,5 +98,10 @@ class GameMapView < ViewBase
 
   def needs_cursor?
     true
+  end
+
+  private
+  def get_food_vms
+    MapManager.current_map.current_area.food_vms
   end
 end

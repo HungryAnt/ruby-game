@@ -1,5 +1,5 @@
 class AreaViewModel
-  attr_reader :image, :area
+  attr_reader :image, :area, :food_vms
 
   def initialize(area)
     @area = area
@@ -7,6 +7,7 @@ class AreaViewModel
     @scale_x = GameConfig::MAP_WIDTH * 1.0 / @image.width
     @scale_y = GameConfig::MAP_HEIGHT * 1.0 / @image.height
     @anim_container = AnimationContainer.new
+    @food_vms = []
   end
 
   def update
