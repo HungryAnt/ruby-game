@@ -26,7 +26,7 @@ class TileSelectorView
   def initialize
     @items = []
     x = 0
-    [Tiles::None, Tiles::Block, Tiles::Gateway].each do |tile|
+    [Tiles::NONE, Tiles::BLOCK, Tiles::GATEWAY].each do |tile|
       item = Item.new(tile, x, 0, Tiles::color(tile))
       x += ITEM_WIDTH
       @items << item

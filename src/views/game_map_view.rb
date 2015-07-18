@@ -6,7 +6,7 @@ class GameMapView < ViewBase
     @player_view_model = PlayerViewModel.new(player)
     @gen_food_timestamp = Gosu::milliseconds
     @status_bar_view = StatusBarView.new
-    MapManager.switch_map :hill
+    MapManager.switch_map :grass_wood_back
   end
 
   def update
@@ -67,7 +67,8 @@ class GameMapView < ViewBase
       when Gosu::Kb2
         MapManager.switch_map :school
       when Gosu::MsLeft
-        pick_up @window.mouse_x, @window.mouse_y
+        done = pick_up @window.mouse_x, @window.mouse_y
+        goto_area(@window.mouse_x, @window.mouse_y) unless done
       when Gosu::MsRight
         set_destination @window.mouse_x, @window.mouse_y
       # when Gosu::KbE
@@ -83,8 +84,16 @@ class GameMapView < ViewBase
       if food_vm.mouse_touch?(mouse_x, mouse_y) && food_vm.can_pick_up?(@player_view_model.role)
         food_vms.reject! { |item| item == food_vm }
         @player_view_model.pick_up food_vm
-        break
+        return true
       end
+    end
+    false
+  end
+
+  def goto_area(mouse_x, mouse_y)
+    map_vm = MapManager.current_map
+    if map_vm.gateway? mouse_x, mouse_y
+      map_vm.goto_area mouse_x, mouse_y, @player_view_model.role
     end
   end
 

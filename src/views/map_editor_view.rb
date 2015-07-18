@@ -31,18 +31,18 @@ class MapEditorView
     0.upto(@row_count-1) do |row|
       @tiles[row] = Array.new(@col_count)
       0.upto(@col_count-1) do |col|
-        tile = Tiles::None
+        tile = Tiles::NONE
         if row < DEFAULT_BORDER_WIDTH ||
             row >= @row_count-DEFAULT_BORDER_WIDTH ||
             col < DEFAULT_BORDER_WIDTH ||
             col >= @col_count - DEFAULT_BORDER_WIDTH
-          tile = Tiles::Block
+          tile = Tiles::BLOCK
         end
         @tiles[row][col] = tile
       end
     end
 
-    @current_tile = Tiles::Block
+    @current_tile = Tiles::BLOCK
 
     @editing = false
     @origin_row = 0
@@ -137,7 +137,7 @@ class MapEditorView
   def print_tiles
     @tiles.each do |row_tiles|
       row_tiles.each do |tile|
-        if tile == Tiles::Block
+        if tile == Tiles::BLOCK
           print '#'
         else
           print ' '

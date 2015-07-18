@@ -30,4 +30,19 @@ class MapViewModel
   def random_available_position
     @current_area.random_available_position
   end
+
+  def gateway?(x, y)
+    tile = @current_area.area.tile x, y
+    Tiles.gateway? tile
+  end
+
+  def goto_area(x, y, role)
+    tile = @current_area.area.tile x, y
+    if Tiles.gateway? tile
+      target_area, x, y = @current_area.area.way_out tile.to_sym
+      @current_area = @areas.find {|area| area.area == target_area}
+      role.x, role.y = x, y
+      activate
+    end
+  end
 end
