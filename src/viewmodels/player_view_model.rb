@@ -23,7 +23,7 @@ class PlayerViewModel
     change_state
     change_anim
     eat if @standing
-    @player.refresh_exp if @update_times % 60 == 0
+    @player.refresh_exp if @update_times % 40 == 0
     @update_times += 1
   end
 

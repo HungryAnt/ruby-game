@@ -5,23 +5,20 @@ class MediaUtil
 
   @@image_map = {}
   @@song_map = {}
+  @@tileable_image_map = {}
+  @@sample_map = {}
 
   def self::get_img(path)
     cache_get_img("#{@@bash_media_path}/img/#{path}")
   end
 
   def self::get_tileable_img(path)
-    Gosu::Image.new("#{@@bash_media_path}/img/#{path}", :tileable => true)
+    cache_get_tileable_img "#{@@bash_media_path}/img/#{path}"
   end
 
   def self::get_sample(path)
-    Gosu::Sample.new("#{@@bash_media_path}/voice/#{path}")
+    cache_get_sample "#{@@bash_media_path}/voice/#{path}"
   end
-
-  # def self::get_img_with_transparent_color(path)
-  #   img = get_img path
-  #   image.clear :dest_select => MagicPink
-  # end
 
   def self::get_song(path)
     cache_get_song "#{@@bash_media_path}/song/#{path}"
@@ -35,6 +32,24 @@ class MediaUtil
       @@image_map[path] = img
     end
     img
+  end
+
+  def self.cache_get_tileable_img(path)
+    img = @@tileable_image_map[path]
+    if img.nil?
+      img = Gosu::Image.new(path, :tileable => true)
+      @@tileable_image_map[path] = img
+    end
+    img
+  end
+
+  def self.cache_get_sample(path)
+    sample = @@sample_map[path]
+    if sample.nil?
+      sample = Gosu::Sample.new(path)
+      @@sample_map[path] = sample
+    end
+    sample
   end
 
   def self.cache_get_song(path)

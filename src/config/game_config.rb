@@ -9,7 +9,7 @@ class GameConfig
   STATUS_BAR_HEIGHT = 58
 
   # 每秒产生食物个数
-  FOOD_GEN_PER_SECOND = 0.2
+  FOOD_GEN_PER_SECOND = 0.15
 
   RUNNING_HP_DEC = 0.2
   REST_HP_INC = 0.05

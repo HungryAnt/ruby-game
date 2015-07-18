@@ -28,7 +28,7 @@ class Role
     @eating_food = nil
     @state = State::STANDING
     @direction = Direction::DOWN
-    @intake = 0.5
+    @intake = 0.2
     @temp_exp = 0
   end
 
