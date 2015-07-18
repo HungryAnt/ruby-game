@@ -15,4 +15,6 @@ class GameConfig
   REST_HP_INC = 0.05
 
   DEBUG = false
+
+  ROLE_INTAKE = 0.2
 end

@@ -7,6 +7,8 @@ require 'utils/media_util'
 
 MediaUtil.init_base_media_path(File.join(@base_src_dir, '../media'))
 
+require 'config/game_config'
+
 require 'z_order'
 require 'engine/direction'
 require 'engine/animation'
@@ -37,7 +39,6 @@ require 'views/game_map_view'
 require 'views/map_editor_view'
 require 'views/main_window'
 
-require 'config/game_config'
 require 'config/anim_config'
 require 'config/map_config'
 require 'config/food_config'
