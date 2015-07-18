@@ -6,7 +6,6 @@ class GameMapView < ViewBase
     @player_view_model = PlayerViewModel.new(player)
     @food_view_models = []
     @gen_food_timestamp = Gosu::milliseconds
-    @font = Gosu::Font.new(20)
     @status_bar_view = StatusBarView.new
     MapManager.switch_map :hill
   end
@@ -56,9 +55,6 @@ class GameMapView < ViewBase
     MapManager.draw_map
     @player_view_model.draw
     @food_view_models.each { |food_vm| food_vm.draw }
-    @font.draw("Score: #{@player_view_model.score}", 10, 10,
-               ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
-
     @window.translate(0, GameConfig::STATUS_BAR_Y) do
       @status_bar_view.draw
     end

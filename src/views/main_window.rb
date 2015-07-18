@@ -54,14 +54,23 @@ class MainWindow < Gosu::Window
     @current_view.draw
     @draw_times += 1
 
-    diff = Gosu::milliseconds - @begin_times
-    update_rate = @update_times * 1000 / diff
-    @font.draw("update_rate: #{update_rate} per second", 10, 30,
-               ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+    if GameConfig::DEBUG
+      diff = Gosu::milliseconds - @begin_times
+      update_rate = @update_times * 1000 / diff
+      @font.draw("update_rate: #{update_rate} per second", 10, 30,
+                 ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
 
-    draw_rate = @draw_times * 1000 / diff
-    @font.draw("draw_rate: #{draw_rate} per second", 10, 50,
-               ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+      draw_rate = @draw_times * 1000 / diff
+      @font.draw("draw_rate: #{draw_rate} per second", 10, 50,
+                 ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+    end
+    Gosu::draw_rect 0, 0, 20 * 20, 20, 0xAA_EFEF56
+    message = "v0.1 beta 作者:Gods_巨蚁 QQ:517377100"
+
+    @font.draw(message, 11, 1,
+               ZOrder::UI, 1.0, 1.0, 0xFF_9EC4FF)
+    @font.draw(message, 10, 0,
+               ZOrder::UI, 1.0, 1.0, 0xFF_2054A3)
   end
 
   def button_down(id)
