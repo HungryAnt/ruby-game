@@ -4,6 +4,7 @@ class MediaUtil
   end
 
   @@image_map = {}
+  @@song_map = {}
 
   def self::get_img(path)
     cache_get_img("#{@@bash_media_path}/img/#{path}")
@@ -23,7 +24,7 @@ class MediaUtil
   # end
 
   def self::get_song(path)
-    Gosu::Song.new("#{@@bash_media_path}/song/#{path}")
+    cache_get_song "#{@@bash_media_path}/song/#{path}"
   end
 
   private
@@ -34,5 +35,14 @@ class MediaUtil
       @@image_map[path] = img
     end
     img
+  end
+
+  def self.cache_get_song(path)
+    song = @@song_map[path]
+    if song.nil?
+      song = Gosu::Song.new(path)
+      @@song_map[path] = song
+    end
+    song
   end
 end
