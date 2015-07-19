@@ -10,6 +10,10 @@ class AreaViewModel
     @food_vms = []
   end
 
+  def tiles
+    @area.tiles
+  end
+
   def update
     @anim_container.update
   end

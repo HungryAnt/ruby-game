@@ -3,12 +3,12 @@ class Area
   GRID_HEIGHT = 10
 
   attr_accessor :gateway
-  attr_reader :image_path, :song_path
+  attr_reader :image_path, :song_path, :tiles
 
   def initialize(image_path, song_path, tiles_text)
     @image_path, @song_path = image_path, song_path
     # lines = File.readlines(tiles_path).map { |line| line.chomp }
-    init_tails tiles_text.lines
+    init_tails tiles_text.lines.map {|line|line.chomp}
     init_available_positions
     @gateway = {}
   end
@@ -23,6 +23,7 @@ class Area
         lines[row][col, 1]
       end
     end
+    puts "area row_count #{@row_count} col_count #{@col_count}"
     # print "tiles.size #{@tiles.size} tiles[0].size #{@tiles[0].size}"
   end
 

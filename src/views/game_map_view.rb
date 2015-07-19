@@ -63,7 +63,7 @@ class GameMapView < ViewBase
   def button_down(id)
     case id
       when Gosu::Kb1
-        MapManager.switch_map :hill
+        MapManager.switch_map :grass_wood_back
       when Gosu::Kb2
         MapManager.switch_map :school
       when Gosu::MsLeft

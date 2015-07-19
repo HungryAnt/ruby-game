@@ -5,42 +5,43 @@ class MapEditorView
 
   def initialize(window)
     @window = window
-    init_imgs
+    init_areas
     init_tile_grid
     @tile_selector = TileSelectorView.new
+    @font = Gosu::Font.new(20)
   end
 
-  def init_imgs
+  def init_areas
     maps = MapManager::all_maps
-    @imgs = []
+    @areas = []
     maps.each do |map|
-      map.areas.each do |area|
-        @imgs << area.image
+      map.areas.each do |area_vm|
+        @areas << area_vm
       end
     end
 
-    @img_index = 0
-    @current_img = @imgs[@img_index]
+    @area_index = 0
+    @current_area = @areas[@area_index]
   end
 
   def init_tile_grid
-    @row_count = GameConfig::MAP_HEIGHT / Area::GRID_WIDTH
+    @row_count = GameConfig::MAP_HEIGHT / Area::GRID_HEIGHT
     @col_count = GameConfig::MAP_WIDTH / Area::GRID_WIDTH
 
-    @tiles = Array.new(@row_count)
-    0.upto(@row_count-1) do |row|
-      @tiles[row] = Array.new(@col_count)
-      0.upto(@col_count-1) do |col|
-        tile = Tiles::NONE
-        if row < DEFAULT_BORDER_WIDTH ||
-            row >= @row_count-DEFAULT_BORDER_WIDTH ||
-            col < DEFAULT_BORDER_WIDTH ||
-            col >= @col_count - DEFAULT_BORDER_WIDTH
-          tile = Tiles::BLOCK
-        end
-        @tiles[row][col] = tile
-      end
-    end
+    # @tiles = Array.new(@row_count)
+    # 0.upto(@row_count-1) do |row|
+    #   @tiles[row] = Array.new(@col_count)
+    #   0.upto(@col_count-1) do |col|
+    #     tile = Tiles::NONE
+    #     if row < DEFAULT_BORDER_WIDTH ||
+    #         row >= @row_count-DEFAULT_BORDER_WIDTH ||
+    #         col < DEFAULT_BORDER_WIDTH ||
+    #         col >= @col_count - DEFAULT_BORDER_WIDTH
+    #       tile = Tiles::BLOCK
+    #     end
+    #     @tiles[row][col] = tile
+    #   end
+    # end
 
     @current_tile = Tiles::BLOCK
 
@@ -54,19 +55,23 @@ class MapEditorView
   end
 
   def draw
-    @current_img.draw(0, 0, ZOrder::Background, 1, 1)
+    @current_area.image.draw(0, 0, ZOrder::Background, 1, 1)
 
     draw_tile_grid
 
     @window.translate(0, GameConfig::MAP_HEIGHT) do
       @tile_selector.draw
     end
+
+    @font.draw("Row:#{@window.mouse_y.to_i/Area::GRID_HEIGHT} Col:#{@window.mouse_x.to_i/Area::GRID_WIDTH}",
+               GameConfig::MAP_WIDTH - 200, GameConfig::MAP_HEIGHT, ZOrder::UI, 1.0, 1.0, 0xff_ffffff)
   end
 
   private def draw_tile_grid
     0.upto(@row_count-1) do |row|
       0.upto(@col_count-1) do |col|
-        color = Tiles.color(@tiles[row][col])
+        # puts "row #{row} col #{col}"
+        color = Tiles.color(@current_area.tiles[row][col])
         Gosu::draw_rect Area::GRID_WIDTH * col, Area::GRID_HEIGHT * row,
                         Area::GRID_WIDTH, Area::GRID_HEIGHT, color
       end
@@ -97,7 +102,7 @@ class MapEditorView
        c_min, c_max = [0, c_min].max, [@col_count-1, c_max].min
        r_min.upto(r_max) do |row|
          c_min.upto(c_max) do |col|
-           @tiles[row][col] = @current_tile
+           @current_area.tiles[row][col] = @current_tile
          end
        end
      end
@@ -105,15 +110,15 @@ class MapEditorView
 
   def button_down(id)
     if id >= Gosu::Kb1 && id <= Gosu::Kb9
-      @img_index = id - Gosu::Kb1
+      @area_index = id - Gosu::Kb1
     elsif id == Gosu::KbLeft || id == Gosu::KbUp
-      @img_index -= 1
+      @area_index -= 1
     elsif id == Gosu::KbRight || id == Gosu::KbDown
-      @img_index += 1
+      @area_index += 1
     end
-    @img_index = [@imgs.size - 1, @img_index].min
-    @img_index = [0, @img_index].max
-    @current_img = @imgs[@img_index]
+    @area_index = [@areas.size - 1, @area_index].min
+    @area_index = [0, @area_index].max
+    @current_area = @areas[@area_index]
 
     if id == Gosu::MsLeft
       if @window.mouse_y > GameConfig::MAP_HEIGHT
@@ -135,7 +140,7 @@ class MapEditorView
   end
 
   def print_tiles
-    @tiles.each do |row_tiles|
+    @current_area.tiles.each do |row_tiles|
       row_tiles.each do |tile|
         if tile == Tiles::BLOCK
           print '#'
