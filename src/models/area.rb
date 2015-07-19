@@ -3,7 +3,7 @@ class Area
   GRID_HEIGHT = 10
 
   attr_accessor :gateway
-  attr_reader :image_path, :song_path, :tiles
+  attr_reader :image_path, :song_path, :tiles, :coverings
 
   def initialize(image_path, song_path, tiles_text)
     @image_path, @song_path = image_path, song_path
@@ -11,6 +11,7 @@ class Area
     init_tails tiles_text.lines.map {|line|line.chomp}
     init_available_positions
     @gateway = {}
+    @coverings = []
   end
 
   private
@@ -41,6 +42,10 @@ class Area
   end
 
   public
+
+  def add_covering(image_path, x, y)
+    @coverings << {:path => image_path, :x => x, :y => y}
+  end
 
   def tile_block?(x, y)
     row, col = get_row_col x, y

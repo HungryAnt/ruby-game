@@ -8,6 +8,19 @@ class AreaViewModel
     @scale_y = GameConfig::MAP_HEIGHT * 1.0 / @image.height
     @anim_container = AnimationContainer.new
     @food_vms = []
+    init_covering
+  end
+
+  def init_covering
+    @covering_views = []
+    @area.coverings.each do |covering|
+      covering_view = {
+        :image => MediaUtil::get_tileable_img(covering[:path]),
+        :x => covering[:x] * @scale_x,
+        :y => covering[:y] * @scale_y
+      }
+      @covering_views << covering_view
+    end
   end
 
   def tiles
@@ -21,6 +34,7 @@ class AreaViewModel
   def draw
     @image.draw(0, 0, ZOrder::Background, @scale_x, @scale_y)
     @anim_container.draw
+    draw_covering
   end
 
   def activate
@@ -41,4 +55,10 @@ class AreaViewModel
     @area.random_available_position
   end
 
+  private
+  def draw_covering
+    @covering_views.each do |covering_view|
+      covering_view[:image].draw(covering_view[:x], covering_view[:y], ZOrder::Covering)
+    end
+  end
 end
