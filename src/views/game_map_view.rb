@@ -68,9 +68,12 @@ class GameMapView < ViewBase
         MapManager.switch_map :school
       when Gosu::MsLeft
         done = pick_up @window.mouse_x, @window.mouse_y
-        goto_area(@window.mouse_x, @window.mouse_y) unless done
-      when Gosu::MsRight
+        return if done
+        done = goto_area @window.mouse_x, @window.mouse_y
+        return if done
         set_destination @window.mouse_x, @window.mouse_y
+      when Gosu::MsRight
+
       # when Gosu::KbE
       #   @player_view_model.start_eat_food
       when Gosu::KbF
@@ -92,9 +95,12 @@ class GameMapView < ViewBase
 
   def goto_area(mouse_x, mouse_y)
     map_vm = MapManager.current_map
-    if map_vm.gateway? mouse_x, mouse_y
+    if map_vm.gateway? mouse_x, mouse_y, @player_view_model.role
+      @player_view_model.disable_auto_move
       map_vm.goto_area mouse_x, mouse_y, @player_view_model.role
+      return true
     end
+    false
   end
 
   def set_destination(mouse_x, mouse_y)

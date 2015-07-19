@@ -93,6 +93,10 @@ class PlayerViewModel
     @auto_move_dest = {:x => x, :y => y}
   end
 
+  def disable_auto_move
+    @auto_move_enabled = false
+  end
+
   private
 
   def get_anim(key)

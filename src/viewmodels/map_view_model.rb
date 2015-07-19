@@ -31,9 +31,9 @@ class MapViewModel
     @current_area.random_available_position
   end
 
-  def gateway?(x, y)
+  def gateway?(x, y, role)
     tile = @current_area.area.tile x, y
-    Tiles.gateway? tile
+    Tiles.gateway?(tile) && Gosu::distance(role.x, role.y, x, y) < 30
   end
 
   def goto_area(x, y, role)
