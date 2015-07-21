@@ -72,7 +72,7 @@ class GameMapView < ViewBase
       when Gosu::Kb2
         MapManager.switch_map :school
       when Gosu::MsLeft
-        done = pick_up @window.mouse_x, @window.mouse_y
+        done = try_pick_up @window.mouse_x, @window.mouse_y
         return if done
         set_destination @window.mouse_x, @window.mouse_y
       # when Gosu::MsRight
@@ -83,16 +83,31 @@ class GameMapView < ViewBase
     end
   end
 
-  def pick_up(mouse_x, mouse_y)
-    food_vms = get_food_vms
-    food_vms.each do |food_vm|
-      if food_vm.mouse_touch?(mouse_x, mouse_y) && food_vm.can_pick_up?(@player_view_model.role)
-        food_vms.reject! { |item| item == food_vm }
-        @player_view_model.pick_up food_vm
-        return true
-      end
+  def try_pick_up(mouse_x, mouse_y)
+    item_vms = get_food_vms
+    item_vm = get_touch_item mouse_x, mouse_y, item_vms
+    return false if item_vm.nil?
+
+    if item_vm.can_pick_up?(@player_view_model.role)
+      @player_view_model.pick_up item_vms, item_vm
+      true
     end
-    false
+
+    set_destination mouse_x, mouse_y, item_vm
+
+    true
+  end
+
+  def get_touch_item(mouse_x, mouse_y, food_vms)
+    food_vms.each do |food_vm|
+      return food_vm if food_vm.mouse_touch?(mouse_x, mouse_y)
+    end
+    nil
+  end
+
+  def touch_item?(mouse_x, mouse_y)
+    item_vm = get_touch_item(mouse_x, mouse_y, get_food_vms)
+    !item_vm.nil?
   end
 
   def goto_area()
@@ -108,19 +123,21 @@ class GameMapView < ViewBase
 
   def check_mouse_action(mouse_x, mouse_y)
     map_vm = get_current_map
+    mouse_left_down = Gosu::button_down?(Gosu::MsLeft)
     if map_vm.gateway? mouse_x, mouse_y
       @mouse_vm.set_mouse_type MouseType::GOTO_AREA
-    # elsif map_vm
+    elsif touch_item? mouse_x, mouse_y
+      @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::PICK_UP_BUTTON_DOWN : MouseType::PICK_UP)
     else
-      @mouse_vm.set_mouse_type MouseType::NORMAL
+      @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::NORMAL_BUTTON_DOWN : MouseType::NORMAL)
     end
   end
 
-  def set_destination(mouse_x, mouse_y)
+  def set_destination(mouse_x, mouse_y, item_vm = nil)
     map_vm = get_current_map
     unless map_vm.tile_block? mouse_x, mouse_y
       map_vm.mark_target(mouse_x, mouse_y) unless map_vm.nil?
-      @player_view_model.set_destination mouse_x, mouse_y
+      @player_view_model.set_destination mouse_x, mouse_y, item_vm
     end
   end
 

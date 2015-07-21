@@ -10,6 +10,7 @@ MediaUtil.init_base_media_path(File.join(@base_src_dir, '../media'))
 require 'config/game_config'
 
 require 'z_order'
+require 'engine/image'
 require 'engine/direction'
 require 'engine/animation'
 require 'engine/animation_holder'

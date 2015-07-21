@@ -69,7 +69,11 @@ class PlayerViewModel
     end
   end
 
-  def pick_up(item_vm)
+  def pick_up(item_vms, item_vm)
+    return unless item_vms.include? item_vm
+
+    item_vms.reject! { |item| item == item_vm }
+
     item = item_vm.item
     @score += 1
     @beep.play
@@ -111,10 +115,11 @@ class PlayerViewModel
     end
   end
 
-  def set_destination(x, y)
+  def set_destination(x, y, item_vm)
     @auto_move_enabled = true
     @auto_move_angle = Gosu::angle(@player.x, @player.y, x, y)
     @auto_move_dest = {:x => x, :y => y}
+    @auto_pick_up_item = item_vm
   end
 
   def disable_auto_move
@@ -208,7 +213,9 @@ class PlayerViewModel
       dest_y = destination[:y]
       if Gosu::distance(@player.x, @player.y, dest_x, dest_y) <= speed
         move_to_location(dest_x, dest_y)
-        @auto_move_enabled = false
+        complete_auto_move
+        @running = false
+        @standing = true
         return
       end
     end
@@ -237,5 +244,11 @@ class PlayerViewModel
 
   def have_a_rest
     @player.inc_hp(GameConfig::REST_HP_INC)
+  end
+
+  def complete_auto_move
+    @auto_move_enabled = false
+    item_vms = MapManager.current_map.current_area.food_vms
+    pick_up(item_vms, @auto_pick_up_item) unless @auto_pick_up_item.nil?
   end
 end
