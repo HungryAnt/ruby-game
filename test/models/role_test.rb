@@ -4,7 +4,7 @@ require 'models/role'
 
 class RoleTest < Test::Unit::TestCase
   def setup
-    @player = Role.new(100, 100)
+    @player = Role.new('Ant', 100, 100)
   end
 
   def teardown

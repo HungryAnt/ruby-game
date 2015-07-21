@@ -17,9 +17,10 @@ class Role
   include Exp
 
   attr_accessor :state, :direction
-  attr_reader :package
+  attr_reader :package, :name
 
-  def initialize(x, y)
+  def initialize(name, x, y)
+    @name = name
     init_location x, y
     init_hp
     init_exp

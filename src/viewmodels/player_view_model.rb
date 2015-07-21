@@ -13,6 +13,8 @@ class PlayerViewModel
     @eating_food_vm = nil
     @update_times = 0
     @auto_move_enabled = false
+
+    @font = Gosu::Font.new(15)
   end
 
   def update
@@ -32,6 +34,28 @@ class PlayerViewModel
     # puts "@player.state: #{@player.state} @current_anim: #{@current_anim}"
     @current_anim.draw(@player.x, @player.y - 26, ZOrder::Player)
     @eating_food_vm.draw unless @eating_food_vm.nil?
+
+    name_width = @font.text_width(@player.name)
+    lv_img_width = 15
+    whole_width = lv_img_width + 2 + name_width
+    lable_left = @player.x - whole_width / 2
+    label_height = @player.y + 14
+    draw_text_with_border(@player.name, lable_left + lv_img_width + 2, label_height, ZOrder::Player,
+                          1, 1, 0xFF_CFC2BC, 0xFF_251B00)
+
+    lv_image.draw(lable_left, label_height, ZOrder::Player)
+  end
+
+  def draw_text_with_border(text, x, y, z, scale_x, scale_y, color, border_color)
+    @font.draw(text, x, y-1, z, scale_x, scale_y, border_color)
+    @font.draw(text, x, y+1, z, scale_x, scale_y, border_color)
+    @font.draw(text, x-1, y, z, scale_x, scale_y, border_color)
+    @font.draw(text, x+1, y, z, scale_x, scale_y, border_color)
+    @font.draw(text, x, y, z, scale_x, scale_y, color)
+  end
+
+  def lv_image
+    GameManager::lv_service.image(@player.lv)
   end
 
   def move(direction, map_vm)
