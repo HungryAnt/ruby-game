@@ -3,7 +3,7 @@ class PlayerViewModel
 
   def initialize(player)
     @player = @role = player
-    @beep = MediaUtil::get_sample("pickup.wav")
+    @beep = MediaUtil::get_sample("eat.wav")
     @speed = 2.0
     @score = 0
     init_animations
