@@ -14,8 +14,13 @@ class AreaViewModel
   def init_covering
     @covering_views = []
     @area.coverings.each do |covering|
+      if covering.include? :image_path
+        visual = MediaUtil::get_tileable_img(covering[:image_path])
+      else
+        visual = AnimationManager.get_anim covering[:anim]
+      end
       covering_view = {
-        :image => MediaUtil::get_tileable_img(covering[:path]),
+        :visual => visual,
         :x => covering[:x] * @scale_x,
         :y => covering[:y] * @scale_y
       }
@@ -58,7 +63,7 @@ class AreaViewModel
   private
   def draw_covering
     @covering_views.each do |covering_view|
-      covering_view[:image].draw(covering_view[:x], covering_view[:y], ZOrder::Covering)
+      covering_view[:visual].draw(covering_view[:x], covering_view[:y], ZOrder::Covering)
     end
   end
 end

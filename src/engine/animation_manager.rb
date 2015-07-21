@@ -1,18 +1,25 @@
 class AnimationManager
   @@anim_dict = {}
 
-  def self::new_anim(key)
+  def self::new_centered_anim(key)
     return unless block_given?
-    anim = AnimationUtil::get_animation(*yield)
-    add_anim(key, anim)
+    anim = AnimationUtil::get_centered_animation(*yield)
+    add_anim key, anim
   end
 
-  def self::new_anims()
+  def self::new_centered_anims()
     return unless block_given?
     dict = yield
     dict.each_pair do |k, v|
-      add_anim k, AnimationUtil::get_animation(*v)
+      add_anim k, AnimationUtil::get_centered_animation(*v)
     end
+  end
+
+  # 更自由的接口
+  def self::new_anim(key)
+    return unless block_given?
+    anim = yield
+    add_anim key, anim
   end
 
   def self::add_anim(key, anim)

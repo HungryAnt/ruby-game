@@ -71,6 +71,8 @@ class GameMapView < ViewBase
         MapManager.switch_map :grass_wood_back
       when Gosu::Kb2
         MapManager.switch_map :school
+      when Gosu::Kb3
+        MapManager.switch_map :church
       when Gosu::MsLeft
         done = try_pick_up @window.mouse_x, @window.mouse_y
         return if done

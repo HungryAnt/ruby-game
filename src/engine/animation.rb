@@ -18,6 +18,6 @@ class Animation
   def draw(x, y, z)
     return if @images.size == 0
     img = @images[(Gosu::milliseconds - @init_timestamp) / @interval % @images.size]
-    img.draw_rot(x, y, z, 0, 0.5, 0.5, @scale_x, @scale_y)
+    img.draw(x, y, z)
   end
 end

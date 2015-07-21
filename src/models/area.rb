@@ -43,8 +43,8 @@ class Area
 
   public
 
-  def add_covering(image_path, x, y)
-    @coverings << {:path => image_path, :x => x, :y => y}
+  def add_covering(convering)
+    @coverings << convering
   end
 
   def tile_block?(x, y)

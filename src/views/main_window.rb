@@ -19,10 +19,12 @@
 
 class MainWindow < Gosu::Window
 
+  VERSION = 'v0.3 beta'
+
   def initialize
     super GameConfig::MAP_WIDTH,
           GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT
-    self.caption = '童年游戏-野菜部落'
+    self.caption = "童年记忆 - Ant版野菜部落 #{VERSION}"
     @game_map_view = GameMapView.new(self)
     @map_editor_view = MapEditorView.new(self)
     @current_view = @game_map_view
@@ -54,7 +56,7 @@ class MainWindow < Gosu::Window
                  ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
     end
     Gosu::draw_rect 0, 0, 20 * 20, 20, 0xAA_EFEF56
-    message = "v0.2 beta 作者:Gods_巨蚁 QQ:517377100"
+    message = "#{VERSION} 作者:Gods_巨蚁 QQ:517377100"
 
     @font.draw(message, 11, 1,
                ZOrder::UI, 1.0, 1.0, 0xFF_9EC4FF)
