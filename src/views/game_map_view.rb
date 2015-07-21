@@ -7,6 +7,7 @@ class GameMapView < ViewBase
     @gen_food_timestamp = Gosu::milliseconds
     @status_bar_view = StatusBarView.new
     MapManager.switch_map :grass_wood_back
+    @mouse_vm = MouseViewModel.new
   end
 
   def update
@@ -49,6 +50,9 @@ class GameMapView < ViewBase
     # @player_view_model.collect_foods @food_view_models #.map {|food_mv| food_mv.food}
 
     @player_view_model.update
+
+    check_mouse_action @window.mouse_x, @window.mouse_y
+    goto_area
   end
 
   def draw
@@ -58,6 +62,7 @@ class GameMapView < ViewBase
     @window.translate(0, GameConfig::STATUS_BAR_Y) do
       @status_bar_view.draw
     end
+    @mouse_vm.draw @window.mouse_x, @window.mouse_y
   end
 
   def button_down(id)
@@ -69,11 +74,8 @@ class GameMapView < ViewBase
       when Gosu::MsLeft
         done = pick_up @window.mouse_x, @window.mouse_y
         return if done
-        done = goto_area @window.mouse_x, @window.mouse_y
-        return if done
         set_destination @window.mouse_x, @window.mouse_y
-      when Gosu::MsRight
-
+      # when Gosu::MsRight
       # when Gosu::KbE
       #   @player_view_model.start_eat_food
       when Gosu::KbF
@@ -93,30 +95,45 @@ class GameMapView < ViewBase
     false
   end
 
-  def goto_area(mouse_x, mouse_y)
-    map_vm = MapManager.current_map
-    if map_vm.gateway? mouse_x, mouse_y, @player_view_model.role
+  def goto_area()
+    map_vm = get_current_map
+    role = @player_view_model.role
+    if map_vm.gateway? role.x, role.y
       @player_view_model.disable_auto_move
-      map_vm.goto_area mouse_x, mouse_y, @player_view_model.role
+      map_vm.goto_area role
       return true
     end
     false
   end
 
+  def check_mouse_action(mouse_x, mouse_y)
+    map_vm = get_current_map
+    if map_vm.gateway? mouse_x, mouse_y
+      @mouse_vm.set_mouse_type MouseType::GOTO_AREA
+    # elsif map_vm
+    else
+      @mouse_vm.set_mouse_type MouseType::NORMAL
+    end
+  end
+
   def set_destination(mouse_x, mouse_y)
-    map_vm = MapManager.current_map
+    map_vm = get_current_map
     unless map_vm.tile_block? mouse_x, mouse_y
-      map_vm.mark_target(mouse_x, mouse_y) unless MapManager.current_map.nil?
+      map_vm.mark_target(mouse_x, mouse_y) unless map_vm.nil?
       @player_view_model.set_destination mouse_x, mouse_y
     end
   end
 
   def needs_cursor?
-    true
+    @mouse_vm.needs_cursor?
   end
 
   private
   def get_food_vms
     MapManager.current_map.current_area.food_vms
+  end
+
+  def get_current_map
+    MapManager.current_map
   end
 end

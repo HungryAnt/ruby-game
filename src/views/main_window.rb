@@ -1,16 +1,5 @@
 # coding: UTF-8
 
-
-# class Mouse
-#   def initialize
-#     @img = MediaUtil::get_img()
-#   end
-#
-#   def draw x, y
-#     @img.draw_rot x, y, ZOrder::Mouse, 0
-#   end
-# end
-
 # class MyGuiState < Fidgit::GuiState
 #   def initialize
 #     super

@@ -10,7 +10,7 @@ module Tiles
     return 0x88_FF0000
   end
 
-  @@gateways = (1..9).to_a + ('A'..'Z').to_a
+  @@gateways = ('1'..'9').to_a + ('A'..'Z').to_a
 
   def self.gateway?(tile)
     @@gateways.include? tile

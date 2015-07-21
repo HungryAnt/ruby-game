@@ -69,13 +69,32 @@ class Area
     @tiles[row][col]
   end
 
+  def gateway?(x, y)
+    tile = tile(x, y)
+    return false if tile.nil?
+    @gateway.include? tile.to_sym
+  end
+
   def way_out(gateway_tile)
-    unless @gateway.include? gateway_tile
+    unless @gateway.include? gateway_tile.to_sym
       raise ArgumentError "wrong gateway_tile #{gateway_tile}"
     end
-    target = @gateway[gateway_tile]
-    x, y = GRID_WIDTH * target[:col] + GRID_WIDTH / 2, GRID_HEIGHT * target[:row] + GRID_HEIGHT / 2
-    [target[:area], x, y]
+    target = @gateway[gateway_tile.to_sym]
+    target_area = target[:area]
+    row, col = target_area.find_tile(gateway_tile)
+    x, y = GRID_WIDTH * col + GRID_WIDTH / 2, GRID_HEIGHT * row + GRID_HEIGHT / 2
+    [target_area, x, y]
+  end
+
+  def find_tile(tile)
+    0.upto(@row_count-1) do |row|
+      0.upto(@col_count-1) do |col|
+        if @tiles[row][col] == tile
+          return [row, col]
+        end
+      end
+    end
+    raise ArgumentError "wrong tail #{tile}"
   end
 
   private

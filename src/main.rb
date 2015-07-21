@@ -32,6 +32,7 @@ require 'viewmodels/player_view_model'
 require 'viewmodels/area_view_model'
 require 'viewmodels/map_view_model'
 require 'viewmodels/food_view_model'
+require 'viewmodels/mouse_view_model'
 
 require 'views/view_base'
 require 'views/status_bar_view'

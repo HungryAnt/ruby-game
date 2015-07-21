@@ -71,7 +71,10 @@ AnimationManager.new_anim(:area_click) do
   [pattern, nums, 120]
 end
 
+# ================Êó±ê¶¯»­================
 
-
-
-
+AnimationManager.new_anim(:goto_area) do
+  pattern = 'ui/cursor/CurSor_#{num}.bmp'
+  nums = [1, 2, 3, 2]
+  [pattern, nums, 200]
+end
