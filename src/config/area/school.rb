@@ -198,16 +198,16 @@ TILES
 school_room_area = create_area('map/school/school_room.bmp', 'map/school_room.ogg', school_room_tiles_text)
 
 school_ground_area.gateway = {
-    :A => {:area => school_lobby_area}
+    :A => {:area => school_lobby_area, :direction => Direction::DOWN}
 }
 
 school_lobby_area.gateway = {
-    :B => {:area => school_ground_area},
-    :C => {:area => school_room_area}
+    :B => {:area => school_ground_area, :direction => Direction::DOWN},
+    :C => {:area => school_room_area, :direction => Direction::RIGHT}
 }
 
 school_room_area.gateway = {
-    :D => {:area => school_lobby_area}
+    :D => {:area => school_lobby_area, :direction => Direction::LEFT}
 }
 
 # иХжцуз╦гнО

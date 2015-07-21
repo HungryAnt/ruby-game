@@ -83,7 +83,7 @@ class Area
     target_area = target[:area]
     row, col = target_area.find_tile(gateway_tile)
     x, y = GRID_WIDTH * col + GRID_WIDTH / 2, GRID_HEIGHT * row + GRID_HEIGHT / 2
-    [target_area, x, y]
+    [target_area, x, y, target[:direction]]
   end
 
   def find_tile(tile)

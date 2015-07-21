@@ -32,15 +32,15 @@ class MapViewModel
   end
 
   def gateway?(x, y)
-    @current_area.2area.gateway? x, y
+    @current_area.area.gateway? x, y
   end
 
   def goto_area(role)
     tile = @current_area.area.tile role.x, role.y
     if Tiles.gateway? tile
-      target_area, x, y = @current_area.area.way_out tile
+      target_area, x, y, direction = @current_area.area.way_out tile
       @current_area = @areas.find {|area| area.area == target_area}
-      role.x, role.y = x, y
+      role.x, role.y, role.direction = x, y, direction
       activate
     end
   end
