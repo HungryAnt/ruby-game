@@ -72,8 +72,10 @@ class PlayerViewModel
   def pick_up(item_vms, item_vm)
     return unless item_vms.include? item_vm
 
-    item_vms.reject! { |item| item == item_vm }
+    # 先尝试扔掉正在吃的食物
+    discard item_vms
 
+    item_vms.reject! { |item| item == item_vm }
     item = item_vm.item
     @score += 1
     @beep.play
