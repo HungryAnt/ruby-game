@@ -73,6 +73,12 @@ class GameMapView < ViewBase
         MapManager.switch_map :school
       when Gosu::Kb3
         MapManager.switch_map :church
+      when Gosu::Kb0
+        @player_view_model.role.role_type = RoleType::WAN_GYE
+        @player_view_model.update_animations
+      when Gosu::Kb9
+        @player_view_model.role.role_type = RoleType::SALARY
+        @player_view_model.update_animations
       when Gosu::MsLeft
         done = try_pick_up @window.mouse_x, @window.mouse_y
         return if done

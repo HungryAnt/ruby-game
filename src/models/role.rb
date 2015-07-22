@@ -3,6 +3,11 @@ require_relative 'hp'
 require_relative 'exp'
 require_relative 'package'
 
+class RoleType
+  WAN_GYE = :wangye
+  SALARY = :salary
+end
+
 class Role
   class State
     STANDING = :stand
@@ -16,11 +21,12 @@ class Role
   include Hp
   include Exp
 
-  attr_accessor :state, :direction
+  attr_accessor :state, :direction, :role_type
   attr_reader :package, :name
 
-  def initialize(name, x, y)
+  def initialize(name, role_type, x, y)
     @name = name
+    @role_type = role_type
     init_location x, y
     init_hp
     init_exp

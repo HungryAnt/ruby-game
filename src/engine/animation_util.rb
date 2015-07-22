@@ -31,6 +31,6 @@ module AnimationUtil
   end
 
   def self.get_path(path_pattern, num)
-    path_pattern.gsub /#\{num\}/, num.to_s
+    path_pattern.gsub /\$\{num\}/, num.to_s
   end
 end

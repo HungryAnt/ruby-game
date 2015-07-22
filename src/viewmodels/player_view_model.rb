@@ -128,6 +128,11 @@ class PlayerViewModel
     @auto_move_enabled = false
   end
 
+  def update_animations
+    init_animations
+    change_state
+  end
+
   private
 
   def get_anim(key)
@@ -135,10 +140,11 @@ class PlayerViewModel
   end
 
   def init_animations
+    role = @role.role_type.to_s
     %w(stand walk run eat hold_food).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
-                                   get_anim("#{state}_#{direction}".to_sym))
+                                   get_anim("#{role}_#{state}_#{direction}".to_sym))
       end
     end
 

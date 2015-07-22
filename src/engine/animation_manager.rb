@@ -7,11 +7,11 @@ class AnimationManager
     add_anim key, anim
   end
 
-  def self::new_centered_anims()
+  def self::new_centered_anims(prefix)
     return unless block_given?
     dict = yield
     dict.each_pair do |k, v|
-      add_anim k, AnimationUtil::get_centered_animation(*v)
+      add_anim((prefix + k.to_s).to_sym, AnimationUtil::get_centered_animation(*v))
     end
   end
 
