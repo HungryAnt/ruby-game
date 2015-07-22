@@ -232,6 +232,7 @@ class PlayerViewModel
     y = @player.y + Gosu::offset_y(angle, speed)
 
     if map_vm.tile_block? x, y
+      disable_auto_move
       # 继续单方向检测
       @running = false
       @standing = true
@@ -255,7 +256,7 @@ class PlayerViewModel
   end
 
   def complete_auto_move
-    @auto_move_enabled = false
+    disable_auto_move
     item_vms = MapManager.current_map.current_area.food_vms
     pick_up(item_vms, @auto_pick_up_item) unless @auto_pick_up_item.nil?
   end
