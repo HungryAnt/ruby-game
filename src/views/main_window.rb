@@ -1,22 +1,5 @@
 # coding: UTF-8
 
-# class MyGuiState < Fidgit::GuiState
-#   def initialize
-#     super
-#
-#     # Create a vertically packed section, centred in the window.
-#     vertical align: :center do
-#       # Create a label with a dark green background.
-#       my_label = label "Hello world!", background_color: Gosu::Color.rgb(0, 100, 0)
-#
-#       # Create a button that, when clicked, changes the label.
-#       button("Goodbye", align_h: :center, tip: "Press me and be done with it!") do
-#         my_label.text = "Goodbye cruel world!"
-#       end
-#     end
-#   end
-# end
-
 class MainWindow < Gosu::Window
 
   VERSION = 'v0.3 beta'
@@ -25,10 +8,15 @@ class MainWindow < Gosu::Window
     super GameConfig::MAP_WIDTH,
           GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT
     self.caption = "童年记忆 - Ant版野菜部落 #{VERSION}"
+    @user_creation_view = UserCreationView.new(self)
     @game_map_view = GameMapView.new(self)
     @map_editor_view = MapEditorView.new(self)
-    @current_view = @game_map_view
-    # @mouse = Mouse.new
+    @current_view = @user_creation_view
+
+    @user_creation_view.init_enter_game_proc do
+      @game_map_view.init
+      @current_view = @game_map_view
+    end
 
     @begin_times = Gosu::milliseconds
     @update_times = 0

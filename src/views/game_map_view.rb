@@ -4,7 +4,11 @@ class GameMapView < ViewBase
 
   def initialize(window)
     @window = window
-    player = GameManager.player_service.player
+  end
+
+  def init
+    player_service = get_instance(PlayerService)
+    player = player_service.player
     @player_view_model = PlayerViewModel.new(player)
     @gen_food_timestamp = Gosu::milliseconds
     @status_bar_view = StatusBarView.new

@@ -4,6 +4,7 @@ class PlayerService
   attr_reader :player
 
   def initialize
-    @player = Role.new('终极帅哥sl', RoleType::WAN_GYE, 100, 300)
+    user_name = get_instance(UserService).user_name
+    @player = Role.new(user_name, RoleType::WAN_GYE, 100, 300)
   end
 end

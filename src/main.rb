@@ -41,6 +41,7 @@ require 'views/view_base'
 require 'views/status_bar_view'
 require 'views/game_map_view'
 require 'views/map_editor_view'
+require 'views/user_creation_view'
 require 'views/main_window'
 
 require 'config/anim_config'
