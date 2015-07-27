@@ -27,6 +27,8 @@ require 'services/song_manager'
 require 'services/map_manager'
 require 'services/game_manager'
 require 'services/food_factory'
+require 'services/user_service'
+require 'services/chat_service'
 
 require 'viewmodels/item_view_model'
 require 'viewmodels/player_view_model'
@@ -45,5 +47,8 @@ require 'config/anim_config'
 require 'config/map_config'
 require 'config/food_config'
 
-window = MainWindow.new
-window.show
+require 'application'
+
+app = Application.new
+app.init
+app.run

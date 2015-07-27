@@ -1,3 +1,5 @@
+require_relative 'common/text_box'
+
 class GameMapView < ViewBase
 
   def initialize(window)
@@ -8,6 +10,8 @@ class GameMapView < ViewBase
     @status_bar_view = StatusBarView.new
     MapManager.switch_map :grass_wood_back
     @mouse_vm = MouseViewModel.new
+    @font_chat_input = Gosu::Font.new(18)
+    init_chat_text_input
   end
 
   def update
@@ -16,21 +20,20 @@ class GameMapView < ViewBase
     MapManager.update_map
 
     direction = Direction::NONE
-    if Gosu::button_down?(Gosu::KbUp) || Gosu::button_down?(Gosu::KbW)
-      direction |= Direction::UP
-    elsif Gosu::button_down?(Gosu::KbDown) || Gosu::button_down?(Gosu::KbS)
-      direction |= Direction::DOWN
-    end
 
-    if Gosu::button_down?(Gosu::KbLeft) || Gosu::button_down?(Gosu::KbA)
-      direction |= Direction::LEFT
-    elsif Gosu::button_down?(Gosu::KbRight) || Gosu::button_down?(Gosu::KbD)
-      direction |= Direction::RIGHT
-    end
+    unless chat_input_enabled?
+      if Gosu::button_down?(Gosu::KbUp) || Gosu::button_down?(Gosu::KbW)
+        direction |= Direction::UP
+      elsif Gosu::button_down?(Gosu::KbDown) || Gosu::button_down?(Gosu::KbS)
+        direction |= Direction::DOWN
+      end
 
-    # if direction != Direction::NONE
-    #
-    # end
+      if Gosu::button_down?(Gosu::KbLeft) || Gosu::button_down?(Gosu::KbA)
+        direction |= Direction::LEFT
+      elsif Gosu::button_down?(Gosu::KbRight) || Gosu::button_down?(Gosu::KbD)
+        direction |= Direction::RIGHT
+      end
+    end
 
     @player_view_model.move direction, MapManager::current_map
 
@@ -61,11 +64,20 @@ class GameMapView < ViewBase
     get_food_vms.each { |food_vm| food_vm.draw }
     @window.translate(0, GameConfig::STATUS_BAR_Y) do
       @status_bar_view.draw
+      draw_chat_text_box
     end
     @mouse_vm.draw @window.mouse_x, @window.mouse_y
   end
 
+  def draw_chat_text_box
+    text_box_x = 60
+    text_box_width = 333-60
+    @chat_text_box.draw text_box_x, 30, text_box_width, 50-30
+  end
+
   def button_down(id)
+    return if chat_input_enabled? && id != Gosu::KbReturn
+
     case id
       when Gosu::Kb1
         MapManager.switch_map :grass_wood_back
@@ -88,7 +100,31 @@ class GameMapView < ViewBase
       #   @player_view_model.start_eat_food
       when Gosu::KbF
         @player_view_model.discard get_food_vms
+      when Gosu::KbReturn
+        switch_chat_text_input
     end
+  end
+
+  def init_chat_text_input
+    @chat_text_box = TextBox.new(false)
+    @window.text_input = nil
+  end
+
+  def switch_chat_text_input
+    if chat_input_enabled?
+      text = @chat_text_box.text
+      @chat_text_box.clear
+      @chat_text_box.enabled = false
+
+      # 发送聊天信息
+    else
+      @chat_text_box.enabled = true
+    end
+    @window.text_input = chat_input_enabled? ? @chat_text_box.text_input : nil
+  end
+
+  def chat_input_enabled?
+    @chat_text_box.enabled
   end
 
   def try_pick_up(mouse_x, mouse_y)
