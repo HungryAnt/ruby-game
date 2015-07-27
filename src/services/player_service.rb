@@ -5,6 +5,7 @@ class PlayerService
 
   def initialize
     user_name = get_instance(UserService).user_name
-    @player = Role.new(user_name, RoleType::WAN_GYE, 100, 300)
+    role_type = [RoleType::WAN_GYE, RoleType::SALARY][rand(2)]
+    @player = Role.new(user_name, role_type, 100, 300)
   end
 end
