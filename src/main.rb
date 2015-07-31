@@ -7,6 +7,8 @@ require 'utils/media_util'
 
 MediaUtil.init_base_media_path(File.join(@base_src_dir, '../media'))
 
+require 'engine/dependency_injection'
+
 require 'config/game_config'
 
 require 'z_order'
