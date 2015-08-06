@@ -4,11 +4,11 @@ class GameMapView < ViewBase
 
   def initialize(window)
     @window = window
+    autowired(PlayerService, ChatService)
   end
 
   def init
-    player_service = get_instance(PlayerService)
-    player = player_service.player
+    player = @player_service.player
     @player_view_model = PlayerViewModel.new(player)
     @gen_food_timestamp = Gosu::milliseconds
     @status_bar_view = StatusBarView.new
@@ -121,6 +121,7 @@ class GameMapView < ViewBase
       @chat_text_box.enabled = false
 
       # 发送聊天信息
+      chat text
     else
       @chat_text_box.enabled = true
     end
@@ -200,5 +201,9 @@ class GameMapView < ViewBase
 
   def get_current_map
     MapManager.current_map
+  end
+
+  def chat(msg)
+    @chat_service.chat msg
   end
 end
