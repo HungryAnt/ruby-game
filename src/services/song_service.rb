@@ -1,5 +1,5 @@
-class SongManager
-  def self.play_song(path)
+class SongService
+  def play_song(path)
     current_song = Gosu::Song::current_song
     current_song.stop unless current_song.nil?
 

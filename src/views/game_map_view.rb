@@ -4,7 +4,7 @@ class GameMapView < ViewBase
 
   def initialize(window)
     @window = window
-    autowired(PlayerService, ChatService)
+    autowired(PlayerService, ChatService, MapService)
   end
 
   def init
@@ -14,7 +14,7 @@ class GameMapView < ViewBase
     @gen_food_timestamp = Gosu::milliseconds
     @status_bar_view = StatusBarView.new
     @chat_board_view = ChatBoardView.new(ChatBoardViewModel.new)
-    MapManager.switch_map :grass_wood_back
+    @map_service.switch_map :grass_wood_back
     @mouse_vm = MouseViewModel.new
     @font_chat_input = Gosu::Font.new(18)
     init_chat_text_input
@@ -24,7 +24,7 @@ class GameMapView < ViewBase
     @status_bar_view.update
     @chat_board_view.update
 
-    MapManager.update_map
+    @map_service.update_map
 
     direction = Direction::NONE
 
@@ -42,7 +42,7 @@ class GameMapView < ViewBase
       end
     end
 
-    @player_view_model.move direction, MapManager::current_map
+    @player_view_model.move direction, @map_service::current_map
 
     seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
     gen_count = (seconds * GameConfig::FOOD_GEN_PER_SECOND).to_i
@@ -52,7 +52,7 @@ class GameMapView < ViewBase
       food_vms = get_food_vms
       0.upto(gen_count - 1).each do
         # @food_view_models << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
-        food = FoodFactory.random_food(*MapManager::current_map.random_available_position)
+        food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
         food_vms << FoodViewModel.new(food)
       end
     end
@@ -66,7 +66,7 @@ class GameMapView < ViewBase
   end
 
   def draw
-    MapManager.draw_map
+    @map_service.draw_map
     @player_view_model.draw
     get_food_vms.each { |food_vm| food_vm.draw }
     @window.translate(0, GameConfig::STATUS_BAR_Y) do
@@ -90,11 +90,11 @@ class GameMapView < ViewBase
 
     case id
       when Gosu::Kb1
-        MapManager.switch_map :grass_wood_back
+        @map_service.switch_map :grass_wood_back
       when Gosu::Kb2
-        MapManager.switch_map :school
+        @map_service.switch_map :school
       when Gosu::Kb3
-        MapManager.switch_map :church
+        @map_service.switch_map :church
       when Gosu::Kb0
         @player_view_model.role.role_type = RoleType::WAN_GYE
         @player_view_model.update_animations
@@ -202,11 +202,11 @@ class GameMapView < ViewBase
 
   private
   def get_food_vms
-    MapManager.current_map.current_area.food_vms
+    @map_service.current_map.current_area.food_vms
   end
 
   def get_current_map
-    MapManager.current_map
+    @map_service.current_map
   end
 
   def chat(msg)

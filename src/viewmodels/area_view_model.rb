@@ -2,6 +2,7 @@ class AreaViewModel
   attr_reader :image, :area, :food_vms
 
   def initialize(area)
+    autowired(SongService)
     @area = area
     @image = MediaUtil::get_tileable_img(@area.image_path)
     @scale_x = GameConfig::MAP_WIDTH * 1.0 / @image.width
@@ -43,7 +44,7 @@ class AreaViewModel
   end
 
   def activate
-    SongManager.play_song @area.song_path
+    @song_service.play_song @area.song_path
   end
 
   def mark_target(x, y)

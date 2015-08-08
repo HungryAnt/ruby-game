@@ -4,6 +4,7 @@ class MapEditorView
   DEFAULT_BORDER_WIDTH = 3
 
   def initialize(window)
+    autowired(MapService)
     @window = window
     init_areas
     init_tile_grid
@@ -12,7 +13,7 @@ class MapEditorView
   end
 
   def init_areas
-    maps = MapManager::all_maps
+    maps = @map_service::all_maps
     @areas = []
     maps.each do |map|
       map.areas.each do |area_vm|

@@ -2,6 +2,7 @@ class PlayerViewModel
   attr_reader :score, :role
 
   def initialize(player)
+    autowired(MapService)
     @player = @role = player
     @beep = MediaUtil::get_sample("eat.wav")
     @speed = 2.0
@@ -18,7 +19,7 @@ class PlayerViewModel
   end
 
   def update
-    map_vm = MapManager.current_map
+    map_vm = @map_service.current_map
     auto_move map_vm
     @player.update_eating_food
     have_a_rest if @standing
@@ -55,7 +56,7 @@ class PlayerViewModel
   end
 
   def lv_image
-    GameManager::lv_service.image(@player.lv)
+    LevelUtil.image(@player.lv)
   end
 
   def move(direction, map_vm)
@@ -257,7 +258,7 @@ class PlayerViewModel
 
   def complete_auto_move
     disable_auto_move
-    item_vms = MapManager.current_map.current_area.food_vms
+    item_vms = @map_service.current_map.current_area.food_vms
     pick_up(item_vms, @auto_pick_up_item) unless @auto_pick_up_item.nil?
   end
 end
