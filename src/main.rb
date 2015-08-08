@@ -29,6 +29,7 @@ require 'services/song_manager'
 require 'services/map_manager'
 require 'services/game_manager'
 require 'services/food_factory'
+require 'services/network_service'
 require 'services/user_service'
 require 'services/chat_service'
 
@@ -49,6 +50,7 @@ require 'views/main_window'
 require 'config/anim_config'
 require 'config/map_config'
 require 'config/food_config'
+require 'config/network_config'
 
 require 'application'
 

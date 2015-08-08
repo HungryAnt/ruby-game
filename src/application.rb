@@ -1,8 +1,6 @@
 class Application
   def initialize
-    [UserService, ChatService].each do |clazz|
-      get_instance(clazz)
-    end
+    autowired(NetworkService, UserService, ChatService)
   end
 
   def init
@@ -10,6 +8,7 @@ class Application
   end
 
   def run
+    @network_service.connect(NetworkConfig::HOST_NAME, NetworkConfig::PORT)
     window = MainWindow.new
     window.show
   end

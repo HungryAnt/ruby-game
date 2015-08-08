@@ -6,9 +6,11 @@ class UserCreationView
   USER_NAME_TEXT_BOX_HEIGHT = 40
 
   def initialize(window)
+    autowired(NetworkService)
     @window = window
 
     @font = Gosu::Font.new(30)
+    @font_net_error = Gosu::Font.new(20)
     init_user_name_text_box
   end
 
@@ -30,6 +32,12 @@ class UserCreationView
 
   def draw
     Gosu::draw_rect 0, 0, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT, 0xFF_709028, ZOrder::Background
+
+    if @network_service.has_error?
+      @font_net_error.draw_rel("网络连接失败，进入单机版#{@network_service.connection_error}",
+                               GameConfig::MAP_WIDTH/2, 30,
+                               ZOrder::Background, 0.5, 0.0, 1.0, 1.0, 0xff_f0f0f0)
+    end
 
     @font.draw_rel('直接键盘输入昵称，按回车键进入游戏', GameConfig::MAP_WIDTH/2, GameConfig::MAP_HEIGHT/2,
                    ZOrder::Background, 0.5, 1.0, 1.0, 1.0, 0xff_f0f0f0)
