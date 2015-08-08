@@ -8,10 +8,12 @@ class GameMapView < ViewBase
   end
 
   def init
+    @player_service.init
     player = @player_service.player
     @player_view_model = PlayerViewModel.new(player)
     @gen_food_timestamp = Gosu::milliseconds
     @status_bar_view = StatusBarView.new
+    @chat_board_view = ChatBoardView.new
     MapManager.switch_map :grass_wood_back
     @mouse_vm = MouseViewModel.new
     @font_chat_input = Gosu::Font.new(18)
@@ -20,6 +22,7 @@ class GameMapView < ViewBase
 
   def update
     @status_bar_view.update
+    @chat_board_view.update
 
     MapManager.update_map
 
@@ -69,6 +72,9 @@ class GameMapView < ViewBase
     @window.translate(0, GameConfig::STATUS_BAR_Y) do
       @status_bar_view.draw
       draw_chat_text_box
+    end
+    @window.translate(GameConfig::CHAT_BOARD_LEFT, GameConfig::CHAT_BOARD_TOP) do
+      @chat_board_view.draw
     end
     @mouse_vm.draw @window.mouse_x, @window.mouse_y
   end

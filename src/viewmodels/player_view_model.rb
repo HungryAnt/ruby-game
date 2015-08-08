@@ -51,7 +51,7 @@ class PlayerViewModel
     @font.draw(text, x, y+1, z, scale_x, scale_y, border_color)
     @font.draw(text, x-1, y, z, scale_x, scale_y, border_color)
     @font.draw(text, x+1, y, z, scale_x, scale_y, border_color)
-    @font.draw(text, x, y, z, scale_x, scale_y, color)
+    @font.draw(text, x, y, z, scale_x, scale_y, color, :additive)
   end
 
   def lv_image

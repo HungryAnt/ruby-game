@@ -4,6 +4,7 @@ $:.unshift(File.dirname(__FILE__))
 
 require 'gosu'
 require 'utils/media_util'
+require 'utils/graphics_util'
 
 MediaUtil.init_base_media_path(File.join(@base_src_dir, '../media'))
 
@@ -25,10 +26,15 @@ require 'models/food'
 require 'models/role'
 require 'models/tiles'
 
+require 'messages/join_message'
+require 'messages/quit_message'
+require 'messages/text_message'
+
 require 'services/song_manager'
 require 'services/map_manager'
 require 'services/game_manager'
 require 'services/food_factory'
+require 'services/message_handler_service'
 require 'services/network_service'
 require 'services/user_service'
 require 'services/chat_service'
@@ -41,6 +47,7 @@ require 'viewmodels/food_view_model'
 require 'viewmodels/mouse_view_model'
 
 require 'views/view_base'
+require 'views/chat_board_view'
 require 'views/status_bar_view'
 require 'views/game_map_view'
 require 'views/map_editor_view'
