@@ -31,7 +31,6 @@ class NetworkService
   end
 
   def start_msg_loop
-    init_message_handler
     Thread.new {
       begin
         while (line = @s.gets("\n"))
@@ -47,17 +46,6 @@ class NetworkService
         puts e.backtrace.inspect
       end
     }
-  end
-
-  private
-  def init_message_handler
-    register('text_message') do |msg_map, params|
-      text_message = TextMessage.json_create(msg_map)
-      puts "[#{text_message.sender}: #{text_message.content}]"
-      if text_message.use_version?
-        @current_version = text_message.version + 1
-      end
-    end
   end
 
   def register(msg_type, &handler)

@@ -13,7 +13,7 @@ class GameMapView < ViewBase
     @player_view_model = PlayerViewModel.new(player)
     @gen_food_timestamp = Gosu::milliseconds
     @status_bar_view = StatusBarView.new
-    @chat_board_view = ChatBoardView.new
+    @chat_board_view = ChatBoardView.new(ChatBoardViewModel.new)
     MapManager.switch_map :grass_wood_back
     @mouse_vm = MouseViewModel.new
     @font_chat_input = Gosu::Font.new(18)
