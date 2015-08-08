@@ -21,7 +21,7 @@ class ChatBoardView
                                    0x80_FFFFFF, ZOrder::UI)
     # puts "chat_board_vm.msgs: #{@chat_board_vm.msgs}"
     @chat_board_vm.msgs.each_with_index do |msg, i|
-      @font_msg.draw("#{msg.sender}: #{msg.content}",
+      @font_msg.draw(msg.to_s,
                      0, i * @line_height, ZOrder::UI,
                      1.0, 1.0, 0xff_f0f0f0, :additive)
     end

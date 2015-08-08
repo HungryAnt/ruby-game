@@ -28,7 +28,8 @@ require 'models/tiles'
 
 require 'messages/join_message'
 require 'messages/quit_message'
-require 'messages/text_message'
+require 'messages/chat_message'
+require 'messages/system_message'
 
 require 'services/song_manager'
 require 'services/map_manager'
