@@ -25,6 +25,12 @@ class ChatService
     send quit_map
   end
 
+  def sync_role(role, area_id)
+    role_map = role.to_map
+    role_msg = RoleMessage.new(@user_service.user_id, @user_service.user_name, role_map, area_id)
+    send role_msg
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1
@@ -52,6 +58,10 @@ class ChatService
     @network_service.register('system_message') do |msg_map, params|
       sys_msg = SystemMessage.json_create(msg_map)
       add_chat_msg sys_msg
+    end
+
+    @network_service.register('role_message') do |msg_map, params|
+
     end
   end
 

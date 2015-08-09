@@ -171,6 +171,7 @@ class GameMapView < ViewBase
     if map_vm.gateway? role.x, role.y
       @player_view_model.disable_auto_move
       map_vm.goto_area role
+      @chat_service.sync_role(role, map_vm.current_area.id)
       return true
     end
     false

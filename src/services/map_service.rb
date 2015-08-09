@@ -25,6 +25,10 @@ class MapService
     @current_map
   end
 
+  def current_area
+    current_map.current_area
+  end
+
   def update_map
     @current_map.update unless @current_map.nil?
   end

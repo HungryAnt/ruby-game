@@ -63,6 +63,6 @@ tiles_text = <<TILES
 ################################################################################
 TILES
 
-area = create_area('map/hill/grass_wood_back.bmp', 'map/hill.ogg', tiles_text)
+area = create_area(:grass, 'map/hill/grass_wood_back.bmp', 'map/hill.ogg', tiles_text)
 
 create_map(:grass_wood_back, [area])

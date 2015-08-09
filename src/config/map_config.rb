@@ -15,8 +15,8 @@ lambda {
     File.join(@base_src_dir, "resource/map/#{name}.txt")
   end
 
-  def create_area(image_path, song_path, tiles_text)
-    Area.new image_path, song_path, tiles_text
+  def create_area(id, image_path, song_path, tiles_text)
+    Area.new id, image_path, song_path, tiles_text
   end
 
   def create_map(key, areas)

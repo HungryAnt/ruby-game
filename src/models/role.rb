@@ -21,7 +21,7 @@ class Role
   include Hp
   include Exp
 
-  attr_accessor :state, :direction, :role_type
+  attr_accessor :state, :direction, :role_type, :hp, :lv
   attr_reader :package, :name
 
   def initialize(name, role_type, x, y)
@@ -42,7 +42,6 @@ class Role
   def start_eat(food)
     @eating_food = food
     food.eating = true
-    # @state = State::EATING
   end
 
   def eat
@@ -109,8 +108,30 @@ class Role
       item = @eating_food
       @eating_food = nil
       item.visible = true
+      item.eating = false
       item.x, item.y = @x, @y
     end
     item
+  end
+
+  def to_map
+    {
+        role_type: @role_type.to_s,
+        name: @name,
+        x: @x,
+        y: @y,
+        hp: @hp,
+        lv: @lv,
+        state: @state.to_s,
+        direction: @direction
+    }
+  end
+
+  def from_map(map)
+    role = Role(map['name'], map['role_type'].to_sym, map['x'].to_i, map['y'].to_i)
+    role.hp = map['hp'].to_i
+    role.lv = map['lv'].to_i
+    role.state = map['state'].to_sym
+    role.direction = map['direction'].to_i
   end
 end

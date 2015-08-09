@@ -64,7 +64,7 @@ outside_tiles_text = <<TILES
 TILES
 
 
-outside_area = create_area('map/church/outside.bmp', 'map/church_outside.ogg', outside_tiles_text)
+outside_area = create_area(:outside, 'map/church/outside.bmp', 'map/church_outside.ogg', outside_tiles_text)
 
 
 inside_tiles_text = <<TILES
@@ -130,7 +130,7 @@ inside_tiles_text = <<TILES
 ################################################################################
 TILES
 
-inside_area = create_area('map/church/inside.bmp', 'map/church_inside.ogg', inside_tiles_text)
+inside_area = create_area(:inside, 'map/church/inside.bmp', 'map/church_inside.ogg', inside_tiles_text)
 
 outside_area.gateway = {
     :A => {:area => inside_area, :direction => Direction::RIGHT}

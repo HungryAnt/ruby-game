@@ -29,6 +29,10 @@ class AreaViewModel
     end
   end
 
+  def id
+    @area.id
+  end
+
   def tiles
     @area.tiles
   end

@@ -3,9 +3,10 @@ class Area
   GRID_HEIGHT = 10
 
   attr_accessor :gateway
-  attr_reader :image_path, :song_path, :tiles, :coverings
+  attr_reader :id, :image_path, :song_path, :tiles, :coverings
 
-  def initialize(image_path, song_path, tiles_text)
+  def initialize(id, image_path, song_path, tiles_text)
+    @id = id
     @image_path, @song_path = image_path, song_path
     # lines = File.readlines(tiles_path).map { |line| line.chomp }
     init_tails tiles_text.lines.map {|line|line.chomp}
