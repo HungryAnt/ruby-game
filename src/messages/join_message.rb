@@ -1,7 +1,7 @@
 require 'json'
 
 class JoinMessage
-  attr_accessor :user_id, :user_name
+  attr_reader :user_id, :user_name, :map_id
 
   def initialize(user_id, user_name, map_id)
     @user_id, @user_name, @map_id = user_id, user_name, map_id
@@ -15,6 +15,6 @@ class JoinMessage
   end
 
   def self.json_create(map)
-    new(map['data']['user_id'], map['data']['user_name'], map['data']['map_id'].to_i)
+    new(map['data']['user_id'], map['data']['user_name'], map['data']['map_id'])
   end
 end

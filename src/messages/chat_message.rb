@@ -1,26 +1,27 @@
 require 'json'
 
 class ChatMessage
-  attr_accessor :sender, :content
+  attr_accessor :user_id, :user_name, :content
 
-  def initialize(sender, content)
-    @sender, @content = sender, content
+  def initialize(user_id, user_name, content)
+    @user_id, @user_name, @content = user_id, user_name, content
   end
 
   def to_json(*a)
     {
         type: 'chat_message',
-        data: {sender: @sender, content: @content}
+        data: {user_id: @user_id, user_name: @user_name, content: @content}
     }.to_json(*a)
   end
 
   def self.json_create(map)
-    new(map['data']['sender'],
+    new(map['data']['user_id'],
+        map['data']['user_name'],
         map['data']['content'])
   end
 
   def to_s
-    "#{@sender}: #{@content}"
+    "#{@user_name}: #{@content}"
   end
 end
 

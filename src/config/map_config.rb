@@ -21,7 +21,7 @@ lambda {
 
   def create_map(key, areas)
     area_vms = areas.collect {|area|AreaViewModel.new area}
-    map = MapViewModel.new(area_vms)
+    map = MapViewModel.new(key.to_s, area_vms)
     @map_manager.map_service.add_map key, map
   end
 

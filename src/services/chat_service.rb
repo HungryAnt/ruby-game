@@ -10,8 +10,19 @@ class ChatService
   end
 
   def chat(msg)
-    chat_mgs = ChatMessage.new(@user_service.user_name, msg)
-    @network_service.send chat_mgs.to_json
+    chat_msg = ChatMessage.new(@user_service.user_id, @user_service.user_name, msg)
+    send chat_msg
+  end
+
+  def join(map_id)
+    join_msg = JoinMessage.new(@user_service.user_id, @user_service.user_name, map_id)
+    puts join_msg.to_json
+    send join_msg
+  end
+
+  def quit(map_id)
+    quit_map = QuitMessage.new(@user_service.user_id, @user_service.user_name, map_id)
+    send quit_map
   end
 
   def add_chat_msg(msg)
@@ -22,7 +33,7 @@ class ChatService
   end
 
   def get_latest_msgs
-    latest_msgs_max_count = 8
+    latest_msgs_max_count = 7
     @mutex.synchronize {
       return [] if @chat_msgs.size == 0
       start = [0, @chat_msgs.size - latest_msgs_max_count].max
@@ -42,5 +53,9 @@ class ChatService
       sys_msg = SystemMessage.json_create(msg_map)
       add_chat_msg sys_msg
     end
+  end
+
+  def send(msg)
+    @network_service.send msg.to_json
   end
 end
