@@ -4,9 +4,24 @@ class RoleViewModel
   def initialize(role)
     autowired(MapService)
     @player = @role = role
-    @beep = MediaUtil::get_sample('eat.wav')
+    @sound_eat_food = MediaUtil::get_sample('eat.wav')
     @font = Gosu::Font.new(15)
     init_animations
+    @eating_food_vm = nil
+  end
+
+  def change_state(state)
+    @role.state = state
+    change_anim
+  end
+
+  def start_eat_food(food)
+    @sound_eat_food.play
+    @role.start_eat food
+    @eating_food_vm = FoodViewModel.new food
+  end
+
+  def clear_food
     @eating_food_vm = nil
   end
 

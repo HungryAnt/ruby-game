@@ -1,7 +1,7 @@
 class StatusBarView
   def initialize
     @img = MediaUtil::get_tileable_img('ui/status_bar.bmp')
-    @player = get_instance(PlayerService).player
+    @player = get_instance(PlayerService).role
     @hp_width = 0
     @exp_width = 0
     @font = Gosu::Font.new(14)

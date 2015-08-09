@@ -1,8 +1,12 @@
 require_relative 'role_view_model'
 
-class PlayerViewModel < RoleViewModel
-  def initialize(role)
-    super role
+class PlayerViewModel
+  attr_reader :role
+
+  def initialize(role_vm)
+    autowired(MapService)
+    @role_vm = role_vm
+    @role = @role_vm.role
     @speed = 2.0
     @move_timestamp = Gosu::milliseconds
     @standing = true
@@ -17,12 +21,15 @@ class PlayerViewModel < RoleViewModel
     @role.update_eating_food
     have_a_rest if @standing
     change_state
-    change_anim
+
     eat if @standing
     @role.refresh_exp if @update_times % 40 == 0
     @update_times += 1
   end
 
+  def draw
+    @role_vm.draw
+  end
 
   def move(direction, map_vm)
     if direction != Direction::NONE
@@ -43,7 +50,7 @@ class PlayerViewModel < RoleViewModel
 
     item_vms.reject! { |item| item == item_vm }
     item = item_vm.item
-    @beep.play
+
     if item.respond_to? :eatable?
       start_eat_food item
     end
@@ -77,29 +84,32 @@ class PlayerViewModel < RoleViewModel
   private
 
   def change_state
+    @role_vm.change_state get_state
+  end
+
+  def get_state
     if @role.eating?
       if @standing
-        @role.state = Role::State::EATING
+        return Role::State::EATING
       else
-        @role.state = Role::State::HOLDING_FOOD
+        return Role::State::HOLDING_FOOD
       end
     else
       if @standing
-        @role.state = Role::State::STANDING
+        return Role::State::STANDING
       else
-        @role.state = @running ? Role::State::RUNNING : Role::State::WALKING
+        return @running ? Role::State::RUNNING : Role::State::WALKING
       end
     end
   end
 
   def start_eat_food(food)
-    @role.start_eat food
-    @eating_food_vm = FoodViewModel.new food
+    @role_vm.start_eat_food food
   end
 
   def eat
     @role.eat
-    @eating_food_vm = nil unless @role.eating?
+    @role_vm.clear_food unless @role.eating?
   end
 
   def auto_move(map_vm)

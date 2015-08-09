@@ -9,8 +9,8 @@ class GameMapView < ViewBase
 
   def init
     @player_service.init
-    player = @player_service.player
-    @player_view_model = PlayerViewModel.new(player)
+    role = @player_service.role
+    @player_view_model = PlayerViewModel.new(RoleViewModel.new(role))
     @gen_food_timestamp = Gosu::milliseconds
     @status_bar_view = StatusBarView.new
     @chat_board_view = ChatBoardView.new(ChatBoardViewModel.new)
