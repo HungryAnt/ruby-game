@@ -51,10 +51,14 @@ class Role
         # inc_exp intake
         @temp_exp += intake
       else
-        # 食物已经吃完
-        @eating_food = nil
+        eat_done
       end
     end
+  end
+
+  # 食物已经吃完
+  def eat_done
+    @eating_food = nil
   end
 
   def eating?
