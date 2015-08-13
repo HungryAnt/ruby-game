@@ -1,7 +1,7 @@
 require_relative 'role_view_model'
 
 class PlayerViewModel
-  attr_reader :role
+  attr_reader :role, :role_vm
 
   def initialize(role_vm)
     autowired(MapService, ChatService)
@@ -12,8 +12,6 @@ class PlayerViewModel
   end
 
   def update
-    map_vm = @map_service.current_map
-    @role_vm.auto_move map_vm
     @role.update_eating_food
     have_a_rest if @role_vm.standing
     change_state
@@ -70,7 +68,7 @@ class PlayerViewModel
         target_x:x,
         target_y:y
     }
-    sync_role 'auto_move_to', detail
+    sync_role Role::Action::AUTO_MOVE_TO, detail
   end
 
   def disable_auto_move
@@ -105,7 +103,7 @@ class PlayerViewModel
     area_id = @map_service.current_map.current_area.id.to_s
     role_map = @role.to_map
     role_map['area_id'] = area_id
-    role_map['action'] = action
+    role_map['action'] = action.to_s
     role_map['detail'] = detail
     @chat_service.send_role_message role_map
   end

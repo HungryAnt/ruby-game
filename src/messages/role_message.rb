@@ -9,7 +9,7 @@ class RoleMessage
   def to_json(*a)
     {
         type: 'role_message',
-        data: {user_id: @user_id, user_name: @user_name, role:@role_map}
+        data: {user_id: @user_id, user_name: @user_name, role_map:@role_map}
     }.to_json(*a)
   end
 

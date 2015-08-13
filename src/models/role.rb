@@ -17,6 +17,10 @@ class Role
     HOLDING_FOOD = :hold_food
   end
 
+  class Action
+    AUTO_MOVE_TO = :auto_move_to
+  end
+
   include Location
   include Hp
   include Exp

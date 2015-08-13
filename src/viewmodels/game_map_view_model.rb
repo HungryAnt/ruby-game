@@ -1,6 +1,6 @@
 class GameMapViewModel
   def initialize
-    autowired(PlayerService, ChatService, MapService)
+    autowired(PlayerService, ChatService, MapService, GameRolesService)
   end
 
   def init
@@ -10,11 +10,11 @@ class GameMapViewModel
     @gen_food_timestamp = Gosu::milliseconds
     @map_service.switch_map :grass_wood_back
     @mouse_vm = MouseViewModel.new
+    init_roles
   end
 
   def update
     @map_service.update_map
-
 
     seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
     gen_count = (seconds * GameConfig::FOOD_GEN_PER_SECOND).to_i
@@ -29,18 +29,38 @@ class GameMapViewModel
       end
     end
 
+    map_vm = @map_service.current_map
+
+    all_role_vms_do do |role_vm|
+      role_vm.auto_move map_vm
+    end
+
     @player_view_model.update
+
     goto_area
   end
 
   def draw
     @map_service.draw_map
-    @player_view_model.draw
+    draw_role_vms
     get_food_vms.each { |food_vm| food_vm.draw }
+  end
+
+  def draw_role_vms
+    all_role_vms_do do |role_vm|
+      role_vm.draw
+    end
   end
 
   def draw_mouse(mouse_x, mouse_y)
     @mouse_vm.draw mouse_x, mouse_y
+  end
+
+  def all_role_vms_do
+    @role_vm_dict.each_value do |role_vm|
+      yield role_vm
+    end
+    yield @player_view_model.role_vm
   end
 
   def player_move(direction)
@@ -100,6 +120,45 @@ class GameMapViewModel
 
   private
 
+  def init_roles
+    @role_vm_dict = {}
+    register_role_msg_call_back
+  end
+
+  def register_role_msg_call_back
+    @game_roles_service.register_role_msg_call_back do |role_msg|
+      user_id = role_msg.user_id
+
+      if @player_service.user_id != user_id
+        role_map = role_msg.role_map
+        role_type = role_map['role_type'].to_sym
+        role_vm = get_role_vm user_id, role_map['name'], role_type
+        role_vm.role.x = role_map['x'].to_i
+        role_vm.role.y = role_map['y'].to_i
+        role_vm.state = role_map['state'].to_sym
+
+        action = role_map['action'].to_sym
+        detail = role_map['detail']
+        case action
+          when Role::Action::AUTO_MOVE_TO
+            target_x = detail['target_x'].to_i
+            target_y = detail['target_y'].to_i
+            role_vm.set_auto_move_to(target_x, target_y)
+        end
+      end
+    end
+  end
+
+  def get_role_vm(user_id, user_name, role_type)
+    role_vm =  @role_vm_dict[user_id]
+    if role_vm.nil?
+      role = Role.new(user_name, role_type, 100, 300)
+      role_vm = RoleViewModel.new(role)
+      @role_vm_dict[user_id] = role_vm
+    end
+    role_vm
+  end
+
   def get_current_map
     @map_service.current_map
   end
@@ -134,4 +193,5 @@ class GameMapViewModel
   def chat(msg)
     @chat_service.chat msg
   end
+
 end

@@ -10,14 +10,14 @@ class GameRolesService
   end
 
   def add_role_msg(role_msg)
-    @mutex.synchronize {
-      area_id = role_msg.area_id.to_sym
-      role_maps = @role_dict[area_id]
-      if role_maps.nil?
-        role_maps = []
-        @role_dict[area_id] = role_maps
-      end
-    }
+    # @mutex.synchronize {
+    #   area_id = role_msg.role_map['area_id'].to_sym
+    #   role_msgs = @role_dict[area_id]
+    #   if role_msgs.nil?
+    #     role_msgs = []
+    #     @role_dict[area_id] = role_msgs
+    #   end
+    # }
     @role_msg_call_back.call role_msg
   end
 end

@@ -37,6 +37,7 @@ class NetworkService
           next if line.nil?
           line = line.chomp.gsub /\n|\r/, ''
           next if line == ''
+          puts "line: #{line}"
           msg_map = JSON.parse(line)
           @message_handler_service.process msg_map
         end
