@@ -1,0 +1,137 @@
+class GameMapViewModel
+  def initialize
+    autowired(PlayerService, ChatService, MapService)
+  end
+
+  def init
+    @player_service.init
+    role = @player_service.role
+    @player_view_model = PlayerViewModel.new(RoleViewModel.new(role))
+    @gen_food_timestamp = Gosu::milliseconds
+    @map_service.switch_map :grass_wood_back
+    @mouse_vm = MouseViewModel.new
+  end
+
+  def update
+    @map_service.update_map
+
+
+    seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
+    gen_count = (seconds * GameConfig::FOOD_GEN_PER_SECOND).to_i
+    if gen_count > 0
+      @gen_food_timestamp += seconds * 1000
+
+      food_vms = get_food_vms
+      0.upto(gen_count - 1).each do
+        # @food_view_models << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
+        food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
+        food_vms << FoodViewModel.new(food)
+      end
+    end
+
+    @player_view_model.update
+    goto_area
+  end
+
+  def draw
+    @map_service.draw_map
+    @player_view_model.draw
+    get_food_vms.each { |food_vm| food_vm.draw }
+  end
+
+  def draw_mouse(mouse_x, mouse_y)
+    @mouse_vm.draw mouse_x, mouse_y
+  end
+
+  def player_move(direction)
+    @player_view_model.move direction, @map_service::current_map
+  end
+
+  def update_mouse_type(mouse_x, mouse_y)
+    map_vm = get_current_map
+    mouse_left_down = Gosu::button_down?(Gosu::MsLeft)
+    if map_vm.gateway? mouse_x, mouse_y
+      @mouse_vm.set_mouse_type MouseType::GOTO_AREA
+    elsif touch_item? mouse_x, mouse_y
+      @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::PICK_UP_BUTTON_DOWN : MouseType::PICK_UP)
+    else
+      @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::NORMAL_BUTTON_DOWN : MouseType::NORMAL)
+    end
+  end
+
+  def switch_map(map_id)
+    @map_service.switch_map map_id
+  end
+
+  def switch_role_type(role_type)
+    @player_view_model.role.role_type = role_type
+    @player_view_model.update_animations
+  end
+
+  def try_pick_up(mouse_x, mouse_y)
+    item_vms = get_food_vms
+    item_vm = get_touch_item mouse_x, mouse_y, item_vms
+    return false if item_vm.nil?
+
+    if item_vm.can_pick_up?(@player_view_model.role)
+      @player_view_model.pick_up item_vms, item_vm
+      true
+    end
+
+    set_destination mouse_x, mouse_y, item_vm
+    true
+  end
+
+  def set_destination(mouse_x, mouse_y, item_vm = nil)
+    map_vm = get_current_map
+    unless map_vm.tile_block? mouse_x, mouse_y
+      map_vm.mark_target(mouse_x, mouse_y) unless map_vm.nil?
+      @player_view_model.set_destination mouse_x, mouse_y, item_vm
+    end
+  end
+
+  def discard
+    @player_view_model.discard get_food_vms
+  end
+
+  def needs_cursor?
+    @mouse_vm.needs_cursor?
+  end
+
+  private
+
+  def get_current_map
+    @map_service.current_map
+  end
+
+  def touch_item?(mouse_x, mouse_y)
+    item_vm = get_touch_item(mouse_x, mouse_y, get_food_vms)
+    !item_vm.nil?
+  end
+
+  def goto_area()
+    map_vm = get_current_map
+    role = @player_view_model.role
+    if map_vm.gateway? role.x, role.y
+      @player_view_model.disable_auto_move
+      map_vm.goto_area role
+      return true
+    end
+    false
+  end
+
+  def get_food_vms
+    @map_service.current_map.current_area.food_vms
+  end
+
+  def get_touch_item(mouse_x, mouse_y, food_vms)
+    food_vms.each do |food_vm|
+      return food_vm if food_vm.mouse_touch?(mouse_x, mouse_y)
+    end
+    nil
+  end
+
+  def chat(msg)
+    @chat_service.chat msg
+  end
+end

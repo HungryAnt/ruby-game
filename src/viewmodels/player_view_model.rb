@@ -4,7 +4,7 @@ class PlayerViewModel
   attr_reader :role
 
   def initialize(role_vm)
-    autowired(MapService)
+    autowired(MapService, ChatService)
     @role_vm = role_vm
     @role = @role_vm.role
     @move_timestamp = Gosu::milliseconds
@@ -32,7 +32,7 @@ class PlayerViewModel
       @auto_move_enabled = false
       @role.direction = direction
       angle = Direction::to_angle direction
-      @role_vm.do_move(angle, map_vm)
+      @role_vm.control_move(angle, map_vm)
     else
       @role_vm.stop
     end
@@ -66,6 +66,11 @@ class PlayerViewModel
       item_vms = @map_service.current_map.current_area.food_vms
       pick_up(item_vms, item_vm) unless item_vm.nil?
     }
+    detail = {
+        target_x:x,
+        target_y:y
+    }
+    sync_role 'auto_move_to', detail
   end
 
   def disable_auto_move
@@ -96,5 +101,12 @@ class PlayerViewModel
     @role.inc_hp(GameConfig::REST_HP_INC)
   end
 
-
+  def sync_role(action, detail)
+    area_id = @map_service.current_map.current_area.id.to_s
+    role_map = @role.to_map
+    role_map['area_id'] = area_id
+    role_map['action'] = action
+    role_map['detail'] = detail
+    @chat_service.send_role_message role_map
+  end
 end

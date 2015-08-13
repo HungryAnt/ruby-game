@@ -85,6 +85,10 @@ class RoleViewModel
     draw_level_and_name
   end
 
+  def control_move(angle, map_vm)
+    do_move angle, map_vm
+  end
+
   private
 
   def lv_image
