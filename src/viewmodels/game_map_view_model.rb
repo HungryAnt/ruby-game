@@ -11,6 +11,7 @@ class GameMapViewModel
     @map_service.switch_map :grass_wood_back
     @mouse_vm = MouseViewModel.new
     init_roles
+    @player_view_model.appear_in_new_area
   end
 
   def update
@@ -59,8 +60,9 @@ class GameMapViewModel
   end
 
   def all_role_vms_do
+    area_id = @map_service.current_area.id
     @role_vm_dict.each_value do |role_vm|
-      yield role_vm
+      yield role_vm if role_vm.area_id == area_id
     end
     yield @player_view_model.role_vm
   end
@@ -120,6 +122,10 @@ class GameMapViewModel
     @mouse_vm.needs_cursor?
   end
 
+  def chat(msg)
+    @chat_service.chat msg
+  end
+
   private
 
   def init_roles
@@ -139,10 +145,15 @@ class GameMapViewModel
         role_vm.role.y = role_map['y'].to_i
         role_vm.role.hp = role_map['hp'].to_i
         role_vm.set_state role_map['state'].to_sym
+        role_vm.set_direction role_map['direction'].to_i
+        role_vm.area_id = role_map['area_id'].to_sym
 
         action = role_map['action'].to_sym
         detail = role_map['detail']
         case action
+          when Role::Action::DISAPPEAR
+          when Role::Action::APPEAR
+            role_vm.appear_in_new_area
           when Role::Action::AUTO_MOVE_TO
             target_x = detail['target_x'].to_i
             target_y = detail['target_y'].to_i
@@ -153,7 +164,7 @@ class GameMapViewModel
   end
 
   def get_role_vm(user_id, user_name, role_type)
-    role_vm =  @role_vm_dict[user_id]
+    role_vm = @role_vm_dict[user_id]
     if role_vm.nil?
       role = Role.new(user_name, role_type, 100, 300)
       role_vm = RoleViewModel.new(role)
@@ -171,12 +182,13 @@ class GameMapViewModel
     !item_vm.nil?
   end
 
-  def goto_area()
+  def goto_area
     map_vm = get_current_map
     role = @player_view_model.role
     if map_vm.gateway? role.x, role.y
-      @player_view_model.disable_auto_move
+      # @player_view_model.disappear
       map_vm.goto_area role
+      @player_view_model.appear_in_new_area
       return true
     end
     false
@@ -192,9 +204,4 @@ class GameMapViewModel
     end
     nil
   end
-
-  def chat(msg)
-    @chat_service.chat msg
-  end
-
 end

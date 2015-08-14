@@ -18,6 +18,8 @@ class Role
   end
 
   class Action
+    APPEAR = :appear
+    DISAPPEAR = :disappear
     AUTO_MOVE_TO = :auto_move_to
   end
 

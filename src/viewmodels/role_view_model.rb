@@ -1,5 +1,6 @@
 class RoleViewModel
   attr_reader :role, :standing
+  attr_accessor :area_id
 
   def initialize(role)
     autowired(MapService)
@@ -12,18 +13,25 @@ class RoleViewModel
     @speed = 2.0
     @arrive_call_back = nil
     stop
+    @area_id = nil
   end
 
   def init_animations
-    role = @role.role_type.to_s
+    role_type = @role.role_type.to_s
     %w(stand walk run eat hold_food).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
-                                   get_anim("#{role}_#{state}_#{direction}".to_sym))
+                                   get_anim("#{role_type}_#{state}_#{direction}".to_sym))
       end
     end
 
     @current_anim = @anim_stand_down
+  end
+
+  def appear_in_new_area
+    disable_auto_move
+    stop
+    update_state
   end
 
   def stop
@@ -89,6 +97,10 @@ class RoleViewModel
         return @running ? Role::State::RUNNING : Role::State::WALKING
       end
     end
+  end
+
+  def set_direction(direction)
+    @role.direction = direction
   end
 
   def draw

@@ -68,13 +68,15 @@ class PlayerViewModel
     sync_role Role::Action::AUTO_MOVE_TO, detail
   end
 
-  def disable_auto_move
-    @role_vm.disable_auto_move
-  end
-
   def update_animations
     @role_vm.init_animations
     @role_vm.update_state
+  end
+
+  def appear_in_new_area
+    @role_vm.appear_in_new_area
+    detail = {}
+    sync_role Role::Action::APPEAR, detail
   end
 
   private
