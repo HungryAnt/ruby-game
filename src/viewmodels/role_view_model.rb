@@ -14,9 +14,16 @@ class RoleViewModel
     stop
   end
 
-  def state=(state)
-    @role.state = state
-    change_anim
+  def init_animations
+    role = @role.role_type.to_s
+    %w(stand walk run eat hold_food).each do |state|
+      %w(left right up down).each do |direction|
+        self.instance_variable_set("@anim_#{state}_#{direction}",
+                                   get_anim("#{role}_#{state}_#{direction}".to_sym))
+      end
+    end
+
+    @current_anim = @anim_stand_down
   end
 
   def stop
@@ -59,6 +66,15 @@ class RoleViewModel
     end
   end
 
+  def set_state(state)
+    @role.state = state
+    change_anim
+  end
+
+  def update_state
+    set_state get_state
+  end
+
   def get_state
     if @role.eating?
       if @standing
@@ -73,10 +89,6 @@ class RoleViewModel
         return @running ? Role::State::RUNNING : Role::State::WALKING
       end
     end
-  end
-
-  def update
-
   end
 
   def draw
@@ -110,18 +122,6 @@ class RoleViewModel
     end
 
     @current_anim = self.instance_variable_get("@anim_#{state}_#{direction}")
-  end
-
-  def init_animations
-    role = @role.role_type.to_s
-    %w(stand walk run eat hold_food).each do |state|
-      %w(left right up down).each do |direction|
-        self.instance_variable_set("@anim_#{state}_#{direction}",
-                                   get_anim("#{role}_#{state}_#{direction}".to_sym))
-      end
-    end
-
-    @current_anim = @anim_stand_down
   end
 
   def get_anim(key)

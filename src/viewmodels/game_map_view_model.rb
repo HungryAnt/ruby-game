@@ -33,6 +33,8 @@ class GameMapViewModel
 
     all_role_vms_do do |role_vm|
       role_vm.auto_move map_vm
+      role_vm.role.update_eating_food
+      role_vm.update_state
     end
 
     @player_view_model.update
@@ -135,7 +137,8 @@ class GameMapViewModel
         role_vm = get_role_vm user_id, role_map['name'], role_type
         role_vm.role.x = role_map['x'].to_i
         role_vm.role.y = role_map['y'].to_i
-        role_vm.state = role_map['state'].to_sym
+        role_vm.role.hp = role_map['hp'].to_i
+        role_vm.set_state role_map['state'].to_sym
 
         action = role_map['action'].to_sym
         detail = role_map['detail']

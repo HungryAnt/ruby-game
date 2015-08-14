@@ -12,10 +12,7 @@ class PlayerViewModel
   end
 
   def update
-    @role.update_eating_food
     have_a_rest if @role_vm.standing
-    change_state
-
     eat if @role_vm.standing
     @role.refresh_exp if @update_times % 40 == 0
     @update_times += 1
@@ -76,15 +73,11 @@ class PlayerViewModel
   end
 
   def update_animations
-    init_animations
-    change_state
+    @role_vm.init_animations
+    @role_vm.update_state
   end
 
   private
-
-  def change_state
-    @role_vm.state = @role_vm.get_state
-  end
 
   def start_eat_food(food)
     @role_vm.eat_food food
