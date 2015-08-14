@@ -70,6 +70,10 @@ class GameMapView < ViewBase
         @game_map_view_model.switch_map :school
       when Gosu::Kb3
         @game_map_view_model.switch_map :church
+      when Gosu::Kb4
+        @game_map_view_model.switch_map :pay
+      when Gosu::Kb5
+        @game_map_view_model.switch_map :alipay
       when Gosu::Kb0
         @game_map_view_model.switch_role_type RoleType::WAN_GYE
       when Gosu::Kb9
