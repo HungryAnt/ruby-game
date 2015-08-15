@@ -68,7 +68,9 @@ class MapEditorView
                GameConfig::MAP_WIDTH - 200, GameConfig::MAP_HEIGHT, ZOrder::UI, 1.0, 1.0, 0xff_ffffff)
   end
 
-  private def draw_tile_grid
+  private
+
+  def draw_tile_grid
     0.upto(@row_count-1) do |row|
       0.upto(@col_count-1) do |col|
         # puts "row #{row} col #{col}"
@@ -89,24 +91,24 @@ class MapEditorView
     end
   end
 
-  private def edit_grid
-     x = @window.mouse_x.to_i
-     y = @window.mouse_y.to_i
-     if @editing && @current_tile
-       rows = [@origin_row, y / Area::GRID_HEIGHT]
-       cols = [@origin_col, x / Area::GRID_WIDTH]
-       r_min, r_max = rows.min().to_i, rows.max().to_i
-       c_min, c_max = cols.min().to_i, cols.max().to_i
-       return if r_min > @row_count-1 || r_max < 0
-       return if c_min > @col_count-1 || c_max < 0
-       r_min, r_max = [0, r_min].max, [@row_count-1, r_max].min
-       c_min, c_max = [0, c_min].max, [@col_count-1, c_max].min
-       r_min.upto(r_max) do |row|
-         c_min.upto(c_max) do |col|
-           @current_area.tiles[row][col] = @current_tile
-         end
-       end
-     end
+  def edit_grid
+    x = @window.mouse_x.to_i
+    y = @window.mouse_y.to_i
+    if @editing && @current_tile
+      rows = [@origin_row, y / Area::GRID_HEIGHT]
+      cols = [@origin_col, x / Area::GRID_WIDTH]
+      r_min, r_max = rows.min().to_i, rows.max().to_i
+      c_min, c_max = cols.min().to_i, cols.max().to_i
+      return if r_min > @row_count-1 || r_max < 0
+      return if c_min > @col_count-1 || c_max < 0
+      r_min, r_max = [0, r_min].max, [@row_count-1, r_max].min
+      c_min, c_max = [0, c_min].max, [@col_count-1, c_max].min
+      r_min.upto(r_max) do |row|
+        c_min.upto(c_max) do |col|
+          @current_area.tiles[row][col] = @current_tile
+        end
+      end
+    end
   end
 
   def button_down(id)
