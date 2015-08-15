@@ -32,6 +32,7 @@ require 'messages/quit_message'
 require 'messages/chat_message'
 require 'messages/system_message'
 require 'messages/role_message'
+require 'messages/roles_query_message'
 
 require 'services/song_service'
 require 'services/map_service'

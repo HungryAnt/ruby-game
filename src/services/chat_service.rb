@@ -30,6 +30,11 @@ class ChatService
     send role_msg
   end
 
+  def send_roles_query_message(map_id)
+    roles_query_msg = RolesQueryMessage.new map_id
+    send roles_query_msg
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1
