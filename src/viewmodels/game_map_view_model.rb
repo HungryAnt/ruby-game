@@ -133,6 +133,7 @@ class GameMapViewModel
   def init_roles
     @role_vm_dict = {}
     register_role_msg_call_back
+    register_delete_role_call_back
   end
 
   def register_role_msg_call_back
@@ -143,6 +144,7 @@ class GameMapViewModel
         role_map = role_msg.role_map
         role_type = role_map['role_type'].to_sym
         role_vm = get_role_vm user_id, role_map['name'], role_type
+
         role_vm.role.x = role_map['x'].to_i
         role_vm.role.y = role_map['y'].to_i
         role_vm.role.hp = role_map['hp'].to_i
@@ -153,8 +155,6 @@ class GameMapViewModel
         action = role_map['action'].to_sym
         detail = role_map['detail']
         case action
-          when Role::Action::DISAPPEAR
-            role_vm.area_id = :none
           when Role::Action::APPEAR
             role_vm.appear_in_new_area
           when Role::Action::AUTO_MOVE_TO
@@ -163,6 +163,13 @@ class GameMapViewModel
             role_vm.set_auto_move_to(target_x, target_y)
         end
       end
+    end
+  end
+
+  def register_delete_role_call_back
+    @game_roles_service.register_delete_role_call_back do |user_id|
+      role_vm = @role_vm_dict[user_id]
+      role_vm.area_id = :none
     end
   end
 

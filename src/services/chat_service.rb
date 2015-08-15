@@ -64,6 +64,11 @@ class ChatService
       add_chat_msg sys_msg
     end
 
+    @network_service.register('quit_message') do |msg_map, params|
+      quit_msg = QuitMessage.json_create(msg_map)
+      @game_roles_service.delete_role quit_msg.user_id
+    end
+
     @network_service.register('role_message') do |msg_map, params|
       role_msg = RoleMessage.json_create(msg_map)
       @game_roles_service.add_role_msg role_msg

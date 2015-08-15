@@ -60,6 +60,7 @@ class PlayerViewModel
     @role_vm.set_auto_move_to(x, y) {
       item_vms = @map_service.current_map.current_area.food_vms
       pick_up(item_vms, item_vm) unless item_vm.nil?
+      sync_role Role::Action::APPEAR, {}
     }
     detail = {
         target_x:x,
@@ -87,8 +88,8 @@ class PlayerViewModel
   end
 
   def disappear
-    detail = {}
-    sync_role Role::Action::DISAPPEAR, detail
+    # detail = {}
+    # sync_role Role::Action::DISAPPEAR, detail
   end
 
   private
