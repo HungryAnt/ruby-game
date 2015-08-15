@@ -2,6 +2,8 @@
 $:.unshift(File.dirname(__FILE__))
 @base_src_dir = File.dirname(__FILE__)
 
+require 'json'
+
 require 'gosu'
 require 'utils/media_util'
 require 'utils/graphics_util'

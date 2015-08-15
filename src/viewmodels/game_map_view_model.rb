@@ -23,10 +23,12 @@ class GameMapViewModel
       @gen_food_timestamp += seconds * 1000
 
       food_vms = get_food_vms
-      0.upto(gen_count - 1).each do
-        # @food_view_models << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
-        food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
-        food_vms << FoodViewModel.new(food)
+      if food_vms.size < 5
+        0.upto(gen_count - 1).each do
+          # @food_view_models << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
+          food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
+          food_vms << FoodViewModel.new(food)
+        end
       end
     end
 

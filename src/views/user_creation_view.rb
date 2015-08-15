@@ -45,6 +45,9 @@ class UserCreationView
 
     @user_name_text_box.draw((GameConfig::MAP_WIDTH - USER_NAME_TEXT_BOX_WIDTH)/2, GameConfig::MAP_HEIGHT/2 + 40,
                              USER_NAME_TEXT_BOX_WIDTH, USER_NAME_TEXT_BOX_HEIGHT)
+
+    @font.draw_rel('游戏过程中 数字键切换地图 回车键聊天', GameConfig::MAP_WIDTH/2, GameConfig::MAP_HEIGHT/2 + 140,
+                   ZOrder::Background, 0.5, 1.0, 1.0, 1.0, 0xff_ffff00, :additive)
   end
 
   def button_down(id)

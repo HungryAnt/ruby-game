@@ -1,5 +1,3 @@
-require 'json'
-
 class ChatMessage
   attr_accessor :user_id, :user_name, :content
 

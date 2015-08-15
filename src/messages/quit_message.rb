@@ -1,5 +1,3 @@
-require 'json'
-
 class QuitMessage
   attr_reader :user_id, :user_name, :map_id
 
