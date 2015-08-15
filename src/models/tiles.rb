@@ -1,6 +1,7 @@
 module Tiles
   NONE = ' ' # 空旷区 可移动
   BLOCK = '#' # 禁止移动区
+  INIT_POSITION = 'X' # 认为出现在地图中的初始位置
   GATEWAY = -2 # 传送
 
   def self.color(tile)

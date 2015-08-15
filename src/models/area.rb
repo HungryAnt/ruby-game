@@ -3,7 +3,7 @@ class Area
   GRID_HEIGHT = 10
 
   attr_accessor :gateway
-  attr_reader :id, :image_path, :song_path, :tiles, :coverings
+  attr_reader :id, :image_path, :song_path, :tiles, :coverings, :initial_position
 
   def initialize(id, image_path, song_path, tiles_text)
     @id = id
@@ -11,6 +11,7 @@ class Area
     # lines = File.readlines(tiles_path).map { |line| line.chomp }
     init_tails tiles_text.lines.map {|line|line.chomp}
     init_available_positions
+    @initial_position = get_initial_position
     @gateway = {}
     @coverings = []
   end
@@ -36,10 +37,25 @@ class Area
     0.upto(@row_count-1) do |row|
       0.upto(@col_count-1) do |col|
         if @tiles[row][col] == Tiles::NONE
-          @available_positions << [GRID_WIDTH * col + GRID_WIDTH / 2, GRID_HEIGHT * row + GRID_HEIGHT / 2]
+          @available_positions << get_position(row, col)
         end
       end
     end
+  end
+
+  def get_initial_position
+    0.upto(@row_count-1) do |row|
+      0.upto(@col_count-1) do |col|
+        if @tiles[row][col] == Tiles::INIT_POSITION
+          return get_position(row, col)
+        end
+      end
+    end
+    [300, 300]
+  end
+
+  def get_position(row, col)
+    [GRID_WIDTH * col + GRID_WIDTH / 2, GRID_HEIGHT * row + GRID_HEIGHT / 2]
   end
 
   public
@@ -83,7 +99,7 @@ class Area
     target = @gateway[gateway_tile.to_sym]
     target_area = target[:area]
     row, col = target_area.find_tile(gateway_tile)
-    x, y = GRID_WIDTH * col + GRID_WIDTH / 2, GRID_HEIGHT * row + GRID_HEIGHT / 2
+    x, y = get_position(row, col)
     [target_area, x, y, target[:direction]]
   end
 

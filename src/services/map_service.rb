@@ -15,6 +15,7 @@ class MapService
     map = @maps[key]
     if @current_map != map
       @chat_service.quit(@current_map.id) unless @current_map.nil?
+      map.switch_to_first_area
       @current_map = map
       @current_map.activate
       @chat_service.join(map.id)

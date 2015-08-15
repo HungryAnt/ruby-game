@@ -11,7 +11,7 @@ class GameMapViewModel
     @map_service.switch_map :grass_wood_back
     @mouse_vm = MouseViewModel.new
     init_roles
-    @player_view_model.appear_in_new_area
+    @player_view_model.switch_to_new_map
   end
 
   def update
@@ -85,6 +85,7 @@ class GameMapViewModel
 
   def switch_map(map_id)
     @map_service.switch_map map_id
+    @player_view_model.switch_to_new_map
   end
 
   def switch_role_type(role_type)

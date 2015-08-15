@@ -5,7 +5,7 @@ class MapViewModel
     ArgumentError "wrong areas #{areas}" if areas.nil? || areas.size == 0
     @id = id
     @areas = areas
-    @current_area = @areas[0]
+    switch_to_first_area
   end
 
   def update
@@ -34,6 +34,10 @@ class MapViewModel
 
   def gateway?(x, y)
     @current_area.area.gateway? x, y
+  end
+
+  def switch_to_first_area
+    @current_area = @areas[0]
   end
 
   def goto_area(role)

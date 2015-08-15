@@ -79,6 +79,11 @@ class PlayerViewModel
     sync_role Role::Action::APPEAR, detail
   end
 
+  def switch_to_new_map
+    @role.x, @role.y = @map_service.current_map.current_area.area.initial_position
+    appear_in_new_area
+  end
+
   private
 
   def start_eat_food(food)
