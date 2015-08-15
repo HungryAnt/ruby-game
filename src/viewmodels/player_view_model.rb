@@ -86,6 +86,11 @@ class PlayerViewModel
     appear_in_new_area
   end
 
+  def disappear
+    detail = {}
+    sync_role Role::Action::DISAPPEAR, detail
+  end
+
   private
 
   def start_eat_food(food)

@@ -84,6 +84,7 @@ class GameMapViewModel
   end
 
   def switch_map(map_id)
+    @player_view_model.disappear
     @map_service.switch_map map_id
     @player_view_model.switch_to_new_map
   end
@@ -153,6 +154,7 @@ class GameMapViewModel
         detail = role_map['detail']
         case action
           when Role::Action::DISAPPEAR
+            role_vm.area_id = :none
           when Role::Action::APPEAR
             role_vm.appear_in_new_area
           when Role::Action::AUTO_MOVE_TO
