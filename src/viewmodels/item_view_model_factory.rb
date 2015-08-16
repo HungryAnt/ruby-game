@@ -9,7 +9,7 @@ class ItemViewModelFactory
   private
 
   def self.create_food_vm(item_map)
-    id = item_map['id'].to_i
+    id = item_map['id']
     x, y = item_map['x'].to_i, item_map['y'].to_i
     food_type_id = item_map['food_type_id'].to_i
     food = Food.new(id, x, y, food_type_id)

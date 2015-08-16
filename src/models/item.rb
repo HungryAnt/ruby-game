@@ -22,7 +22,7 @@ class Item
         'id' => @id,
         'item_type' => @item_type,
         'x' => @x,
-        'y' => @y,
+        'y' => @y
     }
   end
 end

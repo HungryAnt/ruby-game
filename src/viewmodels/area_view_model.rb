@@ -78,9 +78,7 @@ class AreaViewModel
 
   def delete_item_vm(item_id)
     @mutex.synchronize {
-      @item_vms = @item_vms.delete do |item_vm|
-        item_vm.id == item_id
-      end
+      @item_vms = @item_vms.reject {|item_vm| item_vm.id == item_id}
     }
   end
 

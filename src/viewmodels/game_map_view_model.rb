@@ -19,17 +19,17 @@ class GameMapViewModel
   def update
     @map_service.update_map
 
-    seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
-    if seconds > 0
-      @gen_food_timestamp += seconds * 1000
-      0.upto(seconds - 1).each do
-        area_id = @map_service.current_map.current_area.id.to_s
-        food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
-        item_map = food.to_map
-        area_item_msg = AreaItemMessage.new(area_id, item_map)
-        add_area_item area_item_msg
-      end
-    end
+    # seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
+    # if seconds > 0
+    #   @gen_food_timestamp += seconds * 1000
+    #   0.upto(seconds - 1).each do
+    #     area_id = @map_service.current_map.current_area.id.to_s
+    #     food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
+    #     item_map = food.to_map
+    #     area_item_msg = AreaItemMessage.new(area_id, item_map)
+    #     add_area_item area_item_msg
+    #   end
+    # end
 
     if @network_service.has_error?
       seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
@@ -192,15 +192,16 @@ class GameMapViewModel
 
   def init_area_items
     @area_items_service.register_item_msg_callback do |area_item_msg|
-      add_area_item area_item_msg
+      area_id = area_item_msg.area_id
+      item_map = area_item_msg.item_map
+      area_vm = @map_service.get_area(area_id)
+      case area_item_msg.action
+        when AreaItemMessage::Action::CREATE
+          area_vm.add_item_vm ItemViewModelFactory.create_item_vm(item_map)
+        when AreaItemMessage::Action::DELETE
+          area_vm.delete_item_vm item_map['id']
+      end
     end
-  end
-
-  def add_area_item(area_item_msg)
-    area_id = area_item_msg.area_id
-    item_map = area_item_msg.item_map
-    area_vm = @map_service.get_area(area_id)
-    area_vm.add_item_vm ItemViewModelFactory.create_food_vm(item_map)
   end
 
   def get_role_vm(user_id, user_name, role_type)

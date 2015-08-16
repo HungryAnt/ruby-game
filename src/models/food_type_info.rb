@@ -1,16 +1,16 @@
 class FoodTypeInfo
-  @@food_types = {}
+  @@food_type_infos = {}
 
-  def self.put(id, food_type)
-    @@food_types[id] = food_type
+  def self.put(id, food_type_info)
+    @@food_type_infos[id] = food_type_info
   end
 
   def self.get(id)
-    @@food_types[id]
+    @@food_type_infos[id]
   end
 
   def self.random_id
-    @@food_types.keys[rand(@@food_types.size)]
+    @@food_type_infos.keys[rand(@@food_type_infos.size)]
   end
 
   attr_reader :id, :name, :image_path, :energy
