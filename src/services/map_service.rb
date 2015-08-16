@@ -4,11 +4,20 @@ class MapService
     @maps = {}
     @map_list = []
     @current_map = nil
+    @area_vm_dict = {}
   end
 
   def add_map(key, map)
     @maps[key] = map
     @map_list << map
+  end
+
+  def add_area(key, area_vm)
+    @area_vm_dict[key] = area_vm
+  end
+
+  def get_area(key)
+    @area_vm_dict[key]
   end
 
   def switch_map(key)

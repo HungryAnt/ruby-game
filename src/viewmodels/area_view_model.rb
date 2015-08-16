@@ -1,5 +1,5 @@
 class AreaViewModel
-  attr_reader :image, :area, :food_vms
+  attr_reader :image, :area, :item_vms
 
   def initialize(area)
     autowired(SongService)
@@ -8,8 +8,9 @@ class AreaViewModel
     @scale_x = GameConfig::MAP_WIDTH * 1.0 / @image.width
     @scale_y = GameConfig::MAP_HEIGHT * 1.0 / @image.height
     @anim_container = AnimationContainer.new
-    @food_vms = []
+    @item_vms = []
     init_covering
+    @mutex = Mutex.new
   end
 
   def init_covering
@@ -63,6 +64,30 @@ class AreaViewModel
 
   def random_available_position
     @area.random_available_position
+  end
+
+  def get_item_vms
+    @item_vms
+  end
+
+  def add_item_vm(item_vm)
+    @mutex.synchronize {
+      @item_vms << item_vm
+    }
+  end
+
+  def delete_item_vm(item_id)
+    @mutex.synchronize {
+      @item_vms = @item_vms.delete do |item_vm|
+        item_vm.id == item_id
+      end
+    }
+  end
+
+  def clear_item_vms
+    @mutex.synchronize {
+      @item_vms = []
+    }
   end
 
   private

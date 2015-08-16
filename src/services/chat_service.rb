@@ -2,7 +2,7 @@ class ChatService
   attr_reader :revision
 
   def initialize
-    autowired(NetworkService, UserService, GameRolesService)
+    autowired(NetworkService, UserService, GameRolesService, AreaItemsService)
     @mutex = Mutex.new
     @chat_msgs = []
     @revision = 0
@@ -72,6 +72,11 @@ class ChatService
     @network_service.register('role_message') do |msg_map, params|
       role_msg = RoleMessage.json_create(msg_map)
       @game_roles_service.add_role_msg role_msg
+    end
+
+    @network_service.register('area_item_message') do |msg_map, params|
+      area_item_msg = AreaItemMessage.json_create(msg_map)
+      @area_items_service.add_item_msg area_item_msg
     end
   end
 

@@ -58,7 +58,7 @@ class PlayerViewModel
 
   def set_destination(x, y, item_vm)
     @role_vm.set_auto_move_to(x, y) {
-      item_vms = @map_service.current_map.current_area.food_vms
+      item_vms = @map_service.current_map.current_area.item_vms
       pick_up(item_vms, item_vm) unless item_vm.nil?
       sync_role Role::Action::APPEAR, {}
     }

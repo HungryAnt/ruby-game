@@ -1,5 +1,9 @@
 class FoodFactory
+  @@id = 0
+
   def self.random_food(x, y)
-    Food.new(x, y, FoodTypeInfo.random_id)
+    food = Food.new(@@id, x, y, FoodTypeInfo.random_id)
+    @@id += 1
+    food
   end
 end

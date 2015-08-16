@@ -1,15 +1,28 @@
+require_relative 'location'
+
 class Item
-  attr_reader :item_type
-
-  def initialize(item_type)
-    @item_type = item_type
-  end
-
   class ItemType
-    FOOD = :food
-    RUBBISH = :rubbish
-    SPECIAL = :special
+    FOOD = 'food'
+    RUBBISH = 'rubbish'
+    SPECIAL = 'special'
   end
 
-  
+  include Location
+
+  attr_reader :id, :item_type
+
+  def init_item(id, item_type, x, y)
+    @id = id
+    @item_type = item_type
+    init_location x, y
+  end
+
+  def to_map
+    {
+        'id' => @id,
+        'item_type' => @item_type,
+        'x' => @x,
+        'y' => @y,
+    }
+  end
 end
