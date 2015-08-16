@@ -35,6 +35,11 @@ class ChatService
     send roles_query_msg
   end
 
+  def send_area_items_query_message(map_id)
+    query_msg = AreaItemsQueryMessage.new map_id
+    send query_msg
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1

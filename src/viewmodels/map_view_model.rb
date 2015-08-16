@@ -49,4 +49,10 @@ class MapViewModel
       activate
     end
   end
+
+  def clear_area_items
+    @areas.each do |area_vm|
+      area_vm.clear_item_vms
+    end
+  end
 end

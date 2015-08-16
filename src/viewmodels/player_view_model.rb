@@ -83,7 +83,7 @@ class PlayerViewModel
   def switch_to_new_map
     map_vm = @map_service.current_map
     @role.x, @role.y = map_vm.current_area.area.initial_position
-    query_roles map_vm.id
+    refresh_new_map_elements map_vm.id
     appear_in_new_area
   end
 
@@ -116,7 +116,11 @@ class PlayerViewModel
     @chat_service.send_role_message role_map
   end
 
-  def query_roles(map_id)
+  def refresh_new_map_elements(map_id)
+    map_vm = @map_service.current_map
+    map_vm.clear_area_items
+
     @chat_service.send_roles_query_message map_id
+    @chat_service.send_area_items_query_message map_id
   end
 end
