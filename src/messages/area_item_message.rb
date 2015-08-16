@@ -2,6 +2,9 @@ class AreaItemMessage
   class Action
     CREATE = 'create'
     DELETE = 'delete'
+    TRY_PICKUP = 'try_pickup'
+    PICKUP = 'pickup'
+    DISCARD = 'discard'
   end
 
   attr_reader :area_id, :item_map, :action

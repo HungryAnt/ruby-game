@@ -38,6 +38,7 @@ require 'messages/role_message'
 require 'messages/roles_query_message'
 require 'messages/area_item_message'
 require 'messages/area_items_query_message'
+require 'messages/try_pickup_item_message'
 
 require 'services/song_service'
 require 'services/map_service'

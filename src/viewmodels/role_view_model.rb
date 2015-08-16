@@ -39,10 +39,10 @@ class RoleViewModel
     @running = false
   end
 
-  def eat_food(food)
+  def eat_food(food_vm)
     @sound_eat_food.play
-    @role.start_eat food
-    @eating_food_vm = FoodViewModel.new food
+    @role.start_eat food_vm.food
+    @eating_food_vm = food_vm
   end
 
   def clear_food

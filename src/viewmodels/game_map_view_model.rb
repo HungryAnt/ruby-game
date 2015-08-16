@@ -200,6 +200,9 @@ class GameMapViewModel
           area_vm.add_item_vm ItemViewModelFactory.create_item_vm(item_map)
         when AreaItemMessage::Action::DELETE
           area_vm.delete_item_vm item_map['id']
+        when AreaItemMessage::Action::PICKUP
+          food_vm = ItemViewModelFactory.create_item_vm(item_map)
+          @player_view_model.start_eat_food(food_vm)
       end
     end
   end

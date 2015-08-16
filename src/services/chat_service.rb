@@ -40,6 +40,11 @@ class ChatService
     send query_msg
   end
 
+  def send_try_pickup_item_message(user_id, area_id, item_id)
+    try_pickup_item_msg = TryPickupItemMessage.new(user_id, area_id, item_id)
+    send try_pickup_item_msg
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1

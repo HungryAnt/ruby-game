@@ -35,6 +35,7 @@ class Food < Item
   def to_map
     item_map = super
     item_map['food_type_id'] = @food_type_info.id
+    item_map['energy'] = @energy
     item_map
   end
 end

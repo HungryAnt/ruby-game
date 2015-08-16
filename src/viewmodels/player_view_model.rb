@@ -4,7 +4,7 @@ class PlayerViewModel
   attr_reader :role, :role_vm
 
   def initialize(role_vm)
-    autowired(MapService, ChatService)
+    autowired(PlayerService, MapService, ChatService)
     @role_vm = role_vm
     @role = @role_vm.role
     @move_timestamp = Gosu::milliseconds
@@ -39,11 +39,12 @@ class PlayerViewModel
     # 先尝试扔掉正在吃的食物
     discard item_vms
 
-    item_vms.reject! { |item| item == item_vm }
+    # item_vms.reject! { |item| item == item_vm }
     item = item_vm.item
 
     if item.respond_to? :eatable?
-      start_eat_food item
+      try_remote_pickup_item item
+      # start_eat_food item
     end
   end
 
@@ -51,8 +52,9 @@ class PlayerViewModel
     item = @role.discard
     return if item.nil?
     if item.respond_to? :eatable?
-      food_vm = FoodViewModel.new item
-      food_vms << food_vm
+      # food_vm = FoodViewModel.new item
+      # food_vms << food_vm
+      notify_discard_item item
     end
   end
 
@@ -92,11 +94,11 @@ class PlayerViewModel
     # sync_role Role::Action::DISAPPEAR, detail
   end
 
-  private
-
   def start_eat_food(food)
     @role_vm.eat_food food
   end
+
+  private
 
   def eat
     @role.eat
@@ -108,7 +110,7 @@ class PlayerViewModel
   end
 
   def sync_role(action, detail)
-    area_id = @map_service.current_map.current_area.id.to_s
+    area_id = get_current_area_id
     role_map = @role.to_map
     role_map['area_id'] = area_id
     role_map['action'] = action.to_s
@@ -122,5 +124,20 @@ class PlayerViewModel
 
     @chat_service.send_roles_query_message map_id
     @chat_service.send_area_items_query_message map_id
+  end
+
+  def notify_discard_item(item)
+    area_id = get_current_area_id
+    @chat_service.send_area_item_pickup_message(area_id, item.to_map, AreaItemMessage::Action::DISCARD)
+  end
+
+  def try_remote_pickup_item(item)
+    area_id = get_current_area_id
+    user_id = @player_service.user_id
+    @chat_service.send_try_pickup_item_message(user_id, area_id, item.id)
+  end
+
+  def get_current_area_id
+    @map_service.current_map.current_area.id.to_s
   end
 end

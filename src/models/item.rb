@@ -25,4 +25,10 @@ class Item
         'y' => @y
     }
   end
+
+  def to_id_map
+    {
+        id: @id
+    }
+  end
 end
