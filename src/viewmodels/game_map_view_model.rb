@@ -1,6 +1,7 @@
 class GameMapViewModel
   def initialize
-    autowired(PlayerService, ChatService, MapService, GameRolesService)
+    autowired(PlayerService, ChatService, MapService,
+              GameRolesService, AreaItemsService, NetworkService)
   end
 
   def init
@@ -11,26 +12,28 @@ class GameMapViewModel
     @map_service.switch_map :grass_wood_back
     @mouse_vm = MouseViewModel.new
     init_roles
+    init_area_items
     @player_view_model.switch_to_new_map
   end
 
   def update
     @map_service.update_map
 
-    seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
-    gen_count = (seconds * GameConfig::FOOD_GEN_PER_SECOND).to_i
-    if gen_count > 0
-      @gen_food_timestamp += seconds * 1000
+    #if @network_service.has_error?
+      seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
+      gen_count = (seconds * GameConfig::FOOD_GEN_PER_SECOND).to_i
+      if gen_count > 0
+        @gen_food_timestamp += seconds * 1000
 
-      food_vms = get_food_vms
-      if food_vms.size < 5
-        0.upto(gen_count - 1).each do
-          # @food_view_models << Food.new(rand * GameConfig::MAP_WIDTH, rand * GameConfig::MAP_HEIGHT)
-          food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
-          food_vms << FoodViewModel.new(food)
+        food_vms = get_food_vms
+        if food_vms.size < 5
+          0.upto(gen_count - 1).each do
+            food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
+            food_vms << FoodViewModel.new(food)
+          end
         end
       end
-    end
+    #end
 
     map_vm = @map_service.current_map
 
@@ -172,6 +175,17 @@ class GameMapViewModel
     @game_roles_service.register_delete_role_call_back do |user_id|
       role_vm = @role_vm_dict[user_id]
       role_vm.area_id = :none
+    end
+  end
+
+  def init_area_items
+
+  end
+
+  def register_item_msg_callback
+    @area_items_service.register_item_msg_callback do |area_item_msg|
+      area_id = area_item_msg.area_id
+      item_map = area_item_msg.item_map
     end
   end
 

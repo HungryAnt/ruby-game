@@ -5,8 +5,8 @@ id = 0
 add_food_type = lambda do |names|
   names.each do |name|
     image_path = "food/#{id}.bmp"
-    food_type = FoodType.new id, name, image_path, 50
-    FoodFactory.add food_type
+    food_type = FoodTypeInfo.new id, name, image_path, 50
+    FoodTypeInfo.put id, food_type
     id += 1
   end
 end
