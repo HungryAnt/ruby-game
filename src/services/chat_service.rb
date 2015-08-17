@@ -50,6 +50,16 @@ class ChatService
     send discard_item_msg
   end
 
+  def send_eating_food_message(user_id, food_map)
+    eating_food_msg = EatingFoodMessage.new(user_id, food_map)
+    send eating_food_msg
+  end
+
+  def send_eat_up_food_message(user_id)
+    eat_up_food_msg = EatUpFoodMessage.new(user_id)
+    send eat_up_food_msg
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1

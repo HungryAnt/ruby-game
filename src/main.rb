@@ -40,6 +40,8 @@ require 'messages/area_item_message'
 require 'messages/area_items_query_message'
 require 'messages/try_pickup_item_message'
 require 'messages/discard_item_message'
+require 'messages/eating_food_message'
+require 'messages/eat_up_food_message'
 
 require 'services/song_service'
 require 'services/map_service'

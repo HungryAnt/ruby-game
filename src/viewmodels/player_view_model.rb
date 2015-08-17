@@ -97,13 +97,21 @@ class PlayerViewModel
 
   def start_eat_food(food)
     @role_vm.eat_food food
+    remote_eating_food food
   end
 
   private
 
   def eat
-    @role.eat
-    @role_vm.clear_food unless @role.eating?
+    if @role.eating?
+      @role.eat
+      eat_up unless @role.eating?
+    end
+  end
+
+  def eat_up
+    @role_vm.clear_food
+    remote_eat_up_food
   end
 
   def have_a_rest
@@ -134,11 +142,25 @@ class PlayerViewModel
 
   def try_remote_pickup_item(item)
     area_id = get_current_area_id
-    user_id = @player_service.user_id
+    user_id = get_user_id
     @chat_service.send_try_pickup_item_message(user_id, area_id, item.id)
+  end
+
+  def remote_eating_food(food)
+    user_id = get_user_id
+    @chat_service.send_eating_food_message(user_id, food)
+  end
+
+  def remote_eat_up_food
+    user_id = get_user_id
+    @chat_service.send_eat_up_food_message(user_id)
   end
 
   def get_current_area_id
     @map_service.current_map.current_area.id.to_s
+  end
+
+  def get_user_id
+    @player_service.user_id
   end
 end
