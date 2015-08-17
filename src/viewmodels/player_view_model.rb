@@ -37,7 +37,7 @@ class PlayerViewModel
     return unless item_vms.include? item_vm
 
     # 先尝试扔掉正在吃的食物
-    discard item_vms
+    discard
 
     # item_vms.reject! { |item| item == item_vm }
     item = item_vm.item
@@ -48,13 +48,14 @@ class PlayerViewModel
     end
   end
 
-  def discard(food_vms)
+  def discard
     item = @role.discard
     return if item.nil?
     if item.respond_to? :eatable?
+      @role_vm.clear_food
       # food_vm = FoodViewModel.new item
       # food_vms << food_vm
-      notify_discard_item item
+      remote_discard_item item
     end
   end
 
@@ -126,9 +127,9 @@ class PlayerViewModel
     @chat_service.send_area_items_query_message map_id
   end
 
-  def notify_discard_item(item)
+  def remote_discard_item(item)
     area_id = get_current_area_id
-    @chat_service.send_area_item_pickup_message(area_id, item.to_map, AreaItemMessage::Action::DISCARD)
+    @chat_service.send_discard_item_message area_id, item.to_map
   end
 
   def try_remote_pickup_item(item)

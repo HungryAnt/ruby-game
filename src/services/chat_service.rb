@@ -45,6 +45,11 @@ class ChatService
     send try_pickup_item_msg
   end
 
+  def send_discard_item_message(area_id, item_map)
+    discard_item_msg = DiscardItemMessage.new(area_id, item_map)
+    send discard_item_msg
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1

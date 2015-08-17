@@ -134,7 +134,7 @@ class GameMapViewModel
   end
 
   def discard
-    @player_view_model.discard get_food_vms
+    @player_view_model.discard
   end
 
   def needs_cursor?
