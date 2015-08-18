@@ -2,12 +2,12 @@
 
 class MainWindow < Gosu::Window
 
-  VERSION = 'v0.4 beta 内部群测试版'
+  VERSION = 'v0.4.0 beta 网络版'
 
   def initialize
     super GameConfig::MAP_WIDTH,
           GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT
-    self.caption = "童年记忆 - Ant版野菜部落 #{VERSION}"
+    self.caption = "童年记忆 - Ant版野菜部落 网络版 #{VERSION}"
     @user_creation_view = UserCreationView.new(self)
     @game_map_view = GameMapView.new(self)
     @map_editor_view = MapEditorView.new(self)
