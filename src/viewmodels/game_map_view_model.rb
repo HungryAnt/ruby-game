@@ -151,6 +151,8 @@ class GameMapViewModel
     @role_vm_dict = {}
     register_role_msg_call_back
     register_delete_role_call_back
+    register_eating_food_call_back
+    register_eat_up_food_call_back
   end
 
   def register_role_msg_call_back
@@ -179,6 +181,16 @@ class GameMapViewModel
             target_y = detail['target_y'].to_i
             role_vm.set_auto_move_to(target_x, target_y)
         end
+
+        food_type_id = role_map['food_type_id']
+        unless food_type_id.nil?
+          if food_type_id >= 0
+            role_vm_eat_food role_vm, food_type_id, true
+          else
+            role_vm.clear_food
+          end
+        end
+
       end
     end
   end
@@ -187,6 +199,33 @@ class GameMapViewModel
     @game_roles_service.register_delete_role_call_back do |user_id|
       role_vm = @role_vm_dict[user_id]
       role_vm.area_id = :none
+    end
+  end
+
+  def register_eating_food_call_back
+    @game_roles_service.register_eating_food_call_back do |user_id, food_type_id|
+      if @player_service.user_id != user_id
+        role_vm = @role_vm_dict[user_id]
+        role_vm_eat_food role_vm, food_type_id
+      end
+    end
+  end
+
+  def register_eat_up_food_call_back
+    @game_roles_service.register_eat_up_food_call_back do |user_id|
+      if @player_service.user_id != user_id
+        role_vm = @role_vm_dict[user_id]
+        role_vm.clear_food
+      end
+    end
+  end
+
+  def role_vm_eat_food(role_vm, food_type_id, quietly = false)
+    food_vm = ItemViewModelFactory.create_simple_food_vm(food_type_id)
+    if quietly
+      role_vm.eat_food_quietly food_vm
+    else
+      role_vm.eat_food food_vm
     end
   end
 

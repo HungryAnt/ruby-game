@@ -39,4 +39,15 @@ class Food < Item
     item_map['energy'] = @energy
     item_map
   end
+
+  def to_food_map
+    {
+        food_type_id: @food_type_info.id,
+    }
+  end
+
+  def self.from_food_map(food_map)
+    food_type_id = food_map['food_type_id'].to_i
+    new('', 0, 0, food_type_id, 99999)
+  end
 end

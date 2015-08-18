@@ -54,7 +54,7 @@ class AreaViewModel
 
   def mark_target(x, y)
     anim = AnimationManager::get_anim :area_click
-    anim_holder = AnimationHolder.new anim, x, y, ZOrder::UI, false, 1
+    anim_holder = AnimationHolder.new anim, x, y, ZOrder::Background, false, 1
     @anim_container.add_anim anim_holder
   end
 

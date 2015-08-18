@@ -52,9 +52,7 @@ class PlayerViewModel
     item = @role.discard
     return if item.nil?
     if item.respond_to? :eatable?
-      @role_vm.clear_food
-      # food_vm = FoodViewModel.new item
-      # food_vms << food_vm
+      eat_up
       remote_discard_item item
     end
   end
@@ -95,9 +93,9 @@ class PlayerViewModel
     # sync_role Role::Action::DISAPPEAR, detail
   end
 
-  def start_eat_food(food)
-    @role_vm.eat_food food
-    remote_eating_food food
+  def start_eat_food(food_vm)
+    @role_vm.eat_food food_vm
+    remote_eating_food food_vm.food
   end
 
   private
@@ -148,7 +146,7 @@ class PlayerViewModel
 
   def remote_eating_food(food)
     user_id = get_user_id
-    @chat_service.send_eating_food_message(user_id, food)
+    @chat_service.send_eating_food_message(user_id, food.to_food_map)
   end
 
   def remote_eat_up_food

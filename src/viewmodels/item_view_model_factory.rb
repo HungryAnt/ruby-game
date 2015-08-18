@@ -6,6 +6,12 @@ class ItemViewModelFactory
     end
   end
 
+  def self.create_simple_food_vm(food_type_id)
+    food = Food.new('', 0, 0, food_type_id, 999)
+    food_vm = FoodViewModel.new(food)
+    food_vm
+  end
+
   private
 
   def self.create_food_vm(item_map)

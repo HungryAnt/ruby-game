@@ -41,6 +41,10 @@ class RoleViewModel
 
   def eat_food(food_vm)
     @sound_eat_food.play
+    eat_food_quietly food_vm
+  end
+
+  def eat_food_quietly(food_vm)
     @role.start_eat food_vm.food
     @eating_food_vm = food_vm
   end
