@@ -8,13 +8,14 @@ class Food < Item
   attr_accessor :eating, :covered
   attr_reader :energy, :max_energy
 
-  def initialize(id, x, y, food_type_id)
+  def initialize(id, x, y, food_type_id, energy)
     init_item(id, Item::ItemType::FOOD, x, y)
     init_visible
     @food_type_info = FoodTypeInfo.get(food_type_id)
     @eating = false
     @covered = false
-    @max_energy = @energy = @food_type_info.energy
+    @max_energy = @food_type_info.energy
+    @energy = energy
   end
 
   def eatable?
