@@ -17,8 +17,8 @@ class UserCreationView
   def init_user_name_text_box
     @user_name_text_box = TextBox.new(true)
     @user_name_text_box.font = Gosu::Font.new(30)
-    @user_name_text_box.default_text =
-        %w(孤独的美食家 终极帅哥sl)[rand(2)] + rand(1000).to_s
+    @user_name_text_box.default_text = @user_service.user_name
+        # %w(孤独的美食家 终极帅哥sl)[rand(2)] + rand(1000).to_s
     @window.text_input = @user_name_text_box.text_input
   end
 
@@ -69,6 +69,7 @@ class UserCreationView
     user_name = @user_name_text_box.default_text if user_name == ''
     puts "enter_game, user_name: #{user_name}"
     @user_service.user_name = user_name
+    @user_service.save
     @enter_game_proc.call
   end
 end

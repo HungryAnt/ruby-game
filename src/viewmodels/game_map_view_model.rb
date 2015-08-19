@@ -101,6 +101,7 @@ class GameMapViewModel
   end
 
   def switch_map(map_id)
+    return if map_id == get_current_map.id.to_sym
     @player_view_model.disappear
     @map_service.switch_map map_id
     @player_view_model.switch_to_new_map
@@ -167,6 +168,7 @@ class GameMapViewModel
         role_vm.role.x = role_map['x'].to_i
         role_vm.role.y = role_map['y'].to_i
         role_vm.role.hp = role_map['hp'].to_i
+        role_vm.role.lv = role_map['lv'].to_i
         role_vm.set_state role_map['state'].to_sym
         role_vm.set_direction role_map['direction'].to_i
         role_vm.area_id = role_map['area_id'].to_sym
@@ -185,7 +187,7 @@ class GameMapViewModel
         food_type_id = role_map['food_type_id']
         unless food_type_id.nil?
           if food_type_id >= 0
-            role_vm_eat_food role_vm, food_type_id, true
+            role_vm_eat_food role_vm, food_type_id, false
           else
             role_vm.clear_food
           end
@@ -222,7 +224,7 @@ class GameMapViewModel
 
   def role_vm_eat_food(role_vm, food_type_id, quietly = false)
     food_vm = ItemViewModelFactory.create_simple_food_vm(food_type_id)
-    if quietly
+    if quietly || role_vm.area_id != get_current_area.id
       role_vm.eat_food_quietly food_vm
     else
       role_vm.eat_food food_vm
@@ -258,6 +260,10 @@ class GameMapViewModel
 
   def get_current_map
     @map_service.current_map
+  end
+
+  def get_current_area
+    get_current_map.current_area
   end
 
   def touch_item?(mouse_x, mouse_y)

@@ -2,7 +2,7 @@
 
 class MainWindow < Gosu::Window
 
-  VERSION = 'v0.4.0 beta 网络版'
+  VERSION = 'v0.4.1 beta 网络版'
 
   def initialize
     super GameConfig::MAP_WIDTH,
@@ -43,8 +43,8 @@ class MainWindow < Gosu::Window
       @font.draw("draw_rate: #{draw_rate} per second", 10, 50,
                  ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
     end
-    Gosu::draw_rect 0, 0, 20 * 20, 20, 0xAA_EFEF56
-    message = "#{VERSION} 作者:Gods_巨蚁 QQ:517377100"
+    Gosu::draw_rect 0, 0, 20 * 30, 20, 0xAA_EFEF56
+    message = "#{VERSION} 作者:Gods_巨蚁 QQ:517377100 Q群:475143537"
 
     @font.draw(message, 11, 1,
                ZOrder::UI, 1.0, 1.0, 0xFF_9EC4FF)
