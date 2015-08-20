@@ -26,4 +26,9 @@ module Exp
     end
     @exp = exp
   end
+
+  def update_lv(lv, exp)
+    @lv, @exp = lv, exp
+    @max_exp = lv_max_exp
+  end
 end

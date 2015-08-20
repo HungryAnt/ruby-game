@@ -27,7 +27,7 @@ class Role
   include Hp
   include Exp
 
-  attr_accessor :state, :direction, :role_type, :hp, :lv
+  attr_accessor :state, :direction, :role_type, :hp
   attr_reader :package, :name
 
   def initialize(name, role_type, x, y)

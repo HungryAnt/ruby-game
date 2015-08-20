@@ -5,7 +5,6 @@ class GameMapViewModel
   end
 
   def init
-    @player_service.init
     role = @player_service.role
     @player_view_model = PlayerViewModel.new(RoleViewModel.new(role))
     @gen_food_timestamp = Gosu::milliseconds

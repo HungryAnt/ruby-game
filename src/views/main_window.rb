@@ -7,13 +7,21 @@ class MainWindow < Gosu::Window
   def initialize
     super GameConfig::MAP_WIDTH,
           GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT
+    autowired(PlayerService)
+
     self.caption = "童年记忆 - Ant版野菜部落 网络版 #{VERSION}"
     @user_creation_view = UserCreationView.new(self)
+    @loading_view = LoadingView.new
     @game_map_view = GameMapView.new(self)
     @map_editor_view = MapEditorView.new(self)
-    @current_view = @user_creation_view
 
     @user_creation_view.init_enter_game_proc do
+      @player_service.init
+      @current_view = @loading_view
+    end
+
+    @loading_view.init_skip_call_back do
+      @player_service.update_lv
       @game_map_view.init
       @current_view = @game_map_view
     end
@@ -22,6 +30,7 @@ class MainWindow < Gosu::Window
     @update_times = 0
     @draw_times = 0
     @font = Gosu::Font.new(20)
+    @current_view = @user_creation_view
   end
 
   def update

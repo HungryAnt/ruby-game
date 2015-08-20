@@ -4,15 +4,16 @@ require 'securerandom'
 
 class UserService
   attr_accessor :user_name
-  attr_reader :user_id
+  attr_reader :user_id, :lv, :exp
 
   def initialize
     pwd = Dir::pwd
     @file_path = File.join(pwd, 'user.dat')
-    init
+    init_user
+    init_lv_exp
   end
 
-  def init
+  def init_user
     if File.exist? @file_path
       @user_id, @user_name = load_user
       puts "#{@user_id}, #{@user_name}"
@@ -20,6 +21,21 @@ class UserService
       @user_id, @user_name =  SecureRandom.uuid, '小空雅游客' + rand(1000).to_s
       save
     end
+  end
+
+  def init_lv_exp
+    @lv = 1
+    @exp = 0
+    @lv_synced = false
+  end
+
+  def update_lv_exp(lv, exp)
+    @lv, @exp = lv, exp
+    @lv_synced = true
+  end
+
+  def lv_synced?
+    @lv_synced
   end
 
   def save

@@ -9,6 +9,11 @@ class ChatService
     init_message_handler
   end
 
+  def init_sync_user(user_id, user_name)
+    init_sync_user_msg = InitSyncUserMessage.new(user_id, user_name)
+    send init_sync_user_msg
+  end
+
   def chat(msg)
     puts 'chat'
     chat_msg = ChatMessage.new(@user_service.user_id, @user_service.user_name, msg)
@@ -88,6 +93,11 @@ class ChatService
 
   private
   def init_message_handler
+    @network_service.register('lv_message') do |msg_map, params|
+      lv_msg = LvMessage.json_create(msg_map)
+      @user_service.update_lv_exp lv_msg.lv, lv_msg.exp
+    end
+
     @network_service.register('chat_message') do |msg_map, params|
       chat_msg = ChatMessage.json_create(msg_map)
       # puts "[#{text_message.sender}: #{text_message.content}]"
