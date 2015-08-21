@@ -110,6 +110,7 @@ class PlayerViewModel
   def eat_up
     @role_vm.clear_food
     remote_eat_up_food
+    remote_update_lv
   end
 
   def have_a_rest
@@ -152,6 +153,10 @@ class PlayerViewModel
   def remote_eat_up_food
     user_id = get_user_id
     @chat_service.send_eat_up_food_message(user_id)
+  end
+
+  def remote_update_lv
+    @chat_service.send_update_lv get_user_id, @role.lv, @role.exp
   end
 
   def get_current_area_id

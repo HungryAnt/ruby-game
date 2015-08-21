@@ -8,11 +8,11 @@ class GameMapViewModel
     role = @player_service.role
     @player_view_model = PlayerViewModel.new(RoleViewModel.new(role))
     @gen_food_timestamp = Gosu::milliseconds
-    @map_service.switch_map :grass_wood_back
+    @map_service.switch_map :grass_wood_back, role
     @mouse_vm = MouseViewModel.new
     init_roles
     init_area_items
-    @player_view_model.switch_to_new_map
+    # @player_view_model.switch_to_new_map
   end
 
   def update
@@ -102,7 +102,7 @@ class GameMapViewModel
   def switch_map(map_id)
     return if map_id == get_current_map.id.to_sym
     @player_view_model.disappear
-    @map_service.switch_map map_id
+    @map_service.switch_map map_id, @player_view_model.role
     @role_vm_dict.clear
     @player_view_model.switch_to_new_map
   end

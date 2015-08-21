@@ -20,9 +20,9 @@ class ChatService
     send chat_msg
   end
 
-  def join(map_id)
+  def join(map_id, role)
     puts 'join'
-    join_msg = JoinMessage.new(@user_service.user_id, @user_service.user_name, map_id)
+    join_msg = JoinMessage.new(@user_service.user_id, @user_service.user_name, role.lv, map_id)
     puts join_msg.to_json
     send join_msg
   end
@@ -75,10 +75,22 @@ class ChatService
     send eat_up_food_msg
   end
 
+  def send_update_lv(user_id, lv, exp)
+    puts 'send_update_lv'
+    send UpdateLvMessage.new(user_id, lv, exp)
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1
       @chat_msgs << msg
+    }
+  end
+
+  def clear_chat_msgs
+    @mutex.synchronize {
+      @revision += 1
+      @chat_msgs.clear
     }
   end
 

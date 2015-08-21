@@ -4,7 +4,6 @@ class ChatBoardViewModel
   def initialize
     autowired(ChatService)
     @msgs = []
-    puts 'ok!!!!!!!!!!'
     @revision = nil
   end
 

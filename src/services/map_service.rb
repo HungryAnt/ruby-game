@@ -20,14 +20,15 @@ class MapService
     @area_vm_dict[key]
   end
 
-  def switch_map(key)
+  def switch_map(key, role)
     map = @maps[key]
     if @current_map != map
+      @chat_service.clear_chat_msgs
       @chat_service.quit(@current_map.id) unless @current_map.nil?
       map.switch_to_first_area
       @current_map = map
       @current_map.activate
-      @chat_service.join(map.id)
+      @chat_service.join(map.id, role)
     end
   end
 

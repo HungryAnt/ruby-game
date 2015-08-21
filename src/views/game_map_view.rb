@@ -104,7 +104,7 @@ class GameMapView < ViewBase
       @chat_text_box.enabled = false
 
       # 发送聊天信息
-      @game_map_view_model.chat text
+      @game_map_view_model.chat text if text.size > 0
     else
       @chat_text_box.enabled = true
     end

@@ -32,6 +32,7 @@ require 'models/tiles'
 
 require 'messages/init_sync_user_message'
 require 'messages/lv_message'
+require 'messages/update_lv_message'
 require 'messages/join_message'
 require 'messages/quit_message'
 require 'messages/chat_message'
