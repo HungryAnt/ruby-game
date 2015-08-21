@@ -140,7 +140,7 @@ class Role
   def from_map(map)
     role = Role(map['name'], map['role_type'].to_sym, map['x'].to_i, map['y'].to_i)
     role.hp = map['hp'].to_i
-    role.lv = map['lv'].to_i
+    role.update_lv(map['lv'].to_i, 0)
     role.state = map['state'].to_sym
     role.direction = map['direction'].to_i
   end

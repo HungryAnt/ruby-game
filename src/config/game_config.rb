@@ -1,4 +1,6 @@
 class GameConfig
+  DEBUG = true
+
   MAP_WIDTH = 800
   MAP_HEIGHT = 600
 
@@ -21,8 +23,6 @@ class GameConfig
 
   RUNNING_HP_DEC = 0.2
   REST_HP_INC = 0.05
-
-  DEBUG = false
 
   ROLE_INTAKE = 0.2
 end

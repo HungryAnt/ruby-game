@@ -27,7 +27,7 @@ class NetworkService
   def send(data)
     return if has_error?
     puts "[send data]: #{data}"
-    @s.puts(data)
+    @s.puts(data + "\n")
   end
 
   def start_msg_loop
