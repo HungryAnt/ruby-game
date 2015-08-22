@@ -208,7 +208,7 @@ class GameMapViewModel
     @game_roles_service.register_eating_food_call_back do |user_id, food_type_id|
       if @player_service.user_id != user_id
         role_vm = @role_vm_dict[user_id]
-        role_vm_eat_food role_vm, food_type_id
+        role_vm_eat_food role_vm, food_type_id unless role_vm.nil?
       end
     end
   end
@@ -217,7 +217,7 @@ class GameMapViewModel
     @game_roles_service.register_eat_up_food_call_back do |user_id|
       if @player_service.user_id != user_id
         role_vm = @role_vm_dict[user_id]
-        role_vm.clear_food
+        role_vm.clear_food unless role_vm.nil?
       end
     end
   end
