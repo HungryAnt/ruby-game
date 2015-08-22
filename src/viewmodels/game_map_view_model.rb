@@ -200,7 +200,7 @@ class GameMapViewModel
   def register_delete_role_call_back
     @game_roles_service.register_delete_role_call_back do |user_id|
       role_vm = @role_vm_dict[user_id]
-      role_vm.area_id = :none
+      role_vm.area_id = :none unless role_vm.nil?
     end
   end
 

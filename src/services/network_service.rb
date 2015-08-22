@@ -26,7 +26,7 @@ class NetworkService
 
   def send(data)
     return if has_error?
-    puts "[send data]: #{data}"
+    # puts "[send data]: #{data}"
     @s.puts(data + "\n")
   end
 
@@ -34,16 +34,20 @@ class NetworkService
     Thread.new {
       begin
         while (line = @s.gets("\n"))
-          next if line.nil?
-          line = line.chomp.gsub /\n|\r/, ''
-          next if line == ''
-          puts "line: #{line}"
-          msg_map = JSON.parse(line)
-          @message_handler_service.process msg_map
+          begin
+            next if line.nil?
+            line = line.chomp.gsub /\n|\r/, ''
+            next if line == ''
+            msg_map = JSON.parse(line)
+            @message_handler_service.process msg_map
+          rescue Exception => e
+            puts "line: #{line}"
+            puts "get_messages process line exception: #{e.message}"
+            puts e.backtrace.inspect
+          end
         end
       rescue Exception => e
-        puts 'get_messages raise exception:'
-        puts e.message
+        puts "get_messages raise exception: #{e.message}"
         puts e.backtrace.inspect
       end
     }
