@@ -45,14 +45,14 @@ class UserService
   private
 
   def load_user
-    File.open(@file_path, 'r') do |f|
+    File.open(@file_path, 'r:UTF-8') do |f|
       lines = f.readlines
       return lines[0].chomp, lines[1].chomp
     end
   end
 
   def save_user(user_id, user_name)
-    File.open(@file_path, 'w') do |f|
+    File.open(@file_path, 'w:UTF-8') do |f|
       f.puts user_id
       f.puts user_name
     end
