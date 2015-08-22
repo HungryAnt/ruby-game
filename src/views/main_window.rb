@@ -2,7 +2,7 @@
 
 class MainWindow < Gosu::Window
 
-  VERSION = 'v0.4.1 beta 网络版'
+  VERSION = 'v0.4.2 beta 网络版'
 
   def initialize
     super GameConfig::MAP_WIDTH,
