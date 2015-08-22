@@ -15,6 +15,8 @@ class MainWindow < Gosu::Window
     @game_map_view = GameMapView.new(self)
     @map_editor_view = MapEditorView.new(self)
 
+    @ready_for_game = false
+
     @user_creation_view.init_enter_game_proc do
       @player_service.init
       @current_view = @loading_view
@@ -24,6 +26,7 @@ class MainWindow < Gosu::Window
       @player_service.update_lv
       @game_map_view.init
       @current_view = @game_map_view
+      @ready_for_game = true
     end
 
     @begin_times = Gosu::milliseconds
@@ -75,11 +78,13 @@ class MainWindow < Gosu::Window
   def button_down(id)
     @current_view.button_down id
 
-    case id
-      when Gosu::KbF1
-        @current_view = @game_map_view
-      when Gosu::KbF2
-        @current_view = @map_editor_view
+    if @ready_for_game && GameConfig::DEBUG
+      case id
+        when Gosu::KbF1
+          @current_view = @game_map_view
+        when Gosu::KbF3
+          @current_view = @map_editor_view
+      end
     end
   end
 

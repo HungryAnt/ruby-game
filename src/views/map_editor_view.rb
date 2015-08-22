@@ -68,6 +68,47 @@ class MapEditorView
                GameConfig::MAP_WIDTH - 200, GameConfig::MAP_HEIGHT, ZOrder::UI, 1.0, 1.0, 0xff_ffffff)
   end
 
+  def button_down(id)
+    if id >= Gosu::Kb1 && id <= Gosu::Kb9
+      @area_index = id - Gosu::Kb1
+    elsif id == Gosu::KbLeft || id == Gosu::KbUp
+      @area_index -= 1
+    elsif id == Gosu::KbRight || id == Gosu::KbDown
+      @area_index += 1
+    end
+    @area_index = [@areas.size - 1, @area_index].min
+    @area_index = [0, @area_index].max
+    @current_area = @areas[@area_index]
+
+    if id == Gosu::MsLeft
+      if @window.mouse_y > GameConfig::MAP_HEIGHT
+        # 选择地图贴片
+        @current_tile = @tile_selector.select_tile @window.mouse_x, @window.mouse_y-GameConfig::MAP_HEIGHT
+      else
+        # 开始编辑地图
+        unless @current_tile.nil?
+          @editing = true
+          @origin_row = @window.mouse_y / Area::GRID_HEIGHT
+          @origin_col = @window.mouse_x / Area::GRID_WIDTH
+        end
+      end
+    end
+
+    if id == Gosu::KbP
+      print_tiles
+    end
+  end
+
+  def button_up(id)
+    if id == Gosu::MsLeft
+      @editing = false
+    end
+  end
+
+  def needs_cursor?
+    true
+  end
+
   private
 
   def draw_tile_grid
@@ -111,37 +152,6 @@ class MapEditorView
     end
   end
 
-  def button_down(id)
-    if id >= Gosu::Kb1 && id <= Gosu::Kb9
-      @area_index = id - Gosu::Kb1
-    elsif id == Gosu::KbLeft || id == Gosu::KbUp
-      @area_index -= 1
-    elsif id == Gosu::KbRight || id == Gosu::KbDown
-      @area_index += 1
-    end
-    @area_index = [@areas.size - 1, @area_index].min
-    @area_index = [0, @area_index].max
-    @current_area = @areas[@area_index]
-
-    if id == Gosu::MsLeft
-      if @window.mouse_y > GameConfig::MAP_HEIGHT
-        # 选择地图贴片
-        @current_tile = @tile_selector.select_tile @window.mouse_x, @window.mouse_y-GameConfig::MAP_HEIGHT
-      else
-        # 开始编辑地图
-        unless @current_tile.nil?
-          @editing = true
-          @origin_row = @window.mouse_y / Area::GRID_HEIGHT
-          @origin_col = @window.mouse_x / Area::GRID_WIDTH
-        end
-      end
-    end
-
-    if id == Gosu::KbP
-      print_tiles
-    end
-  end
-
   def print_tiles
     @current_area.tiles.each do |row_tiles|
       row_tiles.each do |tile|
@@ -155,13 +165,5 @@ class MapEditorView
     end
   end
 
-  def button_up(id)
-    if id == Gosu::MsLeft
-      @editing = false
-    end
-  end
 
-  def needs_cursor?
-    true
-  end
 end

@@ -106,3 +106,19 @@ AnimationManager.new_anim(:school_ground_children) do
   images = AnimationUtil.get_images(pattern, nums)
   AnimationUtil.get_animation images, 200
 end
+
+# police_policeman
+AnimationManager.new_anim(:police_policeman) do
+  pattern = 'map/police/man_${num}.bmp'
+  nums = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1]
+  images = AnimationUtil.get_images(pattern, nums)
+  AnimationUtil.get_animation images, 300
+end
+
+# police_tv
+AnimationManager.new_anim(:police_tv) do
+  pattern = 'map/police/tv_${num}.bmp'
+  nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, 1]
+  images = AnimationUtil.get_images(pattern, nums)
+  AnimationUtil.get_animation images, 200
+end

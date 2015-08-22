@@ -74,6 +74,8 @@ class GameMapView < ViewBase
         @game_map_view_model.switch_map :pay
       when Gosu::Kb5
         @game_map_view_model.switch_map :alipay
+      when Gosu::KbF2
+        @game_map_view_model.switch_map :police
       when Gosu::Kb0
         @game_map_view_model.switch_role_type RoleType::WAN_GYE
       when Gosu::Kb9
