@@ -146,6 +146,11 @@ class GameMapViewModel
     @chat_service.chat msg
   end
 
+  def command(cmd)
+    user_id = @player_service.user_id
+    @chat_service.command cmd.chomp('`'), user_id, get_current_map.id, get_current_area.id.to_s
+  end
+
   private
 
   def init_roles

@@ -20,6 +20,11 @@ class ChatService
     send chat_msg
   end
 
+  def command(cmd, user_id, map_id, area_id)
+    cmd_msg = CommandMessage.new(cmd, user_id, map_id, area_id)
+    send cmd_msg
+  end
+
   def join(map_id, role)
     puts 'join'
     join_msg = JoinMessage.new(@user_service.user_id, @user_service.user_name, role.lv, map_id)

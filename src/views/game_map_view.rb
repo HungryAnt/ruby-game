@@ -61,7 +61,7 @@ class GameMapView < ViewBase
   end
 
   def button_down(id)
-    return if chat_input_enabled? && id != Gosu::KbReturn
+    return if chat_input_enabled? && id != Gosu::KbReturn && id != Gosu::KbBacktick
 
     case id
       when Gosu::Kb1
@@ -91,6 +91,10 @@ class GameMapView < ViewBase
         @game_map_view_model.discard
       when Gosu::KbReturn
         switch_chat_text_input
+      when Gosu::KbBacktick
+        if chat_input_enabled?
+          switch_chat_text_input true
+        end
     end
   end
 
@@ -99,14 +103,19 @@ class GameMapView < ViewBase
     @window.text_input = nil
   end
 
-  def switch_chat_text_input
+  def switch_chat_text_input(is_cmd = false)
     if chat_input_enabled?
       text = @chat_text_box.text
       @chat_text_box.clear
       @chat_text_box.enabled = false
 
-      # 发送聊天信息
-      @game_map_view_model.chat text if text.size > 0
+      if is_cmd
+        # 发送命令消息
+        @game_map_view_model.command text if text.size > 0
+      else
+        # 发送聊天消息
+        @game_map_view_model.chat text if text.size > 0
+      end
     else
       @chat_text_box.enabled = true
     end
