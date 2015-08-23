@@ -89,6 +89,8 @@ class GameMapView < ViewBase
       #   @player_view_model.start_eat_food
       when Gosu::KbF
         @game_map_view_model.discard
+      when Gosu::KbQ
+        @game_map_view_model.change_driving
       when Gosu::KbReturn
         switch_chat_text_input
       when Gosu::KbBacktick

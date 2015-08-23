@@ -70,6 +70,19 @@ role_info_list.each do |role_info|
         :hold_food_down => [role_pattern, down_nums, anim_interval]
     }
   end
+
+  AnimationManager.new_centered_anims prefix do
+    # ¶¯»­ÓëstandÒ»ÖÂ
+    h_nums = [27, 26, 25, 26, 27, 28, 29, 28]
+    up_nums = [17, 16, 15, 16, 17, 18, 19, 18]
+    down_nums = [2, 1, 0, 1, 2, 3, 4, 3]
+    {
+        :drive_left => [role_pattern, h_nums, anim_interval],
+        :drive_right => [role_pattern, h_nums, anim_interval, -1],
+        :drive_up => [role_pattern, up_nums, anim_interval],
+        :drive_down => [role_pattern, down_nums, anim_interval]
+    }
+  end
 end
 
 

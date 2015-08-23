@@ -49,6 +49,18 @@ class Direction
     is_direct_to(direction, DOWN)
   end
 
+  def self.to_direction_text(direction)
+    if is_direct_to_left(direction)
+      return 'left'
+    elsif is_direct_to_right(direction)
+      return 'right'
+    elsif is_direct_to_up(direction)
+      return 'up'
+    else
+      return 'down'
+    end
+  end
+
   private
   def self.is_direct_to(direction, target_direction)
     direction & target_direction == target_direction

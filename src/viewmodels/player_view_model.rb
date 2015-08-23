@@ -22,6 +22,14 @@ class PlayerViewModel
     @role_vm.draw
   end
 
+  def driving
+    @role_vm.driving
+  end
+
+  def driving=(value)
+    @role_vm.driving = value
+  end
+
   def move(direction, map_vm)
     if direction != Direction::NONE
       @auto_move_enabled = false

@@ -1,6 +1,6 @@
 class RoleViewModel
   attr_reader :role, :standing
-  attr_accessor :area_id
+  attr_accessor :area_id, :driving
 
   def initialize(role)
     autowired(MapService)
@@ -14,11 +14,13 @@ class RoleViewModel
     @arrive_call_back = nil
     stop
     @area_id = nil
+    @car = EquipmentViewModelFactory::create_car_828()
+    @driving = true
   end
 
   def init_animations
     role_type = @role.role_type.to_s
-    %w(stand walk run eat hold_food).each do |state|
+    %w(stand walk run eat hold_food drive).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
                                    get_anim("#{role_type}_#{state}_#{direction}".to_sym))
@@ -78,6 +80,10 @@ class RoleViewModel
     end
   end
 
+  def update_eating_food
+    @role.update_eating_food(*get_actual_role_location)
+  end
+
   def set_state(state)
     @role.state = state
     change_anim
@@ -92,13 +98,21 @@ class RoleViewModel
       if @standing
         return Role::State::EATING
       else
-        return Role::State::HOLDING_FOOD
+        if @driving
+          return Role::State::HOLDING_FOOD
+        else
+          return Role::State::HOLDING_FOOD
+        end
       end
     else
       if @standing
         return Role::State::STANDING
       else
-        return @running ? Role::State::RUNNING : Role::State::WALKING
+        if @driving
+          return Role::State::DRIVING
+        else
+          return @running ? Role::State::RUNNING : Role::State::WALKING
+        end
       end
     end
   end
@@ -109,6 +123,7 @@ class RoleViewModel
 
   def draw
     draw_role_anim
+    draw_equipment
     @eating_food_vm.draw unless @eating_food_vm.nil?
     draw_level_and_name
   end
@@ -126,16 +141,7 @@ class RoleViewModel
   def change_anim
     state = @role.state.to_s
 
-    direction = ''
-    if Direction::is_direct_to_left(@role.direction)
-      direction = 'left'
-    elsif Direction::is_direct_to_right(@role.direction)
-      direction = 'right'
-    elsif Direction::is_direct_to_up(@role.direction)
-      direction = 'up'
-    elsif Direction::is_direct_to_down(@role.direction)
-      direction = 'down'
-    end
+    direction = Direction::to_direction_text(@role.direction)
 
     @current_anim = self.instance_variable_get("@anim_#{state}_#{direction}")
   end
@@ -145,7 +151,14 @@ class RoleViewModel
   end
 
   def draw_role_anim
-    @current_anim.draw(@role.x, @role.y - 26, ZOrder::Player)
+    x, y = get_actual_role_location
+    @current_anim.draw(x, y, ZOrder::Player)
+  end
+
+  def draw_equipment
+    if @driving
+      @car.draw(@role.x, @role.y, @role.direction)
+    end
   end
 
   def draw_level_and_name
@@ -199,7 +212,9 @@ class RoleViewModel
   end
 
   def get_speed
-    @running ? @speed * 2 : @speed
+    speed = @running ? @speed * 2 : @speed
+    speed = speed * 2 if @driving
+    speed
   end
 
   def move_to_location(x, y)
@@ -213,5 +228,11 @@ class RoleViewModel
   def complete_auto_move
     disable_auto_move
     @arrive_call_back.call unless @arrive_call_back.nil?
+  end
+
+  def get_actual_role_location
+    x, y = @role.x, @role.y - 30
+    y = y - @car.car_body_height if @driving
+    [x, y]
   end
 end

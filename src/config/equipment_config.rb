@@ -1,0 +1,2 @@
+class EquipmentConfig
+end

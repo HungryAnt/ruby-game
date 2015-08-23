@@ -15,6 +15,7 @@ class Role
     RUNNING = :run
     EATING = :eat
     HOLDING_FOOD = :hold_food
+    DRIVING = :drive
   end
 
   class Action
@@ -43,6 +44,7 @@ class Role
     @direction = Direction::DOWN
     @intake = GameConfig::ROLE_INTAKE
     @temp_exp = 0
+    # @speed = 2.0
   end
 
   def start_eat(food)
@@ -71,13 +73,13 @@ class Role
     !@eating_food.nil?
   end
 
-  def update_eating_food
+  def update_eating_food(origin_x, origin_y)
     food = @eating_food
     return if food.nil?
 
     if holding_food?
       food.visible = true
-      food.x, food.y = @x, @y-51
+      food.x, food.y = origin_x, origin_y-21
       food.covered = @direction == Direction::UP
       return
     end
@@ -88,15 +90,15 @@ class Role
       food.visible = true
 
       if Direction::is_direct_to_down @direction
-        food.x, food.y = @x, @y
+        food.x, food.y = origin_x, origin_y + 30
       end
 
       if Direction::is_direct_to_left @direction
-        food.x, food.y = @x-35, @y
+        food.x, food.y = origin_x-35, origin_y + 30
       end
 
       if Direction::is_direct_to_right @direction
-        food.x, food.y = @x+35, @y
+        food.x, food.y = origin_x+35, origin_y + 30
       end
     end
   end
@@ -133,7 +135,8 @@ class Role
         hp: @hp,
         lv: @lv,
         state: @state.to_s,
-        direction: @direction
+        direction: @direction,
+        # speed: @speed
     }
   end
 
@@ -143,5 +146,6 @@ class Role
     role.update_lv(map['lv'].to_i, 0)
     role.state = map['state'].to_sym
     role.direction = map['direction'].to_i
+    # role.speed = map['speed'].to_f
   end
 end

@@ -50,7 +50,7 @@ class GameMapViewModel
 
     all_role_vms_do do |role_vm|
       role_vm.auto_move map_vm
-      role_vm.role.update_eating_food
+      role_vm.update_eating_food
       role_vm.update_state
     end
 
@@ -149,6 +149,10 @@ class GameMapViewModel
   def command(cmd)
     user_id = @player_service.user_id
     @chat_service.command cmd.chomp('`'), user_id, get_current_map.id, get_current_area.id.to_s
+  end
+
+  def change_driving
+    @player_view_model.driving = !@player_view_model.driving
   end
 
   private
