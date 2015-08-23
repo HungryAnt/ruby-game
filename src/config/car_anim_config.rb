@@ -20,3 +20,16 @@ AnimationManager.new_centered_anims prefix do
       :car_828_down => [pattern, down_nums, anim_interval]
   }
 end
+
+AnimationManager.new_centered_anims prefix do
+  pattern = 'car/604/604_${num}.bmp'
+  hor_nums = to_anim_nums(16, 23)
+  up_nums = to_anim_nums(8, 15)
+  down_nums = to_anim_nums(0,7)
+  {
+      :car_604_left => [pattern, hor_nums, anim_interval],
+      :car_604_right => [pattern, hor_nums, anim_interval, -1],
+      :car_604_up => [pattern, up_nums, anim_interval],
+      :car_604_down => [pattern, down_nums, anim_interval]
+  }
+end

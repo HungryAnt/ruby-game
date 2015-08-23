@@ -14,7 +14,7 @@ class RoleViewModel
     @arrive_call_back = nil
     stop
     @area_id = nil
-    @car = EquipmentViewModelFactory::create_car_828()
+    @car = EquipmentViewModelFactory::create_car('604')
     @driving = true
   end
 

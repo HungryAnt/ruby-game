@@ -1,6 +1,6 @@
 class EquipmentViewModelFactory
-  def self.create_car_828
-    equipment_vm = EquipmentViewModel.new('car_828', 12)
+  def self.create_car(num)
+    equipment_vm = EquipmentViewModel.new("car_#{num}", 10)
     equipment_vm
   end
 end
