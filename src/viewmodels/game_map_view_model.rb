@@ -1,4 +1,6 @@
 class GameMapViewModel
+  attr_reader :package_items_view_model
+
   def initialize
     autowired(PlayerService, ChatService, MapService,
               GameRolesService, AreaItemsService, NetworkService)
@@ -12,7 +14,7 @@ class GameMapViewModel
     @mouse_vm = MouseViewModel.new
     init_roles
     init_area_items
-    # @player_view_model.switch_to_new_map
+    @package_items_view_model = PackageItemsViewModel.new(role)
   end
 
   def update

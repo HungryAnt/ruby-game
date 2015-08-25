@@ -12,6 +12,7 @@ class GameMapView < ViewBase
     @status_bar_view = StatusBarView.new
     @chat_board_view = ChatBoardView.new(ChatBoardViewModel.new)
     @font_chat_input = Gosu::Font.new(18)
+    @package_items_view = PackageItemsView.new(@game_map_view_model.package_items_view_model)
     init_chat_text_input
   end
 
@@ -43,6 +44,7 @@ class GameMapView < ViewBase
   end
 
   def draw
+    @package_items_view.draw
     @game_map_view_model.draw
     @window.translate(0, GameConfig::STATUS_BAR_Y) do
       @status_bar_view.draw
@@ -91,6 +93,8 @@ class GameMapView < ViewBase
         @game_map_view_model.discard
       when Gosu::KbQ
         @game_map_view_model.change_driving
+      when Gosu::KbE
+        @package_items_view.visible = !@package_items_view.visible
       when Gosu::KbReturn
         switch_chat_text_input
       when Gosu::KbBacktick

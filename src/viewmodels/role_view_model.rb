@@ -14,7 +14,7 @@ class RoleViewModel
     @arrive_call_back = nil
     stop
     @area_id = nil
-    @car = EquipmentViewModelFactory::create_car('604')
+    @vehicle = EquipmentViewModelFactory::create_vehicle('604')
     @driving = true
   end
 
@@ -157,7 +157,7 @@ class RoleViewModel
 
   def draw_equipment
     if @driving
-      @car.draw(@role.x, @role.y, @role.direction)
+      @vehicle.draw(@role.x, @role.y, @role.direction)
     end
   end
 
@@ -232,7 +232,7 @@ class RoleViewModel
 
   def get_actual_role_location
     x, y = @role.x, @role.y - 30
-    y = y - @car.car_body_height if @driving
+    y = y - @vehicle.vehicle_body_height if @driving
     [x, y]
   end
 end
