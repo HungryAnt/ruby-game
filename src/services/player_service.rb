@@ -16,6 +16,8 @@ class PlayerService
     @role = Role.new(user_name, role_type, 100, 300)
     @role.package << Equipment.new(Equipment::Type::VEHICLE, :car_604)
     @role.package << Equipment.new(Equipment::Type::VEHICLE, :car_828)
+    @role.package << Equipment.new(Equipment::Type::VEHICLE, :car_39)
+    @role.package << Equipment.new(Equipment::Type::VEHICLE, :car_40)
     @chat_service.init_sync_user @user_id, user_name
   end
 

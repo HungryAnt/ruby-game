@@ -1,9 +1,9 @@
 class EquipmentViewModel
   attr_reader :vehicle_body_height
 
-  def initialize(key, vehicle_body_height)
+  def initialize(key)
     init_anims key
-    @vehicle_body_height = vehicle_body_height
+    @vehicle_body_height = EquipmentDefinition.get_body_height(key)
     @location_offset = get_location_offset(key)
   end
 

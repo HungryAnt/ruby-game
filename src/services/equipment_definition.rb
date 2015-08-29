@@ -1,5 +1,6 @@
 class EquipmentDefinition
   @@location_offset_map = {}
+  @@body_height_map = {}
   @@item_image_map = {}
 
   def self.set_location_offset(key, offset)
@@ -7,7 +8,15 @@ class EquipmentDefinition
   end
 
   def self.get_location_offset(key)
-    return @@location_offset_map[key]
+    @@location_offset_map[key]
+  end
+
+  def self.set_body_height(key, body_height)
+    @@body_height_map[key] = body_height
+  end
+
+  def self.get_body_height(key)
+    @@body_height_map[key]
   end
 
   def self.set_item_image(key, img_path)

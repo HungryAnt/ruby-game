@@ -5,4 +5,8 @@ class RoleEquipment
     @vehicle = nil
     @weapon = nil
   end
+
+  def equip
+
+  end
 end
