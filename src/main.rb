@@ -9,6 +9,8 @@ require 'utils/media_util'
 require 'utils/graphics_util'
 require 'utils/level_util'
 
+require 'gui/gui'
+
 MediaUtil.init_base_media_path(File.join(@base_src_dir, '../media'))
 
 require 'engine/dependency_injection'

@@ -1,0 +1,7 @@
+require_relative 'visual'
+require_relative 'image'
+require_relative 'control'
+require_relative 'container'
+require_relative 'items_container'
+require_relative 'canvas'
+require_relative 'dialog'
