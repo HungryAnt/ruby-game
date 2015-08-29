@@ -14,7 +14,7 @@ class GameMapViewModel
     @mouse_vm = MouseViewModel.new
     init_roles
     init_area_items
-    @package_items_view_model = PackageItemsViewModel.new(role)
+    @package_items_view_model = PackageItemsViewModel.new(@player_view_model)
   end
 
   def update

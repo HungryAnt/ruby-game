@@ -30,6 +30,10 @@ class PlayerViewModel
     @role_vm.driving = value
   end
 
+  def equip(equipment_vm)
+    @role_vm.vehicle = equipment_vm
+  end
+
   def move(direction, map_vm)
     if direction != Direction::NONE
       @auto_move_enabled = false

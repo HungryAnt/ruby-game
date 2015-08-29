@@ -6,7 +6,7 @@ module AntGui
       super
       @content = nil
       @background_color = nil # 0x00_FFFFFF
-      @button_down_proc = nil
+      @mouse_left_button_down_proc = nil
     end
 
     def set(property, value)
@@ -29,10 +29,27 @@ module AntGui
       @content.draw unless @content.nil?
     end
 
-    def on_button_down(&proc)
+    def on_mouse_left_button_down(&proc)
       if block_given?
-        @button_down_proc = proc
+        @mouse_left_button_down_proc = proc
       end
+    end
+
+    def mouse_left_button_down(x, y)
+      unless @content.nil?
+        return true if @content.mouse_left_button_down(x, y)
+      end
+
+      if contains_point?(x, y)
+        call_mouse_left_button_down_proc
+        return true
+      end
+      false
+    end
+
+    private
+    def call_mouse_left_button_down_proc
+      @mouse_left_button_down_proc.call if @mouse_left_button_down_proc
     end
   end
 end

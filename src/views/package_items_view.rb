@@ -11,7 +11,8 @@ class PackageItemsView
   MARGIN = 5
   PADDING = 10
 
-  def initialize(package_items_vm)
+  def initialize(window, package_items_vm)
+    @window = window
     @package_items_vm = package_items_vm
     @visible = false
     init_controls
@@ -48,6 +49,9 @@ class PackageItemsView
         #               0xff_ffffff, mode = :default)
         image = AntGui::Image.new(item_img)
         control.content = image
+        control.on_mouse_left_button_down do
+          @package_items_vm.choose_equipment item
+        end
       end
 
       @canvas.add(control)
@@ -59,5 +63,22 @@ class PackageItemsView
   def draw
     return unless @visible
     @dialog.draw
+  end
+
+  def button_down(id)
+    return false unless @visible
+    case id
+      when Gosu::MsLeft, Gosu::MsRight
+        mouse_x, mouse_y = @window.mouse_x, @window.mouse_y
+        if @dialog.contains_point?(mouse_x, mouse_y)
+          if id == Gosu::MsLeft
+            @dialog.mouse_left_button_down(mouse_x, mouse_y)
+          else
+            # @dialog.mouse_right_button_down(mouse_x, mouse_y)
+          end
+          return true
+        end
+    end
+    false
   end
 end

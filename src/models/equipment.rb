@@ -4,7 +4,7 @@ class Equipment
     WEAPON = :weapon
   end
 
-  attr_reader :key
+  attr_reader :key, :type
 
   def initialize(type, key)
     @type = type

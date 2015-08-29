@@ -1,6 +1,6 @@
 class RoleViewModel
   attr_reader :role, :standing
-  attr_accessor :area_id, :driving
+  attr_accessor :area_id, :driving, :vehicle
 
   def initialize(role)
     autowired(MapService)
@@ -14,7 +14,7 @@ class RoleViewModel
     @arrive_call_back = nil
     stop
     @area_id = nil
-    @vehicle = EquipmentViewModelFactory::create_vehicle('604')
+    @vehicle = EquipmentViewModelFactory::create_vehicle(:car_828)
     @driving = true
   end
 

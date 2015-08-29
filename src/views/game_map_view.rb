@@ -12,7 +12,7 @@ class GameMapView < ViewBase
     @status_bar_view = StatusBarView.new
     @chat_board_view = ChatBoardView.new(ChatBoardViewModel.new)
     @font_chat_input = Gosu::Font.new(18)
-    @package_items_view = PackageItemsView.new(@game_map_view_model.package_items_view_model)
+    @package_items_view = PackageItemsView.new(@window, @game_map_view_model.package_items_view_model)
     init_chat_text_input
   end
 
@@ -64,6 +64,7 @@ class GameMapView < ViewBase
 
   def button_down(id)
     return if chat_input_enabled? && id != Gosu::KbReturn && id != Gosu::KbBacktick
+    return if @package_items_view.button_down(id)
 
     case id
       when Gosu::Kb1
@@ -131,8 +132,6 @@ class GameMapView < ViewBase
   def chat_input_enabled?
     @chat_text_box.enabled
   end
-
-
 
   def needs_cursor?
     @game_map_view_model.needs_cursor?
