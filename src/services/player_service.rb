@@ -14,10 +14,11 @@ class PlayerService
     puts "player name: #{user_name}"
     role_type = [RoleType::WAN_GYE, RoleType::SALARY][rand(2)]
     @role = Role.new(user_name, role_type, 100, 300)
-    @role.package << Equipment.new(Equipment::Type::VEHICLE, :car_604)
-    @role.package << Equipment.new(Equipment::Type::VEHICLE, :car_828)
-    @role.package << Equipment.new(Equipment::Type::VEHICLE, :car_39)
-    @role.package << Equipment.new(Equipment::Type::VEHICLE, :car_40)
+    [39, 40, 50, 58, 59, 67, 74, 75, 81, 82, 83, 89, 604, 828].each do |num|
+      vehicle_key = "vehicle_#{num}".to_sym
+      @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
+    end
+
     @chat_service.init_sync_user @user_id, user_name
   end
 

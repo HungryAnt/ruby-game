@@ -94,11 +94,11 @@ class Role
       end
 
       if Direction::is_direct_to_left @direction
-        food.x, food.y = origin_x-35, origin_y + 30
+        food.x, food.y = origin_x-27, origin_y + 22
       end
 
       if Direction::is_direct_to_right @direction
-        food.x, food.y = origin_x+35, origin_y + 30
+        food.x, food.y = origin_x+30, origin_y + 22
       end
     end
   end

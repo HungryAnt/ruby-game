@@ -89,12 +89,11 @@ require 'views/package_items_view'
 require 'views/main_window'
 
 require 'config/anim_config'
-require 'config/car_anim_config'
+require 'config/equipment_vehicle_config'
 require 'config/equipment_config'
 require 'config/map_config'
 require 'config/food_config'
 require 'config/network_config'
-require 'config/car_location_offset_config'
 
 require 'application'
 
