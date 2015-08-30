@@ -63,7 +63,7 @@ roof1_tiles_text = <<TILES
 ################################################################################
 TILES
 
-roof1_area = create_area(:house_roof1, 'map/house/roof1/HouseTop_0.bmp', 'map/church_outside.ogg', roof1_tiles_text)
+roof1_area = create_area(:house_roof1, 'map/house/roof1/HouseTop_0.bmp', 'map/house_roof.ogg', roof1_tiles_text)
 
 roof2_tiles_text = <<TILES
 ################################################################################
@@ -128,7 +128,7 @@ BB                                                 #############################
 ################################################################################
 TILES
 
-roof2_area = create_area(:house_roof2, 'map/house/roof2/HouseTop2_0.bmp', 'map/church_outside.ogg', roof2_tiles_text)
+roof2_area = create_area(:house_roof2, 'map/house/roof2/HouseTop2_0.bmp', 'map/house_roof.ogg', roof2_tiles_text)
 
 
 bottom_tiles_text = <<TILES
@@ -194,7 +194,7 @@ bottom_tiles_text = <<TILES
 ################################################################################
 TILES
 
-bottom_area = create_area(:house_bottom, 'map/house/bottom/HouseBottom_0.bmp', 'map/church_outside.ogg',
+bottom_area = create_area(:house_bottom, 'map/house/bottom/HouseBottom_0.bmp', 'map/house_bottom.ogg',
                           bottom_tiles_text)
 
 kitchen_outside_tiles_text = <<TILES
@@ -261,7 +261,7 @@ kitchen_outside_tiles_text = <<TILES
 TILES
 
 kitchen_outside_area = create_area(:house_kitchen_outside, 'map/house/kitchen_outside/KitchenOutside_0.bmp',
-                                   'map/church_outside.ogg', kitchen_outside_tiles_text)
+                                   'map/house_kitchen_outside.ogg', kitchen_outside_tiles_text)
 
 kitchen_inside_tiles_text = <<TILES
 ################################################################################
@@ -327,7 +327,7 @@ HH                                                                            ##
 TILES
 
 kitchen_inside_area = create_area(:house_kitchen_inside, 'map/house/kitchen_inside/KitchenInside_0.bmp',
-                                  'map/church_outside.ogg', kitchen_inside_tiles_text)
+                                  'map/house_kitchen_inside.ogg', kitchen_inside_tiles_text)
 
 
 roof1_area.gateway = {

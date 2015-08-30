@@ -49,7 +49,11 @@ class AreaViewModel
   end
 
   def activate
-    @song_service.play_song @area.song_path unless @area.song_path.nil?
+    if @area.song_path.nil?
+      @song_service.stop_song
+    else
+      @song_service.play_song @area.song_path
+    end
   end
 
   def mark_target(x, y)
