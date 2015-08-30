@@ -52,6 +52,7 @@ require 'messages/eat_up_food_message'
 require 'messages/command_message'
 
 require 'services/equipment_definition'
+require 'services/role_type_definition'
 
 require 'services/song_service'
 require 'services/map_service'
@@ -94,6 +95,7 @@ require 'config/equipment_config'
 require 'config/map_config'
 require 'config/food_config'
 require 'config/network_config'
+require 'config/role_config'
 
 require 'application'
 

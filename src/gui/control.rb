@@ -49,7 +49,7 @@ module AntGui
 
     private
     def call_mouse_left_button_down_proc
-      @mouse_left_button_down_proc.call if @mouse_left_button_down_proc
+      @mouse_left_button_down_proc.call unless @mouse_left_button_down_proc.nil?
     end
   end
 end

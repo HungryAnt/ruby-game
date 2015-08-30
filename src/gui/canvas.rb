@@ -8,7 +8,8 @@ module AntGui
     def arrange(left, top, width, height)
       super
       @items.each do |control|
-        control.arrange(control.get(LEFT), control.get(TOP), control.get(WIDTH), control.get(HEIGHT))
+        control.arrange(left + control.get(LEFT), top + control.get(TOP),
+                        control.get(WIDTH), control.get(HEIGHT))
       end
     end
   end

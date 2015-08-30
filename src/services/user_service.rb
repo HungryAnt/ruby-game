@@ -3,7 +3,7 @@
 require 'securerandom'
 
 class UserService
-  attr_accessor :user_name
+  attr_accessor :user_name, :role_type
   attr_reader :user_id, :lv, :exp
 
   def initialize
@@ -15,10 +15,10 @@ class UserService
 
   def init_user
     if !GameConfig::DEBUG && File.exist?(@file_path)
-      @user_id, @user_name = load_user
+      @user_id, @user_name, @role_type = load_user
       puts "#{@user_id}, #{@user_name}"
     else
-      @user_id, @user_name =  SecureRandom.uuid, '小空雅游客' + rand(1000).to_s
+      @user_id, @user_name, @role_type =  SecureRandom.uuid, '小空雅游客' + rand(1000).to_s, RoleType.default
       save
     end
   end
@@ -39,7 +39,7 @@ class UserService
   end
 
   def save
-    save_user(@user_id, @user_name)
+    save_user(@user_id, @user_name, @role_type)
   end
 
   private
@@ -47,14 +47,19 @@ class UserService
   def load_user
     File.open(@file_path, 'r:UTF-8') do |f|
       lines = f.readlines
-      return lines[0].chomp, lines[1].chomp
+      user_id = lines[0].chomp
+      user_name = lines[1].chomp
+      role_type = RoleType.default
+      role_type = RoleType.from(lines[2].chomp) if lines.length > 2
+      return user_id, user_name, role_type
     end
   end
 
-  def save_user(user_id, user_name)
+  def save_user(user_id, user_name, role_type)
     File.open(@file_path, 'w:UTF-8') do |f|
       f.puts user_id
       f.puts user_name
+      f.puts role_type.to_s
     end
   end
 end

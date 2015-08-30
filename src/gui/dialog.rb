@@ -7,7 +7,7 @@ module AntGui
     end
 
     def update_arrange
-      @content.arrange( @left, @top, @width, @height) unless @content.nil?
+      @content.arrange(@left, @top, @width, @height) unless @content.nil?
     end
   end
 end

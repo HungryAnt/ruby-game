@@ -20,6 +20,14 @@ class RoleType
   @@all_role_types = [WAN_GYE, SALARY, BANGYE, DOOBU, KIMCHI, MANL, MOO, PASERY, PIMENTO, RICE, YANGBEA, YANGPA]
   @@roles_len = @@all_role_types.length
 
+  def self.default
+    YANGPA
+  end
+
+  def self.get_all_types
+    @@all_role_types
+  end
+
   def self.random
     @@all_role_types[rand(@@roles_len)]
   end
@@ -37,6 +45,13 @@ class RoleType
   def self.get_index_of(role_type)
     0.upto(@@roles_len  - 1) {|i| return i if role_type == @@all_role_types[i]}
     return -1
+  end
+
+  def self.from(role_type_text)
+    return default if role_type_text.nil? || role_type_text.chomp == ''
+    role_type = role_type_text.to_sym
+    return default if get_index_of(role_type) < 0
+    role_type
   end
 end
 

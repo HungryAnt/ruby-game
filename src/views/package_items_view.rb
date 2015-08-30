@@ -31,8 +31,8 @@ class PackageItemsView
     0.upto(ROW_COUNT * COL_COUNT - 1) do |index|
       row = index / COL_COUNT
       col = index % COL_COUNT
-      item_left = dialog_left +  PADDING + (ITEM_WIDTH + MARGIN) * col
-      item_top = dialog_top + PADDING + (ITEM_HEIGHT + MARGIN) * row
+      item_left = PADDING + (ITEM_WIDTH + MARGIN) * col
+      item_top = PADDING + (ITEM_HEIGHT + MARGIN) * row
       control = AntGui::Control.new
       control.set(AntGui::Canvas::LEFT, item_left)
       control.set(AntGui::Canvas::TOP, item_top)
