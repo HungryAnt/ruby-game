@@ -11,8 +11,8 @@ class PlayerService
   def init
     @user_id = @user_service.user_id
     user_name = @user_service.user_name
+    role_type = @user_service.role_type
     puts "player name: #{user_name}"
-    role_type = RoleType.random
     @role = Role.new(user_name, role_type, 100, 300)
     [39, 40, 50, 58, 59, 67, 74, 75, 81, 82, 83, 89, 90, 91, 604, 828].each do |num|
       vehicle_key = "vehicle_#{num}".to_sym
