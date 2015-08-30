@@ -14,7 +14,7 @@ class UserService
   end
 
   def init_user
-    if !GameConfig::DEBUG && File.exist?(@file_path)
+    if !GameConfig::USER_DEBUG && File.exist?(@file_path)
       @user_id, @user_name, @role_type = load_user
       puts "#{@user_id}, #{@user_name}"
     else
