@@ -80,9 +80,9 @@ class GameMapView < ViewBase
       when Gosu::KbF2
         @game_map_view_model.switch_map :police
       when Gosu::Kb0
-        @game_map_view_model.switch_role_type RoleType::WAN_GYE
+        @game_map_view_model.switch_to_next_role_type
       when Gosu::Kb9
-        @game_map_view_model.switch_role_type RoleType::SALARY
+        @game_map_view_model.switch_to_prev_role_type
       when Gosu::MsLeft
         done = @game_map_view_model.try_pick_up(@window.mouse_x, @window.mouse_y)
         return if done

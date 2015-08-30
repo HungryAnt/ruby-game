@@ -4,8 +4,40 @@ require_relative 'exp'
 require_relative 'package'
 
 class RoleType
-  WAN_GYE = :wangye
+  WAN_GYE = :wangye # ¼¦µ°
   SALARY = :salary
+  BANGYE = :bangye # °ë¸ö¼¦µ°
+  DOOBU = :doobu
+  KIMCHI = :kimchi
+  MANL = :manl
+  MOO = :moo
+  PASERY = :pasery
+  PIMENTO = :pimento
+  RICE = :rice
+  YANGBEA = :yangbea
+  YANGPA = :yangpa
+
+  @@all_role_types = [WAN_GYE, SALARY, BANGYE, DOOBU, KIMCHI, MANL, MOO, PASERY, PIMENTO, RICE, YANGBEA, YANGPA]
+  @@roles_len = @@all_role_types.length
+
+  def self.random
+    @@all_role_types[rand(@@roles_len)]
+  end
+
+  def self.next(role_type)
+    next_index = (get_index_of(role_type) + 1) % @@roles_len
+    @@all_role_types[next_index]
+  end
+
+  def self.prev(role_type)
+    preve_index = (get_index_of(role_type) - 1 + @@roles_len) % @@roles_len
+    @@all_role_types[preve_index]
+  end
+
+  def self.get_index_of(role_type)
+    0.upto(@@roles_len  - 1) {|i| return i if role_type == @@all_role_types[i]}
+    return -1
+  end
 end
 
 class Role
@@ -98,7 +130,7 @@ class Role
       end
 
       if Direction::is_direct_to_right @direction
-        food.x, food.y = origin_x+30, origin_y + 22
+        food.x, food.y = origin_x+32, origin_y + 22
       end
     end
   end

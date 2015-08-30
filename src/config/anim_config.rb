@@ -1,10 +1,20 @@
-anim_interval = 150
+anim_interval = 100
 
 # ================½ÇÉ«¶¯»­================
 
 role_info_list = []
 role_info_list << [RoleType::WAN_GYE, 'WanGye']
 role_info_list << [RoleType::SALARY, 'Salary']
+role_info_list << [RoleType::BANGYE, 'BanGye']
+role_info_list << [RoleType::DOOBU, 'Doobu']
+role_info_list << [RoleType::KIMCHI, 'Kimchi']
+role_info_list << [RoleType::MANL, 'Manl']
+role_info_list << [RoleType::MOO, 'Moo']
+role_info_list << [RoleType::PASERY, 'Pasery']
+role_info_list << [RoleType::PIMENTO, 'Pimento']
+role_info_list << [RoleType::RICE, 'Rice']
+role_info_list << [RoleType::YANGBEA, 'Yangbea']
+role_info_list << [RoleType::YANGPA, 'Yangpa']
 
 role_info_list.each do |role_info|
   role = role_info[0].to_s
