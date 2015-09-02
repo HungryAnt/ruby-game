@@ -8,6 +8,7 @@ require 'gosu'
 require 'utils/media_util'
 require 'utils/graphics_util'
 require 'utils/level_util'
+require 'utils/des'
 
 require 'gui/gui'
 
@@ -64,6 +65,7 @@ require 'services/chat_service'
 require 'services/network_service'
 require 'services/user_service'
 require 'services/player_service'
+require 'services/des_service'
 
 require 'viewmodels/item_view_model'
 require 'viewmodels/role_view_model'

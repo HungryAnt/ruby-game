@@ -1,11 +1,11 @@
 class SongService
   def initialize
-    @curren_song_path = nil
+    @current_song_path = nil
   end
 
   def play_song(path)
-    return if path == @curren_song_path
-    @curren_song_path = path
+    return if path == @current_song_path
+    @current_song_path = path
     stop_song
     song = MediaUtil::get_song(path)
     song.play(true)
