@@ -54,6 +54,7 @@ class GameMapViewModel
       role_vm.auto_move map_vm
       role_vm.update_eating_food
       role_vm.update_state
+      role_vm.update
     end
 
     @player_view_model.update
@@ -249,7 +250,7 @@ class GameMapViewModel
         role_vm =  @role_vm_dict[user_id]
       end
       unless role_vm.nil?
-        role_vm.show_chat_bubble content
+        role_vm.add_chat_content content
       end
     end
   end

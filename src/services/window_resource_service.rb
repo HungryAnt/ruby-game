@@ -2,7 +2,7 @@
 class WindowResourceService
   def init(window)
     @window = window
-    @font_chat_bubble = Gosu::Font.new(window, 'Microsoft YaHei', 16)
+    @font_chat_bubble = Gosu::Font.new(window, 'Verdana', 17)
   end
 
   def get_chat_bubble_font

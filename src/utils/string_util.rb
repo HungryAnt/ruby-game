@@ -12,6 +12,9 @@ class StringUtil
         lines << line
         line = ''
         line_char_count = 0
+        if char == "\n"
+          next
+        end
       end
       line << char
       line_char_count += en_char_count

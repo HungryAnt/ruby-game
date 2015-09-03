@@ -1,3 +1,3 @@
 module ZOrder
-  Background, Food, Player, Covering, UI, DIALOG_UI, Mouse = *0..6
+  Background, Food, Player, Covering, UI, CHAT_BUBBLE, DIALOG_UI, Mouse = *0..7
 end

@@ -15,8 +15,9 @@ class RoleViewModel
     stop
     @area_id = nil
     @vehicle = EquipmentViewModelFactory::create_vehicle(:vehicle_828)
-    @driving = true
+    @driving = false
     @chat_bubble_vm = ChatBubbleViewModel.new
+    @update_times = 0
   end
 
   def init_animations
@@ -134,8 +135,15 @@ class RoleViewModel
     do_move angle, map_vm
   end
 
-  def show_chat_bubble(content)
-    @chat_bubble_vm.set_content content
+  def add_chat_content(content)
+    @chat_bubble_vm.add_content content
+  end
+
+  def update
+    @update_times += 1
+    if @update_times % 10 == 0
+      @chat_bubble_vm.update_content
+    end
   end
 
   private
