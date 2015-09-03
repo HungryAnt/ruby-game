@@ -1,7 +1,7 @@
 module AnimationUtil
-  def self.get_centered_animation(path_pattern, nums, interval, scale_x = 1, scale_y = 1)
+  def self.get_centered_animation(path_pattern, nums, interval, scale_x = 1, scale_y = 1, offset=[0, 0])
     images = get_centered_images path_pattern, nums, scale_x, scale_y
-    Animation.new(images, interval)
+    Animation.new(images, interval, offset)
   end
 
   def self.get_animation(images, interval)

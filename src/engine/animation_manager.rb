@@ -11,7 +11,8 @@ class AnimationManager
     return unless block_given?
     dict = yield
     dict.each_pair do |k, v|
-      add_anim((prefix + k.to_s).to_sym, AnimationUtil::get_centered_animation(*v))
+      anim = AnimationUtil::get_centered_animation(*v)
+      add_anim((prefix + k.to_s).to_sym, anim)
     end
   end
 

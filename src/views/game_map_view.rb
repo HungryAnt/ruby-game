@@ -22,23 +22,23 @@ class GameMapView < ViewBase
     @status_bar_view.update
     @chat_board_view.update
 
-    direction = Direction::NONE
-
-    unless chat_input_enabled?
-      if Gosu::button_down?(Gosu::KbUp) || Gosu::button_down?(Gosu::KbW)
-        direction |= Direction::UP
-      elsif Gosu::button_down?(Gosu::KbDown) || Gosu::button_down?(Gosu::KbS)
-        direction |= Direction::DOWN
-      end
-
-      if Gosu::button_down?(Gosu::KbLeft) || Gosu::button_down?(Gosu::KbA)
-        direction |= Direction::LEFT
-      elsif Gosu::button_down?(Gosu::KbRight) || Gosu::button_down?(Gosu::KbD)
-        direction |= Direction::RIGHT
-      end
-    end
-
-    @game_map_view_model.player_move direction
+    # direction = Direction::NONE
+    #
+    # unless chat_input_enabled?
+    #   if Gosu::button_down?(Gosu::KbUp) || Gosu::button_down?(Gosu::KbW)
+    #     direction |= Direction::UP
+    #   elsif Gosu::button_down?(Gosu::KbDown) || Gosu::button_down?(Gosu::KbS)
+    #     direction |= Direction::DOWN
+    #   end
+    #
+    #   if Gosu::button_down?(Gosu::KbLeft) || Gosu::button_down?(Gosu::KbA)
+    #     direction |= Direction::LEFT
+    #   elsif Gosu::button_down?(Gosu::KbRight) || Gosu::button_down?(Gosu::KbD)
+    #     direction |= Direction::RIGHT
+    #   end
+    # end
+    #
+    # @game_map_view_model.player_move direction
 
     @game_map_view_model.update_mouse_type @window.mouse_x, @window.mouse_y
   end
@@ -104,6 +104,8 @@ class GameMapView < ViewBase
         if chat_input_enabled?
           switch_chat_text_input true
         end
+      when Gosu::KbA
+          @game_map_view_model.hit
     end
   end
 

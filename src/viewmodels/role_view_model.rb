@@ -18,11 +18,12 @@ class RoleViewModel
     @driving = false
     @chat_bubble_vm = ChatBubbleViewModel.new
     @update_times = 0
+    @hiting = false
   end
 
   def init_animations
     role_type = @role.role_type.to_s
-    %w(stand walk run eat hold_food drive).each do |state|
+    %w(stand walk run eat hold_food drive hit).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
                                    get_anim("#{role_type}_#{state}_#{direction}".to_sym))
@@ -96,6 +97,10 @@ class RoleViewModel
   end
 
   def get_state
+    if @hiting
+      return Role::State::HIT
+    end
+
     if @role.eating?
       if @standing
         return Role::State::EATING
@@ -144,6 +149,18 @@ class RoleViewModel
     if @update_times % 10 == 0
       @chat_bubble_vm.update_content
     end
+    if @hiting
+      @hiting = false if @hit_end_time <= Gosu::milliseconds
+    end
+  end
+
+  def hit
+    return if @hiting
+    return if @role.eating?
+    @hiting = true
+    @hit_end_time = Gosu::milliseconds + 560
+    update_state
+    @current_anim.goto_begin
   end
 
   private
@@ -154,9 +171,7 @@ class RoleViewModel
 
   def change_anim
     state = @role.state.to_s
-
     direction = Direction::to_direction_text(@role.direction)
-
     @current_anim = self.instance_variable_get("@anim_#{state}_#{direction}")
   end
 

@@ -63,6 +63,7 @@ class Role
     EATING = :eat
     HOLDING_FOOD = :hold_food
     DRIVING = :drive
+    HIT = :hit
   end
 
   class Action

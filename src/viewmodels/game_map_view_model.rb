@@ -165,6 +165,10 @@ class GameMapViewModel
     @player_view_model.driving = !@player_view_model.driving
   end
 
+  def hit
+    @player_view_model.hit
+  end
+
   private
 
   def init_roles

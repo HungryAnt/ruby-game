@@ -1,6 +1,4 @@
-def to_anim_nums(first_num, last_num)
-  (first_num..last_num).to_a + (first_num + 1..last_num-1).to_a.reverse
-end
+
 
 def create_vehicle_anims(vehicle_id, anim_nums_map)
   anim_interval = 150

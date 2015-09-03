@@ -110,6 +110,10 @@ class PlayerViewModel
     remote_eating_food food_vm.food
   end
 
+  def hit
+    @role_vm.hit
+  end
+
   private
 
   def eat
