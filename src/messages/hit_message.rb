@@ -12,7 +12,7 @@ class HitMessage
     }.to_json(*a)
   end
 
-  def self.json_create(map)
+  def self.from_map(map)
     new(map['data']['user_id'], map['data']['target_x'].to_i, map['data']['target_y'].to_i)
   end
 end

@@ -13,7 +13,7 @@ class RoleMessage
     }.to_json(*a)
   end
 
-  def self.json_create(map)
+  def self.from_map(map)
     new(map['data']['user_id'], map['data']['user_name'], map['data']['role_map'])
   end
 end

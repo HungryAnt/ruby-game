@@ -111,44 +111,44 @@ class ChatService
   private
   def init_message_handler
     @network_service.register('lv_message') do |msg_map, params|
-      lv_msg = LvMessage.json_create(msg_map)
+      lv_msg = LvMessage.from_map(msg_map)
       @user_service.update_lv_exp lv_msg.lv, lv_msg.exp
     end
 
     @network_service.register('chat_message') do |msg_map, params|
-      chat_msg = ChatMessage.json_create(msg_map)
+      chat_msg = ChatMessage.from_map(msg_map)
       # puts "[#{text_message.sender}: #{text_message.content}]"
       add_chat_msg chat_msg
       @game_roles_service.chat chat_msg.user_id, chat_msg.user_name, chat_msg.content
     end
 
     @network_service.register('system_message') do |msg_map, params|
-      sys_msg = SystemMessage.json_create(msg_map)
+      sys_msg = SystemMessage.from_map(msg_map)
       add_chat_msg sys_msg
     end
 
     @network_service.register('quit_message') do |msg_map, params|
-      quit_msg = QuitMessage.json_create(msg_map)
+      quit_msg = QuitMessage.from_map(msg_map)
       @game_roles_service.delete_role quit_msg.user_id
     end
 
     @network_service.register('role_message') do |msg_map, params|
-      role_msg = RoleMessage.json_create(msg_map)
+      role_msg = RoleMessage.from_map(msg_map)
       @game_roles_service.add_role_msg role_msg
     end
 
     @network_service.register('area_item_message') do |msg_map, params|
-      area_item_msg = AreaItemMessage.json_create(msg_map)
+      area_item_msg = AreaItemMessage.from_map(msg_map)
       @area_items_service.add_item_msg area_item_msg
     end
 
     @network_service.register('eating_food_message') do |msg_map, params|
-      eating_food_msg = EatingFoodMessage.json_create(msg_map)
+      eating_food_msg = EatingFoodMessage.from_map(msg_map)
       @game_roles_service.eating_food eating_food_msg.user_id, eating_food_msg.food_map['food_type_id'].to_i
     end
 
     @network_service.register('eat_up_food_message') do |msg_map, params|
-      eat_up_food_msg = EatUpFoodMessage.json_create(msg_map)
+      eat_up_food_msg = EatUpFoodMessage.from_map(msg_map)
       @game_roles_service.eat_up_food eat_up_food_msg.user_id
     end
   end

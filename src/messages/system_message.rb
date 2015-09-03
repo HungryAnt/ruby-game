@@ -14,7 +14,7 @@ class SystemMessage
     }.to_json(*a)
   end
 
-  def self.json_create(map)
+  def self.from_map(map)
     new(map['data']['content'])
   end
 
