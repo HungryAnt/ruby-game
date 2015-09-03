@@ -178,6 +178,8 @@ class GameMapViewModel
     register_eating_food_call_back
     register_eat_up_food_call_back
     register_chat_call_back
+    register_hit_call_back
+    register_being_battered_call_back
   end
 
   def register_role_msg_call_back
@@ -253,8 +255,25 @@ class GameMapViewModel
       else
         role_vm =  @role_vm_dict[user_id]
       end
-      unless role_vm.nil?
-        role_vm.add_chat_content content
+      role_vm.add_chat_content content unless role_vm.nil?
+    end
+  end
+
+  def register_hit_call_back
+    @game_roles_service.register_hit_call_back do |user_id, target_x, target_y|
+      if @player_service.user_id != user_id
+        role_vm =  @role_vm_dict[user_id]
+        role_vm.hit unless role_vm.nil?
+        @player_view_model.check_hit_battered(target_x, target_y)
+      end
+    end
+  end
+
+  def register_being_battered_call_back
+    @game_roles_service.register_being_battered_call_back do |user_id|
+      if @player_service.user_id != user_id
+        role_vm =  @role_vm_dict[user_id]
+        role_vm.being_battered unless role_vm.nil?
       end
     end
   end

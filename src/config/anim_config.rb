@@ -52,8 +52,8 @@ lambda {
     new_role_anims(prefix, role_pattern, 'eat', hor_nums_pair:[65, 69], up_nums_pair:[60, 64], down_nums_pair:[55, 59])
     new_role_anims(prefix, role_pattern, 'hold_food', hor_nums_pair:[76, 78], up_nums_pair:[73, 75], down_nums_pair:[70, 72])
     new_role_anims(prefix, role_pattern, 'drive', hor_nums_pair:[25, 29], up_nums_pair:[15, 19], down_nums_pair:[0, 4]) # 动画与stand一致
-
-    # battered 打扁的
+    new_role_anims(prefix, role_action_pattern, 'turn_to_battered', hor_nums_pair:[168, 169], up_nums_pair:[162, 163], down_nums_pair:[156, 157]) # 正被打扁
+    new_role_anims(prefix, role_action_pattern, 'battered', hor_nums_pair:[170, 173], up_nums_pair:[164, 167], down_nums_pair:[158, 161]) # 打扁的
 
     AnimationManager.new_centered_anims prefix do
       h_nums = [151, 152, 153, 154]

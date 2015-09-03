@@ -111,7 +111,27 @@ class PlayerViewModel
   end
 
   def hit
+    return if @role_vm.hiting
+    return if @role.eating?
     @role_vm.hit
+    target_x, target_y = get_hit_target
+    remote_hit get_user_id, get_current_area_id, target_x, target_y
+  end
+
+  def get_hit_target
+    hit_range = 70
+    return @role.x - hit_range, @role.y if Direction.is_direct_to_left(@role.direction)
+    return @role.x + hit_range, @role.y if Direction.is_direct_to_right(@role.direction)
+    return @role.x, @role.y - hit_range/2.5 if Direction.is_direct_to_up(@role.direction)
+    return @role.x, @role.y + hit_range/2.5 if Direction.is_direct_to_down(@role.direction)
+  end
+
+  def check_hit_battered(hit_x, hit_y)
+    if Gosu::distance(@role.x, @role.y, hit_x, hit_y) < 28
+      discard
+      @role_vm.being_battered
+      remote_being_battered get_user_id
+    end
   end
 
   private
@@ -173,6 +193,14 @@ class PlayerViewModel
 
   def remote_update_lv
     @chat_service.send_update_lv get_user_id, @role.lv, @role.exp
+  end
+
+  def remote_hit(user_id, area_id, target_x, target_y)
+    @chat_service.send_hit_message user_id, area_id, target_x, target_y
+  end
+
+  def remote_being_battered(user_id)
+    @chat_service.send_being_battered_message user_id
   end
 
   def get_current_area_id

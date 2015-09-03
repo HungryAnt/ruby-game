@@ -1,5 +1,5 @@
 class RoleViewModel
-  attr_reader :role, :standing
+  attr_reader :role, :standing, :hiting
   attr_accessor :area_id, :driving, :vehicle
 
   def initialize(role)
@@ -19,11 +19,12 @@ class RoleViewModel
     @chat_bubble_vm = ChatBubbleViewModel.new
     @update_times = 0
     @hiting = false
+    @battered = false
   end
 
   def init_animations
     role_type = @role.role_type.to_s
-    %w(stand walk run eat hold_food drive hit).each do |state|
+    %w(stand walk run eat hold_food drive hit turn_to_battered battered).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
                                    get_anim("#{role_type}_#{state}_#{direction}".to_sym))
@@ -97,6 +98,11 @@ class RoleViewModel
   end
 
   def get_state
+    if @battered
+      return Role::State::TURN_TO_BATTERED if Gosu::milliseconds < @turn_to_battered_end_time
+      return Role::State::BATTERED
+    end
+
     if @hiting
       return Role::State::HIT
     end
@@ -150,17 +156,24 @@ class RoleViewModel
       @chat_bubble_vm.update_content
     end
     if @hiting
-      @hiting = false if @hit_end_time <= Gosu::milliseconds
+      @hiting = false if Gosu::milliseconds >= @hit_end_time
+    end
+    if @battered
+      @battered = false if Gosu::milliseconds >= @battered_end_time
     end
   end
 
   def hit
-    return if @hiting
-    return if @role.eating?
     @hiting = true
     @hit_end_time = Gosu::milliseconds + 560
     update_state
     @current_anim.goto_begin
+  end
+
+  def being_battered
+    @battered = true
+    @turn_to_battered_end_time = Gosu::milliseconds + 270
+    @battered_end_time = @turn_to_battered_end_time + 6000
   end
 
   private

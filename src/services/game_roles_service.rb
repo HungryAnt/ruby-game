@@ -9,6 +9,8 @@ class GameRolesService
     @eat_up_food_call_back = nil
 
     @chat_call_back = nil
+    @hit_call_back = nil
+    @being_battered_call_back = nil
   end
 
   def register_role_msg_call_back(&role_msg_call_back)
@@ -29,6 +31,14 @@ class GameRolesService
 
   def register_chat_call_back(&chat_call_back)
     @chat_call_back = chat_call_back
+  end
+
+  def register_hit_call_back(&hit_call_back)
+    @hit_call_back = hit_call_back
+  end
+
+  def register_being_battered_call_back(&being_battered_call_back)
+    @being_battered_call_back = being_battered_call_back
   end
 
   def add_role_msg(role_msg)
@@ -57,5 +67,13 @@ class GameRolesService
 
   def chat(user_id, user_name, content)
     @chat_call_back.call user_id, user_name, content
+  end
+
+  def hit(user_id, target_x, target_y)
+    @hit_call_back.call user_id, target_x, target_y
+  end
+
+  def being_battered(user_id)
+    @being_battered_call_back.call user_id
   end
 end

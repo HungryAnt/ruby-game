@@ -64,6 +64,8 @@ class Role
     HOLDING_FOOD = :hold_food
     DRIVING = :drive
     HIT = :hit
+    TURN_TO_BATTERED = :turn_to_battered
+    BATTERED = :battered
   end
 
   class Action

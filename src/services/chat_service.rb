@@ -85,6 +85,16 @@ class ChatService
     send UpdateLvMessage.new(user_id, lv, exp)
   end
 
+  def send_hit_message(user_id, area_id, target_x, target_y)
+    puts 'send_hit_message'
+    send HitMessage.new(user_id, area_id, target_x, target_y)
+  end
+
+  def send_being_battered_message(user_id)
+    puts 'send_being_battered'
+    send BeingBatteredMessage.new(user_id)
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1
@@ -150,6 +160,16 @@ class ChatService
     @network_service.register('eat_up_food_message') do |msg_map, params|
       eat_up_food_msg = EatUpFoodMessage.from_map(msg_map)
       @game_roles_service.eat_up_food eat_up_food_msg.user_id
+    end
+
+    @network_service.register('hit_message') do |msg_map, params|
+      hit_msg = HitMessage.from_map(msg_map)
+      @game_roles_service.hit hit_msg.user_id, hit_msg.target_x, hit_msg.target_y
+    end
+
+    @network_service.register('being_battered_message') do |msg_map, params|
+      being_battered_msg = BeingBatteredMessage.from_map(msg_map)
+      @game_roles_service.being_battered being_battered_msg.user_id
     end
   end
 
