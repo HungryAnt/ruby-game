@@ -7,7 +7,9 @@ class MainWindow < Gosu::Window
   def initialize
     super GameConfig::MAP_WIDTH,
           GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT, fullscreen:false, update_interval:1000/40
-    autowired(PlayerService)
+    autowired(WindowResourceService, PlayerService)
+
+    @window_resource_service.init(self)
 
     self.caption = "童年记忆 - Ant版野菜部落 网络版 #{VERSION}"
     @user_creation_view = UserCreationView.new(self)

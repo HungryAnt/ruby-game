@@ -7,6 +7,8 @@ class GameRolesService
 
     @eating_food_call_back = nil
     @eat_up_food_call_back = nil
+
+    @chat_call_back = nil
   end
 
   def register_role_msg_call_back(&role_msg_call_back)
@@ -23,6 +25,10 @@ class GameRolesService
 
   def register_eat_up_food_call_back(&eat_up_food_call_back)
     @eat_up_food_call_back = eat_up_food_call_back
+  end
+
+  def register_chat_call_back(&chat_call_back)
+    @chat_call_back = chat_call_back
   end
 
   def add_role_msg(role_msg)
@@ -47,5 +53,9 @@ class GameRolesService
 
   def eat_up_food(user_id)
     @eat_up_food_call_back.call user_id
+  end
+
+  def chat(user_id, user_name, content)
+    @chat_call_back.call user_id, user_name, content
   end
 end

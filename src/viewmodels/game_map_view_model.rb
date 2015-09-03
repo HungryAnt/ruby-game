@@ -172,6 +172,7 @@ class GameMapViewModel
     register_delete_role_call_back
     register_eating_food_call_back
     register_eat_up_food_call_back
+    register_chat_call_back
   end
 
   def register_role_msg_call_back
@@ -236,6 +237,19 @@ class GameMapViewModel
       if @player_service.user_id != user_id
         role_vm = @role_vm_dict[user_id]
         role_vm.clear_food unless role_vm.nil?
+      end
+    end
+  end
+
+  def register_chat_call_back
+    @game_roles_service.register_chat_call_back do |user_id, user_name, content|
+      if @player_service.user_id == user_id
+        role_vm = @player_view_model.role_vm
+      else
+        role_vm =  @role_vm_dict[user_id]
+      end
+      unless role_vm.nil?
+        role_vm.show_chat_bubble content
       end
     end
   end

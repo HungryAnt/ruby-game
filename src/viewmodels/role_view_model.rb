@@ -16,6 +16,7 @@ class RoleViewModel
     @area_id = nil
     @vehicle = EquipmentViewModelFactory::create_vehicle(:vehicle_828)
     @driving = true
+    @chat_bubble_vm = ChatBubbleViewModel.new
   end
 
   def init_animations
@@ -126,10 +127,15 @@ class RoleViewModel
     draw_equipment
     @eating_food_vm.draw unless @eating_food_vm.nil?
     draw_level_and_name
+    draw_chat_bubble
   end
 
   def control_move(angle, map_vm)
     do_move angle, map_vm
+  end
+
+  def show_chat_bubble(content)
+    @chat_bubble_vm.set_content content
   end
 
   private
@@ -178,6 +184,11 @@ class RoleViewModel
     @font.draw(text, x-1, y, z, scale_x, scale_y, border_color)
     @font.draw(text, x+1, y, z, scale_x, scale_y, border_color)
     @font.draw(text, x, y, z, scale_x, scale_y, color, :additive)
+  end
+
+  def draw_chat_bubble
+    x, y = get_actual_role_location
+    @chat_bubble_vm.draw_with_target x, y - 30
   end
 
   def do_move(angle, map_vm, destination = nil)

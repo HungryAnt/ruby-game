@@ -119,6 +119,7 @@ class ChatService
       chat_msg = ChatMessage.json_create(msg_map)
       # puts "[#{text_message.sender}: #{text_message.content}]"
       add_chat_msg chat_msg
+      @game_roles_service.chat chat_msg.user_id, chat_msg.user_name, chat_msg.content
     end
 
     @network_service.register('system_message') do |msg_map, params|
