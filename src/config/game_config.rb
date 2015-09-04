@@ -25,5 +25,5 @@ class GameConfig
   RUNNING_HP_DEC = 0.2
   REST_HP_INC = 0.05
 
-  ROLE_INTAKE = 0.2
+  ROLE_INTAKE = 0.15
 end

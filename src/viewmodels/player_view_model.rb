@@ -3,6 +3,9 @@ require_relative 'role_view_model'
 class PlayerViewModel
   attr_reader :role, :role_vm
 
+  HIT_COST_HP = 8
+  BEING_BATTERED_COST_HP = 45
+
   def initialize(role_vm)
     autowired(PlayerService, MapService, ChatService)
     @role_vm = role_vm
@@ -73,7 +76,7 @@ class PlayerViewModel
     @role_vm.set_auto_move_to(x, y) {
       item_vms = @map_service.current_map.current_area.item_vms
       pick_up(item_vms, item_vm) unless item_vm.nil?
-      sync_role Role::Action::APPEAR, {}
+      sync_role_appear
     }
     detail = {
         target_x:x,
@@ -89,8 +92,7 @@ class PlayerViewModel
 
   def appear_in_new_area
     @role_vm.appear_in_new_area
-    detail = {}
-    sync_role Role::Action::APPEAR, detail
+    sync_role_appear
   end
 
   def switch_to_new_map
@@ -100,19 +102,17 @@ class PlayerViewModel
     appear_in_new_area
   end
 
-  def disappear
-    # detail = {}
-    # sync_role Role::Action::DISAPPEAR, detail
-  end
-
   def start_eat_food(food_vm)
     @role_vm.eat_food food_vm
     remote_eating_food food_vm.food
   end
 
   def hit
-    return if @role_vm.hiting
-    return if @role.eating?
+    return if @role_vm.hiting || @role_vm.battered || @role.eating?
+    @role_vm.disable_auto_move
+    sync_role_appear
+    return if @role.hp < HIT_COST_HP
+    @role.dec_hp(HIT_COST_HP)
     @role_vm.hit
     target_x, target_y = get_hit_target
     remote_hit get_user_id, get_current_area_id, target_x, target_y
@@ -127,8 +127,10 @@ class PlayerViewModel
   end
 
   def check_hit_battered(hit_x, hit_y)
+    return if @role_vm.battered
     if Gosu::distance(@role.x, @role.y, hit_x, hit_y) < 28
       discard
+      @role.dec_hp(BEING_BATTERED_COST_HP)
       @role_vm.being_battered
       remote_being_battered get_user_id
     end
@@ -151,6 +153,10 @@ class PlayerViewModel
 
   def have_a_rest
     @role.inc_hp(GameConfig::REST_HP_INC)
+  end
+
+  def sync_role_appear
+    sync_role Role::Action::APPEAR, {}
   end
 
   def sync_role(action, detail)

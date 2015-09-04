@@ -1,5 +1,5 @@
 class RoleViewModel
-  attr_reader :role, :standing, :hiting
+  attr_reader :role, :standing, :hiting, :battered
   attr_accessor :area_id, :driving, :vehicle
 
   def initialize(role)
@@ -19,7 +19,7 @@ class RoleViewModel
     @chat_bubble_vm = ChatBubbleViewModel.new
     @update_times = 0
     @hiting = false
-    @battered = false
+    @battered = false  # 被打扁的
   end
 
   def init_animations
@@ -36,7 +36,6 @@ class RoleViewModel
 
   def appear_in_new_area
     disable_auto_move
-    stop
     update_state
   end
 
@@ -69,6 +68,7 @@ class RoleViewModel
 
   def disable_auto_move
     @auto_move_enabled = false
+    stop
   end
 
   def auto_move(map_vm)
@@ -249,8 +249,6 @@ class RoleViewModel
     if map_vm.tile_block? x, y
       disable_auto_move
       # 继续单方向检测
-      @running = false
-      @standing = true
       move_to_location(x, @role.y) unless map_vm.tile_block? x, @role.y
       move_to_location(@role.x, y) unless map_vm.tile_block? @role.x, y
     else
