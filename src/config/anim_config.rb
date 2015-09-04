@@ -3,14 +3,9 @@ def to_anim_nums(first_num, last_num)
 end
 
 lambda {
-
-# def to_role_anim_nums(first_num, last_num)
-#   []
-# end
-
   anim_interval = 150
 
-# ================角色动画================
+  # ================角色动画================
 
   role_info_list = []
   role_info_list << [RoleType::WAN_GYE, 'WanGye']
@@ -68,15 +63,14 @@ lambda {
     end
   end
 
-
-# ================地面点击动画================
+  # ================地面点击动画================
   AnimationManager.new_centered_anim(:area_click) do
     pattern = 'ui/click/CursorShadow_${num}.bmp'
     nums = 0.upto(6)
     [pattern, nums, 120]
   end
 
-# ================鼠标开门动画================
+  # ================鼠标开门动画================
 
   AnimationManager.new_centered_anim(:goto_area) do
     pattern = 'ui/cursor/CurSor_${num}.bmp'
@@ -84,38 +78,42 @@ lambda {
     [pattern, nums, 200]
   end
 
-# ================ map covering ================
+  # ================ map covering ================
 
-
-# church outside cat
-  AnimationManager.new_anim(:church_outside_cat) do
-    pattern = 'map/church/outside/cat_${num}.bmp'
-    nums = [0, 1, 2, 1]
-    images = AnimationUtil.get_images(pattern, nums)
-    AnimationUtil.get_animation images, 300
+  def new_map_convering_anim(key, pattern, first_num, last_num, interval = 200)
+    AnimationManager.new_anim(key) do
+      nums = to_anim_nums(first_num, last_num)
+      images = AnimationUtil.get_images(pattern, nums)
+      AnimationUtil.get_animation images, interval
+    end
   end
 
-# school ground children
-  AnimationManager.new_anim(:school_ground_children) do
-    pattern = 'map/school/school_ground/children_${num}.bmp'
-    nums = 1.upto(12)
-    images = AnimationUtil.get_images(pattern, nums)
-    AnimationUtil.get_animation images, 200
-  end
+  new_map_convering_anim(:church_outside_cat, 'map/church/outside/cat_${num}.bmp', 0, 2, 300)
 
-# police_policeman
-  AnimationManager.new_anim(:police_policeman) do
-    pattern = 'map/police/man_${num}.bmp'
-    nums = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1]
-    images = AnimationUtil.get_images(pattern, nums)
-    AnimationUtil.get_animation images, 300
-  end
+  new_map_convering_anim(:school_ground_children, 'map/school/school_ground/children_${num}.bmp', 1, 12)
 
-# police_tv
-  AnimationManager.new_anim(:police_tv) do
-    pattern = 'map/police/tv_${num}.bmp'
-    nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, 1]
-    images = AnimationUtil.get_images(pattern, nums)
-    AnimationUtil.get_animation images, 200
-  end
+  new_map_convering_anim(:police_policeman, 'map/police/man_${num}.bmp', 0, 5, 300)
+  new_map_convering_anim(:police_tv, 'map/police/tv_${num}.bmp', 0, 8)
+
+  # house_roof1
+  pattern_house_roof1 = 'map/house/roof1/HouseTop_${num}.bmp'
+  new_map_convering_anim(:house_roof1_right_birds, pattern_house_roof1, 1, 6)
+  new_map_convering_anim(:house_roof1_left_birds, pattern_house_roof1, 7, 13)
+  new_map_convering_anim(:house_roof1_cat_1, pattern_house_roof1, 14, 21)
+  new_map_convering_anim(:house_roof1_cat_2, pattern_house_roof1, 22, 27, 250)
+  new_map_convering_anim(:house_roof1_cat_2_eye, pattern_house_roof1, 28, 31, 500)
+  new_map_convering_anim(:house_roof1_cat_3, pattern_house_roof1, 32, 42)
+
+  # house_roof2
+  pattern_house_roof2 = 'map/house/roof2/HouseTop2_${num}.bmp'
+  new_map_convering_anim(:house_roof2_birds, pattern_house_roof2, 3, 12)
+
+  # house_bottom
+  pattern_house_bottom = 'map/house/bottom/HouseBottom_${num}.bmp'
+  new_map_convering_anim(:house_bottom_frog, pattern_house_bottom, 4, 8, 400)
+  new_map_convering_anim(:house_bottom_bucket, pattern_house_bottom, 9, 18)
+
+  # house_kitchen_outside
+  pattern_house_kitchen_outside = 'map/house/kitchen_outside/KitchenOutside_${num}.bmp'
+  new_map_convering_anim(:house_kitchen_door, pattern_house_kitchen_outside, 3, 16, 200)
 }.call
