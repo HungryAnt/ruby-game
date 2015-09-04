@@ -4,6 +4,7 @@ class GameMapViewModel
   def initialize
     autowired(PlayerService, ChatService, MapService,
               GameRolesService, AreaItemsService, NetworkService)
+    @sound_join_map = MediaUtil::get_sample('join_map.wav')
   end
 
   def init
@@ -108,6 +109,7 @@ class GameMapViewModel
     @map_service.switch_map map_id, @player_view_model.role
     @role_vm_dict.clear
     @player_view_model.switch_to_new_map
+    @sound_join_map.play
   end
 
   def switch_to_next_role_type

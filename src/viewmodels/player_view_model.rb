@@ -12,6 +12,7 @@ class PlayerViewModel
     @role = @role_vm.role
     @move_timestamp = Gosu::milliseconds
     @update_times = 0
+    @sound_run = MediaUtil.get_sample 'run.wav'
   end
 
   def update
@@ -83,6 +84,9 @@ class PlayerViewModel
         target_y:y
     }
     sync_role Role::Action::AUTO_MOVE_TO, detail
+    if @role.hp > 0
+      @sound_run.play
+    end
   end
 
   def update_animations

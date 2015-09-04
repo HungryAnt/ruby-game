@@ -20,6 +20,8 @@ class RoleViewModel
     @update_times = 0
     @hiting = false
     @battered = false  # ±»´ò±âµÄ
+    @sound_hit = MediaUtil.get_sample 'hit.wav'
+    @sound_being_battered = MediaUtil.get_sample 'being_battered.wav'
   end
 
   def init_animations
@@ -168,12 +170,14 @@ class RoleViewModel
     @hit_end_time = Gosu::milliseconds + 560
     update_state
     @current_anim.goto_begin
+    @sound_hit.play
   end
 
   def being_battered
     @battered = true
     @turn_to_battered_end_time = Gosu::milliseconds + 270
     @battered_end_time = @turn_to_battered_end_time + 6000
+    @sound_being_battered.play
   end
 
   private

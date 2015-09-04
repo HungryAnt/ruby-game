@@ -50,6 +50,7 @@ class UserCreationView
   end
 
   def init_role_type_selector
+    @sound_button = MediaUtil.get_sample 'button.wav'
     dialog_width = ROLE_PHOTO_WIDTH * ROLE_SELECTOR_COL_COUNT + ROLE_PHOTO_MARGIN * (ROLE_SELECTOR_COL_COUNT - 1)
     dialog_height = ROLE_PHOTO_WIDTH * ROLE_SELECTOR_ROW_COUNT + ROLE_PHOTO_MARGIN * (ROLE_SELECTOR_ROW_COUNT - 1)
     dialog_left = (GameConfig::WHOLE_WIDTH - dialog_width) / 2
@@ -77,6 +78,7 @@ class UserCreationView
         role_type_control.on_mouse_left_button_down do
           update_role_type_selector role_type
           @dialog_role_type_selector.update_arrange
+          @sound_button.play
         end
       end
     end

@@ -112,6 +112,7 @@ class GameMapView < ViewBase
   def init_chat_text_input
     @chat_text_box = TextBox.new(false)
     @window.text_input = nil
+    @sound_textbox = MediaUtil::get_sample('textbox.wav')
   end
 
   def switch_chat_text_input(is_cmd = false)
@@ -129,6 +130,7 @@ class GameMapView < ViewBase
       end
     else
       @chat_text_box.enabled = true
+      @sound_textbox.play
     end
     @window.text_input = chat_input_enabled? ? @chat_text_box.text_input : nil
   end
