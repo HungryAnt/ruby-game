@@ -122,4 +122,10 @@ lambda {
   new_map_convering_anim(:house_kitchen_sink, pattern_house_kitchen_inside, 3, 5, 150, false)
   new_map_convering_anim(:house_kitchen_pot, pattern_house_kitchen_inside, 6, 10, 150, false)
   new_map_convering_anim(:house_kitchen_fire, pattern_house_kitchen_inside, 11, 13, 150, false)
+
+  # seven_star_hall
+  pattern_seven_star_hall = 'map/seven_star_hall/SevenStartHall_${num}.bmp'
+  new_map_convering_anim(:hall_left_lantern, pattern_seven_star_hall, 3, 10)
+  new_map_convering_anim(:hall_right_lantern, pattern_seven_star_hall, 11, 18)
+  new_map_convering_anim(:hall_immortal, pattern_seven_star_hall, 19, 26)
 }.call

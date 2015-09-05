@@ -2,12 +2,12 @@
 
 class ChannelMainView
   def initialize
-    init_map_selector
+    init_channel_element
     @background_image = MediaUtil::get_tileable_img('channel_main/ChannelMain_0.bmp')
     @select_map_call_back = nil
   end
 
-  def init_map_selector
+  def init_channel_element
 
   end
 

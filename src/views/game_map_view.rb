@@ -83,6 +83,8 @@ class GameMapView < ViewBase
         @game_map_view_model.switch_map :alipay
       when Gosu::Kb6
         @game_map_view_model.switch_map :house
+      when Gosu::Kb7
+        @game_map_view_model.switch_map :seven_star_hall
       when Gosu::KbF2
         @game_map_view_model.switch_map :police
       when Gosu::Kb0
