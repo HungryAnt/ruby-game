@@ -211,7 +211,7 @@ school_room_area.gateway = {
 }
 
 # ÉèÖÃÕÚ¸ÇÎï
-school_ground_area.add_covering(:image_path => "map/school/school_ground/01.bmp", :x => 1, :y => 40)
+school_ground_area.add_covering(:image_path => 'map/school/school_ground/01.bmp', :x => 1, :y => 40)
 school_ground_area.add_covering(:anim => :school_ground_children, :x => 0, :y => 370)
 
 # school_lobby_area.add_covering("map/school/school_lobby/01.bmp", 250, 0)

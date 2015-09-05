@@ -80,9 +80,9 @@ lambda {
 
   # ================ map covering ================
 
-  def new_map_convering_anim(key, pattern, first_num, last_num, interval = 200)
+  def new_map_convering_anim(key, pattern, first_num, last_num, interval = 200, reverse_anim = true)
     AnimationManager.new_anim(key) do
-      nums = to_anim_nums(first_num, last_num)
+      nums = reverse_anim ? to_anim_nums(first_num, last_num): [*(first_num..last_num)]
       images = AnimationUtil.get_images(pattern, nums)
       AnimationUtil.get_animation images, interval
     end
@@ -111,9 +111,15 @@ lambda {
   # house_bottom
   pattern_house_bottom = 'map/house/bottom/HouseBottom_${num}.bmp'
   new_map_convering_anim(:house_bottom_frog, pattern_house_bottom, 4, 8, 400)
-  new_map_convering_anim(:house_bottom_bucket, pattern_house_bottom, 9, 18)
+  new_map_convering_anim(:house_bottom_bucket, pattern_house_bottom, 9, 18, 150, false)
 
   # house_kitchen_outside
   pattern_house_kitchen_outside = 'map/house/kitchen_outside/KitchenOutside_${num}.bmp'
   new_map_convering_anim(:house_kitchen_door, pattern_house_kitchen_outside, 3, 16, 200)
+
+  # house_kitchen_inside
+  pattern_house_kitchen_inside = 'map/house/kitchen_inside/KitchenInside_${num}.bmp'
+  new_map_convering_anim(:house_kitchen_sink, pattern_house_kitchen_inside, 3, 5, 150, false)
+  new_map_convering_anim(:house_kitchen_pot, pattern_house_kitchen_inside, 6, 10, 150, false)
+  new_map_convering_anim(:house_kitchen_fire, pattern_house_kitchen_inside, 11, 13, 150, false)
 }.call

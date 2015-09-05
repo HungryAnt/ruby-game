@@ -26,6 +26,7 @@ class AreaViewModel
         :x => covering[:x] * @scale_x,
         :y => covering[:y] * @scale_y
       }
+      covering_view[:zorder] = covering[:zorder] == :over ? ZOrder::Covering : ZOrder::Background
       @covering_views << covering_view
     end
   end
@@ -95,7 +96,7 @@ class AreaViewModel
   private
   def draw_covering
     @covering_views.each do |covering_view|
-      covering_view[:visual].draw(covering_view[:x], covering_view[:y], ZOrder::Covering)
+      covering_view[:visual].draw(covering_view[:x], covering_view[:y], covering_view[:zorder])
     end
   end
 end

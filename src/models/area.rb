@@ -60,7 +60,15 @@ class Area
 
   public
 
+  def add_surface(surface)
+    surface[:zorder] = :surface
+    add_covering(surface)
+  end
+
   def add_covering(convering)
+    if convering[:zorder].nil?
+      convering[:zorder] = :over  # :surface / over
+    end
     @coverings << convering
   end
 
