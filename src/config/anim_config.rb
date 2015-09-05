@@ -80,7 +80,7 @@ lambda {
 
   # ================ map covering ================
 
-  def new_map_convering_anim(key, pattern, first_num, last_num, interval = 200, reverse_anim = true)
+  def new_map_covering_anim(key, pattern, first_num, last_num, interval = 200, reverse_anim = true)
     AnimationManager.new_anim(key) do
       nums = reverse_anim ? to_anim_nums(first_num, last_num): [*(first_num..last_num)]
       images = AnimationUtil.get_images(pattern, nums)
@@ -88,44 +88,48 @@ lambda {
     end
   end
 
-  new_map_convering_anim(:church_outside_cat, 'map/church/outside/cat_${num}.bmp', 0, 2, 300)
+  new_map_covering_anim(:church_outside_cat, 'map/church/outside/cat_${num}.bmp', 0, 2, 300)
 
-  new_map_convering_anim(:school_ground_children, 'map/school/school_ground/children_${num}.bmp', 1, 12)
+  new_map_covering_anim(:school_ground_children, 'map/school/school_ground/children_${num}.bmp', 1, 12)
 
-  new_map_convering_anim(:police_policeman, 'map/police/man_${num}.bmp', 0, 5, 300)
-  new_map_convering_anim(:police_tv, 'map/police/tv_${num}.bmp', 0, 8)
+  new_map_covering_anim(:police_policeman, 'map/police/man_${num}.bmp', 0, 5, 300)
+  new_map_covering_anim(:police_tv, 'map/police/tv_${num}.bmp', 0, 8)
 
   # house_roof1
   pattern_house_roof1 = 'map/house/roof1/HouseTop_${num}.bmp'
-  new_map_convering_anim(:house_roof1_right_birds, pattern_house_roof1, 1, 6)
-  new_map_convering_anim(:house_roof1_left_birds, pattern_house_roof1, 7, 13)
-  new_map_convering_anim(:house_roof1_cat_1, pattern_house_roof1, 14, 21)
-  new_map_convering_anim(:house_roof1_cat_2, pattern_house_roof1, 22, 27, 250)
-  new_map_convering_anim(:house_roof1_cat_2_eye, pattern_house_roof1, 28, 31, 500)
-  new_map_convering_anim(:house_roof1_cat_3, pattern_house_roof1, 32, 42)
+  new_map_covering_anim(:house_roof1_right_birds, pattern_house_roof1, 1, 6)
+  new_map_covering_anim(:house_roof1_left_birds, pattern_house_roof1, 7, 13)
+  new_map_covering_anim(:house_roof1_cat_1, pattern_house_roof1, 14, 21)
+  new_map_covering_anim(:house_roof1_cat_2, pattern_house_roof1, 22, 27, 250)
+  new_map_covering_anim(:house_roof1_cat_2_eye, pattern_house_roof1, 28, 31, 500)
+  new_map_covering_anim(:house_roof1_cat_3, pattern_house_roof1, 32, 42)
 
   # house_roof2
   pattern_house_roof2 = 'map/house/roof2/HouseTop2_${num}.bmp'
-  new_map_convering_anim(:house_roof2_birds, pattern_house_roof2, 3, 12)
+  new_map_covering_anim(:house_roof2_birds, pattern_house_roof2, 3, 12)
 
   # house_bottom
   pattern_house_bottom = 'map/house/bottom/HouseBottom_${num}.bmp'
-  new_map_convering_anim(:house_bottom_frog, pattern_house_bottom, 4, 8, 400)
-  new_map_convering_anim(:house_bottom_bucket, pattern_house_bottom, 9, 18, 150, false)
+  new_map_covering_anim(:house_bottom_frog, pattern_house_bottom, 4, 8, 400)
+  new_map_covering_anim(:house_bottom_bucket, pattern_house_bottom, 9, 18, 150, false)
 
   # house_kitchen_outside
   pattern_house_kitchen_outside = 'map/house/kitchen_outside/KitchenOutside_${num}.bmp'
-  new_map_convering_anim(:house_kitchen_door, pattern_house_kitchen_outside, 3, 16, 200)
+  new_map_covering_anim(:house_kitchen_door, pattern_house_kitchen_outside, 3, 16, 200)
 
   # house_kitchen_inside
   pattern_house_kitchen_inside = 'map/house/kitchen_inside/KitchenInside_${num}.bmp'
-  new_map_convering_anim(:house_kitchen_sink, pattern_house_kitchen_inside, 3, 5, 150, false)
-  new_map_convering_anim(:house_kitchen_pot, pattern_house_kitchen_inside, 6, 10, 150, false)
-  new_map_convering_anim(:house_kitchen_fire, pattern_house_kitchen_inside, 11, 13, 150, false)
+  new_map_covering_anim(:house_kitchen_sink, pattern_house_kitchen_inside, 3, 5, 150, false)
+  new_map_covering_anim(:house_kitchen_pot, pattern_house_kitchen_inside, 6, 10, 150, false)
+  new_map_covering_anim(:house_kitchen_fire, pattern_house_kitchen_inside, 11, 13, 150, false)
 
   # seven_star_hall
   pattern_seven_star_hall = 'map/seven_star_hall/SevenStartHall_${num}.bmp'
-  new_map_convering_anim(:hall_left_lantern, pattern_seven_star_hall, 3, 10)
-  new_map_convering_anim(:hall_right_lantern, pattern_seven_star_hall, 11, 18)
-  new_map_convering_anim(:hall_immortal, pattern_seven_star_hall, 19, 26)
+  new_map_covering_anim(:hall_left_lantern, pattern_seven_star_hall, 3, 10)
+  new_map_covering_anim(:hall_right_lantern, pattern_seven_star_hall, 11, 18)
+  new_map_covering_anim(:hall_immortal, pattern_seven_star_hall, 19, 26)
+
+  # channel_main
+  pattern_channel_anim = 'channel_main/anim/ChannelAni_${num}.bmp'
+  new_map_covering_anim(:channel_main_exit, pattern_channel_anim, 28, 33)
 }.call

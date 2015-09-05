@@ -36,6 +36,7 @@ class MainWindow < Gosu::Window
       @game_map_view.init_switch_map map_id
       @current_view = @game_map_view
     end
+    @channel_main_view.on_exit {close}
 
     @game_map_view.on_exit do
       @current_view = @channel_main_view
