@@ -12,5 +12,12 @@ module AntGui
                         control.get(WIDTH), control.get(HEIGHT))
       end
     end
+
+    def self.set_canvas_props(control, left, top, width, height)
+      control.set(AntGui::Canvas::LEFT, left)
+      control.set(AntGui::Canvas::TOP, top)
+      control.set(AntGui::Canvas::WIDTH, width)
+      control.set(AntGui::Canvas::HEIGHT, height)
+    end
   end
 end

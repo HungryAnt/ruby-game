@@ -14,6 +14,11 @@ class GameMapView < ViewBase
     @font_chat_input = Gosu::Font.new(18)
     @package_items_view = PackageItemsView.new(@window, @game_map_view_model.package_items_view_model)
     init_chat_text_input
+    init_exit_button
+  end
+
+  def on_exit(&exit_call_back)
+    @exit_call_back = exit_call_back
   end
 
   def init_switch_map(map_id)
@@ -45,6 +50,7 @@ class GameMapView < ViewBase
     # @game_map_view_model.player_move direction
 
     @game_map_view_model.update_mouse_type @window.mouse_x, @window.mouse_y
+    @status_dialog.mouse_move @window.mouse_x, @window.mouse_y
   end
 
   def draw
@@ -58,6 +64,7 @@ class GameMapView < ViewBase
       @chat_board_view.draw
     end
     @game_map_view_model.draw_mouse @window.mouse_x, @window.mouse_y
+    @status_dialog.draw
   end
 
   def draw_chat_text_box
@@ -67,6 +74,10 @@ class GameMapView < ViewBase
   end
 
   def button_down(id)
+    if id == Gosu::MsLeft
+      return if @status_dialog.mouse_left_button_down(@window.mouse_x, @window.mouse_y)
+    end
+
     return if chat_input_enabled? && id != Gosu::KbReturn && id != Gosu::KbBacktick
     return if @package_items_view.button_down(id)
 
@@ -147,5 +158,21 @@ class GameMapView < ViewBase
 
   def needs_cursor?
     @game_map_view_model.needs_cursor?
+  end
+
+  def init_exit_button
+    @status_dialog = AntGui::Dialog.new(0, GameConfig::STATUS_BAR_Y, GameConfig::STATUS_BAR_WIDTH, GameConfig::STATUS_BAR_HEIGHT)
+    canvas = AntGui::Canvas.new
+    @status_dialog.content = canvas
+    exit_button = AntGui::Control.new
+    canvas.add exit_button
+    AntGui::Canvas::set_canvas_props(exit_button, 727, 27, 35, 26)
+    normal_exit_image = AntGui::Image.new(MediaUtil.get_img 'ui/button/GameViewButton_24.bmp')
+    hover_exit_image = AntGui::Image.new(MediaUtil.get_img 'ui/button/GameViewButton_25.bmp')
+    exit_button.content = normal_exit_image
+    exit_button.on_mouse_enter {exit_button.content = hover_exit_image; exit_button.refresh}
+    exit_button.on_mouse_leave {exit_button.content = normal_exit_image; exit_button.refresh}
+    exit_button.on_mouse_left_button_down {@exit_call_back.call unless @exit_call_back.nil?}
+    @status_dialog.update_arrange
   end
 end

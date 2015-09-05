@@ -19,10 +19,17 @@ module AntGui
     end
 
     def mouse_left_button_down(x, y)
-      @items.each do |control|
+      @items.reverse_each do |control|
         return true if control.mouse_left_button_down(x, y)
       end
-      super(x, y)
+      super
+    end
+
+    def mouse_move(x, y)
+      @items.reverse_each do |control|
+        control.mouse_move(x, y) unless control.nil?
+      end
+      super
     end
   end
 end
