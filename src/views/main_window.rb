@@ -14,6 +14,7 @@ class MainWindow < Gosu::Window
     self.caption = "童年记忆 - Ant版野菜部落 网络版 #{VERSION}"
     @user_creation_view = UserCreationView.new(self)
     @loading_view = LoadingView.new
+    @channel_main_view = ChannelMainView.new
     @game_map_view = GameMapView.new(self)
     @map_editor_view = MapEditorView.new(self)
 
@@ -27,8 +28,13 @@ class MainWindow < Gosu::Window
     @loading_view.init_skip_call_back do
       @player_service.update_lv
       @game_map_view.init
-      @current_view = @game_map_view
+      @current_view = @channel_main_view
       @ready_for_game = true
+    end
+
+    @channel_main_view.register_select_map do |map_id|
+      @game_map_view.init_switch_map map_id
+      @current_view = @game_map_view
     end
 
     @begin_times = Gosu::milliseconds

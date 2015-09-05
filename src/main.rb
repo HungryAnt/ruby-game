@@ -95,6 +95,7 @@ require 'views/map_editor_view'
 require 'views/user_creation_view'
 require 'views/loading_view'
 require 'views/package_items_view'
+require 'views/channel_main_view'
 require 'views/main_window'
 
 require 'config/anim_config'

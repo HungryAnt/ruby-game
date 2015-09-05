@@ -15,7 +15,7 @@ class GameMapViewModel
     init_roles
     init_area_items
     @package_items_view_model = PackageItemsViewModel.new(@player_view_model)
-    switch_map :grass_wood_back
+    # switch_map :grass_wood_back
   end
 
   def update

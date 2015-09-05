@@ -16,6 +16,10 @@ class GameMapView < ViewBase
     init_chat_text_input
   end
 
+  def init_switch_map(map_id)
+    @game_map_view_model.switch_map map_id
+  end
+
   def update
     @game_map_view_model.update
 
