@@ -17,6 +17,8 @@ class ChannelMainView
   def init_channel_anims
     @anim_container = AnimationContainer.new
     create_anim :channel_main_exit, 340, 320
+    create_anim :channel_main_cows, 200, 276
+    create_anim :channel_main_sky_wheel, 620, 50
   end
 
   def create_anim(key, x, y, z=ZOrder::Background)
@@ -38,6 +40,16 @@ class ChannelMainView
     control_village = create_back_channel_control canvas, 1, 2, 0, 228, 370, 251
     control_village.on_mouse_left_button_down do
       @select_map_call_back.call :house
+    end
+
+    control_police_station = create_back_channel_control canvas, 13, 14, 430, 160, 103, 79
+    control_police_station.on_mouse_left_button_down do
+      @select_map_call_back.call :police
+    end
+
+    control_playground = create_back_channel_control canvas, 3, 4, 430, 100, 370, 229
+    control_playground.on_mouse_left_button_down do
+      # 修建中
     end
 
     exit_button = AntGui::Facade.create_image_button(get_button_image_path(0), get_button_image_path(1))
