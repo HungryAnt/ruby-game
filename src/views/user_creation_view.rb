@@ -4,9 +4,10 @@ require_relative 'common/text_box'
 class RoleTypeControl < AntGui::Control
   attr_accessor :selected
 
-  def initialize(role_type)
+  def initialize(role_type, border_image)
     super()
     @role_type = role_type
+    @border_image = border_image
     @image_unselected = AntGui::Image.new(RoleTypeDefinition.get_role_unselected_photo(role_type))
     @image_selected = AntGui::Image.new(RoleTypeDefinition.get_role_selected_photo(role_type))
   end
@@ -18,6 +19,7 @@ class RoleTypeControl < AntGui::Control
     else
       @content = @image_unselected
     end
+    @border_image.visible = selected
   end
 end
 
@@ -39,6 +41,7 @@ class UserCreationView
     @font_net_error = Gosu::Font.new(18)
     init_user_name_text_box
     init_role_type_selector
+    update_role_type_selector @user_service.role_type
   end
 
   def init_user_name_text_box
@@ -68,12 +71,13 @@ class UserCreationView
         left = (ROLE_PHOTO_WIDTH  + ROLE_PHOTO_MARGIN) * col
         top = (ROLE_PHOTO_HEIGHT + ROLE_PHOTO_MARGIN) * row
         role_type = role_types[row * ROLE_SELECTOR_COL_COUNT + col]
-        role_type_control = RoleTypeControl.new role_type
-        role_type_control.set(AntGui::Canvas::LEFT, left)
-        role_type_control.set(AntGui::Canvas::TOP, top)
-        role_type_control.set(AntGui::Canvas::WIDTH, ROLE_PHOTO_WIDTH)
-        role_type_control.set(AntGui::Canvas::HEIGHT, ROLE_PHOTO_HEIGHT)
+        border_image = AntGui::Image.new(MediaUtil.get_img('role/koongya/ui/border.bmp'))
+        role_type_control = RoleTypeControl.new role_type, border_image
+        AntGui::Canvas.set_canvas_props(role_type_control, left, top, ROLE_PHOTO_WIDTH, ROLE_PHOTO_HEIGHT)
+        AntGui::Canvas.set_canvas_props(border_image, left, top, ROLE_PHOTO_WIDTH, ROLE_PHOTO_HEIGHT)
         canvas.add role_type_control
+        canvas.add border_image
+
         @role_type_controls << role_type_control
         role_type_control.on_mouse_left_button_down do
           update_role_type_selector role_type
@@ -101,7 +105,7 @@ class UserCreationView
   end
 
   def draw
-    Gosu::draw_rect 0, 0, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT, 0xFF005020, ZOrder::Background
+    Gosu::draw_rect 0, 0, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT, 0xFF_005020, ZOrder::Background
 
     if @network_service.has_error?
       @font_net_error.draw("#{@network_service.connection_error}", 0, 30, ZOrder::Background,
