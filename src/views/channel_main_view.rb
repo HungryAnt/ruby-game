@@ -32,12 +32,14 @@ class ChannelMainView
     canvas = AntGui::Canvas.new
     @main_dialog.content = canvas
 
-    control_seven_star_hall = create_back_channel_control canvas, 11, 12, 120, 50, 221, 238
+    control_seven_star_hall = create_back_channel_control(canvas, 11, 12, 120, 50, 221, 238,
+                                                          35, 31, 31, 5)
     control_seven_star_hall.on_mouse_left_button_down do
       @select_map_call_back.call :seven_star_hall
     end
 
-    control_village = create_back_channel_control canvas, 1, 2, 0, 228, 370, 251
+    control_village = create_back_channel_control(canvas, 1, 2, 0, 228, 370, 251,
+                                                  0, 59, 150, 29)
     control_village.on_mouse_left_button_down do
       @select_map_call_back.call :house
     end
@@ -47,7 +49,8 @@ class ChannelMainView
       @select_map_call_back.call :police
     end
 
-    control_playground = create_back_channel_control canvas, 3, 4, 430, 100, 370, 229
+    control_playground = create_back_channel_control(canvas, 3, 4, 430, 100, 370, 229,
+                                                     86, 50, 0, 44)
     control_playground.on_mouse_left_button_down do
       # 修建中
     end
@@ -60,15 +63,24 @@ class ChannelMainView
     @main_dialog.update_arrange
   end
 
-  def create_back_channel_control(canvas, normal_image_num, hover_image_num, left, top, width, height)
-    control_back = AntGui::Control.new
-    control_back.content = AntGui::Image.new(MediaUtil.get_img(get_image_path(normal_image_num)))
-    control_active = AntGui::Facade.create_image_button(nil, get_image_path(hover_image_num))
-    AntGui::Canvas.set_canvas_props(control_back, left, top, width, height)
-    AntGui::Canvas.set_canvas_props(control_active, left, top, width, height)
-    canvas.add control_back
-    canvas.add control_active
-    control_active
+  def create_back_channel_control(canvas, normal_image_num, hover_image_num, left, top, width, height,
+                                  margin_left=0, margin_top=0, margin_right=0, margin_bottom=0)
+    image_back = AntGui::Image.new(MediaUtil.get_img(get_image_path(normal_image_num)))
+    image_active = AntGui::Image.new(MediaUtil.get_img(get_image_path(hover_image_num)))
+    AntGui::Canvas.set_canvas_props(image_back, left, top, width, height)
+    AntGui::Canvas.set_canvas_props(image_active, left, top, width, height)
+    canvas.add image_back
+    canvas.add image_active
+    image_back.visible = true
+    image_active.visible = false
+
+    control = AntGui::Control.new
+    AntGui::Canvas.set_canvas_props(control, left + margin_left, top + margin_top,
+                                    width - margin_left - margin_right, height - margin_top - margin_bottom)
+    control.on_mouse_enter {image_back.visible = false, image_active.visible = true}
+    control.on_mouse_leave {image_back.visible = true, image_active.visible = false}
+    canvas.add control
+    control
   end
 
   def get_image_path(num)

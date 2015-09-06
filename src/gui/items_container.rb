@@ -3,6 +3,7 @@ module AntGui
     attr_reader :items
 
     def initialize
+      super()
       @items = []
     end
 
@@ -14,7 +15,7 @@ module AntGui
       @items.delete control
     end
 
-    def draw
+    def do_draw
       @items.each {|control| control.draw}
     end
 

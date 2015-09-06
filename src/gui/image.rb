@@ -5,7 +5,7 @@ module AntGui
       @gosu_img = gosu_img
     end
 
-    def draw
+    def do_draw
       @gosu_img.draw(@actual_left, @actual_top, ZOrder::DIALOG_UI,
                      @actual_width * 1.0 / @gosu_img.width, @actual_height * 1.0 / @gosu_img.height,
                      0xff_ffffff, mode = :default)
