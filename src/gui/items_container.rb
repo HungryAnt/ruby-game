@@ -15,8 +15,8 @@ module AntGui
       @items.delete control
     end
 
-    def do_draw
-      @items.each {|control| control.draw}
+    def do_draw(z)
+      @items.each {|control| control.draw z}
     end
 
     def mouse_left_button_down(x, y)

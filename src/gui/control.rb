@@ -18,11 +18,11 @@ module AntGui
       arrange @actual_left, @actual_top, @actual_width, @actual_height
     end
 
-    def do_draw
+    def do_draw(z)
       unless @background_color.nil?
-        Gosu::draw_rect(@actual_left, @actual_top, @actual_width, @actual_height, @background_color, ZOrder::DIALOG_UI)
+        Gosu::draw_rect(@actual_left, @actual_top, @actual_width, @actual_height, @background_color, z)
       end
-      @content.draw unless @content.nil?
+      @content.draw z unless @content.nil?
     end
 
     def mouse_left_button_down(x, y)

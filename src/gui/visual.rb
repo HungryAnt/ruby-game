@@ -1,6 +1,6 @@
 module AntGui
   class Visual
-    attr_accessor :actual_left, :actual_top, :actual_width, :actual_height, :visible
+    attr_accessor :actual_left, :actual_top, :actual_width, :actual_height, :visible, :z_order
 
     def initialize
       @actual_left, @actual_top, @actual_width, @actual_height = 0, 0, 0, 0
@@ -8,13 +8,15 @@ module AntGui
       @mouse_left_button_down_proc = nil
       @mouse_in_area = false
       @mouse_enter_proc = @mouse_leave_proc = nil
+      @z_order = nil
     end
 
-    def draw
-      do_draw if @visible
+    def draw(z=ZOrder::DIALOG_UI)
+      z = @z_order unless @z_order.nil?
+      do_draw z if @visible
     end
 
-    def do_draw
+    def do_draw(z)
 
     end
 

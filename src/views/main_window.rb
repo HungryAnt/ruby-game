@@ -69,9 +69,9 @@ class MainWindow < Gosu::Window
     message = "#{VERSION} 作者:Gods_巨蚁 QQ:517377100 Q群:475143537"
 
     @font.draw(message, 11, 1,
-               ZOrder::UI, 1.0, 1.0, 0xFF_9EC4FF)
+               ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_9EC4FF)
     @font.draw(message, 10, 0,
-               ZOrder::UI, 1.0, 1.0, 0xFF_2054A3)
+               ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_2054A3)
   end
 
   def draw_fps
@@ -79,11 +79,11 @@ class MainWindow < Gosu::Window
       diff = Gosu::milliseconds - @begin_times
       return if diff == 0
       update_rate = @update_times * 1000 / diff
-      @font.draw("update_rate: #{update_rate} per second", 10, 30,
+      @font.draw("update: #{update_rate} per second", 10, 30,
                  ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
 
       draw_rate = @draw_times * 1000 / diff
-      @font.draw("draw_rate: #{draw_rate} per second", 10, 50,
+      @font.draw("draw: #{draw_rate} per second", 10, 50,
                  ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
     end
   end
