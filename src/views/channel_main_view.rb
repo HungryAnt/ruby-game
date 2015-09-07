@@ -1,4 +1,5 @@
 # coding: UTF-8
+require_relative 'channel_main/village_map_selection_view'
 
 class ChannelMainView
   def initialize(window)
@@ -9,6 +10,7 @@ class ChannelMainView
     @background_image = MediaUtil::get_tileable_img('channel_main/ChannelMain_0.bmp')
     @select_map_call_back = nil
     # @target_map_id = nil
+    @village_map_selection_view = VillageMapSelectionView.new
   end
 
   def on_exit(&exit_call_back)
@@ -69,7 +71,6 @@ class ChannelMainView
     control_shop.on_mouse_left_button_down do
       goto_map :pay
     end
-
 
     exit_button = AntGui::Facade.create_image_button(get_button_image_path(0), get_button_image_path(1))
     exit_button.on_mouse_left_button_down {@exit_call_back.call}
@@ -155,6 +156,8 @@ class ChannelMainView
                         ZOrder::Background)
     Gosu::draw_triangle(left, top, color_0, left + width, top + height, color_1, left + width, top, color_0,
                         ZOrder::Background)
+
+    @village_map_selection_view.draw
   end
 
   def button_down(id)

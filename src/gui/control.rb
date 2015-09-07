@@ -6,7 +6,6 @@ module AntGui
       super
       @content = nil
       @background_color = nil # 0x00_FFFFFF
-
     end
 
     def arrange(left, top, width, height)
