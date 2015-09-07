@@ -112,6 +112,10 @@ class GameMapViewModel
     @sound_join_map.play
   end
 
+  def quit_map
+    @map_service.quit_map
+  end
+
   def switch_to_next_role_type
     current_role_type = @player_view_model.role.role_type
     @player_view_model.role.role_type = RoleType::next(current_role_type)

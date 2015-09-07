@@ -3,6 +3,7 @@ require_relative 'common/text_box'
 class GameMapView < ViewBase
 
   def initialize(window)
+    autowired(WindowResourceService)
     @window = window
     @game_map_view_model = GameMapViewModel.new
   end
@@ -23,6 +24,10 @@ class GameMapView < ViewBase
 
   def init_switch_map(map_id)
     @game_map_view_model.switch_map map_id
+  end
+
+  def quit_map
+    @game_map_view_model.quit_map
   end
 
   def update
@@ -172,7 +177,13 @@ class GameMapView < ViewBase
     exit_button.content = normal_exit_image
     exit_button.on_mouse_enter {exit_button.content = hover_exit_image; exit_button.refresh}
     exit_button.on_mouse_leave {exit_button.content = normal_exit_image; exit_button.refresh}
-    exit_button.on_mouse_left_button_down {@exit_call_back.call unless @exit_call_back.nil?}
+
+    sound_button = @window_resource_service.get_sound_button
+    exit_button.on_mouse_left_button_down {
+      @exit_call_back.call unless @exit_call_back.nil?
+      quit_map
+      sound_button.play
+    }
     @status_dialog.update_arrange
   end
 end

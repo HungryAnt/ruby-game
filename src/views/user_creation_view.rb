@@ -34,7 +34,7 @@ class UserCreationView
   ROLE_SELECTOR_ROW_COUNT = 2
 
   def initialize(window)
-    autowired(NetworkService, UserService)
+    autowired(NetworkService, UserService, WindowResourceService)
     @window = window
 
     @font = Gosu::Font.new(30)
@@ -53,7 +53,7 @@ class UserCreationView
   end
 
   def init_role_type_selector
-    @sound_button = MediaUtil.get_sample 'button.wav'
+    @sound_button = @window_resource_service.get_sound_button  # MediaUtil.get_sample 'button.wav'
     dialog_width = ROLE_PHOTO_WIDTH * ROLE_SELECTOR_COL_COUNT + ROLE_PHOTO_MARGIN * (ROLE_SELECTOR_COL_COUNT - 1)
     dialog_height = ROLE_PHOTO_WIDTH * ROLE_SELECTOR_ROW_COUNT + ROLE_PHOTO_MARGIN * (ROLE_SELECTOR_ROW_COUNT - 1)
     dialog_left = (GameConfig::WHOLE_WIDTH - dialog_width) / 2

@@ -32,6 +32,13 @@ class MapService
     end
   end
 
+  def quit_map
+    return if @current_map.nil?
+    @chat_service.clear_chat_msgs
+    @chat_service.quit(@current_map.id) unless @current_map.nil?
+    @current_map = nil
+  end
+
   def current_map
     @current_map
   end

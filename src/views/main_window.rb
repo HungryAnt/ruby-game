@@ -29,6 +29,7 @@ class MainWindow < Gosu::Window
       @player_service.update_lv
       @game_map_view.init
       @current_view = @channel_main_view
+      @channel_main_view.active
       @ready_for_game = true
     end
 
@@ -40,6 +41,7 @@ class MainWindow < Gosu::Window
 
     @game_map_view.on_exit do
       @current_view = @channel_main_view
+      @channel_main_view.active
     end
 
     @begin_times = Gosu::milliseconds
