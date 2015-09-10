@@ -36,6 +36,7 @@ require 'models/role_equipment'
 require 'models/role'
 require 'models/tiles'
 require 'models/equipment'
+require 'models/map_type'
 
 require 'messages/init_sync_user_message'
 require 'messages/lv_message'

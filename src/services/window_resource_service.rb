@@ -3,6 +3,7 @@ class WindowResourceService
   def init(window)
     @window = window
     @font_chat_bubble = Gosu::Font.new(window, 'Verdana', 17)
+    @font_map_name = Gosu::Font.new(window, 'Verdana', 25)
   end
 
   def get_chat_bubble_font
@@ -19,5 +20,9 @@ class WindowResourceService
 
   def get_channel(key)
     MediaUtil.get_sample "channel/#{key.to_s}.wav"
+  end
+
+  def get_map_name_font
+    @font_map_name
   end
 end

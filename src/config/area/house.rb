@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 puts __FILE__
 
 roof1_tiles_text = <<TILES
@@ -372,4 +374,4 @@ kitchen_inside_area.gateway = {
     :I => {:area => roof1_area, :direction => Direction::DOWN},
 }
 
-create_map(:house, [roof1_area, roof2_area, bottom_area, kitchen_outside_area, kitchen_inside_area])
+create_map(:house, '秀娟家的屋顶', MapType::VILLAGE, [roof1_area, roof2_area, bottom_area, kitchen_outside_area, kitchen_inside_area])

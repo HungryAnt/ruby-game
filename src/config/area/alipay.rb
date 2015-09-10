@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 puts __FILE__
 
 tiles_text = <<TILES
@@ -65,4 +67,4 @@ TILES
 
 area = create_area(:alipay, 'map/alipay/alipay.png', 'map/pay.ogg', tiles_text)
 
-create_map(:alipay, [area])
+create_map(:alipay, '商店2', MapType::SPECIAL, [area])

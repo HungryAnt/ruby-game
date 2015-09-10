@@ -1,9 +1,10 @@
 class MapViewModel
-  attr_reader :areas, :current_area, :id
+  attr_reader :areas, :current_area, :id, :name, :map_type
 
-  def initialize(id, areas)
+  def initialize(id, name, map_type, areas)
     ArgumentError "wrong areas #{areas}" if areas.nil? || areas.size == 0
     @id = id
+    @name, @map_type = name, map_type
     @areas = areas
     switch_to_first_area
   end

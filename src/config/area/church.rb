@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 puts __FILE__
 
 outside_tiles_text = <<TILES
@@ -140,9 +142,9 @@ inside_area.gateway = {
     :B => {:area => outside_area, :direction => Direction::DOWN},
 }
 
-# ÉèÖÃÕÚ¸ÇÎï
+# è®¾ç½®é®ç›–ç‰©
 outside_area.add_covering(:image_path => "map/church/outside/snowman.bmp", :x => 0, :y => 299)
 outside_area.add_covering(:anim => :church_outside_cat, :x => 560, :y => 420)
 
-create_map(:church, [outside_area, inside_area])
+create_map(:church, 'ç¤¼æ‹œå ‚', MapType::VILLAGE, [outside_area, inside_area])
 

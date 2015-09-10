@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 puts __FILE__
 
 tiles_text = <<TILES
@@ -65,8 +67,8 @@ TILES
 
 area = create_area(:police, 'map/police/police.png', nil, tiles_text)
 
-# ÉèÖÃÕÚ¸ÇÎï
+# è®¾ç½®é®ç›–ç‰©
 area.add_surface(:anim => :police_policeman, :x => 608, :y => 239)
 area.add_surface(:anim => :police_tv, :x => 700, :y => 20)
 
-create_map(:police, [area])
+create_map(:police, 'è­¦å¯Ÿå†›', MapType::SPECIAL, [area])

@@ -10,7 +10,7 @@ class ChannelMainView
     @background_image = MediaUtil::get_tileable_img('channel_main/ChannelMain_0.bmp')
     @select_map_call_back = nil
     # @target_map_id = nil
-    @village_map_selection_view = VillageMapSelectionView.new
+    @village_map_selection_view = VillageMapSelectionView.new(window)
   end
 
   def on_exit(&exit_call_back)
@@ -138,10 +138,6 @@ class ChannelMainView
 
   def update
     @main_dialog.mouse_move(@window.mouse_x, @window.mouse_y)
-
-    # unless @target_map_id.nil?
-    #   @select_map_call_back.call @target_map_id
-    # end
   end
 
   def draw
@@ -161,6 +157,8 @@ class ChannelMainView
   end
 
   def button_down(id)
+    return if @village_map_selection_view.button_down id
+
     case id
       when Gosu::MsLeft
         @main_dialog.mouse_left_button_down(@window.mouse_x, @window.mouse_y)

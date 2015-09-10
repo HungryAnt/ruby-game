@@ -19,9 +19,9 @@ lambda {
     Area.new id, image_path, song_path, tiles_text
   end
 
-  def create_map(key, areas)
+  def create_map(key, name='地图', map_type, areas)
     area_vms = areas.collect {|area|AreaViewModel.new area}
-    map = MapViewModel.new(key.to_s, area_vms)
+    map = MapViewModel.new(key.to_s, name, map_type, area_vms)
     @map_manager.map_service.add_map key, map
     area_vms.each do |area_vm|
       @map_manager.map_service.add_area(area_vm.id.to_s, area_vm)

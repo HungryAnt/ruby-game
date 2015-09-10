@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 puts __FILE__
 
 school_ground_tiles_text = <<TILES
@@ -210,11 +212,11 @@ school_room_area.gateway = {
     :D => {:area => school_lobby_area, :direction => Direction::LEFT}
 }
 
-# …Ë÷√’⁄∏«ŒÔ
+# ËÆæÁΩÆÈÅÆÁõñÁâ©
 school_ground_area.add_covering(:image_path => 'map/school/school_ground/01.bmp', :x => 1, :y => 40)
 school_ground_area.add_covering(:anim => :school_ground_children, :x => 0, :y => 370)
 
 # school_lobby_area.add_covering("map/school/school_lobby/01.bmp", 250, 0)
 
-create_map(:school, [school_ground_area, school_lobby_area, school_room_area])
+create_map(:school, 'Â∞èÂ≠¶', MapType::VILLAGE, [school_ground_area, school_lobby_area, school_room_area])
 
