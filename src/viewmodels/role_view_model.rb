@@ -10,7 +10,7 @@ class RoleViewModel
     init_animations
     @eating_food_vm = nil
     @auto_move_enabled = false
-    @speed = 2.0
+    @speed = 4.2
     @arrive_call_back = nil
     stop
     @area_id = nil
@@ -261,9 +261,12 @@ class RoleViewModel
   end
 
   def get_speed
-    speed = @running ? @speed * 2 : @speed
-    speed = speed * 2 if @driving
-    speed
+    running = @running && !@battered
+    speed_rate = 1.0
+    speed_rate -= 0.5 unless running
+    speed_rate -= 0.25 if @battered || @role.eating?
+    speed_rate += @vehicle.speed_up if @driving
+    @speed * speed_rate
   end
 
   def move_to_location(x, y)

@@ -1,10 +1,13 @@
 class EquipmentViewModel
-  attr_reader :vehicle_body_height
+  attr_reader :vehicle_body_height, :speed_up
 
   def initialize(key)
     init_anims key
-    @vehicle_body_height = EquipmentDefinition.get_body_height(key)
-    @location_offset = get_location_offset(key)
+    props = EquipmentDefinition.get_props key
+    @vehicle_body_height = props[:body_height]
+    @speed_up = props[:speed_up]
+    @location_offset = props[:offset]
+
   end
 
   def draw(role_x, role_y, direction)
@@ -26,9 +29,5 @@ class EquipmentViewModel
 
   def get_anim(key)
     AnimationManager.get_anim key
-  end
-
-  def get_location_offset(key)
-    EquipmentDefinition.get_location_offset key
   end
 end

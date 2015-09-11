@@ -86,27 +86,32 @@ class GameMapView < ViewBase
     return if chat_input_enabled? && id != Gosu::KbReturn && id != Gosu::KbBacktick
     return if @package_items_view.button_down(id)
 
+    if GameConfig::DEBUG
+      case id
+        when Gosu::Kb1
+          @game_map_view_model.switch_map :grass_wood_back
+        when Gosu::Kb2
+          @game_map_view_model.switch_map :school
+        when Gosu::Kb3
+          @game_map_view_model.switch_map :church
+        when Gosu::Kb4
+          @game_map_view_model.switch_map :pay
+        when Gosu::Kb5
+          @game_map_view_model.switch_map :alipay
+        when Gosu::Kb6
+          @game_map_view_model.switch_map :house
+        when Gosu::Kb7
+          @game_map_view_model.switch_map :seven_star_hall
+        when Gosu::KbF2
+          @game_map_view_model.switch_map :police
+        when Gosu::Kb0
+          @game_map_view_model.switch_to_next_role_type
+        when Gosu::Kb9
+          @game_map_view_model.switch_to_prev_role_type
+      end
+    end
+
     case id
-      when Gosu::Kb1
-        @game_map_view_model.switch_map :grass_wood_back
-      when Gosu::Kb2
-        @game_map_view_model.switch_map :school
-      when Gosu::Kb3
-        @game_map_view_model.switch_map :church
-      when Gosu::Kb4
-        @game_map_view_model.switch_map :pay
-      when Gosu::Kb5
-        @game_map_view_model.switch_map :alipay
-      when Gosu::Kb6
-        @game_map_view_model.switch_map :house
-      when Gosu::Kb7
-        @game_map_view_model.switch_map :seven_star_hall
-      when Gosu::KbF2
-        @game_map_view_model.switch_map :police
-      when Gosu::Kb0
-        @game_map_view_model.switch_to_next_role_type
-      when Gosu::Kb9
-        @game_map_view_model.switch_to_prev_role_type
       when Gosu::MsLeft
         done = @game_map_view_model.try_pick_up(@window.mouse_x, @window.mouse_y)
         return if done

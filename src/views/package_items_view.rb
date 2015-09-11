@@ -1,11 +1,10 @@
 class PackageItemsView
   attr_accessor :visible
 
-  ROW_COUNT = 8
-  COL_COUNT = 10
+  ROW_COUNT = 5
+  COL_COUNT = 6
 
-  DIALOG_WIDTH = 565
-  DIALOG_HEIGHT = 455
+  PROMPT_HEIGHT = 30
   ITEM_WIDTH = 50
   ITEM_HEIGHT = 50
   MARGIN = 5
@@ -19,8 +18,11 @@ class PackageItemsView
   end
 
   def init_controls
-    dialog_left, dialog_top = (GameConfig::WHOLE_WIDTH - DIALOG_WIDTH) / 2, (GameConfig::WHOLE_HEIGHT - DIALOG_HEIGHT) / 2
-    @dialog = AntGui::Dialog.new(dialog_left, dialog_top, DIALOG_WIDTH, DIALOG_HEIGHT)
+    dialog_width = ITEM_WIDTH * COL_COUNT + MARGIN * (COL_COUNT - 1) + PADDING * 2
+    dialog_height = PROMPT_HEIGHT + MARGIN + ITEM_HEIGHT * ROW_COUNT + MARGIN * (ROW_COUNT - 1) + PADDING * 2
+
+    dialog_left, dialog_top = (GameConfig::WHOLE_WIDTH - dialog_width) / 2, (GameConfig::WHOLE_HEIGHT - dialog_width) / 2
+    @dialog = AntGui::Dialog.new(dialog_left, dialog_top, dialog_width, dialog_height)
     @dialog.background_color = 0x88_A17038
     @canvas = AntGui::Canvas.new
     @dialog.content = @canvas
@@ -32,7 +34,7 @@ class PackageItemsView
       row = index / COL_COUNT
       col = index % COL_COUNT
       item_left = PADDING + (ITEM_WIDTH + MARGIN) * col
-      item_top = PADDING + (ITEM_HEIGHT + MARGIN) * row
+      item_top = PADDING + (ITEM_HEIGHT + MARGIN) * row + PROMPT_HEIGHT + MARGIN
       control = AntGui::Control.new
       control.set(AntGui::Canvas::LEFT, item_left)
       control.set(AntGui::Canvas::TOP, item_top)
