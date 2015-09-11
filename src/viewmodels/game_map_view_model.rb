@@ -266,8 +266,8 @@ class GameMapViewModel
   end
 
   def register_hit_call_back
-    @game_roles_service.register_hit_call_back do |user_id, target_x, target_y|
-      if @player_service.user_id != user_id
+    @game_roles_service.register_hit_call_back do |user_id, area_id, target_x, target_y|
+      if @player_service.user_id != user_id && get_current_area.id == area_id
         role_vm =  @role_vm_dict[user_id]
         role_vm.hit unless role_vm.nil?
         @player_view_model.check_hit_battered(target_x, target_y)

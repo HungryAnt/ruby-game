@@ -11,7 +11,10 @@ class ChannelMainView
     @select_map_call_back = nil
     # @target_map_id = nil
     @map_selection_view = VillageMapSelectionView.new(window)
-    @map_selection_view.on_select_map {|map_id| goto_map map_id}
+    @map_selection_view.on_select_map do |map_id|
+      hide_map_selection_view
+      goto_map map_id
+    end
   end
 
   def show_map_selection_view(*map_ids)
