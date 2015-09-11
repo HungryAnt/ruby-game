@@ -1,16 +1,29 @@
 # coding: UTF-8
-require_relative 'channel_main/village_map_selection_view'
+require_relative 'channel_main/map_selection_view'
 
 class ChannelMainView
   def initialize(window)
-    autowired(WindowResourceService, SongService)
+    autowired(WindowResourceService, SongService, MapService)
     @window = window
     init_channel_anims
     init_channel_element
     @background_image = MediaUtil::get_tileable_img('channel_main/ChannelMain_0.bmp')
     @select_map_call_back = nil
     # @target_map_id = nil
-    @village_map_selection_view = VillageMapSelectionView.new(window)
+    @map_selection_view = VillageMapSelectionView.new(window)
+    @map_selection_view.on_select_map {|map_id| goto_map map_id}
+  end
+
+  def show_map_selection_view(*map_ids)
+    map_vms = map_ids.map {|map_id| @map_service.get_map map_id}
+    @map_selection_view.update_maps map_vms
+    @map_selection_view.show
+    @main_dialog.active = false
+  end
+
+  def hide_map_selection_view
+    @map_selection_view.hide
+    @main_dialog.active = true
   end
 
   def on_exit(&exit_call_back)
@@ -51,7 +64,8 @@ class ChannelMainView
     control_village = create_channel_control(canvas, 1, 2, 0, 228, 370, 251,
                                              0, 59, 150, 29, :village)
     control_village.on_mouse_left_button_down do
-      goto_map :house
+      # goto_map :house
+      show_map_selection_view(:grass_wood_back, :school, :church, :house)
     end
 
     control_police_station = create_channel_control(canvas, 13, 14, 430, 160, 103, 79,
@@ -69,7 +83,7 @@ class ChannelMainView
     control_shop = create_channel_control(canvas, 5, 6, 334, 260, 372, 180,
                                           125, 28, 46, 22, :shop)
     control_shop.on_mouse_left_button_down do
-      goto_map :pay
+      show_map_selection_view :pay, :alipay
     end
 
     exit_button = AntGui::Facade.create_image_button(get_button_image_path(0), get_button_image_path(1))
@@ -82,6 +96,7 @@ class ChannelMainView
   end
 
   def goto_map(map_id)
+    @map_selection_view.hide
     pause_all_sample_instances
     @select_map_call_back.call map_id
   end
@@ -138,6 +153,7 @@ class ChannelMainView
 
   def update
     @main_dialog.mouse_move(@window.mouse_x, @window.mouse_y)
+    @map_selection_view.mouse_move(@window.mouse_x, @window.mouse_y) if @map_selection_view.visible
   end
 
   def draw
@@ -153,15 +169,20 @@ class ChannelMainView
     Gosu::draw_triangle(left, top, color_0, left + width, top + height, color_1, left + width, top, color_0,
                         ZOrder::Background)
 
-    @village_map_selection_view.draw
+    @map_selection_view.draw
   end
 
   def button_down(id)
-    return if @village_map_selection_view.button_down id
+    r = @map_selection_view.button_down(id) if @map_selection_view.visible
+    return if r
 
     case id
       when Gosu::MsLeft
-        @main_dialog.mouse_left_button_down(@window.mouse_x, @window.mouse_y)
+        if @map_selection_view.visible
+          hide_map_selection_view
+        else
+          @main_dialog.mouse_left_button_down(@window.mouse_x, @window.mouse_y)
+        end
     end
   end
 

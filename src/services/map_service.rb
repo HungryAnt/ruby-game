@@ -12,6 +12,10 @@ class MapService
     @map_list << map
   end
 
+  def get_map(key)
+    @maps[key]
+  end
+
   def add_area(key, area_vm)
     @area_vm_dict[key] = area_vm
   end
