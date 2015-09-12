@@ -18,15 +18,15 @@ class PlayerService
     #   vehicle_key = "vehicle_#{num}".to_sym
     #   @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
     # end
+    @communication_service.init_sync_user @user_id, user_name
+  end
+
+  def update_sync_data
+    @role.update_lv @user_service.lv, @user_service.exp
+
     vehicles = @user_service.vehicles
     vehicles.each do |vehicle|
       @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle.to_sym)
     end
-
-    @communication_service.init_sync_user @user_id, user_name
-  end
-
-  def update_lv
-    @role.update_lv @user_service.lv, @user_service.exp
   end
 end

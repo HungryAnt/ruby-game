@@ -26,7 +26,7 @@ class MainWindow < Gosu::Window
     end
 
     @loading_view.init_skip_call_back do
-      @player_service.update_lv
+      @player_service.update_sync_data
       @game_map_view.init
       @current_view = @channel_main_view
       @channel_main_view.active
