@@ -9,5 +9,6 @@ class PackageItemsViewModel
 
   def choose_equipment(equipment)
     @player_vm.equip(EquipmentViewModelFactory.create_equipment(equipment))
+    @player_vm.driving = true
   end
 end

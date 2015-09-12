@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 class PackageItemsView
   attr_accessor :visible
 
@@ -11,9 +13,11 @@ class PackageItemsView
   PADDING = 10
 
   def initialize(window, package_items_vm)
+    autowired(WindowResourceService)
     @window = window
     @package_items_vm = package_items_vm
     @visible = false
+    @prompt_font = @window_resource_service.get_normal_font
     init_controls
   end
 
@@ -24,10 +28,13 @@ class PackageItemsView
     dialog_left, dialog_top = (GameConfig::WHOLE_WIDTH - dialog_width) / 2, (GameConfig::WHOLE_HEIGHT - dialog_width) / 2
     @dialog = AntGui::Dialog.new(dialog_left, dialog_top, dialog_width, dialog_height)
     @dialog.background_color = 0x88_A17038
-    @canvas = AntGui::Canvas.new
-    @dialog.content = @canvas
+    canvas = AntGui::Canvas.new
+    @dialog.content = canvas
 
-    # Gosu::draw_rect(dialog_left, dialog_top, DIALOG_WIDTH, DIALOG_HEIGHT, 0x88_A17038, ZOrder::DIALOG_UI)
+    prompt_text_block = AntGui::TextBlock.new(@prompt_font, '点击切换载具，Q键上下车')
+    prompt_text_block.background_color = 0x88_FFFFFF
+    canvas.add prompt_text_block
+    AntGui::Canvas.set_canvas_props(prompt_text_block, PADDING, PADDING, dialog_width - PADDING * 2, PROMPT_HEIGHT)
 
     items = @package_items_vm.get_items
     0.upto(ROW_COUNT * COL_COUNT - 1) do |index|
@@ -41,22 +48,19 @@ class PackageItemsView
       control.set(AntGui::Canvas::WIDTH, ITEM_WIDTH)
       control.set(AntGui::Canvas::HEIGHT, ITEM_HEIGHT)
       control.background_color = 0xFF_2B2B2B
-      # Gosu::draw_rect(item_left, item_top, ITEM_WIDTH, ITEM_HEIGHT, 0xFF_2B2B2B, ZOrder::DIALOG_UI)
 
       if index < items.count
         item = items[index]
         item_img = EquipmentDefinition.get_item_image item.key
-        # item_img.draw(item_left, item_top, ZOrder::DIALOG_UI,
-        #               ITEM_WIDTH * 1.0 / item_img.width, ITEM_HEIGHT * 1.0 / item_img.height,
-        #               0xff_ffffff, mode = :default)
         image = AntGui::Image.new(item_img)
         control.content = image
         control.on_mouse_left_button_down do
           @package_items_vm.choose_equipment item
+          @visible = false
         end
       end
 
-      @canvas.add(control)
+      canvas.add(control)
     end
 
     @dialog.update_arrange
@@ -78,8 +82,10 @@ class PackageItemsView
           else
             # @dialog.mouse_right_button_down(mouse_x, mouse_y)
           end
-          return true
+        else
+          @visible = false
         end
+        return true
     end
     false
   end
