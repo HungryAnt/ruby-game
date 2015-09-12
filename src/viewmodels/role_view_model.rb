@@ -1,6 +1,6 @@
 class RoleViewModel
   attr_reader :role, :standing, :hiting, :battered
-  attr_accessor :area_id, :driving, :vehicle
+  attr_accessor :area_id, :vehicle
 
   def initialize(role)
     autowired(MapService)
@@ -14,7 +14,7 @@ class RoleViewModel
     @arrive_call_back = nil
     stop
     @area_id = nil
-    @vehicle = EquipmentViewModelFactory::create_vehicle(:vehicle_828)
+    @vehicle = nil
     @driving = false
     @chat_bubble_vm = ChatBubbleViewModel.new
     @update_times = 0
@@ -22,6 +22,24 @@ class RoleViewModel
     @battered = false  # ±»´ò±âµÄ
     @sound_hit = MediaUtil.get_sample 'hit.wav'
     @sound_being_battered = MediaUtil.get_sample 'being_battered.wav'
+  end
+
+  def driving?
+    @driving && !@vehicle.nil?
+  end
+
+  def driving=(value)
+    @driving = value
+    if driving?
+      @role.vehicle = @vehicle.key
+    else
+      @role.vehicle = nil
+    end
+    value
+  end
+
+  def driving
+    @driving
   end
 
   def init_animations
@@ -113,7 +131,7 @@ class RoleViewModel
       if @standing
         return Role::State::EATING
       else
-        if @driving
+        if driving?
           return Role::State::HOLDING_FOOD
         else
           return Role::State::HOLDING_FOOD
@@ -123,7 +141,7 @@ class RoleViewModel
       if @standing
         return Role::State::STANDING
       else
-        if @driving
+        if driving?
           return Role::State::DRIVING
         else
           return @running ? Role::State::RUNNING : Role::State::WALKING
@@ -202,7 +220,7 @@ class RoleViewModel
   end
 
   def draw_equipment
-    if @driving
+    if driving?
       @vehicle.draw(@role.x, @role.y, @role.direction)
     end
   end
@@ -265,7 +283,7 @@ class RoleViewModel
     speed_rate = 1.0
     speed_rate -= 0.5 unless running
     speed_rate -= 0.25 if @battered || @role.eating?
-    speed_rate += @vehicle.speed_up if @driving
+    speed_rate += @vehicle.speed_up if driving?
     @speed * speed_rate
   end
 
@@ -284,7 +302,7 @@ class RoleViewModel
 
   def get_actual_role_location
     x, y = @role.x, @role.y - 30
-    y = y - @vehicle.vehicle_body_height if @driving
+    y = y - @vehicle.vehicle_body_height if driving?
     [x, y]
   end
 end

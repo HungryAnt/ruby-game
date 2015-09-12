@@ -7,7 +7,7 @@ class EquipmentViewModelFactory
   end
 
   def self.create_vehicle(key)
-    equipment_vm = EquipmentViewModel.new(key)
+    equipment_vm = VehicleViewModel.new(key)
     equipment_vm
   end
 end

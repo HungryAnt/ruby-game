@@ -78,7 +78,7 @@ class Role
   include Hp
   include Exp
 
-  attr_accessor :state, :direction, :role_type, :hp
+  attr_accessor :state, :direction, :role_type, :hp, :vehicle
   attr_reader :package, :name
 
   def initialize(name, role_type, x, y)
@@ -94,7 +94,7 @@ class Role
     @direction = Direction::DOWN
     @intake = GameConfig::ROLE_INTAKE
     @temp_exp = 0
-    # @speed = 2.0
+    @vehicle = nil  # "vehicle_#{id}"
   end
 
   def start_eat(food)
@@ -186,7 +186,7 @@ class Role
         lv: @lv,
         state: @state.to_s,
         direction: @direction,
-        # speed: @speed
+        vehicle: @vehicle
     }
   end
 
