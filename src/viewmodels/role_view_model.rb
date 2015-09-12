@@ -28,7 +28,7 @@ class RoleViewModel
     @driving && !@vehicle.nil?
   end
 
-  def driving=(value)
+  def set_driving(value)
     @driving = value
     if driving?
       @role.vehicle = @vehicle.key
@@ -40,6 +40,16 @@ class RoleViewModel
 
   def driving
     @driving
+  end
+
+  def drive(vehicle_key)
+    if vehicle_key.nil?
+      set_driving false
+      return
+    end
+    return if driving? && @vehicle.key == vehicle_key
+    @vehicle = EquipmentViewModelFactory.create_vehicle vehicle_key
+    set_driving true
   end
 
   def init_animations

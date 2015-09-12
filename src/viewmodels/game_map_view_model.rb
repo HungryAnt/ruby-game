@@ -204,6 +204,12 @@ class GameMapViewModel
         role_vm.set_state role_map['state'].to_sym
         role_vm.set_direction role_map['direction'].to_i
         role_vm.area_id = role_map['area_id'].to_sym
+        if role_map['vehicle'].nil?
+          vehicle_key = nil
+        else
+          vehicle_key = role_map['vehicle'].to_sym
+        end
+        role_vm.drive(vehicle_key)
 
         action = role_map['action'].to_sym
         detail = role_map['detail']

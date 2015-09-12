@@ -30,8 +30,9 @@ class PlayerViewModel
     @role_vm.driving
   end
 
-  def driving=(value)
-    @role_vm.driving = value
+  def set_driving(value)
+    @role_vm.set_driving value
+    sync_role_appear
   end
 
   def equip(equipment_vm)
