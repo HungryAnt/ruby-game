@@ -7,7 +7,7 @@ class PlayerViewModel
   BEING_BATTERED_COST_HP = 45
 
   def initialize(role_vm)
-    autowired(PlayerService, MapService, ChatService)
+    autowired(PlayerService, MapService, CommunicationService)
     @role_vm = role_vm
     @role = @role_vm.role
     @move_timestamp = Gosu::milliseconds
@@ -169,48 +169,48 @@ class PlayerViewModel
     role_map['area_id'] = area_id
     role_map['action'] = action.to_s
     role_map['detail'] = detail
-    @chat_service.send_role_message role_map
+    @communication_service.send_role_message role_map
   end
 
   def refresh_new_map_elements(map_id)
     map_vm = @map_service.current_map
     map_vm.clear_area_items
 
-    @chat_service.send_roles_query_message map_id
-    @chat_service.send_area_items_query_message map_id
+    @communication_service.send_roles_query_message map_id
+    @communication_service.send_area_items_query_message map_id
   end
 
   def remote_discard_item(item)
     area_id = get_current_area_id
-    @chat_service.send_discard_item_message area_id, item.to_map
+    @communication_service.send_discard_item_message area_id, item.to_map
   end
 
   def try_remote_pickup_item(item)
     area_id = get_current_area_id
     user_id = get_user_id
-    @chat_service.send_try_pickup_item_message(user_id, area_id, item.id)
+    @communication_service.send_try_pickup_item_message(user_id, area_id, item.id)
   end
 
   def remote_eating_food(food)
     user_id = get_user_id
-    @chat_service.send_eating_food_message(user_id, food.to_food_map)
+    @communication_service.send_eating_food_message(user_id, food.to_food_map)
   end
 
   def remote_eat_up_food
     user_id = get_user_id
-    @chat_service.send_eat_up_food_message(user_id)
+    @communication_service.send_eat_up_food_message(user_id)
   end
 
   def remote_update_lv
-    @chat_service.send_update_lv get_user_id, @role.lv, @role.exp
+    @communication_service.send_update_lv get_user_id, @role.lv, @role.exp
   end
 
   def remote_hit(user_id, area_id, target_x, target_y)
-    @chat_service.send_hit_message user_id, area_id, target_x, target_y
+    @communication_service.send_hit_message user_id, area_id, target_x, target_y
   end
 
   def remote_being_battered(user_id)
-    @chat_service.send_being_battered_message user_id
+    @communication_service.send_being_battered_message user_id
   end
 
   def get_current_area_id

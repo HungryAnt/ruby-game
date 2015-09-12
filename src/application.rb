@@ -1,6 +1,6 @@
 class Application
   def initialize
-    autowired(NetworkService, UserService, ChatService)
+    autowired(NetworkService, UserService, CommunicationService)
   end
 
   def init

@@ -2,7 +2,7 @@ class GameMapViewModel
   attr_reader :package_items_view_model
 
   def initialize
-    autowired(PlayerService, ChatService, MapService,
+    autowired(PlayerService, CommunicationService, MapService,
               GameRolesService, AreaItemsService, NetworkService)
     @sound_join_map = MediaUtil::get_sample('join_map.wav')
   end
@@ -159,12 +159,12 @@ class GameMapViewModel
   end
 
   def chat(msg)
-    @chat_service.chat msg
+    @communication_service.chat msg
   end
 
   def command(cmd)
     user_id = @player_service.user_id
-    @chat_service.command cmd.chomp('`'), user_id, get_current_map.id, get_current_area.id.to_s
+    @communication_service.command cmd.chomp('`'), user_id, get_current_map.id, get_current_area.id.to_s
   end
 
   def change_driving

@@ -1,6 +1,6 @@
 class MapService
   def initialize
-    autowired(ChatService)
+    autowired(CommunicationService)
     @maps = {}
     @map_list = []
     @current_map = nil
@@ -27,19 +27,19 @@ class MapService
   def switch_map(key, role)
     map = @maps[key]
     if @current_map != map
-      @chat_service.clear_chat_msgs
-      @chat_service.quit(@current_map.id) unless @current_map.nil?
+      @communication_service.clear_chat_msgs
+      @communication_service.quit(@current_map.id) unless @current_map.nil?
       map.switch_to_first_area
       @current_map = map
       @current_map.activate
-      @chat_service.join(map.id, role)
+      @communication_service.join(map.id, role)
     end
   end
 
   def quit_map
     return if @current_map.nil?
-    @chat_service.clear_chat_msgs
-    @chat_service.quit(@current_map.id) unless @current_map.nil?
+    @communication_service.clear_chat_msgs
+    @communication_service.quit(@current_map.id) unless @current_map.nil?
     @current_map = nil
   end
 

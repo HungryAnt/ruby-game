@@ -1,4 +1,4 @@
-class ChatService
+class CommunicationService
   attr_reader :revision
 
   def initialize
