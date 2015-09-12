@@ -14,9 +14,13 @@ class PlayerService
     role_type = @user_service.role_type
     puts "player name: #{user_name}"
     @role = Role.new(user_name, role_type, 100, 300)
-    [39, 40, 50, 58, 59, 67, 74, 75, 81, 82, 83, 89, 90, 91, 604, 828].each do |num|
-      vehicle_key = "vehicle_#{num}".to_sym
-      @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
+    # [39, 40, 50, 58, 59, 67, 74, 75, 81, 82, 83, 89, 90, 91, 604, 828].each do |num|
+    #   vehicle_key = "vehicle_#{num}".to_sym
+    #   @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
+    # end
+    vehicles = @user_service.vehicles
+    vehicles.each do |vehicle|
+      @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle.to_sym)
     end
 
     @communication_service.init_sync_user @user_id, user_name

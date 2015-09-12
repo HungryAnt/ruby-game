@@ -120,9 +120,9 @@ class CommunicationService
 
   private
   def init_message_handler
-    @network_service.register('lv_message') do |msg_map, params|
-      lv_msg = LvMessage.from_map(msg_map)
-      @user_service.update_lv_exp lv_msg.lv, lv_msg.exp
+    @network_service.register('res_sync_user_message') do |msg_map, params|
+      res_sync_user_msg = ResSyncUserMessage.from_map(msg_map)
+      @user_service.update_user_data res_sync_user_msg.lv, res_sync_user_msg.exp, res_sync_user_msg.vehicles
     end
 
     @network_service.register('chat_message') do |msg_map, params|

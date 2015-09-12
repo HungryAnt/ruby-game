@@ -36,7 +36,7 @@ class LoadingView
   end
 
   def check_user_lv_synced
-    if @user_service.lv_synced?
+    if @user_service.data_synced?
       skip
     end
   end

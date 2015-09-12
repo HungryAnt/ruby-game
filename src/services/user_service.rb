@@ -4,13 +4,14 @@ require 'securerandom'
 
 class UserService
   attr_accessor :user_name, :role_type
-  attr_reader :user_id, :lv, :exp
+  attr_reader :user_id, :lv, :exp, :vehicles
 
   def initialize
     pwd = Dir::pwd
     @file_path = File.join(pwd, 'user.dat')
     init_user
     init_lv_exp
+    @vehicles = []
   end
 
   def init_user
@@ -26,16 +27,17 @@ class UserService
   def init_lv_exp
     @lv = 1
     @exp = 0
-    @lv_synced = false
+    @data_synced = false
   end
 
-  def update_lv_exp(lv, exp)
+  def update_user_data(lv, exp, vehicles)
     @lv, @exp = lv, exp
-    @lv_synced = true
+    @vehicles = vehicles
+    @data_synced = true
   end
 
-  def lv_synced?
-    @lv_synced
+  def data_synced?
+    @data_synced
   end
 
   def save

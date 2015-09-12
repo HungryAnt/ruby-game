@@ -168,7 +168,7 @@ class GameMapViewModel
   end
 
   def change_driving
-    @player_view_model.driving = !@player_view_model.driving
+    @player_view_model.set_driving(!@player_view_model.driving)
   end
 
   def hit
