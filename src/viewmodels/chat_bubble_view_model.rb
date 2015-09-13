@@ -40,7 +40,7 @@ class ChatBubbleViewModel
     width = TIP_WIDTH * 2
     height = 0
     @lines.each do |line|
-      puts line
+      # puts line
       w = @font.text_width(line)
       width = [width, w].max
       height += @font.height

@@ -14,7 +14,7 @@ require 'utils/string_util'
 
 require 'gui/gui'
 
-MediaUtil.init_base_media_path(File.join(@base_src_dir, '../media'))
+MediaUtil.init_base_media_path(File.join(Dir::pwd, 'media'))
 
 require 'engine/dependency_injection'
 
