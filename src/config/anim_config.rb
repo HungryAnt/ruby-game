@@ -134,4 +134,5 @@ lambda {
   new_map_covering_anim(:channel_main_vegetable, pattern_channel_anim, 28, 33)
   new_map_covering_anim(:channel_main_cows, pattern_channel_anim, 2, 5)
   new_map_covering_anim(:channel_main_sky_wheel, pattern_channel_anim, 10, 19, 150, false)
+  new_map_covering_anim(:channel_main_waterfall, pattern_channel_anim, 24, 27, 150, false)
 }.call

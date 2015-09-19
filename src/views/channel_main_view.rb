@@ -36,8 +36,9 @@ class ChannelMainView
   def init_channel_anims
     @anim_container = AnimationContainer.new
     create_anim :channel_main_vegetable, 340, 320, ZOrder::DIALOG_UI
-    create_anim :channel_main_cows, 200, 276
+    create_anim :channel_main_cows, 200, 276, ZOrder::DIALOG_UI
     create_anim :channel_main_sky_wheel, 620, 50
+    create_anim :channel_main_waterfall, 110, 150, ZOrder::DIALOG_UI
   end
 
   def create_anim(key, x, y, z=ZOrder::Background)
@@ -65,7 +66,7 @@ class ChannelMainView
     end
 
     control_village = create_channel_control(canvas, 1, 2, 0, 228, 370, 251,
-                                             0, 59, 150, 29, :village)
+                                             0, 59, 150, 29, :village, ZOrder::DIALOG_UI)
     control_village.on_mouse_left_button_down do
       # goto_map :house
       show_map_selection_view(:grass_wood_back, :school, :church, :house)
@@ -105,10 +106,11 @@ class ChannelMainView
   end
 
   def create_channel_control(canvas, normal_image_num, hover_image_num, left, top, width, height,
-                             margin_left=0, margin_top=0, margin_right=0, margin_bottom=0, music_key=nil)
+                             margin_left=0, margin_top=0, margin_right=0, margin_bottom=0, music_key=nil,
+                             z_order=ZOrder::Background)
     image_back = AntGui::Image.new(MediaUtil.get_img(get_image_path(normal_image_num)))
     image_active = AntGui::Image.new(MediaUtil.get_img(get_image_path(hover_image_num)))
-    # image_back.z_order = image_active.z_order = z_order
+    image_active.z_order = z_order
     AntGui::Canvas.set_canvas_props(image_back, left, top, width, height)
     AntGui::Canvas.set_canvas_props(image_active, left, top, width, height)
     canvas.add image_back
@@ -131,12 +133,12 @@ class ChannelMainView
     control.on_mouse_enter do
       # image_back.visible = false
       image_active.visible = true
-      music_sample_instance.resume unless music.nil?
+      music_sample_instance.resume unless music_sample_instance.nil?
     end
     control.on_mouse_leave do
       # image_back.visible = true
       image_active.visible = false
-      music_sample_instance.pause unless music.nil?
+      music_sample_instance.pause unless music_sample_instance.nil?
     end
     canvas.add control
     control

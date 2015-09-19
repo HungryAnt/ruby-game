@@ -76,3 +76,35 @@ set_vehicle_properties(604, 10, 2.0, left: [-15, -20], up: [0, -10], down: [0, 0
 
 create_vehicle_anims(828, hor_nums_pair:[32, 47], up_nums_pair:[16, 31], down_nums_pair:[0,15])
 set_vehicle_properties(828, 10, 1.0, left: [-3, -4], up: [0, -10], down: [0, 7])
+
+# ----v0.5.1
+create_vehicle_anims(96, hor_nums_pair:[8, 11], up_nums_pair:[4, 7], down_nums_pair:[0, 3])
+set_vehicle_properties(96, 10, 0.5, left: [-5, -4], up: [0, -12], down: [0, -4])
+
+create_vehicle_anims(97, hor_nums_pair:[4, 7], up_nums_pair:[2, 3], down_nums_pair:[0, 1])
+set_vehicle_properties(97, 10, 0.5, left: [-3, -4], up: [-1, -12], down: [-1, -4])
+
+create_vehicle_anims(103, hor_nums_pair:[16, 23], up_nums_pair:[8, 15], down_nums_pair:[0, 7])
+set_vehicle_properties(103, 6, 0.5, left: [-7, -7], up: [15, -12], down: [15, -4])
+
+create_vehicle_anims(104, hor_nums_pair:[14, 21], up_nums_pair:[8, 13], down_nums_pair:[0, 7])
+set_vehicle_properties(104, 10, 0.5, left: [-15, -4], up: [-1, 2], down: [0, 3])
+
+create_vehicle_anims(108, hor_nums_pair:[4, 5], up_nums_pair:[2, 3], down_nums_pair:[0, 1])
+set_vehicle_properties(108, 10, 0.5, left: [-1, -4], up: [0, -12], down: [1, -4])
+
+create_vehicle_anims(109, hor_nums_pair:[16, 23], up_nums_pair:[8, 15], down_nums_pair:[0, 7])
+set_vehicle_properties(109, 16, 0.5, left: [-1, 7], up: [0, -5], down: [-1, -5])
+
+# Èü³µ
+create_vehicle_anims(114, hor_nums_pair:[8, 11], up_nums_pair:[4, 7], down_nums_pair:[0, 3])
+set_vehicle_properties(114, 8, 0.5, left: [-13, -8], up: [0, -5], down: [0, -5])
+
+create_vehicle_anims(115, hor_nums_pair:[14, 15], up_nums_pair:[6, 13], down_nums_pair:[0, 5])
+set_vehicle_properties(115, 3, 0.5, left: [-5, -10], up: [0, -10], down: [0, -10])
+
+create_vehicle_anims(119, hor_nums_pair:[8, 11], up_nums_pair:[4, 7], down_nums_pair:[0, 3])
+set_vehicle_properties(119, 6, 0.5, left: [-5, -3], up: [0, 0], down: [0, 2])
+
+create_vehicle_anims(121, hor_nums_pair:[8, 11], up_nums_pair:[4, 7], down_nums_pair:[0, 3])
+set_vehicle_properties(121, 3, 0.5, left: [-8, -9], up: [0, -6], down: [0, -2])
