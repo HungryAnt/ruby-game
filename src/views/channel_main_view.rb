@@ -15,6 +15,18 @@ class ChannelMainView
       hide_map_selection_view
       goto_map map_id
     end
+    init_bottom_bar
+  end
+
+  def init_bottom_bar
+    @image_gold = MediaUtil::get_img 'money/gold.bmp'
+    @image_silver = MediaUtil::get_img 'money/silver.bmp'
+    @image_copper = MediaUtil::get_img 'money/copper.bmp'
+    @font_money = @window_resource_service.get_map_name_font
+  end
+
+  def on_shop(&shopping_call_back)
+    @shopping_call_back = shopping_call_back
   end
 
   def show_map_selection_view(*map_ids)
@@ -87,7 +99,8 @@ class ChannelMainView
     control_shop = create_channel_control(canvas, 5, 6, 334, 260, 372, 180,
                                           125, 28, 46, 22, :shop)
     control_shop.on_mouse_left_button_down do
-      show_map_selection_view :pay, :alipay
+      # show_map_selection_view :pay, :alipay
+      @shopping_call_back.call unless @shopping_call_back.nil?
     end
 
     exit_button = AntGui::Facade.create_image_button(get_button_image_path(0), get_button_image_path(1))
@@ -166,15 +179,36 @@ class ChannelMainView
     @anim_container.draw
     @main_dialog.draw ZOrder::Background
 
-    left, top, width, height = 0, GameConfig::MAP_HEIGHT, GameConfig::MAP_WIDTH, GameConfig::WHOLE_HEIGHT - GameConfig::MAP_HEIGHT
-    color_0 = 0xFF_FEFEFE
-    color_1 = 0xFF_DBDBDB
-    Gosu::draw_triangle(left, top, color_0, left, top + height, color_1, left + width, top + height, color_1,
-                        ZOrder::Background)
-    Gosu::draw_triangle(left, top, color_0, left + width, top + height, color_1, left + width, top, color_0,
-                        ZOrder::Background)
+    draw_bottom_bar
 
     @map_selection_view.draw
+  end
+
+  def draw_bottom_bar
+    left, top, width, height = 0, GameConfig::MAP_HEIGHT, GameConfig::MAP_WIDTH, GameConfig::WHOLE_HEIGHT - GameConfig::MAP_HEIGHT
+    GraphicsUtil.draw_linear_rect(left, top, width, height, ZOrder::Background, 0xFF_FEFEFE, 0xFF_DBDBDB)
+
+    margin = 10
+    money_image_width = 60
+    money_value_width = 50
+    x = 10
+    y = top + height / 2
+    z = ZOrder::Background
+
+    @image_gold.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
+    x += money_image_width + margin
+    @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    x += money_value_width + margin
+
+    @image_silver.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
+    x += money_image_width + margin
+    @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    x += money_value_width + margin
+
+    @image_copper.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
+    x += money_image_width + margin
+    @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    x += money_value_width + margin
   end
 
   def button_down(id)

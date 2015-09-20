@@ -1,4 +1,8 @@
 class ViewBase
+  def initialize(window)
+    @window = window
+  end
+
   def update
 
   end
@@ -13,5 +17,9 @@ class ViewBase
 
   def button_up(id)
 
+  end
+
+  def needs_cursor?
+    true
   end
 end

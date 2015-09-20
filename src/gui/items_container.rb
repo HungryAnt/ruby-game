@@ -16,6 +16,7 @@ module AntGui
     end
 
     def do_draw(z)
+      super
       @items.each {|control| control.draw z}
     end
 

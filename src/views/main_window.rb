@@ -17,6 +17,7 @@ class MainWindow < Gosu::Window
     @channel_main_view = ChannelMainView.new(self)
     @game_map_view = GameMapView.new(self)
     @map_editor_view = MapEditorView.new(self)
+    @shopping_view = ShoppingView.new(self)
 
     @ready_for_game = false
 
@@ -40,6 +41,15 @@ class MainWindow < Gosu::Window
     @channel_main_view.on_exit {close}
 
     @game_map_view.on_exit do
+      @current_view = @channel_main_view
+      @channel_main_view.active
+    end
+
+    @channel_main_view.on_shop do
+      @current_view = @shopping_view
+    end
+
+    @shopping_view.on_exit do
       @current_view = @channel_main_view
       @channel_main_view.active
     end
