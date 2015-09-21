@@ -3,7 +3,7 @@ require_relative 'channel_main/map_selection_view'
 
 class ChannelMainView
   def initialize(window)
-    autowired(WindowResourceService, SongService, MapService)
+    autowired(WindowResourceService, SongService, MapService, AccountService, UserService)
     @window = window
     init_channel_anims
     init_channel_element
@@ -21,8 +21,15 @@ class ChannelMainView
   def init_bottom_bar
     @image_gold = MediaUtil::get_img 'money/gold.bmp'
     @image_silver = MediaUtil::get_img 'money/silver.bmp'
-    @image_copper = MediaUtil::get_img 'money/copper.bmp'
+    # @image_copper = MediaUtil::get_img 'money/copper.bmp'
     @font_money = @window_resource_service.get_map_name_font
+    update_money
+  end
+
+  def update_money
+    amount = @account_service.get_amount(@user_service.user_id)
+    @gold = amount / 100
+    @silver = amount % 100
   end
 
   def on_shop(&shopping_call_back)
@@ -197,18 +204,17 @@ class ChannelMainView
 
     @image_gold.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
     x += money_image_width + margin
-    @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    @font_money.draw_rel(@gold, x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
     x += money_value_width + margin
 
     @image_silver.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
     x += money_image_width + margin
-    @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
-    x += money_value_width + margin
-
-    @image_copper.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
-    x += money_image_width + margin
-    @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
-    x += money_value_width + margin
+    @font_money.draw_rel(@silver, x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    # x += money_value_width + margin
+    # @image_copper.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
+    # x += money_image_width + margin
+    # @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    # x += money_value_width + margin
   end
 
   def button_down(id)

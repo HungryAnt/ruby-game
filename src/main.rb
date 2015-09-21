@@ -5,12 +5,15 @@ $:.unshift(File.dirname(__FILE__))
 require 'json'
 
 require 'gosu'
+require 'config/network_config'
+
 require 'utils/media_util'
 require 'utils/graphics_util'
 require 'utils/level_util'
 require 'utils/des'
 require 'utils/character_util'
 require 'utils/string_util'
+require 'utils/new_work_util'
 
 require 'gui/gui'
 
@@ -72,6 +75,7 @@ require 'services/user_service'
 require 'services/player_service'
 require 'services/des_service'
 require 'services/window_resource_service'
+require 'services/account_service'
 
 require 'viewmodels/item_view_model'
 require 'viewmodels/role_view_model'
@@ -105,7 +109,6 @@ require 'config/equipment_vehicle_config'
 require 'config/equipment_config'
 require 'config/map_config'
 require 'config/food_config'
-require 'config/network_config'
 require 'config/role_config'
 
 require 'application'
