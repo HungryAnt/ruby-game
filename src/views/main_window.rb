@@ -47,6 +47,7 @@ class MainWindow < Gosu::Window
 
     @channel_main_view.on_shop do
       @current_view = @shopping_view
+      @shopping_view.active
     end
 
     @shopping_view.on_exit do

@@ -1,11 +1,10 @@
-require 'net/http'
-
-class AccountService
-  def get_amount(user_id)
+class ShoppingService
+  def get_vehicles(page_no, page_size)
     params = {
-        userId: user_id
+        pageNo: page_no,
+        pageSize: page_size
     }
-    uri = URI(NewWorkUtil.get_uri('/account/getAmount', params))
+    uri = URI(NewWorkUtil.get_uri('/shopping/vehicles', params))
     req = Net::HTTP::Get.new(uri)
     req.content_type = 'application/json'
 

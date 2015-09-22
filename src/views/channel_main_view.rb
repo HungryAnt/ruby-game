@@ -23,7 +23,8 @@ class ChannelMainView
     @image_silver = MediaUtil::get_img 'money/silver.bmp'
     # @image_copper = MediaUtil::get_img 'money/copper.bmp'
     @font_money = @window_resource_service.get_map_name_font
-    update_money
+    # update_money
+    @gold = @silver = 0
   end
 
   def update_money
@@ -241,6 +242,7 @@ class ChannelMainView
 
   def active
     @song_service.play_song 'channel/back.ogg'
+    update_money
   end
 
   def pause_all_sample_instances

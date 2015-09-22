@@ -18,6 +18,10 @@ class ShoppingView < ViewBase
     @exit_call_back = exit_call_back
   end
 
+  def active
+
+  end
+
   def init_ui
     # AntGui::Facade.create_image_button()
 
