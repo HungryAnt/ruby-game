@@ -77,7 +77,7 @@ class ChannelMainView
                                              0, 59, 150, 29, :village, ZOrder::DIALOG_UI)
     control_village.on_mouse_left_button_down do
       # goto_map :house
-      show_map_selection_view(:grass_wood_back, :school, :church, :house, :cart, :ghost_house)
+      show_map_selection_view(:grass_wood_back, :school, :church, :house, :cart, :ghost_house, :henhouse)
     end
 
     control_police_station = create_channel_control(canvas, 13, 14, 430, 160, 103, 79,

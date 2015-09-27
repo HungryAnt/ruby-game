@@ -135,21 +135,34 @@ lambda {
 
   # ghost_house_0
   pattern_ghost_house_0 = 'map/ghost_house/ghost_house_0/GhostHouse0_${num}.bmp'
-  new_map_covering_anim(:ghost_house_0_well, pattern_ghost_house_0, 27, 38, 200)
+  new_map_covering_anim(:ghost_house_0_well, pattern_ghost_house_0, 27, 38)
   new_map_covering_anim(:ghost_house_0_ghost_old_man, pattern_ghost_house_0, 2, 26, 200, false)
   new_map_covering_anim(:ghost_house_0_ghost_woman, pattern_ghost_house_0, 39, 42, 250, false)
 
   # ghost_house_1
   pattern_ghost_house_1 = 'map/ghost_house/ghost_house_1/GhostHouse1_${num}.bmp'
-  new_map_covering_anim(:ghost_house_1_left_ghost, pattern_ghost_house_1, 14, 25, 200)
-  new_map_covering_anim(:ghost_house_1_right_old_man, pattern_ghost_house_1, 3, 13, 200)
+  new_map_covering_anim(:ghost_house_1_left_ghost, pattern_ghost_house_1, 14, 25)
+  new_map_covering_anim(:ghost_house_1_right_old_man, pattern_ghost_house_1, 3, 13)
   new_map_covering_anim(:ghost_house_1_right_women, pattern_ghost_house_1, 26, 38, 200, false)
 
   # ghost_house_2
   pattern_ghost_house_2 = 'map/ghost_house/ghost_house_2/GhostHouse2_${num}.bmp'
-  new_map_covering_anim(:ghost_house_2_ghost_boy, pattern_ghost_house_2, 4, 9, 200)
-  new_map_covering_anim(:ghost_house_2_palm, pattern_ghost_house_2, 10, 16, 200)
-  new_map_covering_anim(:ghost_house_2_head, pattern_ghost_house_2, 17, 24, 200)
+  new_map_covering_anim(:ghost_house_2_ghost_boy, pattern_ghost_house_2, 4, 9)
+  new_map_covering_anim(:ghost_house_2_palm, pattern_ghost_house_2, 10, 16)
+  new_map_covering_anim(:ghost_house_2_head, pattern_ghost_house_2, 17, 24)
+
+  # henhouse
+  pattern_henhouse_outside = 'map/henhouse/henhouse_outside/ChickenHouse_${num}.bmp'
+  new_map_covering_anim(:henhouse_outside_left_two_hens, pattern_henhouse_outside, 1, 19)
+  new_map_covering_anim(:henhouse_outside_hens_tails, pattern_henhouse_outside, 20, 38)
+  new_map_covering_anim(:henhouse_outside_right_hen, pattern_henhouse_outside, 39, 57)
+
+  pattern_henhouse_inside = 'map/henhouse/henhouse_inside/HenhouseInside_${num}.bmp'
+  new_map_covering_anim(:henhouse_inside_two_hens, pattern_henhouse_inside, 1, 19)
+  new_map_covering_anim(:henhouse_inside_one_hens, pattern_henhouse_inside, 20, 32)
+
+  pattern_henhouse_back_garden = 'map/henhouse/henhouse_back_garden/HenhouseBackGarden_${num}.bmp'
+  new_map_covering_anim(:henhouse_back_garden_dragonfly, pattern_henhouse_back_garden, 3, 10)
 
   # channel_main
   pattern_channel_anim = 'channel_main/anim/ChannelAni_${num}.bmp'

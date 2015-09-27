@@ -143,7 +143,7 @@ inside_area.gateway = {
 }
 
 # 设置遮盖物
-outside_area.add_covering(:image_path => "map/church/outside/snowman.bmp", :x => 0, :y => 299)
+outside_area.add_covering(:image_path => 'map/church/outside/snowman.bmp', :x => 0, :y => 299)
 outside_area.add_covering(:anim => :church_outside_cat, :x => 560, :y => 420)
 
 create_map(:church, '礼拜堂', MapType::VILLAGE, [outside_area, inside_area])
