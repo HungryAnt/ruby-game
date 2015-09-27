@@ -11,15 +11,13 @@ class ShoppingView < ViewBase
 
   def initialize(window)
     super
+    autowired(WindowResourceService, AccountService, UserService)
     init_ui
+    init_money
   end
 
   def on_exit(&exit_call_back)
     @exit_call_back = exit_call_back
-  end
-
-  def active
-
   end
 
   def init_ui
@@ -63,13 +61,57 @@ class ShoppingView < ViewBase
     @dialog.update_arrange
   end
 
+  def init_money
+    @image_gold = MediaUtil::get_img 'money/gold.bmp'
+    @image_silver = MediaUtil::get_img 'money/silver.bmp'
+    # @image_copper = MediaUtil::get_img 'money/copper.bmp'
+    @font_money = @window_resource_service.get_map_name_font
+    # update_money
+    @gold = @silver = 0
+  end
+
+  def active
+    update_money
+  end
+
+  def update_money
+    amount = @account_service.get_amount(@user_service.user_id)
+    @gold = amount / 100
+    @silver = amount % 100
+  end
+
   def draw
     GraphicsUtil.draw_linear_rect(0, 0, GameConfig::WHOLE_WIDTH, GameConfig::MAP_HEIGHT,
                                   ZOrder::Background, 0xFF_906838, 0xFF_C0A068)
 
-    GraphicsUtil.draw_linear_rect(0, GameConfig::MAP_HEIGHT, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT,
-                                  ZOrder::Background, 0xFF_FEFEFE, 0xFF_DBDBDB)
+    draw_bottom_bar
 
     @dialog.draw
+  end
+
+  def draw_bottom_bar
+    left, top, width, height = 0, GameConfig::MAP_HEIGHT, GameConfig::MAP_WIDTH, GameConfig::WHOLE_HEIGHT - GameConfig::MAP_HEIGHT
+    GraphicsUtil.draw_linear_rect(left, top, width, height, ZOrder::Background, 0xFF_FEFEFE, 0xFF_DBDBDB)
+
+    margin = 10
+    money_image_width = 60
+    money_value_width = 50
+    x = 10
+    y = top + height / 2
+    z = ZOrder::Background
+
+    @image_gold.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
+    x += money_image_width + margin
+    @font_money.draw_rel(@gold, x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    x += money_value_width + margin
+
+    @image_silver.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
+    x += money_image_width + margin
+    @font_money.draw_rel(@silver, x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    # x += money_value_width + margin
+    # @image_copper.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
+    # x += money_image_width + margin
+    # @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    # x += money_value_width + margin
   end
 end

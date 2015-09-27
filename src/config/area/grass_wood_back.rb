@@ -67,4 +67,4 @@ TILES
 
 area = create_area(:grass, 'map/hill/grass_wood_back.bmp', 'map/hill.ogg', tiles_text)
 
-create_map(:grass_wood_back, '风岳山山脚', MapType::VILLAGE, [area])
+create_map(:grass_wood_back, '风岳山山腰', MapType::VILLAGE, [area])

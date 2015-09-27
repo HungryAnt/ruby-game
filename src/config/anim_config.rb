@@ -80,7 +80,7 @@ lambda {
 
   # ================ map covering ================
 
-  def new_map_covering_anim(key, pattern, first_num, last_num, interval = 200, reverse_anim = true)
+  def new_map_covering_anim(key, pattern, first_num, last_num, interval=200, reverse_anim=true)
     AnimationManager.new_anim(key) do
       nums = reverse_anim ? to_anim_nums(first_num, last_num): [*(first_num..last_num)]
       images = AnimationUtil.get_images(pattern, nums)
@@ -128,6 +128,28 @@ lambda {
   new_map_covering_anim(:hall_left_lantern, pattern_seven_star_hall, 3, 10)
   new_map_covering_anim(:hall_right_lantern, pattern_seven_star_hall, 11, 18)
   new_map_covering_anim(:hall_immortal, pattern_seven_star_hall, 19, 26)
+
+  # cart
+  pattern_cart = 'map/cart/Cart_${num}.bmp'
+  new_map_covering_anim(:cart_wheel, pattern_cart, 6, 18, 150, false)
+
+  # ghost_house_0
+  pattern_ghost_house_0 = 'map/ghost_house/ghost_house_0/GhostHouse0_${num}.bmp'
+  new_map_covering_anim(:ghost_house_0_well, pattern_ghost_house_0, 27, 38, 200)
+  new_map_covering_anim(:ghost_house_0_ghost_old_man, pattern_ghost_house_0, 2, 26, 200, false)
+  new_map_covering_anim(:ghost_house_0_ghost_woman, pattern_ghost_house_0, 39, 42, 250, false)
+
+  # ghost_house_1
+  pattern_ghost_house_1 = 'map/ghost_house/ghost_house_1/GhostHouse1_${num}.bmp'
+  new_map_covering_anim(:ghost_house_1_left_ghost, pattern_ghost_house_1, 14, 25, 200)
+  new_map_covering_anim(:ghost_house_1_right_old_man, pattern_ghost_house_1, 3, 13, 200)
+  new_map_covering_anim(:ghost_house_1_right_women, pattern_ghost_house_1, 26, 38, 200, false)
+
+  # ghost_house_2
+  pattern_ghost_house_2 = 'map/ghost_house/ghost_house_2/GhostHouse2_${num}.bmp'
+  new_map_covering_anim(:ghost_house_2_ghost_boy, pattern_ghost_house_2, 4, 9, 200)
+  new_map_covering_anim(:ghost_house_2_palm, pattern_ghost_house_2, 10, 16, 200)
+  new_map_covering_anim(:ghost_house_2_head, pattern_ghost_house_2, 17, 24, 200)
 
   # channel_main
   pattern_channel_anim = 'channel_main/anim/ChannelAni_${num}.bmp'

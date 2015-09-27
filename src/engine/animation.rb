@@ -2,7 +2,7 @@ class Animation
   attr_reader :interval
 
   def initialize(images, interval, offset=[0, 0])
-    raise ArgumentError "nil images" if images.nil?
+    raise ArgumentError 'nil images' if images.nil?
     raise ArgumentError "wrong interval #{interval}" if interval <= 0
     @images = images
     @interval = interval

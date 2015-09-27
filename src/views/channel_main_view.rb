@@ -3,13 +3,12 @@ require_relative 'channel_main/map_selection_view'
 
 class ChannelMainView
   def initialize(window)
-    autowired(WindowResourceService, SongService, MapService, AccountService, UserService)
+    autowired(WindowResourceService, SongService, MapService)
     @window = window
     init_channel_anims
     init_channel_element
     @background_image = MediaUtil::get_tileable_img('channel_main/ChannelMain_0.bmp')
     @select_map_call_back = nil
-    # @target_map_id = nil
     @map_selection_view = VillageMapSelectionView.new(window)
     @map_selection_view.on_select_map do |map_id|
       hide_map_selection_view
@@ -19,18 +18,7 @@ class ChannelMainView
   end
 
   def init_bottom_bar
-    @image_gold = MediaUtil::get_img 'money/gold.bmp'
-    @image_silver = MediaUtil::get_img 'money/silver.bmp'
-    # @image_copper = MediaUtil::get_img 'money/copper.bmp'
-    @font_money = @window_resource_service.get_map_name_font
-    # update_money
-    @gold = @silver = 0
-  end
 
-  def update_money
-    amount = @account_service.get_amount(@user_service.user_id)
-    @gold = amount / 100
-    @silver = amount % 100
   end
 
   def on_shop(&shopping_call_back)
@@ -89,7 +77,7 @@ class ChannelMainView
                                              0, 59, 150, 29, :village, ZOrder::DIALOG_UI)
     control_village.on_mouse_left_button_down do
       # goto_map :house
-      show_map_selection_view(:grass_wood_back, :school, :church, :house)
+      show_map_selection_view(:grass_wood_back, :school, :church, :house, :cart, :ghost_house)
     end
 
     control_police_station = create_channel_control(canvas, 13, 14, 430, 160, 103, 79,
@@ -195,27 +183,6 @@ class ChannelMainView
   def draw_bottom_bar
     left, top, width, height = 0, GameConfig::MAP_HEIGHT, GameConfig::MAP_WIDTH, GameConfig::WHOLE_HEIGHT - GameConfig::MAP_HEIGHT
     GraphicsUtil.draw_linear_rect(left, top, width, height, ZOrder::Background, 0xFF_FEFEFE, 0xFF_DBDBDB)
-
-    margin = 10
-    money_image_width = 60
-    money_value_width = 50
-    x = 10
-    y = top + height / 2
-    z = ZOrder::Background
-
-    @image_gold.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
-    x += money_image_width + margin
-    @font_money.draw_rel(@gold, x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
-    x += money_value_width + margin
-
-    @image_silver.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
-    x += money_image_width + margin
-    @font_money.draw_rel(@silver, x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
-    # x += money_value_width + margin
-    # @image_copper.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
-    # x += money_image_width + margin
-    # @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
-    # x += money_value_width + margin
   end
 
   def button_down(id)
@@ -242,7 +209,6 @@ class ChannelMainView
 
   def active
     @song_service.play_song 'channel/back.ogg'
-    update_money
   end
 
   def pause_all_sample_instances
