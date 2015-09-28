@@ -170,6 +170,13 @@ lambda {
   new_map_covering_anim(:henhouse_cow_cage_middle_cow, pattern_henhouse_cow_cage, 35, 41, 200, false)
   new_map_covering_anim(:henhouse_cow_cage_right_cow, pattern_henhouse_cow_cage, 12, 23, 200, false)
 
+  # rainy_day
+  pattern_rainy_day_1 = 'map/rainy_day/rainy_day_1/RainyDay1_${num}.bmp'
+  new_map_covering_anim(:rainy_day_1_rain, pattern_rainy_day_1, 3, 8, 150, false)
+
+  pattern_rainy_day_2 = 'map/rainy_day/rainy_day_2/RainyDay2_${num}.bmp'
+  new_map_covering_anim(:rainy_day_2_rain, pattern_rainy_day_2, 2, 5, 150, false)
+
   # channel_main
   pattern_channel_anim = 'channel_main/anim/ChannelAni_${num}.bmp'
   new_map_covering_anim(:channel_main_vegetable, pattern_channel_anim, 28, 33)
