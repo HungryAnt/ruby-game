@@ -164,6 +164,12 @@ lambda {
   pattern_henhouse_back_garden = 'map/henhouse/henhouse_back_garden/HenhouseBackGarden_${num}.bmp'
   new_map_covering_anim(:henhouse_back_garden_dragonfly, pattern_henhouse_back_garden, 3, 10)
 
+  pattern_henhouse_cow_cage = 'map/henhouse/henhouse_cow_cage/CowCage_${num}.bmp'
+  new_map_covering_anim(:henhouse_cow_cage_cat, pattern_henhouse_cow_cage, 4, 11, 200, false)
+  new_map_covering_anim(:henhouse_cow_cage_left_cow, pattern_henhouse_cow_cage, 24, 34, 200, false)
+  new_map_covering_anim(:henhouse_cow_cage_middle_cow, pattern_henhouse_cow_cage, 35, 41, 200, false)
+  new_map_covering_anim(:henhouse_cow_cage_right_cow, pattern_henhouse_cow_cage, 12, 23, 200, false)
+
   # channel_main
   pattern_channel_anim = 'channel_main/anim/ChannelAni_${num}.bmp'
   new_map_covering_anim(:channel_main_vegetable, pattern_channel_anim, 28, 33)
