@@ -11,6 +11,8 @@ class GameRolesService
     @chat_call_back = nil
     @hit_call_back = nil
     @being_battered_call_back = nil
+
+    @collecting_rubbish_call_back = nil
   end
 
   def register_role_msg_call_back(&role_msg_call_back)
@@ -39,6 +41,10 @@ class GameRolesService
 
   def register_being_battered_call_back(&being_battered_call_back)
     @being_battered_call_back = being_battered_call_back
+  end
+
+  def register_collecting_rubbish_call_back(&collecting_rubbish_call_back)
+    @collecting_rubbish_call_back = collecting_rubbish_call_back
   end
 
   def add_role_msg(role_msg)
@@ -75,5 +81,9 @@ class GameRolesService
 
   def being_battered(user_id)
     @being_battered_call_back.call user_id
+  end
+
+  def collecting_rubbish(user_id)
+    @collecting_rubbish_call_back.call user_id
   end
 end

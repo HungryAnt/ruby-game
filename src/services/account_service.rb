@@ -20,7 +20,7 @@ class AccountService
         return 0
       end
     rescue Exception => e
-      puts "AccountService.get_amount raise exception: #{e.message}"
+      puts 'AccountService.get_amount raise exception'
       puts e.backtrace.inspect
       return 0
     end

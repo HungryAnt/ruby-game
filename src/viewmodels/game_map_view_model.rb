@@ -173,6 +173,7 @@ class GameMapViewModel
     register_chat_call_back
     register_hit_call_back
     register_being_battered_call_back
+    register_collecting_rubbish_call_back
   end
 
   def register_role_msg_call_back
@@ -261,9 +262,11 @@ class GameMapViewModel
   def register_hit_call_back
     @game_roles_service.register_hit_call_back do |user_id, area_id, target_x, target_y|
       if @player_service.user_id != user_id && get_current_area.id == area_id
-        role_vm =  @role_vm_dict[user_id]
-        role_vm.hit unless role_vm.nil?
-        @player_view_model.check_hit_battered(target_x, target_y)
+        role_vm = @role_vm_dict[user_id]
+        if !role_vm.nil? && role_vm.area_id == get_current_area.id
+          role_vm.hit
+          @player_view_model.check_hit_battered(target_x, target_y)
+        end
       end
     end
   end
@@ -271,8 +274,21 @@ class GameMapViewModel
   def register_being_battered_call_back
     @game_roles_service.register_being_battered_call_back do |user_id|
       if @player_service.user_id != user_id
-        role_vm =  @role_vm_dict[user_id]
-        role_vm.being_battered unless role_vm.nil?
+        role_vm = @role_vm_dict[user_id]
+        if !role_vm.nil? && role_vm.area_id == get_current_area.id
+          role_vm.being_battered
+        end
+      end
+    end
+  end
+
+  def register_collecting_rubbish_call_back
+    @game_roles_service.register_collecting_rubbish_call_back do |user_id|
+      if @player_service.user_id != user_id
+        role_vm = @role_vm_dict[user_id]
+        if !role_vm.nil? && role_vm.area_id == get_current_area.id
+          role_vm.collect_rubbish
+        end
       end
     end
   end

@@ -95,6 +95,11 @@ class CommunicationService
     send BeingBatteredMessage.new(user_id)
   end
 
+  def send_collect_rubbish_message(user_id, rubbish_map)
+    puts 'send_collect_rubbish_message'
+    send CollectingRubbishMessage.new(user_id, rubbish_map)
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1
@@ -170,6 +175,11 @@ class CommunicationService
     @network_service.register('being_battered_message') do |msg_map, params|
       being_battered_msg = BeingBatteredMessage.from_map(msg_map)
       @game_roles_service.being_battered being_battered_msg.user_id
+    end
+
+    @network_service.register('collecting_rubbish_message') do |msg_map, params|
+      collecting_rubbish_msg = CollectingRubbishMessage.from_map(msg_map)
+      @game_roles_service.collecting_rubbish collecting_rubbish_msg.user_id
     end
   end
 

@@ -62,6 +62,7 @@ require 'messages/eat_up_food_message'
 require 'messages/command_message'
 require 'messages/hit_message'
 require 'messages/being_battered_message'
+require 'messages/collecting_rubbish_message'
 
 require 'services/equipment_definition'
 require 'services/role_type_definition'

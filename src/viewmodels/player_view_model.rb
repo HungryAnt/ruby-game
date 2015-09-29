@@ -112,7 +112,8 @@ class PlayerViewModel
   end
 
   def collect_rubbish(rubbish_vm)
-    @role_vm.collect_rubbish rubbish_vm
+    @role_vm.collect_rubbish
+    @role.package << rubbish_vm.rubbish
     remote_collect_rubbish rubbish_vm.rubbish
   end
 
@@ -220,7 +221,7 @@ class PlayerViewModel
 
   def remote_collect_rubbish(rubbish)
     user_id = get_user_id
-    # @communication_service.send_collect_rubbish_message(user_id, rubbish.to_rubbish_map)
+    @communication_service.send_collect_rubbish_message(user_id, rubbish.to_rubbish_map)
   end
 
   def get_current_area_id

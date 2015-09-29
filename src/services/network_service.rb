@@ -15,7 +15,9 @@ class NetworkService
       start_msg_loop
       return true
     rescue Exception => e
-      @connection_error = e.message
+      puts 'connect exception'
+      puts e.backtrace.inspect
+      @connection_error = 'connection error'
       return false
     end
   end
@@ -51,12 +53,12 @@ class NetworkService
             @message_handler_service.process msg_map
           rescue Exception => e
             puts "line: #{line}"
-            puts "get_messages process line exception: #{e.message}"
+            puts 'get_messages process line exception'
             puts e.backtrace.inspect
           end
         end
       rescue Exception => e
-        puts "get_messages raise exception: #{e.message}"
+        puts 'get_messages raise exception'
         puts e.backtrace.inspect
       end
     }

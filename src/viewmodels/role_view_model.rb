@@ -90,11 +90,10 @@ class RoleViewModel
     @role.eat_done
   end
 
-  def collect_rubbish(rubbish_vm, quiet=false)
+  def collect_rubbish(quiet=false)
     @sound_collect_rubbish.play unless quiet
     @collecting_rubbish = true
     @collecting_rubbish_end_time = Gosu::milliseconds + 430
-    @role.package << rubbish_vm.rubbish
     update_state
   end
 
