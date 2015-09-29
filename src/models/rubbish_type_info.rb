@@ -1,5 +1,6 @@
 class RubbishTypeInfo
   @@type_info = {}
+  @@type_image = {}
 
   def self.put(id, type_info)
     @@type_info[id] = type_info
@@ -7,6 +8,14 @@ class RubbishTypeInfo
 
   def self.get(id)
     @@type_info[id]
+  end
+
+  def self.cache_image(id, image)
+    @@type_image[id] = image
+  end
+
+  def self.get_image(id)
+    @@type_image[id]
   end
 
   attr_reader :id, :name, :image_path

@@ -98,6 +98,8 @@ require 'viewmodels/package_items_view_model'
 require 'viewmodels/chat_bubble_view_model'
 require 'viewmodels/shopping_view_model'
 
+require 'views/control/rubbish_item_control'
+
 require 'views/view_base'
 require 'views/chat_board_view'
 require 'views/status_bar_view'

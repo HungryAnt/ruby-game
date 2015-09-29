@@ -3,8 +3,16 @@ class PackageItemsViewModel
     @player_vm = player_vm
   end
 
-  def get_items
-    @player_vm.role.package.items
+  # def get_items
+  #   @player_vm.role.package.items
+  # end
+
+  def get_vehicles
+    @player_vm.role.package.items.find_all {|item| item.instance_of? Equipment}
+  end
+
+  def get_rubbishes
+    @player_vm.role.package.items.find_all {|item| item.instance_of? Rubbish}
   end
 
   def choose_equipment(equipment)

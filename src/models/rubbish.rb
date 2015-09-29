@@ -1,8 +1,11 @@
 require_relative 'rubbish_type_info'
 
 class Rubbish < Item
+  attr_reader :rubbish_type_id
+
   def initialize(id, x, y, rubbish_type_id)
     init_item(id, Item::ItemType::RUBBISH, x, y)
+    @rubbish_type_id = rubbish_type_id
     @rubbish_type_info = RubbishTypeInfo.get(rubbish_type_id)
   end
 

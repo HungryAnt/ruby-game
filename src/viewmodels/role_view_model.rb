@@ -94,6 +94,7 @@ class RoleViewModel
     @sound_collect_rubbish.play unless quiet
     @collecting_rubbish = true
     @collecting_rubbish_end_time = Gosu::milliseconds + 430
+    @role.package << rubbish_vm.rubbish
     update_state
   end
 

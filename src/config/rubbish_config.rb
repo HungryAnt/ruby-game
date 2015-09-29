@@ -3,8 +3,8 @@
 def add_rubbish_type(id, name)
   image_path = "rubbish/#{id}.bmp"
   rubbish_type_info = RubbishTypeInfo.new id, name, image_path
-  MediaUtil::get_img(rubbish_type_info.image_path)
   RubbishTypeInfo.put id, rubbish_type_info
+  RubbishTypeInfo.cache_image id, MediaUtil::get_img(rubbish_type_info.image_path)
 end
 
 add_rubbish_type 0, '破饭碗'
