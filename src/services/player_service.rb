@@ -32,5 +32,7 @@ class PlayerService
         @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle.to_sym)
       end
     end
+
+    @role.rubbish_bin.init(@user_service.rubbishes)
   end
 end

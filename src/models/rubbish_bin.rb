@@ -8,6 +8,12 @@ class RubbishBin
     end
   end
 
+  def init(rubbishes)
+    0.upto(RubbishTypeInfo::COUNT - 1) do |i|
+      @rubbishes[i] = rubbishes[i]
+    end
+  end
+
   def inc(rubbish_id)
     @rubbishes[rubbish_id] += 1
   end
