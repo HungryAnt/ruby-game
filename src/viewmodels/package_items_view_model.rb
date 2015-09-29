@@ -12,7 +12,7 @@ class PackageItemsViewModel
   end
 
   def get_rubbishes
-    @player_vm.role.package.items.find_all {|item| item.instance_of? Rubbish}
+    @player_vm.role.rubbish_bin.get_rubbishes
   end
 
   def choose_equipment(equipment)

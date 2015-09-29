@@ -1,4 +1,6 @@
 class RubbishTypeInfo
+  COUNT = 12
+
   @@type_info = {}
   @@type_image = {}
 

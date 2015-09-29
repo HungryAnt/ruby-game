@@ -117,10 +117,10 @@ class PackageItemsView
 
   def init_rubbish_panel
     rubbishes = @package_items_vm.get_rubbishes
-    items = rubbishes.map do |rubbish|
+    items = rubbishes.map do |rubbish_info|
       {
-          data: rubbish,
-          content: create_rubbish_content(rubbish)
+          data: nil,
+          content: create_rubbish_content(rubbish_info[:rubbish_type_id], rubbish_info[:count])
       }
     end
     create_panel('辛辛苦苦收集的垃圾，可以换成钱币呢', items) do |item|
@@ -128,8 +128,8 @@ class PackageItemsView
     end
   end
 
-  def create_rubbish_content(rubbish)
-    RubbishItemControl.new(rubbish)
+  def create_rubbish_content(rubbish_type_id, count)
+    RubbishItemControl.new(rubbish_type_id, count)
   end
 
   def init_vehicle_panel

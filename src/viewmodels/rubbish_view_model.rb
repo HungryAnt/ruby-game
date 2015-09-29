@@ -7,6 +7,10 @@ class RubbishViewModel < ItemViewModel
     @image = MediaUtil::get_img(rubbish.image_path)
   end
 
+  def rubbish_type_id
+    @rubbish.rubbish_type_id
+  end
+
   def draw
     @image.draw_rot(@rubbish.x, @rubbish.y, ZOrder::RUBBISH, 0)
   end

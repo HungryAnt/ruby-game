@@ -109,7 +109,7 @@ class PlayerViewModel
 
   def collect_rubbish(rubbish_vm)
     @role_vm.collect_rubbish
-    @role.package << rubbish_vm.rubbish
+    @role.rubbish_bin.inc rubbish_vm.rubbish_type_id
     remote_collect_rubbish rubbish_vm.rubbish
   end
 

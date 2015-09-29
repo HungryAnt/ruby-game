@@ -1,7 +1,10 @@
 class RubbishItemControl < AntGui::Control
-  def initialize(rubbish)
+  def initialize(rubbish_type_id, count)
     super()
-    @image = RubbishTypeInfo.get_image(rubbish.rubbish_type_id)
+    autowired(WindowResourceService)
+    @image = RubbishTypeInfo.get_image(rubbish_type_id)
+    @count = count
+    @font = @window_resource_service.get_normal_font
   end
 
   def do_draw(z)
@@ -16,5 +19,7 @@ class RubbishItemControl < AntGui::Control
       scale_x = scale_y = 1
     end
     @image.draw(left, top, z, scale_x, scale_y, 0xff_ffffff, mode = :default)
+    @font.draw_rel("#{@count}", @actual_left + @actual_width, @actual_top + @actual_height,
+                   z, 1.0, 1.0, 1.0, 1.0, 0xBB_ffffff)
   end
 end
