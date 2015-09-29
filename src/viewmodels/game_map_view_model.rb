@@ -83,7 +83,7 @@ class GameMapViewModel
     mouse_left_down = Gosu::button_down?(Gosu::MsLeft)
     if map_vm.gateway? mouse_x, mouse_y
       @mouse_vm.set_mouse_type MouseType::GOTO_AREA
-    elsif touch_item? mouse_x, mouse_y
+    elsif !@player_view_model.battered && touch_item?(mouse_x, mouse_y)
       @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::PICK_UP_BUTTON_DOWN : MouseType::PICK_UP)
     else
       @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::NORMAL_BUTTON_DOWN : MouseType::NORMAL)
@@ -116,6 +116,8 @@ class GameMapViewModel
   end
 
   def try_pick_up(mouse_x, mouse_y)
+    return false if @player_view_model.battered
+
     item_vms = get_item_vms
     item_vm = get_touch_item mouse_x, mouse_y, item_vms
     return false if item_vm.nil?

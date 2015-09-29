@@ -93,7 +93,7 @@ class RoleViewModel
   def collect_rubbish(quiet=false)
     @sound_collect_rubbish.play unless quiet
     @collecting_rubbish = true
-    @collecting_rubbish_end_time = Gosu::milliseconds + 430
+    @collecting_rubbish_end_time = Gosu::milliseconds + 420
     update_state
   end
 

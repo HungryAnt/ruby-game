@@ -51,16 +51,12 @@ class PlayerViewModel
   end
 
   def pick_up(item_vms, item_vm)
+    return if @role_vm.battered
     return unless item_vms.include? item_vm
 
     # 先尝试扔掉正在吃的食物
     discard
-
     item = item_vm.item
-
-    # if item.respond_to? :eatable?
-    #
-    # end
     try_remote_pickup_item item
   end
 
@@ -144,6 +140,10 @@ class PlayerViewModel
       @role_vm.being_battered
       remote_being_battered get_user_id
     end
+  end
+
+  def battered
+    @role_vm.battered
   end
 
   private
