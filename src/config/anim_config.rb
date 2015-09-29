@@ -61,6 +61,18 @@ lambda {
           :hit_down => [role_action_pattern, down_nums, anim_interval]
       }
     end
+
+    AnimationManager.new_centered_anims prefix do
+      h_nums = [85, 86, 87]
+      up_nums = [82, 83, 84]
+      down_nums = [79, 80, 81]
+      {
+          :collecting_rubbish_left => [role_pattern, h_nums, anim_interval, 1, 1, [8, 0]],
+          :collecting_rubbish_right => [role_pattern, h_nums, anim_interval, -1, 1, [-8, 0]],
+          :collecting_rubbish_up => [role_pattern, up_nums, anim_interval],
+          :collecting_rubbish_down => [role_pattern, down_nums, anim_interval]
+      }
+    end
   end
 
   # ================地面点击动画================

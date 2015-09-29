@@ -66,6 +66,7 @@ class Role
     HIT = :hit
     TURN_TO_BATTERED = :turn_to_battered
     BATTERED = :battered
+    COLLECTING_RUBBISH = :collecting_rubbish
   end
 
   class Action

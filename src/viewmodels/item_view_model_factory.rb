@@ -3,6 +3,8 @@ class ItemViewModelFactory
     case item_map['item_type']
       when Item::ItemType::FOOD
         create_food_vm(item_map)
+      when Item::ItemType::RUBBISH
+        create_rubbish_vm(item_map)
     end
   end
 
@@ -11,6 +13,12 @@ class ItemViewModelFactory
     food_vm = FoodViewModel.new(food)
     food_vm
   end
+
+  # def self.create_simple_rubbish_vm(rubbish_type_id)
+  #   rubbish = Rubbish.new()
+  #   rubbish_vm = RubbishViewModel.new(rubbish)
+  #   rubbish_vm
+  # end
 
   private
 
@@ -24,7 +32,12 @@ class ItemViewModelFactory
     food_vm
   end
 
-  def self.create_rubbish_vm
-
+  def self.create_rubbish_vm(item_map)
+    id = item_map['id']
+    x, y = item_map['x'].to_i, item_map['y'].to_i
+    rubbish_type_id = item_map['rubbish_type_id'].to_i
+    rubbish = Rubbish.new(id, x, y, rubbish_type_id)
+    rubbish_vm = RubbishViewModel.new rubbish
+    rubbish_vm
   end
 end

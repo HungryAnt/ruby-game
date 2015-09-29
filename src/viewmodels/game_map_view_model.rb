@@ -15,39 +15,26 @@ class GameMapViewModel
     init_roles
     init_area_items
     @package_items_view_model = PackageItemsViewModel.new(@player_view_model)
-    # switch_map :grass_wood_back
   end
 
   def update
     @map_service.update_map
 
-    # seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
-    # if seconds > 0
-    #   @gen_food_timestamp += seconds * 1000
-    #   0.upto(seconds - 1).each do
-    #     area_id = @map_service.current_map.current_area.id.to_s
-    #     food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
-    #     item_map = food.to_map
-    #     area_item_msg = AreaItemMessage.new(area_id, item_map)
-    #     add_area_item area_item_msg
+    # if @network_service.has_error?
+    #   seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
+    #   gen_count = (seconds * GameConfig::FOOD_GEN_PER_SECOND).to_i
+    #   if gen_count > 0
+    #     @gen_food_timestamp += seconds * 1000
+    #
+    #     food_vms = get_item_vms
+    #     if food_vms.size < 5
+    #       0.upto(gen_count - 1).each do
+    #         food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
+    #         food_vms << FoodViewModel.new(food)
+    #       end
+    #     end
     #   end
     # end
-
-    if @network_service.has_error?
-      seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
-      gen_count = (seconds * GameConfig::FOOD_GEN_PER_SECOND).to_i
-      if gen_count > 0
-        @gen_food_timestamp += seconds * 1000
-
-        food_vms = get_food_vms
-        if food_vms.size < 5
-          0.upto(gen_count - 1).each do
-            food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
-            food_vms << FoodViewModel.new(food)
-          end
-        end
-      end
-    end
 
     map_vm = @map_service.current_map
 
@@ -66,7 +53,7 @@ class GameMapViewModel
   def draw
     @map_service.draw_map
     draw_role_vms
-    get_food_vms.each { |food_vm| food_vm.draw }
+    get_item_vms.each { |item_vm| item_vm.draw }
   end
 
   def draw_role_vms
@@ -129,7 +116,7 @@ class GameMapViewModel
   end
 
   def try_pick_up(mouse_x, mouse_y)
-    item_vms = get_food_vms
+    item_vms = get_item_vms
     item_vm = get_touch_item mouse_x, mouse_y, item_vms
     return false if item_vm.nil?
 
@@ -310,8 +297,8 @@ class GameMapViewModel
         when AreaItemMessage::Action::DELETE
           area_vm.delete_item_vm item_map['id']
         when AreaItemMessage::Action::PICKUP
-          food_vm = ItemViewModelFactory.create_item_vm(item_map)
-          @player_view_model.start_eat_food(food_vm)
+          item_vm = ItemViewModelFactory.create_item_vm(item_map)
+          item_vm.pick_up(@player_view_model)
       end
     end
   end
@@ -335,7 +322,7 @@ class GameMapViewModel
   end
 
   def touch_item?(mouse_x, mouse_y)
-    item_vm = get_touch_item(mouse_x, mouse_y, get_food_vms)
+    item_vm = get_touch_item(mouse_x, mouse_y, get_item_vms)
     !item_vm.nil?
   end
 
@@ -351,13 +338,13 @@ class GameMapViewModel
     false
   end
 
-  def get_food_vms
+  def get_item_vms
     @map_service.current_map.current_area.get_item_vms
   end
 
-  def get_touch_item(mouse_x, mouse_y, food_vms)
-    food_vms.each do |food_vm|
-      return food_vm if food_vm.mouse_touch?(mouse_x, mouse_y)
+  def get_touch_item(mouse_x, mouse_y, item_vms)
+    item_vms.each do |item_vm|
+      return item_vm if item_vm.mouse_touch?(mouse_x, mouse_y)
     end
     nil
   end

@@ -46,8 +46,8 @@ class Food < Item
     }
   end
 
-  def self.from_food_map(food_map)
-    food_type_id = food_map['food_type_id'].to_i
-    new('', 0, 0, food_type_id, 99999)
-  end
+  # def self.from_food_map(food_map)
+  #   food_type_id = food_map['food_type_id'].to_i
+  #   new('', 0, 0, food_type_id, 99999)
+  # end
 end

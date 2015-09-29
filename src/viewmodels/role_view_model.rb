@@ -6,6 +6,7 @@ class RoleViewModel
     autowired(MapService)
     @player = @role = role
     @sound_eat_food = MediaUtil::get_sample('eat.wav')
+    @sound_collect_rubbish = MediaUtil::get_sample('collect_rubbish.wav')
     @font = Gosu::Font.new(15)
     init_animations
     @eating_food_vm = nil
@@ -54,7 +55,7 @@ class RoleViewModel
 
   def init_animations
     role_type = @role.role_type.to_s
-    %w(stand walk run eat hold_food drive hit turn_to_battered battered).each do |state|
+    %w(stand walk run eat hold_food drive hit turn_to_battered battered collecting_rubbish).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
                                    get_anim("#{role_type}_#{state}_#{direction}".to_sym))
@@ -87,6 +88,13 @@ class RoleViewModel
   def clear_food
     @eating_food_vm = nil
     @role.eat_done
+  end
+
+  def collect_rubbish(rubbish_vm, quiet=false)
+    @sound_collect_rubbish.play unless quiet
+    @collecting_rubbish = true
+    @collecting_rubbish_end_time = Gosu::milliseconds + 430
+    update_state
   end
 
   def set_auto_move_to(x, y, &arrive_call_back)
@@ -135,6 +143,10 @@ class RoleViewModel
 
     if @hiting
       return Role::State::HIT
+    end
+
+    if @collecting_rubbish
+      return Role::State::COLLECTING_RUBBISH
     end
 
     if @role.eating?
@@ -190,6 +202,9 @@ class RoleViewModel
     end
     if @battered
       @battered = false if Gosu::milliseconds >= @battered_end_time
+    end
+    if @collecting_rubbish
+      @collecting_rubbish = false if Gosu::milliseconds >= @collecting_rubbish_end_time
     end
   end
 

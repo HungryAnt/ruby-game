@@ -56,13 +56,12 @@ class PlayerViewModel
     # 先尝试扔掉正在吃的食物
     discard
 
-    # item_vms.reject! { |item| item == item_vm }
     item = item_vm.item
 
-    if item.respond_to? :eatable?
-      try_remote_pickup_item item
-      # start_eat_food item
-    end
+    # if item.respond_to? :eatable?
+    #
+    # end
+    try_remote_pickup_item item
   end
 
   def discard
@@ -110,6 +109,11 @@ class PlayerViewModel
   def start_eat_food(food_vm)
     @role_vm.eat_food food_vm
     remote_eating_food food_vm.food
+  end
+
+  def collect_rubbish(rubbish_vm)
+    @role_vm.collect_rubbish rubbish_vm
+    remote_collect_rubbish rubbish_vm.rubbish
   end
 
   def hit
@@ -212,6 +216,11 @@ class PlayerViewModel
 
   def remote_being_battered(user_id)
     @communication_service.send_being_battered_message user_id
+  end
+
+  def remote_collect_rubbish(rubbish)
+    user_id = get_user_id
+    # @communication_service.send_collect_rubbish_message(user_id, rubbish.to_rubbish_map)
   end
 
   def get_current_area_id

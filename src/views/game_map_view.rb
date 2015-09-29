@@ -117,8 +117,6 @@ class GameMapView < ViewBase
         return if done
         @game_map_view_model.set_destination(@window.mouse_x, @window.mouse_y)
       # when Gosu::MsRight
-      # when Gosu::KbE
-      #   @player_view_model.start_eat_food
       when Gosu::KbF
         @game_map_view_model.discard
       when Gosu::KbQ

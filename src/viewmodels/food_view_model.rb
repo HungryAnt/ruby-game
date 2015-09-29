@@ -21,4 +21,8 @@ class FoodViewModel < ItemViewModel
       end
     end
   end
+
+  def pick_up(player_vm)
+    player_vm.start_eat_food(self)
+  end
 end
