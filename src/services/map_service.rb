@@ -5,6 +5,7 @@ class MapService
     @map_list = []
     @current_map = nil
     @area_vm_dict = {}
+    @map_user_count_dict = {}
   end
 
   def add_map(key, map)

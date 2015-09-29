@@ -2,7 +2,7 @@ class CommunicationService
   attr_reader :revision
 
   def initialize
-    autowired(NetworkService, UserService, GameRolesService, AreaItemsService)
+    autowired(NetworkService, UserService, GameRolesService, AreaItemsService, MapUserCountService)
     @mutex = Mutex.new
     @chat_msgs = []
     @revision = 0
@@ -181,6 +181,11 @@ class CommunicationService
     @network_service.register('collecting_rubbish_message') do |msg_map, params|
       collecting_rubbish_msg = CollectingRubbishMessage.from_map(msg_map)
       @game_roles_service.collecting_rubbish collecting_rubbish_msg.user_id
+    end
+
+    @network_service.register('map_user_count_message') do |msg_map, params|
+      map_user_count_msg = MapUserCountMessage.from_map(msg_map)
+      @map_user_count_service.refresh_map_user_count map_user_count_msg.map_user_count_dict
     end
   end
 

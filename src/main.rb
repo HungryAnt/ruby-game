@@ -82,6 +82,7 @@ require 'services/des_service'
 require 'services/window_resource_service'
 require 'services/account_service'
 require 'services/shopping_service'
+require 'services/map_user_count_service'
 
 require 'viewmodels/item_view_model'
 require 'viewmodels/role_view_model'
