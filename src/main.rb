@@ -45,6 +45,7 @@ require 'models/equipment'
 require 'models/map_type'
 
 require 'entity/goods'
+require 'entity/page_result'
 
 require 'messages/init_sync_user_message'
 require 'messages/res_sync_user_message'
@@ -105,6 +106,7 @@ require 'viewmodels/chat_bubble_view_model'
 require 'viewmodels/shopping_view_model'
 
 require 'views/control/rubbish_item_control'
+require 'views/control/shopping_item_control'
 
 require 'views/view_base'
 require 'views/chat_board_view'

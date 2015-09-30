@@ -6,6 +6,8 @@ class WindowResourceService
     @font_map_name = Gosu::Font.new(window, 'Verdana', 25)
     @normal_font = Gosu::Font.new(window, 'Verdana', 17)
     @warning_font = Gosu::Font.new(window, 'Verdana', 30)
+    @goods_money_font = Gosu::Font.new(window, 'Verdana', 15)
+    @font_25 = Gosu::Font.new(window, 'Verdana', 25)
   end
 
   def get_chat_bubble_font
@@ -34,5 +36,21 @@ class WindowResourceService
 
   def get_warning_font
     @warning_font
+  end
+
+  def get_gold_image
+    MediaUtil::get_img 'money/gold.bmp'
+  end
+
+  def get_silver_image
+    MediaUtil::get_img 'money/silver.bmp'
+  end
+
+  def get_goods_money_font
+    @goods_money_font
+  end
+
+  def get_font_25
+    @font_25
   end
 end

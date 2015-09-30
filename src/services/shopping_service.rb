@@ -11,9 +11,10 @@ class ShoppingService
     res = http_client.get
 
     if res.code == '200'
-      res.body.to_i
+      map = JSON.parse(res.body)
+      PageResult.from_map map
     else
-      0
+      nil
     end
   end
 
