@@ -110,7 +110,7 @@ class UserCreationView
     if @network_service.has_error?
       @font_net_error.draw("#{@network_service.connection_error}", 0, 30, ZOrder::Background,
                            1.0, 1.0, 0xff_f0f0f0, :additive)
-      @font.draw_rel('网络连接失败，进入单机版', GameConfig::WHOLE_WIDTH / 2, 60,
+      @font.draw_rel('网络连接失败，请联系管理员', GameConfig::WHOLE_WIDTH / 2, 60,
                            ZOrder::Background, 0.5, 0.0, 1.0, 1.0, 0xff_f0f0f0, :additive)
     end
 

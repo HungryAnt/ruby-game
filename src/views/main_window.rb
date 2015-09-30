@@ -116,7 +116,7 @@ class MainWindow < Gosu::Window
       y = GameConfig::MAP_HEIGHT/2 - 50
       @anti_cheating_info.each do |info|
         @warning_font.draw_rel(info, GameConfig::MAP_WIDTH/2, y,
-                               ZOrder::DIALOG_UI, 0.5, 0.5, 1.0, 1.0, 0xFF_FFFFFF)
+                               ZOrder::DIALOG_UI, 0.5, 0.5, 1.0, 1.0, 0xFF_FFFFFF, :additive)
         y += 35
       end
     end
