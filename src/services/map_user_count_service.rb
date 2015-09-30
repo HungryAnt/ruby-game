@@ -1,4 +1,8 @@
 class MapUserCountService
+  def initialize
+    @map_user_count_dict = {}
+  end
+
   def refresh_map_user_count(map_user_count_dict)
     @map_user_count_dict = map_user_count_dict
   end

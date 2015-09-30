@@ -1,9 +1,13 @@
+# coding: UTF-8
+
 class MapItemControl < AntGui::Control
   def initialize(map_vm)
     super()
     @map_name = map_vm.name
-    autowired(WindowResourceService)
+    @map_id = map_vm.id
+    autowired(WindowResourceService, MapUserCountService)
     @font_map_name = @window_resource_service.get_map_name_font
+    @font_normal = @window_resource_service.get_normal_font
   end
 
   def do_draw(z)
@@ -18,6 +22,10 @@ class MapItemControl < AntGui::Control
     center_x = @actual_left + @actual_width / 2
     center_y = @actual_top + @actual_height / 2
     @font_map_name.draw_rel(@map_name, center_x, center_y, z, 0.5, 0.5, 1.0, 1.0, 0xFF_905810)
+
+    user_count = @map_user_count_service.get_map_user_count(@map_id)
+
+    @font_normal.draw_rel("#{user_count}人", left + width, top + height, z, 1.0, 1.0, 1.0, 1.0, 0xBB_000000)
   end
 end
 
