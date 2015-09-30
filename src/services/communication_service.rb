@@ -185,7 +185,8 @@ class CommunicationService
 
     @network_service.register('map_user_count_message') do |msg_map, params|
       map_user_count_msg = MapUserCountMessage.from_map(msg_map)
-      @map_user_count_service.refresh_map_user_count map_user_count_msg.map_user_count_dict
+      @map_user_count_service.refresh_map_user_count map_user_count_msg.map_user_count_dict,
+                                                     map_user_count_msg.all_user_count
     end
   end
 

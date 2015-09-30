@@ -3,7 +3,7 @@ require_relative 'channel_main/map_selection_view'
 
 class ChannelMainView
   def initialize(window)
-    autowired(WindowResourceService, SongService, MapService)
+    autowired(WindowResourceService, SongService, MapService, MapUserCountService)
     @window = window
     init_channel_anims
     init_channel_element
@@ -14,11 +14,7 @@ class ChannelMainView
       hide_map_selection_view
       goto_map map_id
     end
-    init_bottom_bar
-  end
-
-  def init_bottom_bar
-
+    @font_normal = @window_resource_service.get_normal_font
   end
 
   def on_shop(&shopping_call_back)
@@ -68,7 +64,7 @@ class ChannelMainView
     end
 
     control_seven_star_hall = create_channel_control(canvas, 11, 12, 120, 50, 221, 238,
-                                                     35, 31, 31, 5, :seven_star_hall)
+                                                     35, 31, 31, 5, :seven_star_hall, ZOrder::DIALOG_UI)
     control_seven_star_hall.on_mouse_left_button_down do
       goto_map :seven_star_hall
     end
@@ -183,6 +179,10 @@ class ChannelMainView
   def draw_bottom_bar
     left, top, width, height = 0, GameConfig::MAP_HEIGHT, GameConfig::MAP_WIDTH, GameConfig::WHOLE_HEIGHT - GameConfig::MAP_HEIGHT
     GraphicsUtil.draw_linear_rect(left, top, width, height, ZOrder::Background, 0xFF_FEFEFE, 0xFF_DBDBDB)
+
+    user_count = @map_user_count_service.get_all_user_count
+    @font_normal.draw_rel("总在线空雅数:#{user_count}", left + 5, top + height / 2, ZOrder::DIALOG_UI,
+                          0, 0.5, 1.0, 1.0, 0xBB_000000)
   end
 
   def button_down(id)

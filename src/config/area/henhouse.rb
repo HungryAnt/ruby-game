@@ -136,7 +136,7 @@ BBBBB                                                                         ##
 ################################################################################
 TILES
 
-henhouse_inside_area = create_area(:ghost_house_0, 'map/henhouse/henhouse_inside/HenhouseInside_0.bmp',
+henhouse_inside_area = create_area(:henhouse_inside, 'map/henhouse/henhouse_inside/HenhouseInside_0.bmp',
                                    'map/henhouse_1.ogg', henhouse_inside_tiles_text)
 
 henhouse_inside_area.add_surface(:anim => :henhouse_inside_two_hens, :x => 213, :y => 85)

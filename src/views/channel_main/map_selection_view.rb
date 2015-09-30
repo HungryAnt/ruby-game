@@ -21,11 +21,11 @@ class MapItemControl < AntGui::Control
 
     center_x = @actual_left + @actual_width / 2
     center_y = @actual_top + @actual_height / 2
-    @font_map_name.draw_rel(@map_name, center_x, center_y, z, 0.5, 0.5, 1.0, 1.0, 0xFF_905810)
+    @font_map_name.draw_rel(@map_name, center_x, center_y, z, 0.6, 0.5, 1.0, 1.0, 0xFF_905810)
 
     user_count = @map_user_count_service.get_map_user_count(@map_id)
 
-    @font_normal.draw_rel("#{user_count}人", left + width, top + height, z, 1.0, 1.0, 1.0, 1.0, 0xBB_000000)
+    @font_normal.draw_rel("空雅数:#{user_count}  ", left + width, top + height, z, 1.0, 1.0, 1.0, 1.0, 0xBB_000000)
   end
 end
 
