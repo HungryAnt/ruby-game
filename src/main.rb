@@ -16,6 +16,7 @@ require 'utils/string_util'
 require 'utils/new_work_util'
 
 require 'gui/gui'
+require 'http/http_client'
 
 MediaUtil.init_base_media_path(File.join(Dir::pwd, 'media'))
 

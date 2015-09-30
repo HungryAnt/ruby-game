@@ -6,13 +6,10 @@ class AccountService
       params = {
           userId: user_id
       }
-      uri = URI(NewWorkUtil.get_uri('/account/getAmount', params))
-      req = Net::HTTP::Get.new(uri)
-      req.content_type = 'application/json'
-
-      res = Net::HTTP.start(uri.host, uri.port) do |http|
-        http.request(req)
-      end
+      http_client = create_http_client
+      http_client.path 'account/getAmount'
+      http_client.params params
+      res = http_client.get
 
       if res.code == '200'
         return res.body.to_i
@@ -24,5 +21,9 @@ class AccountService
       puts e.backtrace.inspect
       return 0
     end
+  end
+
+  def create_http_client
+    AntHttp::HttpClient.new(NetworkConfig::WEB_SERVICE_ENDPOINT)
   end
 end
