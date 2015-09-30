@@ -10,8 +10,21 @@ class MainWindow < Gosu::Window
     autowired(WindowResourceService, PlayerService)
 
     @window_resource_service.init(self)
-
     self.caption = "童年记忆 - Ant版野菜部落 网络版 #{VERSION}"
+
+    @warning_font = @window_resource_service.get_warning_font
+    @is_cheating = false
+    @anti_cheating_info = []
+
+    @begin_times = Gosu::milliseconds
+    @update_times = 0
+    @draw_times = 0
+    @font = Gosu::Font.new(20)
+
+    init_all_views
+  end
+
+  def init_all_views
     @user_creation_view = UserCreationView.new(self)
     @loading_view = LoadingView.new
     @channel_main_view = ChannelMainView.new(self)
@@ -32,6 +45,7 @@ class MainWindow < Gosu::Window
       @current_view = @channel_main_view
       @channel_main_view.active
       @ready_for_game = true
+      init_anti_cheating
     end
 
     @channel_main_view.register_select_map do |map_id|
@@ -55,11 +69,22 @@ class MainWindow < Gosu::Window
       @channel_main_view.active
     end
 
-    @begin_times = Gosu::milliseconds
-    @update_times = 0
-    @draw_times = 0
-    @font = Gosu::Font.new(20)
     @current_view = @user_creation_view
+  end
+
+  def init_anti_cheating
+    anti_cheating_service = AntiCheatingService.new(@player_service.user_id)
+    anti_cheating_service.init_check_cheating_thread
+
+    anti_cheating_service.on_cheating do
+      @is_cheating = true
+      @anti_cheating_info = []
+      @anti_cheating_info << '本游戏严禁使用加速器等作弊软件'
+      @anti_cheating_info << '情节严重者封号处理'
+      @anti_cheating_info << '游戏将在10秒后退出'
+      sleep(10)
+      close
+    end
   end
 
   def update
@@ -85,6 +110,16 @@ class MainWindow < Gosu::Window
                ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_9EC4FF)
     @font.draw(message, 10, 0,
                ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_2054A3)
+
+    if @is_cheating
+      Gosu::draw_rect 0, 0, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT, 0xAA_550015, ZOrder::DIALOG_UI
+      y = GameConfig::MAP_HEIGHT/2 - 50
+      @anti_cheating_info.each do |info|
+        @warning_font.draw_rel(info, GameConfig::MAP_WIDTH/2, y,
+                               ZOrder::DIALOG_UI, 0.5, 0.5, 1.0, 1.0, 0xFF_FFFFFF)
+        y += 35
+      end
+    end
   end
 
   def draw_fps

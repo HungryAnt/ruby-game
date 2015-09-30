@@ -3,7 +3,7 @@ module AntHttp
 
   class HttpClient
     def initialize(uri, content_type='application/json')
-      @uri = uri
+      @uri = uri.clone
       @content_type = content_type
     end
 

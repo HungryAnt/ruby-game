@@ -1,7 +1,15 @@
 class AntiCheatingService
-  def initialize
-    @user_id = ''
-    @is_cheating = false
+  def initialize(user_id)
+    @user_id = user_id
+    @cheating_call_back = nil
+  end
+
+  def on_cheating(&cheating_call_back)
+    @cheating_call_back = cheating_call_back
+  end
+
+  def call_cheating
+    @cheating_call_back.call unless @cheating_call_back.nil?
   end
 
   def init_check_cheating_thread
@@ -12,14 +20,14 @@ class AntiCheatingService
         loop {
           begin
             check_cheating
-            sleep(15)
           rescue Exception => e
-            puts 'get_messages raise exception:'
+            puts "get_messages raise exception:#{e.message}"
             puts e.backtrace.inspect
           end
+          sleep(15)
         }
       rescue Exception => e
-        puts 'init_check_cheating_thread raise exception:'
+        puts "init_check_cheating_thread raise exception:#{e.message}"
         puts e.backtrace.inspect
       end
     }
@@ -37,7 +45,7 @@ class AntiCheatingService
     http_client.params(params)
     res = http_client.put
     if res.code != '200'
-      throw new RuntimeError("res.code: #{res.code}")
+      raise RuntimeError.new("res.code: #{res.code}")
     end
   end
 
@@ -47,14 +55,14 @@ class AntiCheatingService
         timestamp: Time.now.to_i
     }
     http_client = create_http_client
-    http_client.path('antiCheating/initClientTimestamp')
+    http_client.path('antiCheating/checkCheating')
     http_client.params(params)
     res = http_client.put
     if res.code != '200'
       throw new RuntimeError("res.code: #{res.code}")
     end
     is_cheating = res.body != 'false'
-    @is_cheating = true if is_cheating
+    call_cheating if is_cheating
   end
 
   def create_http_client
