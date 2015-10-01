@@ -1,24 +1,42 @@
+require 'set'
+
 class ShoppingViewModel
   PAGE_SIZE = 9
 
   def initialize
-    autowired(ShoppingService)
+    autowired(ShoppingService, PlayerService, UserEquipmentService)
   end
 
   def get_vehicle_goods(page_no)
     page_result = @shopping_service.get_vehicles(page_no, PAGE_SIZE)
-    return [] if page_result.nil?
+    package_vehicle_keys_set = get_package_vehicle_keys_set
     items = []
     page_result.page.result.map do |data_map|
       goods = Goods.from_map data_map
-      image = EquipmentDefinition.get_item_image goods.key.to_sym
+      key = goods.key.to_sym
+      image = EquipmentDefinition.get_item_image key
       items << {
-          # key: goods.key,
+          key: key,
           image: image,
-          price: goods.price
+          price: goods.price,
+          existing: package_vehicle_keys_set.include?(key)
       }
     end
-    page_count = page_result.page.total_count / PAGE_SIZE
+    page_count = (page_result.page.total_count + PAGE_SIZE - 1) / PAGE_SIZE
     return items, page_count
+  end
+
+  def get_package_vehicle_keys_set
+    vehicles = @player_service.role.package.items.find_all {|item| item.instance_of? Equipment}
+    Set.new vehicles.map {|vehicle| vehicle.key}
+  end
+
+  def buy(key)
+    @shopping_service.buy(@player_service.user_id, key)
+    @user_equipment_service.update
+  end
+
+  def apply_gift_vehicle
+    @shopping_service.apply_gift_vehicle @player_service.user_id
   end
 end

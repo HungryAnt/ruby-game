@@ -20,19 +20,25 @@ class PlayerService
   def update_sync_data
     @role.update_lv @user_service.lv, @user_service.exp
 
-    if GameConfig::DEBUG
-      [39, 40, 50, 58, 59, 67, 74, 75, 81, 82, 83, 89, 90, 91, 604, 828,
-       96, 97, 103, 104, 108, 109, 114, 115, 119, 121].each do |num|
-        vehicle_key = "vehicle_#{num}".to_sym
-        @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
-      end
-    else
+    # if GameConfig::DEBUG
+    #   [39, 40, 50, 58, 59, 67, 74, 75, 81, 82, 83, 89, 90, 91, 604, 828,
+    #    96, 97, 103, 104, 108, 109, 114, 115, 119, 121
+    #   ].each do |num|
+    #     vehicle_key = "vehicle_#{num}".to_sym
+    #     @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
+    #   end
+    # else
       vehicles = @user_service.vehicles
-      vehicles.each do |vehicle|
-        @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle.to_sym)
-      end
-    end
+      update_vehicles vehicles
+    # end
 
     @role.rubbish_bin.init(@user_service.rubbishes)
+  end
+
+  def update_vehicles(vehicles)
+    @role.package.clear
+    vehicles.each do |vehicle|
+      @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle.to_sym)
+    end
   end
 end

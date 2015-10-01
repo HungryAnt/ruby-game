@@ -232,6 +232,6 @@ ghost_house_2_area.add_surface(:anim => :ghost_house_2_head, :x => 260, :y => 0)
 
 # school_lobby_area.add_covering("map/school/school_lobby/01.bmp", 250, 0)
 
-create_map(:ghost_house, '鬼屋lv.15', MapType::VILLAGE,
+create_map(:ghost_house, '鬼屋', MapType::VILLAGE,
            [ghost_house_0_area, ghost_house_1_area, ghost_house_2_area])
 

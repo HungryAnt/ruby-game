@@ -6,7 +6,7 @@ class AccountService
       params = {
           userId: user_id
       }
-      http_client = create_http_client
+      http_client = HttpClientFactory.create
       http_client.path 'account/getAmount'
       http_client.params params
       res = http_client.get
@@ -21,9 +21,5 @@ class AccountService
       puts e.backtrace.inspect
       return 0
     end
-  end
-
-  def create_http_client
-    AntHttp::HttpClient.new(NetworkConfig::WEB_SERVICE_ENDPOINT)
   end
 end

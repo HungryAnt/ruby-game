@@ -33,7 +33,7 @@ class ShoppingView < ViewBase
     main_canvas = AntGui::Canvas.new
     @dialog.content = main_canvas
 
-    goods_panel_left = 60
+    goods_panel_left = 65
     goods_panel_top = 80
     goods_panel_width = GOODS_ITEM_WIDTH * GOODS_COL_COUNT + GOODS_MARGIN * (GOODS_COL_COUNT - 1) + GOODS_PADDING * 2
     goods_panel_height = GOODS_ITEM_HEIGHT * GOODS_ROW_COUNT + GOODS_MARGIN * (GOODS_ROW_COUNT - 1) + GOODS_PADDING * 2
@@ -41,17 +41,23 @@ class ShoppingView < ViewBase
     page_panel_top = goods_panel_top + goods_panel_height + 12
     page_panel_width = goods_panel_width
     page_panel_height = 32
+    right_panel_left = goods_panel_left + goods_panel_width + 45
+    right_panel_top = goods_panel_top
+    right_panel_width = 250
+    right_panel_height = goods_panel_height + 12 + page_panel_height
 
-    goods_panel = create_goods_canvas items, goods_panel_left, goods_panel_top, goods_panel_width, goods_panel_height
+    goods_panel = create_goods_panel items, goods_panel_left, goods_panel_top, goods_panel_width, goods_panel_height
     page_panel = create_page_panel page_panel_left, page_panel_top, page_panel_width, page_panel_height
+    right_panel = create_right_panel right_panel_left, right_panel_top, right_panel_width, right_panel_height
 
     main_canvas.add goods_panel
     main_canvas.add page_panel
+    main_canvas.add right_panel
 
     @dialog.update_arrange
   end
 
-  def create_goods_canvas(items, goods_panel_left, goods_panel_top, goods_panel_width, goods_panel_height)
+  def create_goods_panel(items, goods_panel_left, goods_panel_top, goods_panel_width, goods_panel_height)
     goods_panel = AntGui::Canvas.new
     AntGui::Canvas.set_canvas_props goods_panel, goods_panel_left, goods_panel_top,
                                     goods_panel_width, goods_panel_height
@@ -71,17 +77,25 @@ class ShoppingView < ViewBase
           item_image.background_color = 0x44_EADAC5
           AntGui::Canvas.set_canvas_props item_image, 0, 0, GOODS_ITEM_WIDTH, GOODS_IMAGE_HEIGHT
 
-          item_payment_btn = AntGui::Control.new
-          item_payment_btn.background_color = 0xFF_E8B455
-          text_block = AntGui::TextBlock.new(@font, '购买', :center, :center)
-          text_block.foreground_color = 0xFF_662230
-          item_payment_btn.content = text_block
 
-          AntGui::Canvas.set_canvas_props item_payment_btn, 0, GOODS_ITEM_HEIGHT - GOODS_PAY_BUTTON_HEIGHT,
+          if item[:existing]
+            buy_button = AntGui::TextBlock.new(@font, '购买', :center, :center)
+            buy_button.foreground_color = 0xFF_423F30
+            buy_button.background_color = 0xFF_847B60
+          else
+            buy_button = create_button '购买'
+            buy_button.foreground_color = 0xFF_662230
+            buy_button.background_color = 0xFF_E8B455
+            buy_button.on_mouse_left_button_down do
+              buy item[:key]
+            end
+          end
+
+          AntGui::Canvas.set_canvas_props buy_button, 0, GOODS_ITEM_HEIGHT - GOODS_PAY_BUTTON_HEIGHT,
                                           GOODS_ITEM_WIDTH, GOODS_PAY_BUTTON_HEIGHT
 
           item_canvas.add item_image
-          item_canvas.add item_payment_btn
+          item_canvas.add buy_button
 
           index += 1
         end
@@ -91,6 +105,11 @@ class ShoppingView < ViewBase
     goods_panel
   end
 
+  def buy(key)
+    @shopping_view_model.buy key
+    active
+  end
+
   def create_page_panel(left, top, width, height)
     button_width = 120
     button_height = height
@@ -98,11 +117,11 @@ class ShoppingView < ViewBase
     page_panel = AntGui::Canvas.new
     AntGui::Canvas.set_canvas_props page_panel, left, top, width, height
 
-    prev_page_button = create_page_button '上一页'
-    next_page_button = create_page_button '下一页'
+    prev_page_button = create_button '上一页'
+    next_page_button = create_button '下一页'
 
     prev_page_button.on_mouse_left_button_down do
-      if @page_no > 0
+      if @page_no > 1
         @page_no -= 1
         update_ui
       end
@@ -130,11 +149,62 @@ class ShoppingView < ViewBase
     page_panel
   end
 
-  def create_page_button(text)
-    page_button = AntGui::TextBlock.new(@font, text, :center, :center)
-    page_button.foreground_color = 0xFF_662230
-    page_button.background_color = 0xFF_E8B455
-    page_button
+  def create_right_panel(left, top, width, height)
+    right_panel = AntGui::Canvas.new
+    AntGui::Canvas.set_canvas_props right_panel, left, top, width, height
+
+    button_height = 40
+
+    recharge_button = create_button '【土豪充值入口】'
+    # recharge_button.on_mouse_left_button_down do
+    #   @recharge_call_back.call
+    # end
+
+    exchange_button = create_button '所有垃圾兑换成货币'
+
+    gift_button = create_button '30级免费申领第一辆车'
+    gift_button.on_mouse_left_button_down do
+      apply_gift_vehicle
+    end
+
+    quit_button = create_button '返回主界面'
+    quit_button.on_mouse_left_button_down do
+      @exit_call_back.call
+    end
+
+    margin = 30
+    y = height - button_height
+    AntGui::Canvas.set_canvas_props quit_button, 0, y, width, button_height
+    y -= button_height + margin
+    AntGui::Canvas.set_canvas_props gift_button, 0, y, width, button_height
+    y -= button_height + margin
+    AntGui::Canvas.set_canvas_props exchange_button, 0, y, width, button_height
+    y -= button_height + margin
+    AntGui::Canvas.set_canvas_props recharge_button, 0, y, width, button_height
+
+    right_panel.add quit_button
+    right_panel.add gift_button
+    right_panel.add exchange_button
+    right_panel.add recharge_button
+    right_panel
+  end
+
+  def apply_gift_vehicle
+    @shopping_view_model.apply_gift_vehicle
+    active
+  end
+
+  def create_button(text)
+    button = AntGui::TextBlock.new(@font, text, :center, :center)
+    button.foreground_color = 0xFF_662230
+    button.background_color = 0xFF_E8B455
+    button.on_mouse_enter do
+      button.background_color = 0xFF_FFE586
+    end
+    button.on_mouse_leave do
+      button.background_color = 0xFF_E8B455
+    end
+    button
   end
 
   def init_money
@@ -189,6 +259,10 @@ class ShoppingView < ViewBase
     # x += money_image_width + margin
     # @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
     # x += money_value_width + margin
+  end
+
+  def update
+    @dialog.mouse_move(@window.mouse_x, @window.mouse_y)
   end
 
   def button_down(id)

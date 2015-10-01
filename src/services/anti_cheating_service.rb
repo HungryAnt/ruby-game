@@ -40,11 +40,12 @@ class AntiCheatingService
         userId: @user_id,
         timestamp: Time.now.to_i
     }
-    http_client = create_http_client
+    http_client = HttpClientFactory.create
     http_client.path('antiCheating/initClientTimestamp')
     http_client.params(params)
     res = http_client.put
     if res.code != '200'
+      puts "res.code: #{res.code} res.body: #{res.body}"
       raise RuntimeError.new("res.code: #{res.code}")
     end
   end
@@ -54,18 +55,15 @@ class AntiCheatingService
         userId: @user_id,
         timestamp: Time.now.to_i
     }
-    http_client = create_http_client
+    http_client = HttpClientFactory.create
     http_client.path('antiCheating/checkCheating')
     http_client.params(params)
     res = http_client.put
     if res.code != '200'
+      puts "res.code: #{res.code} res.body: #{res.body}"
       throw new RuntimeError("res.code: #{res.code}")
     end
     is_cheating = res.body != 'false'
     call_cheating if is_cheating
-  end
-
-  def create_http_client
-    AntHttp::HttpClient.new(NetworkConfig::WEB_SERVICE_ENDPOINT)
   end
 end

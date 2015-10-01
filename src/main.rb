@@ -68,6 +68,7 @@ require 'messages/being_battered_message'
 require 'messages/collecting_rubbish_message'
 require 'messages/map_user_count_message'
 
+require 'services/http_client_factory'
 require 'services/equipment_definition'
 require 'services/role_type_definition'
 
@@ -87,6 +88,7 @@ require 'services/account_service'
 require 'services/shopping_service'
 require 'services/map_user_count_service'
 require 'services/anti_cheating_service'
+require 'services/user_equipment_service'
 
 require 'viewmodels/item_view_model'
 require 'viewmodels/role_view_model'

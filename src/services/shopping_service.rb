@@ -5,7 +5,7 @@ class ShoppingService
         pageSize: page_size
     }
 
-    http_client = create_http_client
+    http_client = HttpClientFactory.create
     http_client.path 'shopping/vehicles'
     http_client.params params
     res = http_client.get
@@ -18,8 +18,35 @@ class ShoppingService
     end
   end
 
-  private
-  def create_http_client
-    AntHttp::HttpClient.new(NetworkConfig::WEB_SERVICE_ENDPOINT)
+  def buy(user_id, key)
+    params = {
+        userId: user_id,
+        key: key
+    }
+    http_client = HttpClientFactory.create
+    http_client.path 'shopping/buy'
+    http_client.params params
+    res = http_client.post
+
+    if res.code != '200'
+      puts "res.code: #{res.code} res.body: #{res.body}"
+      raise RuntimeError.new("res.code: #{res.code}")
+    end
+  end
+
+  def apply_gift_vehicle(user_id)
+    http_client = HttpClientFactory.create
+    http_client.path 'vehicle/gift'
+    http_client.params(userId: user_id)
+    res = http_client.post
+
+    if res.code != '200'
+      puts "res.code: #{res.code} res.body: #{res.body}"
+      raise RuntimeError.new("res.code: #{res.code}")
+    end
+  end
+
+  def convert_to_money(user_id)
+
   end
 end

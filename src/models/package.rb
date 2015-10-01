@@ -7,6 +7,10 @@ class Package
     @items = []
   end
 
+  def clear
+    @items.clear
+  end
+
   def size
     @items.size
   end
