@@ -32,7 +32,7 @@ class PlayerService
       update_vehicles vehicles
     # end
 
-    @role.rubbish_bin.init(@user_service.rubbishes)
+    @role.rubbish_bin.update(@user_service.rubbishes)
   end
 
   def update_vehicles(vehicles)
@@ -40,5 +40,9 @@ class PlayerService
     vehicles.each do |vehicle|
       @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle.to_sym)
     end
+  end
+
+  def clear_rubbishes
+    @role.rubbish_bin.clear
   end
 end

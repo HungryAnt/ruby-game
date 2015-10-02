@@ -156,11 +156,15 @@ class ShoppingView < ViewBase
     button_height = 40
 
     recharge_button = create_button '【土豪充值入口】'
-    # recharge_button.on_mouse_left_button_down do
-    #   @recharge_call_back.call
-    # end
+    recharge_button.on_mouse_left_button_down do
+      recharge_url = "http://#{NetworkConfig::HOST_NAME}/yecai/chongzhi.html"
+      system "start explorer #{recharge_url}"
+    end
 
     exchange_button = create_button '所有垃圾兑换成货币'
+    exchange_button.on_mouse_left_button_down do
+      convert_to_money
+    end
 
     gift_button = create_button '30级免费申领第一辆车'
     gift_button.on_mouse_left_button_down do
@@ -191,6 +195,11 @@ class ShoppingView < ViewBase
 
   def apply_gift_vehicle
     @shopping_view_model.apply_gift_vehicle
+    active
+  end
+
+  def convert_to_money
+    @shopping_view_model.convert_to_money
     active
   end
 

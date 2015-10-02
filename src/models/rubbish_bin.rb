@@ -2,13 +2,21 @@ require_relative 'rubbish_type_info'
 
 class RubbishBin
   def initialize
+    init
+  end
+
+  def init
     @rubbishes = []
     0.upto(RubbishTypeInfo::COUNT - 1) do
       @rubbishes << 0
     end
   end
 
-  def init(rubbishes)
+  def clear
+    init
+  end
+
+  def update(rubbishes)
     0.upto(RubbishTypeInfo::COUNT - 1) do |i|
       @rubbishes[i] = rubbishes[i]
     end

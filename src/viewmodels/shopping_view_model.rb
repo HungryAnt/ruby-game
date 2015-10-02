@@ -39,4 +39,9 @@ class ShoppingViewModel
   def apply_gift_vehicle
     @shopping_service.apply_gift_vehicle @player_service.user_id
   end
+
+  def convert_to_money
+    @shopping_service.convert_to_money @player_service.user_id
+    @player_service.clear_rubbishes
+  end
 end
