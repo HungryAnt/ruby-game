@@ -1,5 +1,5 @@
 class GameConfig
-  DEBUG = true
+  DEBUG = false
   USER_DEBUG = false
 
   MAP_WIDTH = 800
