@@ -218,6 +218,7 @@ ghost_house_2_area.gateway = {
 # 设置遮盖物
 ghost_house_0_area.add_covering(:image_path => 'map/ghost_house/ghost_house_0/GhostHouse0_1.bmp',
                                 :x => 620, :y => 40)
+ghost_house_0_area.add_covering(:image_path => 'map/ghost_house/ghost_house_0/GhostHouse0_27.bmp', :x => 0, :y => 219)
 ghost_house_0_area.add_covering(:anim => :ghost_house_0_well, :x => 0, :y => 219)
 ghost_house_0_area.add_surface(:anim => :ghost_house_0_ghost_old_man, :x => 65, :y => 86)
 ghost_house_0_area.add_surface(:anim => :ghost_house_0_ghost_woman, :x => 477, :y => 100)

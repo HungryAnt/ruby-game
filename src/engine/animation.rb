@@ -1,4 +1,5 @@
 class Animation
+  attr_accessor :delay
   attr_reader :interval
 
   def initialize(images, interval, offset=[0, 0])
@@ -6,6 +7,7 @@ class Animation
     raise ArgumentError "wrong interval #{interval}" if interval <= 0
     @images = images
     @interval = interval
+    @delay = 0
     goto_begin
     @offset_x, @offset_y = offset[0], offset[1]
   end
@@ -25,7 +27,11 @@ class Animation
 
   def draw(x, y, z)
     return if @images.size == 0
-    img = @images[(Gosu::milliseconds - @init_timestamp) / @interval % @images.size]
-    img.draw(x + @offset_x, y + @offset_y, z)
+    anim_duration_time = @interval * @images.size
+    time = (Gosu::milliseconds - @init_timestamp) % (anim_duration_time + @delay)
+    if time > @delay
+      img = @images[(time - @delay) / @interval % @images.size]
+      img.draw(x + @offset_x, y + @offset_y, z)
+    end
   end
 end

@@ -100,6 +100,11 @@ lambda {
     end
   end
 
+  def set_animation_delay(key, delay)
+    anim = AnimationManager.get_anim key
+    anim.delay = delay
+  end
+
   new_map_covering_anim(:church_outside_cat, 'map/church/outside/cat_${num}.bmp', 0, 2, 300)
 
   new_map_covering_anim(:school_ground_children, 'map/school/school_ground/children_${num}.bmp', 1, 12)
@@ -148,20 +153,28 @@ lambda {
   # ghost_house_0
   pattern_ghost_house_0 = 'map/ghost_house/ghost_house_0/GhostHouse0_${num}.bmp'
   new_map_covering_anim(:ghost_house_0_well, pattern_ghost_house_0, 27, 38)
+  set_animation_delay(:ghost_house_0_well, 13000)
   new_map_covering_anim(:ghost_house_0_ghost_old_man, pattern_ghost_house_0, 2, 26, 200, false)
+  set_animation_delay(:ghost_house_0_ghost_old_man, 8000)
   new_map_covering_anim(:ghost_house_0_ghost_woman, pattern_ghost_house_0, 39, 42, 250, false)
 
   # ghost_house_1
   pattern_ghost_house_1 = 'map/ghost_house/ghost_house_1/GhostHouse1_${num}.bmp'
   new_map_covering_anim(:ghost_house_1_left_ghost, pattern_ghost_house_1, 14, 25)
+  set_animation_delay(:ghost_house_1_left_ghost, 7000)
   new_map_covering_anim(:ghost_house_1_right_old_man, pattern_ghost_house_1, 3, 13)
+  set_animation_delay(:ghost_house_1_right_old_man, 10000)
   new_map_covering_anim(:ghost_house_1_right_women, pattern_ghost_house_1, 26, 38, 200, false)
+  set_animation_delay(:ghost_house_1_right_women, 13000)
 
   # ghost_house_2
   pattern_ghost_house_2 = 'map/ghost_house/ghost_house_2/GhostHouse2_${num}.bmp'
   new_map_covering_anim(:ghost_house_2_ghost_boy, pattern_ghost_house_2, 4, 9)
+  set_animation_delay(:ghost_house_2_ghost_boy, 12000)
   new_map_covering_anim(:ghost_house_2_palm, pattern_ghost_house_2, 10, 16)
+  set_animation_delay(:ghost_house_2_palm, 8000)
   new_map_covering_anim(:ghost_house_2_head, pattern_ghost_house_2, 17, 24)
+  set_animation_delay(:ghost_house_2_head, 18000)
 
   # henhouse
   pattern_henhouse_outside = 'map/henhouse/henhouse_outside/ChickenHouse_${num}.bmp'
