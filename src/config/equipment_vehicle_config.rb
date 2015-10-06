@@ -30,8 +30,16 @@ def create_vehicle2_anims(vehicle_id, anim_nums_map)
   create_vehicle_anims vehicle_id, anim_nums_map, 'vehicle2'
 end
 
-def set_vehicle2_properties(id, body_height, speed_up, offset, vehicle='vehicle')
+def set_vehicle2_properties(id, body_height, speed_up, offset)
   set_vehicle_properties id, body_height, speed_up, offset, 'vehicle2'
+end
+
+def create_dragon_anims(dragon, anim_nums_map)
+  create_vehicle_anims dragon, anim_nums_map, 'dragon'
+end
+
+def set_dragon_properties(id, body_height, speed_up, offset)
+  set_vehicle_properties id, body_height, speed_up, offset, 'dragon'
 end
 
 create_vehicle_anims(39, hor_nums_pair:[4, 5], up_nums_pair:[2, 3], down_nums_pair:[0, 1])
@@ -147,5 +155,12 @@ set_vehicle2_properties(69, 7, 0.5, left: [-11, -7], up: [0, -4], down: [0, 7])
 create_vehicle2_anims(119, hor_nums_pair:[20, 29], up_nums_pair:[10, 19], down_nums_pair:[0, 9])
 set_vehicle2_properties(119, 10, 0.5, left: [-28, 18], up: [0, 17], down: [0, 21])
 
+create_dragon_anims('DragonRed', hor_nums_pair:[20, 29], up_nums_pair:[10, 19], down_nums_pair:[0, 9])
+set_dragon_properties('DragonRed', 95, 5.5, left: [-10, -50], up: [0, -43], down: [0, -38])
 
+create_dragon_anims('DragonBlack', hor_nums_pair:[20, 29], up_nums_pair:[10, 19], down_nums_pair:[0, 9])
+set_dragon_properties('DragonBlack', 95, 5.5, left: [-10, -50], up: [0, -43], down: [0, -38])
+
+create_dragon_anims('DragonBlue', hor_nums_pair:[20, 29], up_nums_pair:[10, 19], down_nums_pair:[0, 9])
+set_dragon_properties('DragonBlue', 95, 5.5, left: [-10, -50], up: [0, -43], down: [0, -38])
 

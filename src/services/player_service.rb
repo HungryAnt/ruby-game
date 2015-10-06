@@ -32,7 +32,10 @@ class PlayerService
         vehicle_key = "vehicle2_#{num}".to_sym
         @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
       end
-
+      ['DragonRed', 'DragonBlack', 'DragonBlue'].each do |dragon|
+        dragon_key = "dragon_#{dragon}".to_sym
+        @role.package << Equipment.new(Equipment::Type::VEHICLE, dragon_key)
+      end
     else
       vehicles = @user_service.vehicles
       update_vehicles vehicles
