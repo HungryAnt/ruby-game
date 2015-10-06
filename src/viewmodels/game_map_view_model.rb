@@ -263,9 +263,9 @@ class GameMapViewModel
 
   def register_hit_call_back
     @game_roles_service.register_hit_call_back do |user_id, area_id, target_x, target_y|
-      if @player_service.user_id != user_id && get_current_area.id == area_id
+      if @player_service.user_id != user_id && is_current_area(area_id)
         role_vm = @role_vm_dict[user_id]
-        if !role_vm.nil? && role_vm.area_id == get_current_area.id
+        if !role_vm.nil? && is_current_area(role_vm.area_id)
           role_vm.hit
           @player_view_model.check_hit_battered(target_x, target_y)
         end
@@ -277,7 +277,7 @@ class GameMapViewModel
     @game_roles_service.register_being_battered_call_back do |user_id|
       if @player_service.user_id != user_id
         role_vm = @role_vm_dict[user_id]
-        if !role_vm.nil? && role_vm.area_id == get_current_area.id
+        if !role_vm.nil? && is_current_area(role_vm.area_id)
           role_vm.being_battered
         end
       end
@@ -288,7 +288,7 @@ class GameMapViewModel
     @game_roles_service.register_collecting_rubbish_call_back do |user_id|
       if @player_service.user_id != user_id
         role_vm = @role_vm_dict[user_id]
-        if !role_vm.nil? && role_vm.area_id == get_current_area.id
+        if !role_vm.nil? && is_current_area(role_vm.area_id)
           role_vm.collect_rubbish
         end
       end
@@ -337,6 +337,12 @@ class GameMapViewModel
 
   def get_current_area
     get_current_map.current_area
+  end
+
+  def is_current_area(area_id)
+    map = get_current_map
+    return false if map.nil?
+    area_id == map.current_area
   end
 
   def touch_item?(mouse_x, mouse_y)

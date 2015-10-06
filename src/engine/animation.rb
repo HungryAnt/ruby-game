@@ -29,7 +29,7 @@ class Animation
     return if @images.size == 0
     anim_duration_time = @interval * @images.size
     time = (Gosu::milliseconds - @init_timestamp) % (anim_duration_time + @delay)
-    if time > @delay
+    if time >= @delay
       img = @images[(time - @delay) / @interval % @images.size]
       img.draw(x + @offset_x, y + @offset_y, z)
     end

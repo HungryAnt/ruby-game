@@ -1,27 +1,37 @@
+# def to_one_way_anim_nums(first_num, last_num)
+#   (first_num..last_num).to_a
+# end
 
-
-def create_vehicle_anims(vehicle_id, anim_nums_map)
+def create_vehicle_anims(vehicle_id, anim_nums_map, vehicle='vehicle')
   anim_interval = 150
   AnimationManager.new_centered_anims '' do
-    pattern = "vehicle/#{vehicle_id}/#{vehicle_id}_${num}.bmp"
+    pattern = "#{vehicle}/#{vehicle_id}/#{vehicle_id}_${num}.bmp"
     hor_nums = to_anim_nums(*anim_nums_map[:hor_nums_pair])
     up_nums = to_anim_nums(*anim_nums_map[:up_nums_pair])
     down_nums = to_anim_nums(*anim_nums_map[:down_nums_pair])
     {
-        "vehicle_#{vehicle_id}_left".to_sym => [pattern, hor_nums, anim_interval],
-        "vehicle_#{vehicle_id}_right".to_sym => [pattern, hor_nums, anim_interval, -1],
-        "vehicle_#{vehicle_id}_up".to_sym => [pattern, up_nums, anim_interval],
-        "vehicle_#{vehicle_id}_down".to_sym => [pattern, down_nums, anim_interval]
+        "#{vehicle}_#{vehicle_id}_left".to_sym => [pattern, hor_nums, anim_interval],
+        "#{vehicle}_#{vehicle_id}_right".to_sym => [pattern, hor_nums, anim_interval, -1],
+        "#{vehicle}_#{vehicle_id}_up".to_sym => [pattern, up_nums, anim_interval],
+        "#{vehicle}_#{vehicle_id}_down".to_sym => [pattern, down_nums, anim_interval]
     }
   end
 end
 
-def set_vehicle_properties(id, body_height, speed_up, offset)
-  key = "vehicle_#{id}".to_sym
+def set_vehicle_properties(id, body_height, speed_up, offset, vehicle='vehicle')
+  key = "#{vehicle}_#{id}".to_sym
   offset_left = offset[:left]
   offset[:right] = [-offset_left[0], offset_left[1]]
   EquipmentDefinition.set_props key, offset:offset, body_height:body_height, speed_up:speed_up
-  EquipmentDefinition.set_item_image key, "vehicle/#{id}/#{id}_0.bmp"
+  EquipmentDefinition.set_item_image key, "#{vehicle}/#{id}/#{id}_0.bmp"
+end
+
+def create_vehicle2_anims(vehicle_id, anim_nums_map)
+  create_vehicle_anims vehicle_id, anim_nums_map, 'vehicle2'
+end
+
+def set_vehicle2_properties(id, body_height, speed_up, offset, vehicle='vehicle')
+  set_vehicle_properties id, body_height, speed_up, offset, 'vehicle2'
 end
 
 create_vehicle_anims(39, hor_nums_pair:[4, 5], up_nums_pair:[2, 3], down_nums_pair:[0, 1])
@@ -108,3 +118,34 @@ set_vehicle_properties(119, 6, 0.5, left: [-5, -3], up: [0, 0], down: [0, 2])
 
 create_vehicle_anims(121, hor_nums_pair:[8, 11], up_nums_pair:[4, 7], down_nums_pair:[0, 3])
 set_vehicle_properties(121, 3, 0.5, left: [-8, -9], up: [0, -6], down: [0, -2])
+
+# »³¾É³µÁ¾
+create_vehicle2_anims(10, hor_nums_pair:[2, 2], up_nums_pair:[1, 1], down_nums_pair:[0, 0])
+set_vehicle2_properties(10, 3, 0.5, left: [-5, -4], up: [0, -4], down: [0, -4])
+
+create_vehicle2_anims(24, hor_nums_pair:[16, 23], up_nums_pair:[8, 15], down_nums_pair:[0, 7])
+set_vehicle2_properties(24, 6, 0.5, left: [-5, -4], up: [-2, -4], down: [-2, -4])
+
+create_vehicle2_anims(26, hor_nums_pair:[16, 23], up_nums_pair:[8, 15], down_nums_pair:[0, 7])
+set_vehicle2_properties(26, 6, 0.5, left: [-4, -4], up: [-0.5, -4], down: [-0.5, -4])
+
+create_vehicle2_anims(35, hor_nums_pair:[4, 7], up_nums_pair:[2, 3], down_nums_pair:[0, 1])
+set_vehicle2_properties(35, 3, 0.5, left: [-11, -7], up: [0, -5], down: [0, -3])
+
+create_vehicle2_anims(39, hor_nums_pair:[8, 11], up_nums_pair:[4, 7], down_nums_pair:[0, 3])
+set_vehicle2_properties(39, 6, 0.5, left: [-5, -4], up: [0, 0], down: [0, 0])
+
+create_vehicle2_anims(41, hor_nums_pair:[8, 11], up_nums_pair:[4, 7], down_nums_pair:[0, 3])
+set_vehicle2_properties(41, 3, 0.5, left: [-11, -7], up: [0, -5], down: [0, -3])
+
+create_vehicle2_anims(43, hor_nums_pair:[8, 11], up_nums_pair:[4, 7], down_nums_pair:[0, 3])
+set_vehicle2_properties(43, 6, 0.5, left: [-11, -7], up: [0, -3], down: [0, 2])
+
+create_vehicle2_anims(69, hor_nums_pair:[4, 5], up_nums_pair:[2, 3], down_nums_pair:[0, 1])
+set_vehicle2_properties(69, 7, 0.5, left: [-11, -7], up: [0, -4], down: [0, 7])
+
+create_vehicle2_anims(119, hor_nums_pair:[20, 29], up_nums_pair:[10, 19], down_nums_pair:[0, 9])
+set_vehicle2_properties(119, 10, 0.5, left: [-28, 18], up: [0, 17], down: [0, 21])
+
+
+

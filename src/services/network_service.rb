@@ -34,6 +34,10 @@ class NetworkService
     @s.puts(encrypted_data + "\n")
   end
 
+  def waiting_for_password?
+    @des_service.waiting_for_password?
+  end
+
   def start_msg_loop
     Thread.new {
       begin
