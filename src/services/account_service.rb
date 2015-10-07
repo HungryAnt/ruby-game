@@ -3,12 +3,9 @@ require 'net/http'
 class AccountService
   def get_amount(user_id)
     begin
-      params = {
-          userId: user_id
-      }
       http_client = HttpClientFactory.create
       http_client.path 'account/getAmount'
-      http_client.params params
+      http_client.params(userId: user_id)
       res = http_client.get
 
       if res.code == '200'

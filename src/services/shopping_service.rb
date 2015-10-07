@@ -1,13 +1,8 @@
 class ShoppingService
   def get_vehicles(page_no, page_size)
-    params = {
-        pageNo: page_no,
-        pageSize: page_size
-    }
-
     http_client = HttpClientFactory.create
     http_client.path 'shopping/vehicles'
-    http_client.params params
+    http_client.params pageNo: page_no, pageSize: page_size
     res = http_client.get
 
     if res.code == '200'
@@ -19,13 +14,9 @@ class ShoppingService
   end
 
   def buy(user_id, key)
-    params = {
-        userId: user_id,
-        key: key
-    }
     http_client = HttpClientFactory.create
     http_client.path 'shopping/buy'
-    http_client.params params
+    http_client.params userId: user_id, key: key
     res = http_client.post
     check_res res
   end

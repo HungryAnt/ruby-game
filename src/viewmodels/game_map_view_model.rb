@@ -176,52 +176,54 @@ class GameMapViewModel
     register_hit_call_back
     register_being_battered_call_back
     register_collecting_rubbish_call_back
+    register_collecting_nutrient_call_back
   end
 
   def register_role_msg_call_back
     @game_roles_service.register_role_msg_call_back do |role_msg|
-      user_id = role_msg.user_id
+      if is_in_chat_map
+        user_id = role_msg.user_id
 
-      if @player_service.user_id != user_id
-        role_map = role_msg.role_map
-        role_type = role_map['role_type'].to_sym
-        role_vm = get_role_vm user_id, role_map['name'], role_type
+        if @player_service.user_id != user_id
+          role_map = role_msg.role_map
+          role_type = role_map['role_type'].to_sym
+          role_vm = get_role_vm user_id, role_map['name'], role_type
 
-        role_vm.role.x = role_map['x'].to_i
-        role_vm.role.y = role_map['y'].to_i
-        role_vm.role.hp = role_map['hp'].to_i
-        role_vm.role.update_lv(role_map['lv'].to_i, 0)
-        role_vm.set_state role_map['state'].to_sym
-        role_vm.set_direction role_map['direction'].to_i
-        role_vm.area_id = role_map['area_id'].to_sym
-        if role_map['vehicle'].nil?
-          vehicle_key = nil
-        else
-          vehicle_key = role_map['vehicle'].to_sym
-        end
-        role_vm.drive(vehicle_key)
-
-        action = role_map['action'].to_sym
-        detail = role_map['detail']
-        case action
-          when Role::Action::APPEAR
-            role_vm.appear_in_new_area
-          when Role::Action::AUTO_MOVE_TO
-            target_x = detail['target_x'].to_i
-            target_y = detail['target_y'].to_i
-            role_vm.set_auto_move_to(target_x, target_y)
-        end
-
-        food_type_id = role_map['food_type_id']
-        unless food_type_id.nil?
-          if food_type_id >= 0
-            role_vm_eat_food role_vm, food_type_id, true
+          role_vm.role.x = role_map['x'].to_i
+          role_vm.role.y = role_map['y'].to_i
+          role_vm.role.hp = role_map['hp'].to_i
+          role_vm.role.update_lv(role_map['lv'].to_i, 0)
+          role_vm.set_state role_map['state'].to_sym
+          role_vm.set_direction role_map['direction'].to_i
+          role_vm.area_id = role_map['area_id'].to_sym
+          if role_map['vehicle'].nil?
+            vehicle_key = nil
           else
-            role_vm.clear_food
+            vehicle_key = role_map['vehicle'].to_sym
+          end
+          role_vm.drive(vehicle_key)
+
+          action = role_map['action'].to_sym
+          detail = role_map['detail']
+          case action
+            when Role::Action::APPEAR
+              role_vm.appear_in_new_area
+            when Role::Action::AUTO_MOVE_TO
+              target_x = detail['target_x'].to_i
+              target_y = detail['target_y'].to_i
+              role_vm.set_auto_move_to(target_x, target_y)
+          end
+
+          food_type_id = role_map['food_type_id']
+          unless food_type_id.nil?
+            if food_type_id >= 0
+              role_vm_eat_food role_vm, food_type_id, true
+            else
+              role_vm.clear_food
+            end
           end
         end
-
-      end
+      end # is_in_chat_map
     end
   end
 
@@ -234,9 +236,11 @@ class GameMapViewModel
 
   def register_eating_food_call_back
     @game_roles_service.register_eating_food_call_back do |user_id, food_type_id|
-      if @player_service.user_id != user_id
-        role_vm = @role_vm_dict[user_id]
-        role_vm_eat_food role_vm, food_type_id unless role_vm.nil?
+      if is_in_chat_map
+        if @player_service.user_id != user_id
+          role_vm = @role_vm_dict[user_id]
+          role_vm_eat_food role_vm, food_type_id unless role_vm.nil?
+        end
       end
     end
   end
@@ -263,11 +267,13 @@ class GameMapViewModel
 
   def register_hit_call_back
     @game_roles_service.register_hit_call_back do |user_id, area_id, target_x, target_y|
-      if @player_service.user_id != user_id && is_current_area(area_id)
-        role_vm = @role_vm_dict[user_id]
-        if !role_vm.nil? && is_current_area(role_vm.area_id)
-          role_vm.hit
-          @player_view_model.check_hit_battered(target_x, target_y)
+      if is_in_chat_map
+        if @player_service.user_id != user_id && is_current_area(area_id)
+          role_vm = @role_vm_dict[user_id]
+          if !role_vm.nil? && is_current_area(role_vm.area_id)
+            role_vm.hit
+            @player_view_model.check_hit_battered(target_x, target_y)
+          end
         end
       end
     end
@@ -275,10 +281,12 @@ class GameMapViewModel
 
   def register_being_battered_call_back
     @game_roles_service.register_being_battered_call_back do |user_id|
-      if @player_service.user_id != user_id
-        role_vm = @role_vm_dict[user_id]
-        if !role_vm.nil? && is_current_area(role_vm.area_id)
-          role_vm.being_battered
+      if is_in_chat_map
+        if @player_service.user_id != user_id
+          role_vm = @role_vm_dict[user_id]
+          if !role_vm.nil? && is_current_area(role_vm.area_id)
+            role_vm.being_battered
+          end
         end
       end
     end
@@ -286,10 +294,25 @@ class GameMapViewModel
 
   def register_collecting_rubbish_call_back
     @game_roles_service.register_collecting_rubbish_call_back do |user_id|
-      if @player_service.user_id != user_id
-        role_vm = @role_vm_dict[user_id]
-        if !role_vm.nil? && is_current_area(role_vm.area_id)
-          role_vm.collect_rubbish
+      if is_in_chat_map
+        if @player_service.user_id != user_id
+          role_vm = @role_vm_dict[user_id]
+          if !role_vm.nil? && is_current_area(role_vm.area_id)
+            role_vm.collect_rubbish
+          end
+        end
+      end
+    end
+  end
+
+  def register_collecting_nutrient_call_back
+    @game_roles_service.register_collecting_nutrient_call_back do |user_id|
+      if is_in_chat_map
+        if @player_service.user_id != user_id
+          role_vm = @role_vm_dict[user_id]
+          if !role_vm.nil? && is_current_area(role_vm.area_id)
+            role_vm.collect_nutrient
+          end
         end
       end
     end
@@ -343,6 +366,10 @@ class GameMapViewModel
     map = get_current_map
     return false if map.nil?
     area_id == map.current_area
+  end
+
+  def is_in_chat_map
+    !get_current_map.nil?
   end
 
   def touch_item?(mouse_x, mouse_y)

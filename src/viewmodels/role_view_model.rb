@@ -23,6 +23,7 @@ class RoleViewModel
     @battered = false  # ±»´ò±âµÄ
     @sound_hit = MediaUtil.get_sample 'hit.wav'
     @sound_being_battered = MediaUtil.get_sample 'being_battered.wav'
+    @sound_collect_nutrient = MediaUtil.get_sample 'collect_nutrient.wav'
   end
 
   def driving?
@@ -95,6 +96,10 @@ class RoleViewModel
     @collecting_rubbish = true
     @collecting_rubbish_end_time = Gosu::milliseconds + 420
     update_state
+  end
+
+  def collect_nutrient(quiet=false)
+    @sound_collect_nutrient.play unless quiet
   end
 
   def set_auto_move_to(x, y, &arrive_call_back)

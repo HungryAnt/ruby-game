@@ -12,7 +12,7 @@ class RubbishViewModel < ItemViewModel
   end
 
   def draw
-    @image.draw_rot(@rubbish.x, @rubbish.y, ZOrder::RUBBISH, 0)
+    @image.draw_rot(@rubbish.x, @rubbish.y, ZOrder::AREA_ITEM, 0)
   end
 
   def pick_up(player_vm)

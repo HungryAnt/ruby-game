@@ -113,6 +113,11 @@ class PlayerViewModel
     remote_collect_rubbish rubbish_vm.rubbish
   end
 
+  def collect_nutrient(nutrient_vm)
+    @role_vm.collect_nutrient
+    remote_collect_nutrient nutrient_vm.nutrient
+  end
+
   def hit
     return if @role_vm.hiting || @role_vm.battered || @role.eating?
     @role_vm.disable_auto_move
@@ -222,6 +227,11 @@ class PlayerViewModel
   def remote_collect_rubbish(rubbish)
     user_id = get_user_id
     @communication_service.send_collect_rubbish_message(user_id, rubbish.to_rubbish_map)
+  end
+
+  def remote_collect_nutrient(nutrient)
+    user_id = get_user_id
+    @communication_service.send_collect_nutrient_message(user_id, nutrient.to_nutrient_map)
   end
 
   def get_current_area_id

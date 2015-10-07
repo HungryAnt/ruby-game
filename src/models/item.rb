@@ -4,6 +4,7 @@ class Item
   class ItemType
     FOOD = 'food'
     RUBBISH = 'rubbish'
+    NUTRIENT = 'nutrient'
     SPECIAL = 'special'
   end
 

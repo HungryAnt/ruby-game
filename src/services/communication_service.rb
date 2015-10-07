@@ -100,6 +100,11 @@ class CommunicationService
     send CollectingRubbishMessage.new(user_id, rubbish_map)
   end
 
+  def send_collect_nutrient_message(user_id, nutrient_map)
+    puts 'send_collect_nutrient_message'
+    send CollectingNutrientMessage.new(user_id, nutrient_map)
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1
@@ -181,6 +186,11 @@ class CommunicationService
     @network_service.register('collecting_rubbish_message') do |msg_map, params|
       collecting_rubbish_msg = CollectingRubbishMessage.from_map(msg_map)
       @game_roles_service.collecting_rubbish collecting_rubbish_msg.user_id
+    end
+
+    @network_service.register('collecting_nutrient_message') do |msg_map, params|
+      collecting_nutrient_msg = CollectingNutrientMessage.from_map(msg_map)
+      @game_roles_service.collecting_nutrient collecting_nutrient_msg.user_id
     end
 
     @network_service.register('map_user_count_message') do |msg_map, params|
