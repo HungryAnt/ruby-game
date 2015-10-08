@@ -42,6 +42,7 @@ class PlayerService
     end
 
     @role.rubbish_bin.update(@user_service.rubbishes)
+    @role.nutrient_bin.update(@user_service.nutrients)
   end
 
   def update_vehicles(vehicles)

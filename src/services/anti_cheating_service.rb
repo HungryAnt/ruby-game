@@ -21,7 +21,7 @@ class AntiCheatingService
           begin
             check_cheating
           rescue Exception => e
-            puts "get_messages raise exception:#{e.message}"
+            puts "check_cheating raise exception:#{e.message}"
             puts e.backtrace.inspect
           end
           sleep(15)

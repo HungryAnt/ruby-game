@@ -80,7 +80,7 @@ class Role
   include Exp
 
   attr_accessor :state, :direction, :role_type, :hp, :vehicle
-  attr_reader :package, :name, :rubbish_bin
+  attr_reader :package, :name, :rubbish_bin, :nutrient_bin
 
   def initialize(name, role_type, x, y)
     @name = name
@@ -97,6 +97,7 @@ class Role
     @temp_exp = 0
     @vehicle = nil  # "vehicle_#{id}"
     @rubbish_bin = RubbishBin.new
+    @nutrient_bin = NutrientBin.new
   end
 
   def start_eat(food)

@@ -15,6 +15,10 @@ class PackageItemsViewModel
     @player_vm.role.rubbish_bin.get_rubbishes
   end
 
+  def get_nutrients
+    @player_vm.role.nutrient_bin.get_nutrients
+  end
+
   def choose_equipment(equipment)
     @player_vm.equip(EquipmentViewModelFactory.create_equipment(equipment))
     @player_vm.set_driving true

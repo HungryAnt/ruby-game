@@ -1,8 +1,8 @@
-class RubbishItemControl < AntGui::Control
-  def initialize(rubbish_type_id, count)
+class MultiItemsControl < AntGui::Control
+  def initialize(image, count)
     super()
     autowired(WindowResourceService)
-    @image = RubbishTypeInfo.get_image(rubbish_type_id)
+    @image = image
     @count = count
     @font = @window_resource_service.get_normal_font
   end

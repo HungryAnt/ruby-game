@@ -67,45 +67,62 @@ class PackageItemsView
     main_panel.add left_panel
     main_panel.add right_panel
 
-    vehicle_panel = init_vehicle_panel
     rubbish_panel = init_rubbish_panel
+    nutrient_panel = init_nutrient_panel
+    vehicle_panel = init_vehicle_panel
 
     right_panel.content = rubbish_panel
 
     # 左侧tab
     rubbish_tab = AntGui::TextBlock.new(@prompt_font, '  垃圾')
+    nutrient_tab = AntGui::TextBlock.new(@prompt_font, '  物资')
     vehicle_tab = AntGui::TextBlock.new(@prompt_font, '  载具')
 
-    all_tabs = [rubbish_tab, vehicle_tab]
+    all_tabs = [rubbish_tab, nutrient_tab, vehicle_tab]
 
     rubbish_tab.background_color = 0x88_FFFFFF
-    rubbish_tab.on_mouse_left_button_down do
-      all_tabs.each {|tab| set_unselected_tab_color tab}
-      set_selected_tab_color rubbish_tab
-      right_panel.content = rubbish_panel
-      @dialog.update_arrange
-    end
+    # rubbish_tab.on_mouse_left_button_down do
+    #   all_tabs.each {|tab| set_unselected_tab_color tab}
+    #   set_selected_tab_color rubbish_tab
+    #   right_panel.content = rubbish_panel
+    #   @dialog.update_arrange
+    # end
 
-    vehicle_tab.on_mouse_left_button_down do
-      all_tabs.each {|tab| set_unselected_tab_color tab}
-      set_selected_tab_color vehicle_tab
-      right_panel.content = vehicle_panel
-      @dialog.update_arrange
-    end
+    # vehicle_tab.on_mouse_left_button_down do
+    #   all_tabs.each {|tab| set_unselected_tab_color tab}
+    #   set_selected_tab_color vehicle_tab
+    #   right_panel.content = vehicle_panel
+    #   @dialog.update_arrange
+    # end
+
+    init_tab_event rubbish_tab, all_tabs, right_panel, rubbish_panel
+    init_tab_event nutrient_tab, all_tabs, right_panel, nutrient_panel
+    init_tab_event vehicle_tab, all_tabs, right_panel, vehicle_panel
 
     left_panel.add rubbish_tab
+    left_panel.add nutrient_tab
     left_panel.add vehicle_tab
 
     y = 10
-    AntGui::Canvas.set_canvas_props rubbish_tab, 0, y, LEFT_TAB_ITEM_WIDTH, LEFT_TAB_ITEM_HEIGHT
-    y += LEFT_TAB_ITEM_HEIGHT + LEFT_TAB_ITEM_MARGIN
-    AntGui::Canvas.set_canvas_props vehicle_tab, 0, y, LEFT_TAB_ITEM_WIDTH, LEFT_TAB_ITEM_HEIGHT
+    [rubbish_tab, nutrient_tab, vehicle_tab].each do |tab|
+      AntGui::Canvas.set_canvas_props tab, 0, y, LEFT_TAB_ITEM_WIDTH, LEFT_TAB_ITEM_HEIGHT
+      y += LEFT_TAB_ITEM_HEIGHT + LEFT_TAB_ITEM_MARGIN
+    end
 
     @dialog.content = main_panel
     @dialog.update_arrange
   end
 
   private
+
+  def init_tab_event(item_tab, all_tabs, parent_panel, tab_related_panel)
+    item_tab.on_mouse_left_button_down do
+      all_tabs.each {|tab| set_unselected_tab_color tab}
+      set_selected_tab_color item_tab
+      parent_panel.content = tab_related_panel
+      @dialog.update_arrange
+    end
+  end
 
   def set_unselected_tab_color(tab)
     tab.background_color = 0x00_FFFFFF
@@ -120,7 +137,8 @@ class PackageItemsView
     items = rubbishes.map do |rubbish_info|
       {
           data: nil,
-          content: create_rubbish_content(rubbish_info[:rubbish_type_id], rubbish_info[:count])
+          content: create_rubbish_content(rubbish_info[:rubbish_type_id],
+                                          rubbish_info[:count])
       }
     end
     create_panel('辛辛苦苦收集的垃圾，可以换成钱币呢', items) do |item|
@@ -129,7 +147,27 @@ class PackageItemsView
   end
 
   def create_rubbish_content(rubbish_type_id, count)
-    RubbishItemControl.new(rubbish_type_id, count)
+    image = RubbishTypeInfo.get_image(rubbish_type_id)
+    MultiItemsControl.new(image, count)
+  end
+
+  def init_nutrient_panel
+    nutrients = @package_items_vm.get_nutrients
+    items = nutrients.map do |nutrient_info|
+      {
+          data: nil,
+          content: create_nutrient_content(nutrient_info[:nutrient_type_id],
+                                           nutrient_info[:count])
+      }
+    end
+    create_panel('珍贵的物资，兑换货币或者囤积起来留作他用', items) do |item|
+      @visible = false
+    end
+  end
+
+  def create_nutrient_content(nutrient_type_id, count)
+    image = NutrientTypeInfo.get_image nutrient_type_id
+    MultiItemsControl.new(image, count)
   end
 
   def init_vehicle_panel

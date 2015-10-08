@@ -115,6 +115,7 @@ class PlayerViewModel
 
   def collect_nutrient(nutrient_vm)
     @role_vm.collect_nutrient
+    @role.nutrient_bin.inc nutrient_vm.nutrient_type_id
     remote_collect_nutrient nutrient_vm.nutrient
   end
 

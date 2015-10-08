@@ -4,7 +4,7 @@ require 'securerandom'
 
 class UserService
   attr_accessor :user_name, :role_type
-  attr_reader :user_id, :lv, :exp, :vehicles, :rubbishes
+  attr_reader :user_id, :lv, :exp, :vehicles, :rubbishes, :nutrients
 
   def initialize
     pwd = Dir::pwd
@@ -30,10 +30,11 @@ class UserService
     @data_synced = false
   end
 
-  def update_user_data(lv, exp, vehicles, rubbishes)
+  def update_user_data(lv, exp, vehicles, rubbishes, nutrients)
     @lv, @exp = lv, exp
     @vehicles = vehicles
     @rubbishes = rubbishes
+    @nutrients = nutrients
     @data_synced = true
   end
 

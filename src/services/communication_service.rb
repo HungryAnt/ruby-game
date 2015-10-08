@@ -133,7 +133,8 @@ class CommunicationService
     @network_service.register('res_sync_user_message') do |msg_map, params|
       res_sync_user_msg = ResSyncUserMessage.from_map(msg_map)
       @user_service.update_user_data res_sync_user_msg.lv, res_sync_user_msg.exp,
-                                     res_sync_user_msg.vehicles, res_sync_user_msg.rubbishes
+                                     res_sync_user_msg.vehicles, res_sync_user_msg.rubbishes,
+                                     res_sync_user_msg.nutrients
     end
 
     @network_service.register('chat_message') do |msg_map, params|
