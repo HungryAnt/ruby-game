@@ -75,6 +75,19 @@ class PlayerViewModel
       pick_up(item_vms, item_vm) unless item_vm.nil?
       sync_role_appear
     }
+    set_destination_with_target x, y
+  end
+
+  def set_destination_for_smash(large_rubbish_vm)
+    x, y = large_rubbish_vm.get_destination @role
+    @role_vm.set_auto_move_to(x, y) {
+      sync_role_appear
+      smash(large_rubbish_vm) unless large_rubbish_vm.nil?
+    }
+    set_destination_with_target x, y
+  end
+
+  def set_destination_with_target(x, y)
     detail = {
         target_x:x,
         target_y:y
@@ -150,6 +163,10 @@ class PlayerViewModel
 
   def battered
     @role_vm.battered
+  end
+
+  def smash(large_rubbish_vm)
+
   end
 
   private

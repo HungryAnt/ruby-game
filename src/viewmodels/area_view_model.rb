@@ -9,8 +9,16 @@ class AreaViewModel
     @scale_y = GameConfig::MAP_HEIGHT * 1.0 / @image.height
     @anim_container = AnimationContainer.new
     @item_vms = []
+    @large_rubbish_vms = []
     init_covering
     @mutex = Mutex.new
+    init_large_rubbish
+  end
+
+  def init_large_rubbish
+    large_rubbish = LargeRubbish.new 'id', 400, 300, 8, 1000, 800
+    large_rubbish_vm = LargeRubbishViewModel.new(large_rubbish)
+    @large_rubbish_vms << large_rubbish_vm
   end
 
   def init_covering
@@ -90,6 +98,22 @@ class AreaViewModel
   def clear_item_vms
     @mutex.synchronize {
       @item_vms = []
+    }
+  end
+
+  def get_large_rubbish_vms
+    @large_rubbish_vms
+  end
+
+  def add_large_rubbish_vms(large_rubbish_vm)
+    @mutex.synchronize {
+      @large_rubbish_vms << large_rubbish_vm
+    }
+  end
+
+  def clear_large_rubbish_vms
+    @mutex.synchronize {
+      @large_rubbish_vms = []
     }
   end
 

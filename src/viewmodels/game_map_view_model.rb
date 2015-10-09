@@ -10,7 +10,6 @@ class GameMapViewModel
   def init
     role = @player_service.role
     @player_view_model = PlayerViewModel.new(RoleViewModel.new(role))
-    @gen_food_timestamp = Gosu::milliseconds
     @mouse_vm = MouseViewModel.new
     init_roles
     init_area_items
@@ -19,22 +18,6 @@ class GameMapViewModel
 
   def update
     @map_service.update_map
-
-    # if @network_service.has_error?
-    #   seconds = (Gosu::milliseconds - @gen_food_timestamp) / 1000
-    #   gen_count = (seconds * GameConfig::FOOD_GEN_PER_SECOND).to_i
-    #   if gen_count > 0
-    #     @gen_food_timestamp += seconds * 1000
-    #
-    #     food_vms = get_item_vms
-    #     if food_vms.size < 5
-    #       0.upto(gen_count - 1).each do
-    #         food = FoodFactory.random_food(*@map_service::current_map.random_available_position)
-    #         food_vms << FoodViewModel.new(food)
-    #       end
-    #     end
-    #   end
-    # end
 
     map_vm = @map_service.current_map
 
@@ -54,6 +37,7 @@ class GameMapViewModel
     @map_service.draw_map
     draw_role_vms
     get_item_vms.each { |item_vm| item_vm.draw }
+    get_large_rubbish_vms.each {|large_rubbish_vm| large_rubbish_vm.draw}
   end
 
   def draw_role_vms
@@ -83,11 +67,22 @@ class GameMapViewModel
     mouse_left_down = Gosu::button_down?(Gosu::MsLeft)
     if map_vm.gateway? mouse_x, mouse_y
       @mouse_vm.set_mouse_type MouseType::GOTO_AREA
-    elsif !@player_view_model.battered && touch_item?(mouse_x, mouse_y)
-      @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::PICK_UP_BUTTON_DOWN : MouseType::PICK_UP)
-    else
-      @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::NORMAL_BUTTON_DOWN : MouseType::NORMAL)
+      return
     end
+
+    if !@player_view_model.battered
+      if touch_item?(mouse_x, mouse_y)
+        @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::PICK_UP_BUTTON_DOWN : MouseType::PICK_UP)
+        return
+      end
+
+      if touch_large_rubbish?(mouse_x, mouse_y)
+        @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::SMASH_BUTTON_DOWN : MouseType::SMASH)
+        return
+      end
+    end
+
+    @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::NORMAL_BUTTON_DOWN : MouseType::NORMAL)
   end
 
   def switch_map(map_id)
@@ -124,10 +119,22 @@ class GameMapViewModel
 
     if item_vm.can_pick_up?(@player_view_model.role)
       @player_view_model.pick_up item_vms, item_vm
-      true
+      return true
     end
 
     set_destination mouse_x, mouse_y, item_vm
+    true
+  end
+
+  def try_smash_rubbish(mouse_x, mouse_y)
+    return false if @player_view_model.battered
+    large_rubbish_vm = get_touch_rubbish mouse_x, mouse_y
+    return false if large_rubbish_vm.nil?
+    if large_rubbish_vm.can_smash?(@player_view_model.role)
+      @player_view_model.smash large_rubbish_vm
+      return true
+    end
+    set_destination_for_smash large_rubbish_vm
     true
   end
 
@@ -137,6 +144,10 @@ class GameMapViewModel
       map_vm.mark_target(mouse_x, mouse_y) unless map_vm.nil?
       @player_view_model.set_destination mouse_x, mouse_y, item_vm
     end
+  end
+
+  def set_destination_for_smash(large_rubbish_vm)
+    @player_view_model.set_destination_for_smash large_rubbish_vm
   end
 
   def discard
@@ -395,6 +406,22 @@ class GameMapViewModel
 
   def get_touch_item(mouse_x, mouse_y, item_vms)
     item_vms.each do |item_vm|
+      return item_vm if item_vm.mouse_touch?(mouse_x, mouse_y)
+    end
+    nil
+  end
+
+  def touch_large_rubbish?(mouse_x, mouse_y)
+    item_vm = get_touch_rubbish(mouse_x, mouse_y)
+    !item_vm.nil?
+  end
+
+  def get_large_rubbish_vms
+    @map_service.current_map.current_area.get_large_rubbish_vms
+  end
+
+  def get_touch_rubbish(mouse_x, mouse_y)
+    get_large_rubbish_vms.each do |item_vm|
       return item_vm if item_vm.mouse_touch?(mouse_x, mouse_y)
     end
     nil
