@@ -7,6 +7,18 @@ class LargeRubbishViewModel
     @large_rubbish  = large_rubbish
   end
 
+  def id
+    @large_rubbish.id
+  end
+
+  def x
+    @large_rubbish.x
+  end
+
+  def y
+    @large_rubbish.y
+  end
+
   def draw
     image_index = @large_rubbish.images.size - 1 -
         @large_rubbish.hp * @large_rubbish.images.size / @large_rubbish.max_hp

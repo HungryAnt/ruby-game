@@ -105,6 +105,11 @@ class CommunicationService
     send CollectingNutrientMessage.new(user_id, nutrient_map)
   end
 
+  def send_smash_large_rubbish_message(user_id, large_rubbish_id)
+    puts 'send_smash_large_rubbish_message'
+    send SmashLargeRubbishMessage.new(user_id, large_rubbish_id)
+  end
+
   def add_chat_msg(msg)
     @mutex.synchronize {
       @revision += 1

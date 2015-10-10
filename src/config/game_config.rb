@@ -26,4 +26,7 @@ class GameConfig
   REST_HP_INC = 0.05
 
   ROLE_INTAKE = 0.2
+
+  # Ã¿ÃëÖ¡Êý
+  FPS = 40
 end

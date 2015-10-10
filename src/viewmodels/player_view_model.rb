@@ -13,12 +13,15 @@ class PlayerViewModel
     @move_timestamp = Gosu::milliseconds
     @update_times = 0
     @sound_run = MediaUtil.get_sample 'run.wav'
+    @smash_beging_update_time = 0
+    @smashing_large_rubbish_vm = nil
   end
 
   def update
     have_a_rest if @role_vm.standing
     eat if @role_vm.standing
-    @role.refresh_exp if @update_times % 40 == 0
+    @role.refresh_exp if @update_times % GameConfig::FPS == 0
+    smash if @update_times % GameConfig::FPS == @smash_beging_update_time
     @update_times += 1
   end
 
@@ -82,7 +85,7 @@ class PlayerViewModel
     x, y = large_rubbish_vm.get_destination @role
     @role_vm.set_auto_move_to(x, y) {
       sync_role_appear
-      smash(large_rubbish_vm) unless large_rubbish_vm.nil?
+      start_smash(large_rubbish_vm) unless large_rubbish_vm.nil?
     }
     set_destination_with_target x, y
   end
@@ -105,6 +108,7 @@ class PlayerViewModel
 
   def appear_in_new_area
     @role_vm.appear_in_new_area
+    stop_smash
     sync_role_appear
   end
 
@@ -165,8 +169,29 @@ class PlayerViewModel
     @role_vm.battered
   end
 
-  def smash(large_rubbish_vm)
+  def start_smash(large_rubbish_vm)
+    discard
+    @smash_beging_update_time = @update_times % GameConfig::FPS
+    @smashing_large_rubbish_vm = large_rubbish_vm
+  end
 
+  def stop_smash
+    @smashing_large_rubbish_vm = nil
+  end
+
+  def smashing?
+    !@smashing_large_rubbish_vm.nil?
+  end
+
+  def smash
+    return if !smashing?
+    return if @role_vm.hiting || @role_vm.battered || @role.eating?
+    large_rubbish_vm = @smashing_large_rubbish_vm
+    @role_vm.disable_auto_move
+    sync_role_appear
+    @role_vm.adjust_to_suit_direction(large_rubbish_vm.x, large_rubbish_vm.y)
+    @role_vm.hit
+    remote_smash large_rubbish_vm.id
   end
 
   private
@@ -250,6 +275,11 @@ class PlayerViewModel
   def remote_collect_nutrient(nutrient)
     user_id = get_user_id
     @communication_service.send_collect_nutrient_message(user_id, nutrient.to_nutrient_map)
+  end
+
+  def remote_smash(large_rubbish_id)
+    user_id = get_user_id
+    @communication_service.send_smash_large_rubbish_message(user_id, large_rubbish_id)
   end
 
   def get_current_area_id

@@ -116,15 +116,13 @@ class RoleViewModel
 
   def auto_move(map_vm)
     if @auto_move_enabled
-      x_diff = @auto_move_dest[:x] - @role.x
-      y_diff = @auto_move_dest[:y] - @role.y
-      if x_diff.abs > y_diff.abs
-        @role.direction = x_diff < 0 ? Direction::LEFT : Direction::RIGHT
-      else
-        @role.direction = y_diff < 0 ? Direction::UP : Direction::DOWN
-      end
+      adjust_to_suit_direction(@auto_move_dest[:x], @auto_move_dest[:y])
       do_move @auto_move_angle, map_vm, @auto_move_dest
     end
+  end
+
+  def adjust_to_suit_direction(target_x, target_y)
+    @role.direction = calc_suit_direction target_x, target_y
   end
 
   def update_eating_food
@@ -334,5 +332,15 @@ class RoleViewModel
     x, y = @role.x, @role.y - 30
     y = y - @vehicle.vehicle_body_height if driving?
     [x, y]
+  end
+
+  def calc_suit_direction(target_x, target_y)
+    x_diff = target_x - @role.x
+    y_diff = target_y - @role.y
+    if x_diff.abs > y_diff.abs
+      x_diff < 0 ? Direction::LEFT : Direction::RIGHT
+    else
+      y_diff < 0 ? Direction::UP : Direction::DOWN
+    end
   end
 end

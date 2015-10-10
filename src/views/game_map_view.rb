@@ -113,6 +113,7 @@ class GameMapView < ViewBase
 
     case id
       when Gosu::MsLeft
+        @game_map_view_model.stop_smash
         done = @game_map_view_model.try_pick_up(@window.mouse_x, @window.mouse_y)
         return if done
         done = @game_map_view_model.try_smash_rubbish(@window.mouse_x, @window.mouse_y)

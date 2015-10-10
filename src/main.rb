@@ -70,6 +70,7 @@ require 'messages/hit_message'
 require 'messages/being_battered_message'
 require 'messages/collecting_rubbish_message'
 require 'messages/map_user_count_message'
+require 'messages/smash_large_rubbish_message'
 
 require 'services/http_client_factory'
 require 'services/equipment_definition'

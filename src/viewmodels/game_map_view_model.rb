@@ -131,11 +131,15 @@ class GameMapViewModel
     large_rubbish_vm = get_touch_rubbish mouse_x, mouse_y
     return false if large_rubbish_vm.nil?
     if large_rubbish_vm.can_smash?(@player_view_model.role)
-      @player_view_model.smash large_rubbish_vm
+      @player_view_model.start_smash large_rubbish_vm
       return true
     end
     set_destination_for_smash large_rubbish_vm
     true
+  end
+
+  def stop_smash
+    @player_view_model.stop_smash
   end
 
   def set_destination(mouse_x, mouse_y, item_vm = nil)

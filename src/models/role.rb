@@ -63,7 +63,7 @@ class Role
     EATING = :eat
     HOLDING_FOOD = :hold_food
     DRIVING = :drive
-    HIT = :hit
+    HIT = :hit # 砸人与砸大型垃圾都是HIT
     TURN_TO_BATTERED = :turn_to_battered
     BATTERED = :battered
     COLLECTING_RUBBISH = :collecting_rubbish
