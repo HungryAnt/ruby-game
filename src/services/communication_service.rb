@@ -105,9 +105,9 @@ class CommunicationService
     send CollectingNutrientMessage.new(user_id, nutrient_map)
   end
 
-  def send_smash_large_rubbish_message(user_id, large_rubbish_id)
+  def send_smash_large_rubbish_message(user_id, area_id, large_rubbish_id)
     puts 'send_smash_large_rubbish_message'
-    send SmashLargeRubbishMessage.new(user_id, large_rubbish_id)
+    send SmashLargeRubbishMessage.new(user_id, area_id, large_rubbish_id)
   end
 
   def add_chat_msg(msg)
@@ -203,6 +203,11 @@ class CommunicationService
       map_user_count_msg = MapUserCountMessage.from_map(msg_map)
       @map_user_count_service.refresh_map_user_count map_user_count_msg.map_user_count_dict,
                                                      map_user_count_msg.all_user_count
+    end
+
+    @network_service.register('large_rubbish_message') do |msg_map, params|
+      msg = LargeRubbishMessage.from_map msg_map
+      @large_rubbish_service.add_large_rubbish_msg msg
     end
   end
 

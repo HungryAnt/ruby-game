@@ -3,7 +3,8 @@ class GameMapViewModel
 
   def initialize
     autowired(PlayerService, CommunicationService, MapService,
-              GameRolesService, AreaItemsService, NetworkService)
+              GameRolesService, AreaItemsService, NetworkService,
+              LargeRubbishesService)
     @sound_join_map = MediaUtil::get_sample('join_map.wav')
   end
 
@@ -13,6 +14,7 @@ class GameMapViewModel
     @mouse_vm = MouseViewModel.new
     init_roles
     init_area_items
+    init_large_rubbishes
     @package_items_view_model = PackageItemsViewModel.new(@player_view_model)
     @update_times = 0
     @visual_items = []
@@ -372,6 +374,22 @@ class GameMapViewModel
         when AreaItemMessage::Action::PICKUP
           item_vm = ItemViewModelFactory.create_item_vm(item_map)
           item_vm.pick_up(@player_view_model)
+      end
+    end
+  end
+
+  def init_large_rubbishes
+    @large_rubbishes_service.register_large_rubbish_msg_callback do |large_rubbish_msg|
+      area_id = large_rubbish_msg.area_id
+      item_map = large_rubbish_msg.item_map
+      area_vm = @map_service.get_area(area_id)
+      case large_rubbish_msg.action
+        when LargeRubbishMessage::Action::CREATE
+          area_vm.add_large_rubbish_vm LargeRubbishViewModelFactory.create_large_rubbish_vm(item_map)
+        when LargeRubbishMessage::Action::UPDATE
+          area_vm.update_large_rubbish_vm LargeRubbishViewModelFactory.create_large_rubbish_vm(item_map)
+        when LargeRubbishMessage::Action::DESTROY
+          area_vm.destroy_large_rubbish_vm item_map['id']
       end
     end
   end

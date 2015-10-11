@@ -1,5 +1,5 @@
 class LargeRubbishViewModel
-  SMASH_DISTANCE = 100
+  SMASH_DISTANCE = 90
   INFO_BOARD_WIDTH = 106
   INFO_BOARD_HEIGHT = 37
   HP_BAR_WIDTH = 64
@@ -10,7 +10,7 @@ class LargeRubbishViewModel
 
   def initialize(large_rubbish)
     autowired(WindowResourceService)
-    @large_rubbish  = large_rubbish
+    @large_rubbish = large_rubbish
   end
 
   def id
@@ -29,11 +29,16 @@ class LargeRubbishViewModel
     @large_rubbish.name
   end
 
+  def update_large_rubbish(large_rubbish)
+    @large_rubbish = large_rubbish
+  end
+
   def draw
     image_index = @large_rubbish.images.size - 1 -
         @large_rubbish.hp * @large_rubbish.images.size / @large_rubbish.max_hp
     image = @large_rubbish.images[image_index]
-    image.draw_rot(@large_rubbish.x, @large_rubbish.y, ZOrder::Player, 0)
+    image.draw_rot(@large_rubbish.x, @large_rubbish.y, ZOrder::Player, 0,
+                   0.5, 0.67)
     draw_info_board
     draw_name
     draw_hp
@@ -72,11 +77,11 @@ class LargeRubbishViewModel
   end
 
   def mouse_touch?(mouse_x, mouse_y)
-    distance(mouse_x, mouse_y)< 60
+    distance(mouse_x, mouse_y) < 60
   end
 
   def can_smash?(role)
-    distance(role.x, role.y)< SMASH_DISTANCE
+    distance(role.x, role.y) < SMASH_DISTANCE
   end
 
   def get_destination(role)

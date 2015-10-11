@@ -12,14 +12,14 @@ class AreaViewModel
     @large_rubbish_vms = []
     init_covering
     @mutex = Mutex.new
-    init_large_rubbish
+    # init_large_rubbish
   end
 
-  def init_large_rubbish
-    large_rubbish = LargeRubbish.new 'id', 400, 300, 8, 1000, 800
-    large_rubbish_vm = LargeRubbishViewModel.new(large_rubbish)
-    @large_rubbish_vms << large_rubbish_vm
-  end
+  # def init_large_rubbish
+  #   large_rubbish = LargeRubbish.new 'id', 400, 300, rand(10), 1000, 800
+  #   large_rubbish_vm = LargeRubbishViewModel.new(large_rubbish)
+  #   @large_rubbish_vms << large_rubbish_vm
+  # end
 
   def init_covering
     @covering_views = []
@@ -105,9 +105,26 @@ class AreaViewModel
     @large_rubbish_vms
   end
 
-  def add_large_rubbish_vms(large_rubbish_vm)
+  def add_large_rubbish_vm(large_rubbish_vm)
     @mutex.synchronize {
       @large_rubbish_vms << large_rubbish_vm
+    }
+  end
+
+  def update_large_rubbish_vm(large_rubbish_vm)
+    @mutex.synchronize {
+      target_vm = @large_rubbish_vms.find {|item| item.id = large_rubbish_vm.id}
+      if target_vm.nil?
+        @large_rubbish_vms << large_rubbish_vm
+      else
+        target_vm.update_large_rubbish large_rubbish_vm.large_rubbish
+      end
+    }
+  end
+
+  def destroy_large_rubbish_vm(id)
+    @mutex.synchronize {
+      @large_rubbish_vms.delete_if {|item| item.id = id}
     }
   end
 

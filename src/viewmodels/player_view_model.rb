@@ -280,7 +280,8 @@ class PlayerViewModel
 
   def remote_smash(large_rubbish_id)
     user_id = get_user_id
-    @communication_service.send_smash_large_rubbish_message(user_id, large_rubbish_id)
+    area_id = get_current_area_id
+    @communication_service.send_smash_large_rubbish_message(user_id, area_id, large_rubbish_id)
   end
 
   def get_current_area_id
