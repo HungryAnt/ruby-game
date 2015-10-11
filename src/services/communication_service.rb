@@ -87,9 +87,9 @@ class CommunicationService
     send eat_up_food_msg
   end
 
-  def send_update_lv(user_id, lv, exp)
-    puts 'send_update_lv'
-    send UpdateLvMessage.new(user_id, lv, exp)
+  def send_inc_exp_message(user_id, exp)
+    puts 'send_inc_exp_message'
+    send IncExpMessage.new(user_id, exp)
   end
 
   def send_hit_message(user_id, area_id, target_x, target_y)
@@ -147,6 +147,13 @@ class CommunicationService
       @user_service.update_user_data res_sync_user_msg.lv, res_sync_user_msg.exp,
                                      res_sync_user_msg.vehicles, res_sync_user_msg.rubbishes,
                                      res_sync_user_msg.nutrients
+    end
+
+    @network_service.register('update_lv_message') do |msg_map, params|
+      msg = UpdateLvMessage.from_map(msg_map)
+      if @user_service.user_id == msg.user_id
+        @user_service.update_lv msg.lv, msg.exp
+      end
     end
 
     @network_service.register('chat_message') do |msg_map, params|

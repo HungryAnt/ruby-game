@@ -20,9 +20,14 @@ class PlayerViewModel
   def update
     have_a_rest if @role_vm.standing
     eat if @role_vm.standing
-    @role.refresh_exp if @update_times % GameConfig::FPS == 0
+    refresh_exp if @update_times % GameConfig::FPS == 0
     smash if @update_times % GameConfig::FPS == @smash_beging_update_time
     @update_times += 1
+  end
+
+  def refresh_exp
+    exp = @role.query_and_dec_temp_exp
+    remote_inc_exp(exp) if exp > 0
   end
 
   def draw
@@ -211,7 +216,7 @@ class PlayerViewModel
   def eat_up
     @role_vm.clear_food
     remote_eat_up_food
-    remote_update_lv
+    # remote_update_lv
   end
 
   def have_a_rest
@@ -261,8 +266,12 @@ class PlayerViewModel
     @communication_service.send_eat_up_food_message(user_id)
   end
 
-  def remote_update_lv
-    @communication_service.send_update_lv get_user_id, @role.lv, @role.exp
+  # def remote_update_lv
+  #   @communication_service.send_update_lv get_user_id, @role.lv, @role.exp
+  # end
+
+  def remote_inc_exp(exp)
+    @communication_service.send_inc_exp_message get_user_id, exp
   end
 
   def remote_hit(user_id, area_id, target_x, target_y)

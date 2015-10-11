@@ -4,7 +4,7 @@ class GameMapViewModel
   def initialize
     autowired(PlayerService, CommunicationService, MapService,
               GameRolesService, AreaItemsService, NetworkService,
-              LargeRubbishesService)
+              LargeRubbishesService, UserService)
     @sound_join_map = MediaUtil::get_sample('join_map.wav')
   end
 
@@ -202,6 +202,7 @@ class GameMapViewModel
 
   def init_roles
     @role_vm_dict = {}
+    register_update_lv_callback
     register_role_msg_call_back
     register_delete_role_call_back
     register_eating_food_call_back
@@ -212,6 +213,12 @@ class GameMapViewModel
     register_collecting_rubbish_call_back
     register_collecting_nutrient_call_back
     register_smash_callback
+  end
+
+  def register_update_lv_callback
+    @user_service.register_update_lv_callback do |lv, exp|
+      @player_view_model.role.update_lv lv, exp
+    end
   end
 
   def register_role_msg_call_back

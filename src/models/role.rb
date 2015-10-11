@@ -160,11 +160,17 @@ class Role
     @state == State::HOLDING_FOOD
   end
 
-  def refresh_exp
-    if @temp_exp > 0
-      inc_exp(@temp_exp)
-      @temp_exp = 0
-    end
+  # def refresh_exp
+  #   if @temp_exp > 0
+  #     inc_exp(@temp_exp)
+  #     @temp_exp = 0
+  #   end
+  # end
+
+  def query_and_dec_temp_exp
+    exp = @temp_exp.to_i
+    @temp_exp -= exp
+    exp
   end
 
   def discard

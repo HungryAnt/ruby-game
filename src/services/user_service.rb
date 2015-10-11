@@ -12,6 +12,7 @@ class UserService
     init_user
     init_lv_exp
     @vehicles = []
+    @update_lv_callback = nil
   end
 
   def init_user
@@ -44,6 +45,14 @@ class UserService
 
   def save
     save_user(@user_id, @user_name, @role_type)
+  end
+
+  def register_update_lv_callback(&callback)
+    @update_lv_callback = callback
+  end
+
+  def update_lv(lv, exp)
+    @update_lv_callback.call(lv, exp)
   end
 
   private
