@@ -211,6 +211,7 @@ class GameMapViewModel
     register_being_battered_call_back
     register_collecting_rubbish_call_back
     register_collecting_nutrient_call_back
+    register_smash_callback
   end
 
   def register_role_msg_call_back
@@ -352,6 +353,23 @@ class GameMapViewModel
     end
   end
 
+  def register_smash_callback
+    @game_roles_service.register_smash_callback do |user_id, area_id|
+      call_role_vm(user_id, area_id) {|role_vm| role_vm.hit(:smash)}
+    end
+  end
+
+  def call_role_vm(user_id, area_id)
+    if is_in_chat_map
+      if @player_service.user_id != user_id && is_current_area(area_id)
+        role_vm = @role_vm_dict[user_id]
+        if !role_vm.nil? && is_current_area(role_vm.area_id)
+          yield role_vm
+        end
+      end
+    end
+  end
+
   def role_vm_eat_food(role_vm, food_type_id, quietly = false)
     food_vm = ItemViewModelFactory.create_simple_food_vm(food_type_id)
     if quietly || role_vm.area_id != get_current_area.id
@@ -389,7 +407,9 @@ class GameMapViewModel
         when LargeRubbishMessage::Action::UPDATE
           area_vm.update_large_rubbish_vm LargeRubbishViewModelFactory.create_large_rubbish_vm(item_map)
         when LargeRubbishMessage::Action::DESTROY
-          area_vm.destroy_large_rubbish_vm item_map['id']
+          large_rubbish_id = item_map['id']
+          area_vm.destroy_large_rubbish_vm large_rubbish_id
+          @player_view_model.stop_smash_large_rubbish large_rubbish_id
       end
     end
   end
@@ -415,7 +435,7 @@ class GameMapViewModel
   def is_current_area(area_id)
     map = get_current_map
     return false if map.nil?
-    area_id == map.current_area
+    area_id == map.current_area.id
   end
 
   def is_in_chat_map

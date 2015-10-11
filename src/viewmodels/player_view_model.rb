@@ -179,6 +179,10 @@ class PlayerViewModel
     @smashing_large_rubbish_vm = nil
   end
 
+  def stop_smash_large_rubbish(large_rubbish_id)
+    stop_smash if @smashing_large_rubbish_vm.id == large_rubbish_id
+  end
+
   def smashing?
     !@smashing_large_rubbish_vm.nil?
   end
@@ -190,9 +194,9 @@ class PlayerViewModel
     @role_vm.disable_auto_move
     sync_role_appear
     @role_vm.adjust_to_suit_direction(large_rubbish_vm.x, large_rubbish_vm.y)
-    @role_vm.hit
+    @role_vm.hit(:smash)
     remote_smash large_rubbish_vm.id
-    large_rubbish_vm.smash
+    # large_rubbish_vm.smash
   end
 
   private
@@ -233,6 +237,7 @@ class PlayerViewModel
 
     @communication_service.send_roles_query_message map_id
     @communication_service.send_area_items_query_message map_id
+    @communication_service.send_area_large_rubbishes_query_message map_id
   end
 
   def remote_discard_item(item)

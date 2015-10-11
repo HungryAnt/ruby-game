@@ -72,6 +72,7 @@ require 'messages/collecting_rubbish_message'
 require 'messages/map_user_count_message'
 require 'messages/smash_large_rubbish_message'
 require 'messages/large_rubbish_message'
+require 'messages/area_large_rubbishes_query_message'
 
 require 'services/http_client_factory'
 require 'services/equipment_definition'

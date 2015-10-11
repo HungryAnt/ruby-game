@@ -22,6 +22,7 @@ class RoleViewModel
     @hiting = false
     @battered = false  # ±»´ò±âµÄ
     @sound_hit = MediaUtil.get_sample 'hit.wav'
+    @sound_smash = MediaUtil.get_sample 'smash.wav'
     @sound_being_battered = MediaUtil.get_sample 'being_battered.wav'
     @sound_collect_nutrient = MediaUtil.get_sample 'collect_nutrient.wav'
   end
@@ -215,13 +216,19 @@ class RoleViewModel
     end
   end
 
-  def hit
+  def hit(sound=:hit)
     @hiting = true
     @hit_end_time = Gosu::milliseconds + 560
     update_state
     @current_anim.goto_begin
-    @sound_hit.play
+    if sound == :hit
+      @sound_hit.play
+    elsif sound == :smash
+      @sound_smash.play
+    end
   end
+
+
 
   def being_battered
     @battered = true

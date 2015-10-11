@@ -2,7 +2,8 @@ class CommunicationService
   attr_reader :revision
 
   def initialize
-    autowired(NetworkService, UserService, GameRolesService, AreaItemsService, MapUserCountService)
+    autowired(NetworkService, UserService, GameRolesService, AreaItemsService,
+              MapUserCountService, LargeRubbishesService)
     @mutex = Mutex.new
     @chat_msgs = []
     @revision = 0
@@ -54,6 +55,12 @@ class CommunicationService
     puts "send_area_items_query_message map_id:#{map_id}"
     query_msg = AreaItemsQueryMessage.new map_id
     send query_msg
+  end
+
+  def send_area_large_rubbishes_query_message(map_id)
+    puts "send_area_large_rubbish_query_message map_id:#{map_id}"
+    msg = AreaLargeRubbishesQueryMessage.new map_id
+    send msg
   end
 
   def send_try_pickup_item_message(user_id, area_id, item_id)
@@ -202,12 +209,18 @@ class CommunicationService
     @network_service.register('map_user_count_message') do |msg_map, params|
       map_user_count_msg = MapUserCountMessage.from_map(msg_map)
       @map_user_count_service.refresh_map_user_count map_user_count_msg.map_user_count_dict,
-                                                     map_user_count_msg.all_user_count
+                                                     map_user_count_msg.all_user_count,
+                                                     map_user_count_msg.map_large_rubbish_dict
     end
 
     @network_service.register('large_rubbish_message') do |msg_map, params|
       msg = LargeRubbishMessage.from_map msg_map
-      @large_rubbish_service.add_large_rubbish_msg msg
+      @large_rubbishes_service.add_large_rubbish_msg msg
+    end
+
+    @network_service.register('smash_large_rubbish_message') do |msg_map, params|
+      msg = SmashLargeRubbishMessage.from_map(msg_map)
+      @game_roles_service.smash msg.user_id, msg.area_id.to_sym
     end
   end
 

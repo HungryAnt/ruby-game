@@ -24,8 +24,13 @@ class MapItemControl < AntGui::Control
     @font_map_name.draw_rel(@map_name, center_x, center_y, z, 0.6, 0.5, 1.0, 1.0, 0xFF_905810)
 
     user_count = @map_user_count_service.get_map_user_count(@map_id)
+    @font_normal.draw_rel("空雅数:#{user_count}  ",
+                          left + width, top + height, z, 1.0, 1.0, 1.0, 1.0, 0xBB_000000)
 
-    @font_normal.draw_rel("空雅数:#{user_count}  ", left + width, top + height, z, 1.0, 1.0, 1.0, 1.0, 0xBB_000000)
+    if @map_user_count_service.has_large_rubbish? @map_id
+      @font_normal.draw_rel('大型垃圾  ',
+                            left + width, top, z, 1.0, 0.0, 1.0, 1.0, 0xBB_EE0000)
+    end
   end
 end
 

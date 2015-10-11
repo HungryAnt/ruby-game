@@ -113,7 +113,7 @@ class AreaViewModel
 
   def update_large_rubbish_vm(large_rubbish_vm)
     @mutex.synchronize {
-      target_vm = @large_rubbish_vms.find {|item| item.id = large_rubbish_vm.id}
+      target_vm = @large_rubbish_vms.find {|item| item.id == large_rubbish_vm.id}
       if target_vm.nil?
         @large_rubbish_vms << large_rubbish_vm
       else
@@ -124,7 +124,7 @@ class AreaViewModel
 
   def destroy_large_rubbish_vm(id)
     @mutex.synchronize {
-      @large_rubbish_vms.delete_if {|item| item.id = id}
+      @large_rubbish_vms.delete_if {|item| item.id == id}
     }
   end
 

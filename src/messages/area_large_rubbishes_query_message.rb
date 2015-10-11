@@ -1,8 +1,8 @@
 require_relative 'area_query_message'
 
-class AreaItemsQueryMessage < AreaQueryMessage
+class AreaLargeRubbishesQueryMessage < AreaQueryMessage
   def initialize(map_id)
-    super('area_items_query_message', map_id)
+    super('area_large_rubbishes_query_message', map_id)
   end
 
   def self.from_map(map)

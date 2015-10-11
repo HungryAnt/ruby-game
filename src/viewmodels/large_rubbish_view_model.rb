@@ -35,7 +35,7 @@ class LargeRubbishViewModel
 
   def draw
     image_index = @large_rubbish.images.size - 1 -
-        @large_rubbish.hp * @large_rubbish.images.size / @large_rubbish.max_hp
+        @large_rubbish.hp * @large_rubbish.images.size / (@large_rubbish.max_hp + 1)
     image = @large_rubbish.images[image_index]
     image.draw_rot(@large_rubbish.x, @large_rubbish.y, ZOrder::Player, 0,
                    0.5, 0.67)
@@ -91,11 +91,11 @@ class LargeRubbishViewModel
     [dest_x, dest_y]
   end
 
-  def smash
-    hp_dec = 3
-    hp_dec = @large_rubbish.hp if hp_dec > @large_rubbish.hp
-    @large_rubbish.update_hp @large_rubbish.hp - hp_dec
-  end
+  # def smash
+  #   hp_dec = 3
+  #   hp_dec = @large_rubbish.hp if hp_dec > @large_rubbish.hp
+  #   @large_rubbish.update_hp @large_rubbish.hp - hp_dec
+  # end
 
   private
   def distance(x, y)

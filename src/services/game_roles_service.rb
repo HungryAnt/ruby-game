@@ -14,6 +14,8 @@ class GameRolesService
 
     @collecting_rubbish_call_back = nil
     @collecting_nutrient_call_back = nil
+
+    @smash_callback = nil
   end
 
   def register_role_msg_call_back(&role_msg_call_back)
@@ -50,6 +52,10 @@ class GameRolesService
 
   def register_collecting_nutrient_call_back(&collecting_nutrient_call_back)
     @collecting_nutrient_call_back = collecting_nutrient_call_back
+  end
+
+  def register_smash_callback(&callback)
+    @smash_callback = callback
   end
 
   def add_role_msg(role_msg)
@@ -94,5 +100,9 @@ class GameRolesService
 
   def collecting_nutrient(user_id)
     @collecting_nutrient_call_back.call user_id
+  end
+
+  def smash(user_id, area_id)
+    @smash_callback.call user_id, area_id
   end
 end
