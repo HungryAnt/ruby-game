@@ -26,6 +26,10 @@ class RoleViewModel
     @sound_collect_nutrient = MediaUtil.get_sample 'collect_nutrient.wav'
   end
 
+  def y
+    @role.y
+  end
+
   def driving?
     @driving && !@vehicle.nil?
   end

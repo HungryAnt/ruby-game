@@ -14,6 +14,8 @@ class GameMapViewModel
     init_roles
     init_area_items
     @package_items_view_model = PackageItemsViewModel.new(@player_view_model)
+    @update_times = 0
+    @visual_items = []
   end
 
   def update
@@ -30,14 +32,29 @@ class GameMapViewModel
 
     @player_view_model.update
 
+    sort_visual_items if @update_times % 4 == 0
+
     goto_area
+    @update_times += 1
+  end
+
+  def sort_visual_items
+    @visual_items = []
+    all_role_vms_do do |role_vm|
+      @visual_items << role_vm
+    end
+    get_large_rubbish_vms.each do |large_rubbish_vm|
+      @visual_items << large_rubbish_vm
+    end
+    @visual_items.sort_by! {|item| item.y}
   end
 
   def draw
     @map_service.draw_map
-    draw_role_vms
+    # draw_role_vms
     get_item_vms.each { |item_vm| item_vm.draw }
-    get_large_rubbish_vms.each {|large_rubbish_vm| large_rubbish_vm.draw}
+    # get_large_rubbish_vms.each {|large_rubbish_vm| large_rubbish_vm.draw}
+    @visual_items.each {|item| item.draw}
   end
 
   def draw_role_vms
