@@ -192,6 +192,7 @@ class PlayerViewModel
     @role_vm.adjust_to_suit_direction(large_rubbish_vm.x, large_rubbish_vm.y)
     @role_vm.hit
     remote_smash large_rubbish_vm.id
+    large_rubbish_vm.smash
   end
 
   private

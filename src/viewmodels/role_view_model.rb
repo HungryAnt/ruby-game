@@ -259,17 +259,9 @@ class RoleViewModel
     whole_width = lv_img_width + 2 + name_width
     level_left = @role.x - whole_width / 2
     level_height = @role.y + 14
-    draw_text_with_border(@role.name, level_left + lv_img_width + 2, level_height, ZOrder::Player,
-                          1, 1, 0xFF_CFC2BC, 0xFF_251B00)
+    GraphicsUtil.draw_text_with_border(@role.name, @font, level_left + lv_img_width + 2, level_height,
+                                       ZOrder::Player, 1, 1, 0xFF_EFE2DC, 0xFF_251B00)
     lv_image.draw(level_left, level_height, ZOrder::Player)
-  end
-
-  def draw_text_with_border(text, x, y, z, scale_x, scale_y, color, border_color)
-    @font.draw(text, x, y-1, z, scale_x, scale_y, border_color)
-    @font.draw(text, x, y+1, z, scale_x, scale_y, border_color)
-    @font.draw(text, x-1, y, z, scale_x, scale_y, border_color)
-    @font.draw(text, x+1, y, z, scale_x, scale_y, border_color)
-    @font.draw(text, x, y, z, scale_x, scale_y, color, :additive)
   end
 
   def draw_chat_bubble
