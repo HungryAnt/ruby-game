@@ -162,6 +162,7 @@ class PlayerViewModel
 
   def check_hit_battered(hit_x, hit_y)
     return if @role_vm.battered
+    return if @role_vm.driving_dragon?
     if Gosu::distance(@role.x, @role.y, hit_x, hit_y) < 28
       discard
       @role.dec_hp(BEING_BATTERED_COST_HP)

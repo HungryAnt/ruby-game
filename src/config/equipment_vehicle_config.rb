@@ -156,11 +156,11 @@ create_vehicle2_anims(119, hor_nums_pair:[20, 29], up_nums_pair:[10, 19], down_n
 set_vehicle2_properties(119, 10, 0.8, left: [-28, 18], up: [0, 17], down: [0, 21])
 
 create_dragon_anims('DragonRed', hor_nums_pair:[20, 29], up_nums_pair:[10, 19], down_nums_pair:[0, 9])
-set_dragon_properties('DragonRed', 95, 3.5, left: [-10, -50], up: [0, -43], down: [0, -38])
+set_dragon_properties('DragonRed', 95, 3.5, left: [-10, -50], up: [0, -50], down: [0, -38])
 
 create_dragon_anims('DragonBlack', hor_nums_pair:[20, 29], up_nums_pair:[10, 19], down_nums_pair:[0, 9])
-set_dragon_properties('DragonBlack', 95, 5.5, left: [-10, -50], up: [0, -43], down: [0, -38])
+set_dragon_properties('DragonBlack', 95, 5.5, left: [-10, -50], up: [0, -50], down: [0, -38])
 
 create_dragon_anims('DragonBlue', hor_nums_pair:[20, 29], up_nums_pair:[10, 19], down_nums_pair:[0, 9])
-set_dragon_properties('DragonBlue', 95, 4.5, left: [-10, -50], up: [0, -43], down: [0, -38])
+set_dragon_properties('DragonBlue', 95, 4.5, left: [-10, -50], up: [0, -50], down: [0, -38])
 

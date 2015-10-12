@@ -185,11 +185,21 @@ class RoleViewModel
   end
 
   def draw
-    draw_role_anim
-    draw_equipment
+    if driving_dragon? && @role.direction == Direction::UP
+      draw_equipment
+      draw_role_anim
+    else
+      draw_role_anim
+      draw_equipment
+    end
+
     @eating_food_vm.draw unless @eating_food_vm.nil?
     draw_level_and_name
     draw_chat_bubble
+  end
+
+  def driving_dragon?
+    driving? && @vehicle.key.to_s.start_with?('dragon')
   end
 
   def control_move(angle, map_vm)
@@ -227,8 +237,6 @@ class RoleViewModel
       @sound_smash.play
     end
   end
-
-
 
   def being_battered
     @battered = true
