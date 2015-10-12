@@ -1,7 +1,11 @@
 class ShoppingService
   def get_vehicles(page_no, page_size)
+    get_goods :vehicles, page_no, page_size
+  end
+
+  def get_goods(category, page_no, page_size)
     http_client = HttpClientFactory.create
-    http_client.path 'shopping/vehicles'
+    http_client.path "shopping/#{category}"
     http_client.params pageNo: page_no, pageSize: page_size
     res = http_client.get
 

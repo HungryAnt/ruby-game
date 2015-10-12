@@ -16,6 +16,7 @@ class ShoppingView < ViewBase
     init_money
     @font = @window_resource_service.get_font_25
     @page_no = @total_page_count = 1
+    @current_goods_category = :vehicles
   end
 
   def on_exit(&exit_call_back)
@@ -23,7 +24,7 @@ class ShoppingView < ViewBase
   end
 
   def update_ui
-    items, page_count = @shopping_view_model.get_vehicle_goods @page_no
+    items, page_count = @shopping_view_model.get_goods @current_goods_category, @page_no
     @total_page_count = page_count
     create_ui items
   end
@@ -33,9 +34,13 @@ class ShoppingView < ViewBase
     main_canvas = AntGui::Canvas.new
     @dialog.content = main_canvas
 
-    goods_panel_left = 65
-    goods_panel_top = 80
-    goods_panel_width = GOODS_ITEM_WIDTH * GOODS_COL_COUNT + GOODS_MARGIN * (GOODS_COL_COUNT - 1) + GOODS_PADDING * 2
+    tab_panel_left = 65
+    tab_panel_top = 60
+    tab_panel_width = GOODS_ITEM_WIDTH * GOODS_COL_COUNT + GOODS_MARGIN * (GOODS_COL_COUNT - 1) + GOODS_PADDING * 2
+    tab_panel_height = 32
+    goods_panel_left = tab_panel_left
+    goods_panel_top = 100
+    goods_panel_width = tab_panel_width
     goods_panel_height = GOODS_ITEM_HEIGHT * GOODS_ROW_COUNT + GOODS_MARGIN * (GOODS_ROW_COUNT - 1) + GOODS_PADDING * 2
     page_panel_left = goods_panel_left
     page_panel_top = goods_panel_top + goods_panel_height + 12
@@ -46,15 +51,48 @@ class ShoppingView < ViewBase
     right_panel_width = 250
     right_panel_height = goods_panel_height + 12 + page_panel_height
 
+    tab_panel = create_tab_panel tab_panel_left, tab_panel_top, tab_panel_width, tab_panel_height
     goods_panel = create_goods_panel items, goods_panel_left, goods_panel_top, goods_panel_width, goods_panel_height
     page_panel = create_page_panel page_panel_left, page_panel_top, page_panel_width, page_panel_height
     right_panel = create_right_panel right_panel_left, right_panel_top, right_panel_width, right_panel_height
 
+    main_canvas.add tab_panel
     main_canvas.add goods_panel
     main_canvas.add page_panel
     main_canvas.add right_panel
 
     @dialog.update_arrange
+  end
+
+  def create_tab_panel(left, top, width, height)
+    tab_panel = AntGui::Canvas.new
+    AntGui::Canvas.set_canvas_props tab_panel, left, top, width, height
+    x = y = 0
+    tab_item_width = 120
+    tab_item_height = height
+    tab_item_margin = 5
+    vehicle_tab_button = create_button '载具'
+    AntGui::Canvas.set_canvas_props vehicle_tab_button, x, y, tab_item_width, tab_item_height
+
+    x += tab_item_width + tab_item_margin
+    nostalgic_vehicle_tab_button = create_button '怀旧载具'
+    AntGui::Canvas.set_canvas_props nostalgic_vehicle_tab_button, x, y, tab_item_width, tab_item_height
+
+    vehicle_tab_button.on_mouse_left_button_down do
+      @page_no = 1
+      @current_goods_category = :vehicles
+      update_ui
+    end
+
+    nostalgic_vehicle_tab_button.on_mouse_left_button_down do
+      @page_no = 1
+      @current_goods_category = :nostalgicVehicles
+      update_ui
+    end
+
+    tab_panel.add vehicle_tab_button
+    tab_panel.add nostalgic_vehicle_tab_button
+    tab_panel
   end
 
   def create_goods_panel(items, goods_panel_left, goods_panel_top, goods_panel_width, goods_panel_height)

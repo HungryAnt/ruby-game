@@ -2,7 +2,7 @@
 
 class MainWindow < Gosu::Window
 
-  VERSION = 'v0.6.0 beta 网络版'
+  VERSION = 'v0.7.0 beta'
 
   def initialize
     super GameConfig::MAP_WIDTH,
@@ -104,7 +104,7 @@ class MainWindow < Gosu::Window
     draw_fps
 
     Gosu::draw_rect 0, 0, 20 * 30, 20, 0xAA_EFEF56
-    message = "#{VERSION} 作者:Gods_巨蚁 QQ:517377100 Q群:475143537"
+    message = '作者:Ant(群主大大大) QQ:517377100 活跃Q群:20977325'
 
     @font.draw(message, 11, 1,
                ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_9EC4FF)

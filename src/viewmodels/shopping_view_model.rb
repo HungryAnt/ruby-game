@@ -8,7 +8,11 @@ class ShoppingViewModel
   end
 
   def get_vehicle_goods(page_no)
-    page_result = @shopping_service.get_vehicles(page_no, PAGE_SIZE)
+
+  end
+
+  def get_goods(category, page_no)
+    page_result = @shopping_service.get_goods(category, page_no, PAGE_SIZE)
     package_vehicle_keys_set = get_package_vehicle_keys_set
     items = []
     page_result.page.result.map do |data_map|

@@ -3,7 +3,7 @@
 class PackageItemsView
   attr_accessor :visible
 
-  ROW_COUNT = 5
+  ROW_COUNT = 6
   COL_COUNT = 6
 
   PROMPT_HEIGHT = 30
