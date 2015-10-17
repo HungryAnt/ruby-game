@@ -34,7 +34,7 @@ class GameMapViewModel
 
     @player_view_model.update
 
-    sort_visual_items if @update_times % 4 == 0
+    sort_visual_items
 
     goto_area
     @update_times += 1
@@ -231,13 +231,14 @@ class GameMapViewModel
           role_type = role_map['role_type'].to_sym
           role_vm = get_role_vm user_id, role_map['name'], role_type
 
+          role_vm.area_id = role_map['area_id'].to_sym
           role_vm.role.x = role_map['x'].to_i
           role_vm.role.y = role_map['y'].to_i
           role_vm.role.hp = role_map['hp'].to_i
           role_vm.role.update_lv(role_map['lv'].to_i, 0)
           role_vm.set_state role_map['state'].to_sym
           role_vm.set_direction role_map['direction'].to_i
-          role_vm.area_id = role_map['area_id'].to_sym
+
           if role_map['vehicle'].nil?
             vehicle_key = nil
           else

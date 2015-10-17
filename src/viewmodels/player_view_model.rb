@@ -186,7 +186,7 @@ class PlayerViewModel
   end
 
   def stop_smash_large_rubbish(large_rubbish_id)
-    stop_smash if @smashing_large_rubbish_vm.id == large_rubbish_id
+    stop_smash if smashing? && @smashing_large_rubbish_vm.id == large_rubbish_id
   end
 
   def smashing?
@@ -239,7 +239,7 @@ class PlayerViewModel
 
   def refresh_new_map_elements(map_id)
     map_vm = @map_service.current_map
-    map_vm.clear_area_items
+    map_vm.clear_items
 
     @communication_service.send_roles_query_message map_id
     @communication_service.send_area_items_query_message map_id

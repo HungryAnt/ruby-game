@@ -74,6 +74,7 @@ require 'messages/smash_large_rubbish_message'
 require 'messages/large_rubbish_message'
 require 'messages/area_large_rubbishes_query_message'
 require 'messages/inc_exp_message'
+require 'messages/collecting_nutrient_message'
 
 require 'services/http_client_factory'
 require 'services/equipment_definition'
