@@ -56,7 +56,7 @@ class RoleType
 end
 
 class Role
-  class State
+  module State
     STANDING = :stand
     WALKING = :walk
     RUNNING = :run
@@ -67,9 +67,18 @@ class Role
     TURN_TO_BATTERED = :turn_to_battered
     BATTERED = :battered
     COLLECTING_RUBBISH = :collecting_rubbish
+
+    SCARE = :scare
+    LECHEROUS = :lecherous
+    BYE = :bye
+    CRY = :cry
+    LAUGH = :laugh
+    FINGER_HIT = :finger_hit
+    HEAD_HIT = :head_hit
+    FART = :fart
   end
 
-  class Action
+  module Action
     APPEAR = :appear
     DISAPPEAR = :disappear
     AUTO_MOVE_TO = :auto_move_to

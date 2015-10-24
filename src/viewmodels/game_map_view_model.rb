@@ -198,6 +198,10 @@ class GameMapViewModel
     @player_view_model.hit
   end
 
+  def set_player_action(action)
+    @player_view_model.set_action action
+  end
+
   private
 
   def init_roles

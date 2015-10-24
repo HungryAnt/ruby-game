@@ -142,18 +142,41 @@ class PlayerViewModel
   end
 
   def hit
-    return if @role_vm.hiting || @role_vm.battered || @role.eating?
+    hit_range = 70
+    do_hit :hit, HIT_COST_HP, hit_range
+  end
+
+  def finger_hit
+    hit_cost = 4
+    hit_range = 50
+    do_hit :finger_hit, hit_cost, hit_range
+  end
+
+  def fart
+    hit_cost = 4
+    hit_range = 50
+    do_hit :fart, hit_cost, hit_range
+  end
+
+  def head_hit
+    hit_cost = 4
+    hit_range = 50
+    do_hit :head_hit, hit_cost, hit_range
+  end
+
+  def do_hit(hit_type, cost_hp, hit_range)
+    return if @role_vm.hiting || @role_vm.finger_hiting || @role_vm.farting || @role_vm.head_hiting ||
+        @role_vm.battered || @role.eating?
     @role_vm.disable_auto_move
     sync_role_appear
-    return if @role.hp < HIT_COST_HP
-    @role.dec_hp(HIT_COST_HP)
-    @role_vm.hit
-    target_x, target_y = get_hit_target
+    return if @role.hp < cost_hp
+    @role.dec_hp(cost_hp)
+    @role_vm.send hit_type
+    target_x, target_y = get_hit_target hit_range
     remote_hit get_user_id, get_current_area_id, target_x, target_y
   end
 
-  def get_hit_target
-    hit_range = 70
+  def get_hit_target(hit_range)
     return @role.x - hit_range, @role.y if Direction.is_direct_to_left(@role.direction)
     return @role.x + hit_range, @role.y if Direction.is_direct_to_right(@role.direction)
     return @role.x, @role.y - hit_range/2.5 if Direction.is_direct_to_up(@role.direction)
@@ -203,6 +226,28 @@ class PlayerViewModel
     @role_vm.hit(:smash)
     remote_smash large_rubbish_vm.id
     # large_rubbish_vm.smash
+  end
+
+  def set_action(action)
+    if action == Role::State::HIT
+      hit
+      return
+    end
+    if action == Role::State::FINGER_HIT
+      finger_hit
+      return
+    end
+    if action == Role::State::FART
+      fart
+      return
+    end
+    if action == Role::State::HEAD_HIT
+      head_hit
+      return
+    end
+    return if @role_vm.hiting || @role_vm.battered
+    discard
+    @role_vm.set_durable_state action
   end
 
   private

@@ -1,5 +1,5 @@
 class LargeRubbishTypeInfo
-  COUNT = 10
+  COUNT = 29
 
   @@type_info = {}
 

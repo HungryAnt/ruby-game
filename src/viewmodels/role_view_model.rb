@@ -1,5 +1,5 @@
 class RoleViewModel
-  attr_reader :role, :standing, :hiting, :battered
+  attr_reader :role, :standing, :hiting, :battered, :finger_hiting, :farting, :head_hiting
   attr_accessor :area_id, :vehicle
 
   def initialize(role)
@@ -25,6 +25,7 @@ class RoleViewModel
     @sound_smash = MediaUtil.get_sample 'smash.wav'
     @sound_being_battered = MediaUtil.get_sample 'being_battered.wav'
     @sound_collect_nutrient = MediaUtil.get_sample 'collect_nutrient.wav'
+    reset_durable_state
   end
 
   def y
@@ -61,7 +62,10 @@ class RoleViewModel
 
   def init_animations
     role_type = @role.role_type.to_s
-    %w(stand walk run eat hold_food drive hit turn_to_battered battered collecting_rubbish).each do |state|
+    %w(stand walk run eat hold_food drive hit turn_to_battered battered
+      collecting_rubbish scare lecherous bye cry laugh
+      finger_hit turn_to_finger_battered finger_battered
+      fart head_hit).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
                                    get_anim("#{role_type}_#{state}_#{direction}".to_sym))
@@ -108,6 +112,7 @@ class RoleViewModel
   end
 
   def set_auto_move_to(x, y, &arrive_call_back)
+    reset_durable_state
     @auto_move_enabled = true
     @auto_move_angle = Gosu::angle(@role.x, @role.y, x, y)
     @auto_move_dest = {:x => x, :y => y}
@@ -134,6 +139,15 @@ class RoleViewModel
     @role.update_eating_food(*get_actual_role_location)
   end
 
+  def set_durable_state(state)
+    @durable_state = state
+    set_state(state)
+  end
+
+  def reset_durable_state
+    @durable_state = Role::State::STANDING
+  end
+
   def set_state(state)
     @role.state = state
     change_anim
@@ -153,6 +167,18 @@ class RoleViewModel
       return Role::State::HIT
     end
 
+    if @finger_hiting
+      return Role::State::FINGER_HIT
+    end
+
+    if @farting
+      return Role::State::FART
+    end
+
+    if @head_hiting
+      return Role::State::HEAD_HIT
+    end
+
     if @collecting_rubbish
       return Role::State::COLLECTING_RUBBISH
     end
@@ -169,7 +195,7 @@ class RoleViewModel
       end
     else
       if @standing
-        return Role::State::STANDING
+        return @durable_state
       else
         if driving?
           return Role::State::DRIVING
@@ -221,6 +247,16 @@ class RoleViewModel
     if @battered
       @battered = false if Gosu::milliseconds >= @battered_end_time
     end
+    if @finger_hiting
+      @finger_hiting = false if Gosu::milliseconds >= @finger_hit_end_time
+    end
+    if @farting
+      @farting = false if Gosu::milliseconds >= @fart_end_time
+    end
+    if @head_hiting
+      @head_hiting = false if Gosu::milliseconds >= @head_hit_end_time
+    end
+
     if @collecting_rubbish
       @collecting_rubbish = false if Gosu::milliseconds >= @collecting_rubbish_end_time
     end
@@ -228,7 +264,7 @@ class RoleViewModel
 
   def hit(sound=:hit)
     @hiting = true
-    @hit_end_time = Gosu::milliseconds + 560
+    @hit_end_time = calc_end_time
     update_state
     @current_anim.goto_begin
     if sound == :hit
@@ -245,7 +281,32 @@ class RoleViewModel
     @sound_being_battered.play
   end
 
+  def finger_hit
+    @finger_hiting = true
+    @finger_hit_end_time = calc_end_time
+    update_state
+    @current_anim.goto_begin
+  end
+
+  def fart
+    @farting = true
+    @fart_end_time = calc_end_time
+    update_state
+    @current_anim.goto_begin
+  end
+
+  def head_hit
+    @finger_hiting = true
+    @finger_hit_end_time = calc_end_time
+    update_state
+    @current_anim.goto_begin
+  end
+
   private
+
+  def calc_end_time
+    Gosu::milliseconds + 585
+  end
 
   def lv_image
     LevelUtil.image(@role.lv)

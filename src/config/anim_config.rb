@@ -50,6 +50,18 @@ lambda {
     new_role_anims(prefix, role_action_pattern, 'turn_to_battered', hor_nums_pair:[168, 169], up_nums_pair:[162, 163], down_nums_pair:[156, 157]) # 正被打扁
     new_role_anims(prefix, role_action_pattern, 'battered', hor_nums_pair:[170, 173], up_nums_pair:[164, 167], down_nums_pair:[158, 161]) # 打扁的
 
+    new_role_anims(prefix, role_action_pattern, 'scare', hor_nums_pair:[10, 14], up_nums_pair:[5, 9], down_nums_pair:[0, 4]) # 惊吓
+    new_role_anims(prefix, role_action_pattern, 'lecherous', hor_nums_pair:[25, 29], up_nums_pair:[20, 24], down_nums_pair:[15, 19]) # 好色
+    new_role_anims(prefix, role_action_pattern, 'bye', hor_nums_pair:[40, 44], up_nums_pair:[35, 39], down_nums_pair:[30, 34])
+    new_role_anims(prefix, role_action_pattern, 'cry', hor_nums_pair:[55, 59], up_nums_pair:[50, 54], down_nums_pair:[45, 49])
+    new_role_anims(prefix, role_action_pattern, 'laugh', hor_nums_pair:[70, 74], up_nums_pair:[65, 69], down_nums_pair:[60, 63])
+    new_role_anims(prefix, role_action_pattern, 'finger_hit', hor_nums_pair:[85, 89], up_nums_pair:[80, 84], down_nums_pair:[75, 79])
+    new_role_anims(prefix, role_action_pattern, 'turn_to_finger_battered', hor_nums_pair:[104, 108], up_nums_pair:[97, 101], down_nums_pair:[90, 94])
+    new_role_anims(prefix, role_action_pattern, 'finger_battered', hor_nums_pair:[109, 110], up_nums_pair:[102, 103], down_nums_pair:[95, 96])
+    new_role_anims(prefix, role_action_pattern, 'fart', hor_nums_pair:[121, 125], up_nums_pair:[116, 120], down_nums_pair:[111, 115])
+    new_role_anims(prefix, role_action_pattern, 'head_hit', hor_nums_pair:[136, 140], up_nums_pair:[131, 135], down_nums_pair:[126, 130])
+
+
     AnimationManager.new_centered_anims prefix do
       h_nums = [151, 152, 153, 154]
       up_nums = [147, 148, 149, 150]
