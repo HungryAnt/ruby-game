@@ -1,5 +1,5 @@
 class RoleViewModel
-  attr_reader :role, :standing, :hiting, :battered, :finger_hiting, :farting, :head_hiting
+  attr_reader :role, :standing, :hitting, :battered, :finger_hitting, :farting, :head_hitting
   attr_accessor :area_id, :vehicle
 
   def initialize(role)
@@ -19,7 +19,7 @@ class RoleViewModel
     @driving = false
     @chat_bubble_vm = ChatBubbleViewModel.new
     @update_times = 0
-    @hiting = false
+    @hitting = false
     @battered = false  # ±»´ò±âµÄ
     @sound_hit = MediaUtil.get_sample 'hit.wav'
     @sound_smash = MediaUtil.get_sample 'smash.wav'
@@ -140,12 +140,12 @@ class RoleViewModel
   end
 
   def set_durable_state(state)
-    @durable_state = state
+    @role.durable_state = state
     set_state(state)
   end
 
   def reset_durable_state
-    @durable_state = Role::State::STANDING
+    @role.durable_state = Role::State::STANDING
   end
 
   def set_state(state)
@@ -163,11 +163,11 @@ class RoleViewModel
       return Role::State::BATTERED
     end
 
-    if @hiting
+    if @hitting
       return Role::State::HIT
     end
 
-    if @finger_hiting
+    if @finger_hitting
       return Role::State::FINGER_HIT
     end
 
@@ -175,7 +175,7 @@ class RoleViewModel
       return Role::State::FART
     end
 
-    if @head_hiting
+    if @head_hitting
       return Role::State::HEAD_HIT
     end
 
@@ -195,7 +195,7 @@ class RoleViewModel
       end
     else
       if @standing
-        return @durable_state
+        return @role.durable_state
       else
         if driving?
           return Role::State::DRIVING
@@ -241,20 +241,20 @@ class RoleViewModel
     if @update_times % 10 == 0
       @chat_bubble_vm.update_content
     end
-    if @hiting
-      @hiting = false if Gosu::milliseconds >= @hit_end_time
+    if @hitting
+      @hitting = false if Gosu::milliseconds >= @hit_end_time
     end
     if @battered
       @battered = false if Gosu::milliseconds >= @battered_end_time
     end
-    if @finger_hiting
-      @finger_hiting = false if Gosu::milliseconds >= @finger_hit_end_time
+    if @finger_hitting
+      @finger_hitting = false if Gosu::milliseconds >= @finger_hit_end_time
     end
     if @farting
       @farting = false if Gosu::milliseconds >= @fart_end_time
     end
-    if @head_hiting
-      @head_hiting = false if Gosu::milliseconds >= @head_hit_end_time
+    if @head_hitting
+      @head_hitting = false if Gosu::milliseconds >= @head_hit_end_time
     end
 
     if @collecting_rubbish
@@ -263,7 +263,7 @@ class RoleViewModel
   end
 
   def hit(sound=:hit)
-    @hiting = true
+    @hitting = true
     @hit_end_time = calc_end_time
     update_state
     @current_anim.goto_begin
@@ -282,7 +282,7 @@ class RoleViewModel
   end
 
   def finger_hit
-    @finger_hiting = true
+    @finger_hitting = true
     @finger_hit_end_time = calc_end_time
     update_state
     @current_anim.goto_begin
@@ -296,8 +296,8 @@ class RoleViewModel
   end
 
   def head_hit
-    @finger_hiting = true
-    @finger_hit_end_time = calc_end_time
+    @head_hitting = true
+    @head_hit_end_time = calc_end_time
     update_state
     @current_anim.goto_begin
   end

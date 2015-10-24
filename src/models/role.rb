@@ -88,7 +88,7 @@ class Role
   include Hp
   include Exp
 
-  attr_accessor :state, :direction, :role_type, :hp, :vehicle
+  attr_accessor :state, :durable_state, :direction, :role_type, :hp, :vehicle
   attr_reader :package, :name, :rubbish_bin, :nutrient_bin
 
   def initialize(name, role_type, x, y)
@@ -101,6 +101,7 @@ class Role
     @package = Package.new 100
     @eating_food = nil
     @state = State::STANDING
+    @durable_state = State::STANDING
     @direction = Direction::DOWN
     @intake = GameConfig::ROLE_INTAKE
     @temp_exp = 0
@@ -203,6 +204,7 @@ class Role
         hp: @hp,
         lv: @lv,
         state: @state.to_s,
+        durable_state: @durable_state.to_s,
         direction: @direction,
         vehicle: @vehicle
     }

@@ -165,7 +165,7 @@ class PlayerViewModel
   end
 
   def do_hit(hit_type, cost_hp, hit_range)
-    return if @role_vm.hiting || @role_vm.finger_hiting || @role_vm.farting || @role_vm.head_hiting ||
+    return if @role_vm.hitting || @role_vm.finger_hitting || @role_vm.farting || @role_vm.head_hitting ||
         @role_vm.battered || @role.eating?
     @role_vm.disable_auto_move
     sync_role_appear
@@ -173,7 +173,7 @@ class PlayerViewModel
     @role.dec_hp(cost_hp)
     @role_vm.send hit_type
     target_x, target_y = get_hit_target hit_range
-    remote_hit get_user_id, get_current_area_id, target_x, target_y
+    remote_hit get_user_id, get_current_area_id, hit_type, target_x, target_y
   end
 
   def get_hit_target(hit_range)
@@ -218,7 +218,7 @@ class PlayerViewModel
 
   def smash
     return if !smashing?
-    return if @role_vm.hiting || @role_vm.battered || @role.eating?
+    return if @role_vm.hitting || @role_vm.battered || @role.eating?
     large_rubbish_vm = @smashing_large_rubbish_vm
     @role_vm.disable_auto_move
     sync_role_appear
@@ -245,9 +245,10 @@ class PlayerViewModel
       head_hit
       return
     end
-    return if @role_vm.hiting || @role_vm.battered
+    return if @role_vm.hitting || @role_vm.battered
     discard
     @role_vm.set_durable_state action
+    sync_role_appear
   end
 
   private
@@ -320,8 +321,8 @@ class PlayerViewModel
     @communication_service.send_inc_exp_message get_user_id, exp
   end
 
-  def remote_hit(user_id, area_id, target_x, target_y)
-    @communication_service.send_hit_message user_id, area_id, target_x, target_y
+  def remote_hit(user_id, area_id, hit_type, target_x, target_y)
+    @communication_service.send_hit_message user_id, area_id, hit_type, target_x, target_y
   end
 
   def remote_being_battered(user_id)

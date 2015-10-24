@@ -241,6 +241,7 @@ class GameMapViewModel
           role_vm.role.hp = role_map['hp'].to_i
           role_vm.role.update_lv(role_map['lv'].to_i, 0)
           role_vm.set_state role_map['state'].to_sym
+          role_vm.set_durable_state role_map['durable_state'].to_sym
           role_vm.set_direction role_map['direction'].to_i
 
           if role_map['vehicle'].nil?
@@ -313,13 +314,15 @@ class GameMapViewModel
   end
 
   def register_hit_call_back
-    @game_roles_service.register_hit_call_back do |user_id, area_id, target_x, target_y|
+    @game_roles_service.register_hit_call_back do |user_id, area_id, hit_type, target_x, target_y|
       if is_in_chat_map
         if @player_service.user_id != user_id && is_current_area(area_id)
           role_vm = @role_vm_dict[user_id]
           if !role_vm.nil? && is_current_area(role_vm.area_id)
-            role_vm.hit
-            @player_view_model.check_hit_battered(target_x, target_y)
+            if [:hit, :finger_hit, :fart, :head_hit].include? hit_type
+              role_vm.send hit_type
+              @player_view_model.check_hit_battered(target_x, target_y)
+            end
           end
         end
       end

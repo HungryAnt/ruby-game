@@ -92,9 +92,9 @@ class CommunicationService
     send IncExpMessage.new(user_id, exp)
   end
 
-  def send_hit_message(user_id, area_id, target_x, target_y)
+  def send_hit_message(user_id, area_id, hit_type, target_x, target_y)
     puts 'send_hit_message'
-    send HitMessage.new(user_id, area_id, target_x, target_y)
+    send HitMessage.new(user_id, area_id, hit_type, target_x, target_y)
   end
 
   def send_being_battered_message(user_id)
@@ -195,7 +195,8 @@ class CommunicationService
 
     @network_service.register('hit_message') do |msg_map, params|
       hit_msg = HitMessage.from_map(msg_map)
-      @game_roles_service.hit hit_msg.user_id, hit_msg.area_id.to_sym, hit_msg.target_x, hit_msg.target_y
+      @game_roles_service.hit hit_msg.user_id, hit_msg.area_id.to_sym,
+                              hit_msg.hit_type.to_sym, hit_msg.target_x, hit_msg.target_y
     end
 
     @network_service.register('being_battered_message') do |msg_map, params|

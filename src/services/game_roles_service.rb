@@ -86,8 +86,8 @@ class GameRolesService
     @chat_call_back.call user_id, user_name, content
   end
 
-  def hit(user_id, area_id, target_x, target_y)
-    @hit_call_back.call user_id, area_id, target_x, target_y
+  def hit(user_id, area_id, hit_type, target_x, target_y)
+    @hit_call_back.call user_id, area_id, hit_type, target_x, target_y
   end
 
   def being_battered(user_id)
