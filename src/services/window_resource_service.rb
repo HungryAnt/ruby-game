@@ -9,6 +9,9 @@ class WindowResourceService
     @goods_money_font = Gosu::Font.new(window, 'Verdana', 15)
     @font_25 = Gosu::Font.new(window, 'Verdana', 25)
     @font_16 = Gosu::Font.new(window, 'Verdana', 16)
+    @font_12 = Gosu::Font.new(window, 'Verdana', 12)
+    @font_14 = Gosu::Font.new(window, 'Verdana', 14)
+    @font_13 = Gosu::Font.new(window, 'Verdana', 13)
   end
 
   def get_chat_bubble_font
@@ -58,4 +61,18 @@ class WindowResourceService
   def get_font_16
     @font_16
   end
+
+  def get_font_14
+    @font_14
+  end
+
+  def get_font_13
+    @font_13
+  end
+
+  def get_font_12
+    @font_12
+  end
+
+
 end

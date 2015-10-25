@@ -94,36 +94,37 @@ class GameMapView < ViewBase
   def button_down(id)
     if id == Gosu::MsLeft
       return if @status_dialog.mouse_left_button_down(@window.mouse_x, @window.mouse_y)
-      return if check_choose_action @window.mouse_x, @window.mouse_y
+      return if check_mouse_choose_action @window.mouse_x, @window.mouse_y
     end
 
     return if chat_input_enabled? && id != Gosu::KbReturn && id != Gosu::KbBacktick
     return if @package_items_view.button_down(id)
+    return if check_keyboard_choose_action id
 
-    if GameConfig::DEBUG
-      case id
-        when Gosu::Kb1
-          @game_map_view_model.switch_map :grass_wood_back
-        when Gosu::Kb2
-          @game_map_view_model.switch_map :school
-        when Gosu::Kb3
-          @game_map_view_model.switch_map :church
-        when Gosu::Kb4
-          @game_map_view_model.switch_map :pay
-        when Gosu::Kb5
-          @game_map_view_model.switch_map :alipay
-        when Gosu::Kb6
-          @game_map_view_model.switch_map :house
-        when Gosu::Kb7
-          @game_map_view_model.switch_map :seven_star_hall
-        when Gosu::KbF2
-          @game_map_view_model.switch_map :police
-        when Gosu::Kb0
-          @game_map_view_model.switch_to_next_role_type
-        when Gosu::Kb9
-          @game_map_view_model.switch_to_prev_role_type
-      end
-    end
+    # if GameConfig::DEBUG
+    #   case id
+    #     when Gosu::Kb1
+    #       @game_map_view_model.switch_map :grass_wood_back
+    #     when Gosu::Kb2
+    #       @game_map_view_model.switch_map :school
+    #     when Gosu::Kb3
+    #       @game_map_view_model.switch_map :church
+    #     when Gosu::Kb4
+    #       @game_map_view_model.switch_map :pay
+    #     when Gosu::Kb5
+    #       @game_map_view_model.switch_map :alipay
+    #     when Gosu::Kb6
+    #       @game_map_view_model.switch_map :house
+    #     when Gosu::Kb7
+    #       @game_map_view_model.switch_map :seven_star_hall
+    #     when Gosu::KbF2
+    #       @game_map_view_model.switch_map :police
+    #     when Gosu::Kb0
+    #       @game_map_view_model.switch_to_next_role_type
+    #     when Gosu::Kb9
+    #       @game_map_view_model.switch_to_prev_role_type
+    #   end
+    # end
 
     case id
       when Gosu::MsLeft
@@ -239,9 +240,18 @@ class GameMapView < ViewBase
     button
   end
 
-  def check_choose_action(mouse_x, mouse_y)
+  def check_mouse_choose_action(mouse_x, mouse_y)
     left, top = *@ui_control_vm.actions_bar_location
     action = @actions_bar_view.choose_action(mouse_x - left, mouse_y - top)
+    choose_action action
+  end
+
+  def check_keyboard_choose_action(id)
+    action = @actions_bar_view.choose_action_with_key_id id
+    choose_action action
+  end
+
+  def choose_action(action)
     if action.nil?
       false
     else
