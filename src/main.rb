@@ -136,19 +136,22 @@ require 'views/package_items_view'
 require 'views/channel_main_view'
 require 'views/shopping_view'
 require 'views/main_window'
-
-require 'config/anim_config'
-require 'config/equipment_vehicle_config'
-require 'config/equipment_config'
-require 'config/food_config'
-require 'config/rubbish_config'
-require 'config/nutrient_config'
-require 'config/large_rubbish_config'
-require 'config/map_config'
-require 'config/role_config'
+require 'views/start_up_loading_window'
 
 require 'application'
-
 app = Application.new
+
+app.start_up do
+  require 'config/anim_config'
+  require 'config/equipment_vehicle_config'
+  require 'config/equipment_config'
+  require 'config/food_config'
+  require 'config/rubbish_config'
+  require 'config/nutrient_config'
+  require 'config/large_rubbish_config'
+  require 'config/map_config'
+  require 'config/role_config'
+end
+
 app.init
 app.run

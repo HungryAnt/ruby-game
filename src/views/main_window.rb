@@ -1,16 +1,15 @@
 # coding: UTF-8
 
 class MainWindow < Gosu::Window
-
-  VERSION = 'v0.7.0 beta'
-
-  def initialize
+  def initialize(version)
     super GameConfig::MAP_WIDTH,
           GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT, fullscreen:false, update_interval:1000/40
     autowired(WindowResourceService, PlayerService)
 
+    @version = version
+
     @window_resource_service.init(self)
-    self.caption = "童年记忆 - Ant版野菜部落 网络版 #{VERSION}"
+    self.caption = "童年记忆 - Ant版野菜部落 网络版 #{@version}"
 
     @warning_font = @window_resource_service.get_warning_font
     @is_cheating = false
