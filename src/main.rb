@@ -98,6 +98,7 @@ require 'services/map_user_count_service'
 require 'services/anti_cheating_service'
 require 'services/user_equipment_service'
 require 'services/large_rubbishes_service'
+require 'services/hit_service'
 
 require 'viewmodels/item_view_model'
 require 'viewmodels/role_view_model'

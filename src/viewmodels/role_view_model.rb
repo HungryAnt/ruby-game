@@ -3,10 +3,8 @@ class RoleViewModel
   attr_accessor :area_id, :vehicle
 
   def initialize(role)
-    autowired(MapService)
+    autowired(MapService, HitService)
     @player = @role = role
-    @sound_eat_food = MediaUtil::get_sample('eat.wav')
-    @sound_collect_rubbish = MediaUtil::get_sample('collect_rubbish.wav')
     @font = Gosu::Font.new(15)
     init_animations
     @eating_food_vm = nil
@@ -19,13 +17,22 @@ class RoleViewModel
     @driving = false
     @chat_bubble_vm = ChatBubbleViewModel.new
     @update_times = 0
+    init_hit_components
+    init_sound
+    reset_durable_state
+  end
+
+  def init_hit_components
     @hitting = false
     @battered = false  # ±»´ò±âµÄ
-    @sound_hit = MediaUtil.get_sample 'hit.wav'
+    @battered_by_hit_type = Role::State::HIT
+  end
+
+  def init_sound
+    @sound_eat_food = MediaUtil::get_sample('eat.wav')
+    @sound_collect_rubbish = MediaUtil::get_sample('collect_rubbish.wav')
     @sound_smash = MediaUtil.get_sample 'smash.wav'
-    @sound_being_battered = MediaUtil.get_sample 'being_battered.wav'
     @sound_collect_nutrient = MediaUtil.get_sample 'collect_nutrient.wav'
-    reset_durable_state
   end
 
   def y
@@ -65,7 +72,7 @@ class RoleViewModel
     %w(stand walk run eat hold_food drive hit turn_to_battered battered
       collecting_rubbish scare lecherous bye cry laugh
       finger_hit turn_to_finger_battered finger_battered
-      fart head_hit).each do |state|
+      fart head_hit turn_to_stunned stunned).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
                                    get_anim("#{role_type}_#{state}_#{direction}".to_sym))
@@ -159,25 +166,27 @@ class RoleViewModel
 
   def get_state
     if @battered
-      return Role::State::TURN_TO_BATTERED if Gosu::milliseconds < @turn_to_battered_end_time
-      return Role::State::BATTERED
+      if Gosu::milliseconds < @turn_to_battered_end_time
+        return @hit_service.get_turn_to_battered_state(@battered_by_hit_type)
+      end
+      return @hit_service.get_battered_state(@battered_by_hit_type)
     end
 
     if @hitting
-      return Role::State::HIT
+      return @hit_service.get_hitting_state(@hit_type)
     end
 
-    if @finger_hitting
-      return Role::State::FINGER_HIT
-    end
-
-    if @farting
-      return Role::State::FART
-    end
-
-    if @head_hitting
-      return Role::State::HEAD_HIT
-    end
+    # if @finger_hitting
+    #   return Role::State::FINGER_HIT
+    # end
+    #
+    # if @farting
+    #   return Role::State::FART
+    # end
+    #
+    # if @head_hitting
+    #   return Role::State::HEAD_HIT
+    # end
 
     if @collecting_rubbish
       return Role::State::COLLECTING_RUBBISH
@@ -247,15 +256,15 @@ class RoleViewModel
     if @battered
       @battered = false if Gosu::milliseconds >= @battered_end_time
     end
-    if @finger_hitting
-      @finger_hitting = false if Gosu::milliseconds >= @finger_hit_end_time
-    end
-    if @farting
-      @farting = false if Gosu::milliseconds >= @fart_end_time
-    end
-    if @head_hitting
-      @head_hitting = false if Gosu::milliseconds >= @head_hit_end_time
-    end
+    # if @finger_hitting
+    #   @finger_hitting = false if Gosu::milliseconds >= @finger_hit_end_time
+    # end
+    # if @farting
+    #   @farting = false if Gosu::milliseconds >= @fart_end_time
+    # end
+    # if @head_hitting
+    #   @head_hitting = false if Gosu::milliseconds >= @head_hit_end_time
+    # end
 
     if @collecting_rubbish
       @collecting_rubbish = false if Gosu::milliseconds >= @collecting_rubbish_end_time
@@ -263,44 +272,58 @@ class RoleViewModel
   end
 
   def hit(sound=:hit)
-    @hitting = true
-    @hit_end_time = calc_end_time
-    update_state
-    @current_anim.goto_begin
+    common_hit Role::State::HIT, true
     if sound == :hit
-      @sound_hit.play
+      @hit_service.play_hitting_sound(Role::State::HIT)
     elsif sound == :smash
       @sound_smash.play
     end
   end
 
-  def being_battered
+  def common_hit(hit_type, quite=false)
+    return unless @hit_service.is_hit? hit_type
+    @hitting = true
+    @hit_type = hit_type
+    @hit_end_time = calc_end_time
+    update_state
+    @current_anim.goto_begin
+    unless quite
+      @hit_service.play_hitting_sound(hit_type)
+    end
+  end
+
+  def being_battered(hit_type)
+    return unless @hit_service.is_hit? hit_type
     @battered = true
-    @turn_to_battered_end_time = Gosu::milliseconds + 270
-    @battered_end_time = @turn_to_battered_end_time + 6000
-    @sound_being_battered.play
+    @battered_by_hit_type = hit_type
+    @turn_to_battered_end_time = Gosu::milliseconds +
+        @hit_service.get_turn_to_battered_duration_time(hit_type)
+    @battered_end_time = @turn_to_battered_end_time +
+        @hit_service.get_battered_duration_time(hit_type)
+    @hit_service.play_battered_sound hit_type
   end
 
-  def finger_hit
-    @finger_hitting = true
-    @finger_hit_end_time = calc_end_time
-    update_state
-    @current_anim.goto_begin
-  end
-
-  def fart
-    @farting = true
-    @fart_end_time = calc_end_time
-    update_state
-    @current_anim.goto_begin
-  end
-
-  def head_hit
-    @head_hitting = true
-    @head_hit_end_time = calc_end_time
-    update_state
-    @current_anim.goto_begin
-  end
+  # def finger_hit
+  #   @finger_hitting = true
+  #   @finger_hit_end_time = calc_end_time
+  #   update_state
+  #   @current_anim.goto_begin
+  # end
+  #
+  # def fart
+  #   @farting = true
+  #   @fart_end_time = calc_end_time
+  #   update_state
+  #   @current_anim.goto_begin
+  #   @sound_fart.play
+  # end
+  #
+  # def head_hit
+  #   @head_hitting = true
+  #   @head_hit_end_time = calc_end_time
+  #   update_state
+  #   @current_anim.goto_begin
+  # end
 
   private
 
@@ -379,6 +402,10 @@ class RoleViewModel
   end
 
   def get_speed
+    if @battered
+      return 0 if @hit_service.cannot_move? @battered_by_hit_type
+    end
+
     running = @running && !@battered
     speed_rate = 1.0
     speed_rate -= 0.5 unless running

@@ -319,10 +319,8 @@ class GameMapViewModel
         if @player_service.user_id != user_id && is_current_area(area_id)
           role_vm = @role_vm_dict[user_id]
           if !role_vm.nil? && is_current_area(role_vm.area_id)
-            if [:hit, :finger_hit, :fart, :head_hit].include? hit_type
-              role_vm.send hit_type
-              @player_view_model.check_hit_battered(target_x, target_y)
-            end
+            role_vm.common_hit hit_type
+            @player_view_model.check_hit_battered(hit_type, target_x, target_y)
           end
         end
       end
@@ -330,12 +328,12 @@ class GameMapViewModel
   end
 
   def register_being_battered_call_back
-    @game_roles_service.register_being_battered_call_back do |user_id|
+    @game_roles_service.register_being_battered_call_back do |user_id, hit_type|
       if is_in_chat_map
         if @player_service.user_id != user_id
           role_vm = @role_vm_dict[user_id]
           if !role_vm.nil? && is_current_area(role_vm.area_id)
-            role_vm.being_battered
+            role_vm.being_battered hit_type
           end
         end
       end

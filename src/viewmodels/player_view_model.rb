@@ -7,7 +7,7 @@ class PlayerViewModel
   BEING_BATTERED_COST_HP = 45
 
   def initialize(role_vm)
-    autowired(PlayerService, MapService, CommunicationService)
+    autowired(PlayerService, MapService, CommunicationService, HitService)
     @role_vm = role_vm
     @role = @role_vm.role
     @move_timestamp = Gosu::milliseconds
@@ -154,7 +154,7 @@ class PlayerViewModel
 
   def fart
     hit_cost = 4
-    hit_range = 50
+    hit_range = -50
     do_hit :fart, hit_cost, hit_range
   end
 
@@ -165,13 +165,12 @@ class PlayerViewModel
   end
 
   def do_hit(hit_type, cost_hp, hit_range)
-    return if @role_vm.hitting || @role_vm.finger_hitting || @role_vm.farting || @role_vm.head_hitting ||
-        @role_vm.battered || @role.eating?
+    return if @role_vm.hitting || @role_vm.battered || @role.eating?
     @role_vm.disable_auto_move
     sync_role_appear
     return if @role.hp < cost_hp
     @role.dec_hp(cost_hp)
-    @role_vm.send hit_type
+    @role_vm.common_hit hit_type
     target_x, target_y = get_hit_target hit_range
     remote_hit get_user_id, get_current_area_id, hit_type, target_x, target_y
   end
@@ -183,14 +182,16 @@ class PlayerViewModel
     return @role.x, @role.y + hit_range/2.5 if Direction.is_direct_to_down(@role.direction)
   end
 
-  def check_hit_battered(hit_x, hit_y)
+  def check_hit_battered(hit_type, hit_x, hit_y)
+    return unless @hit_service.is_hit? hit_type
     return if @role_vm.battered
     return if @role_vm.driving_dragon?
     if Gosu::distance(@role.x, @role.y, hit_x, hit_y) < 28
       discard
-      @role.dec_hp(BEING_BATTERED_COST_HP)
-      @role_vm.being_battered
-      remote_being_battered get_user_id
+      battered_cost_hp = @hit_service.get_battered_cost_hp hit_type
+      @role.dec_hp(battered_cost_hp)
+      @role_vm.being_battered hit_type
+      remote_being_battered get_user_id, hit_type
     end
   end
 
@@ -325,8 +326,8 @@ class PlayerViewModel
     @communication_service.send_hit_message user_id, area_id, hit_type, target_x, target_y
   end
 
-  def remote_being_battered(user_id)
-    @communication_service.send_being_battered_message user_id
+  def remote_being_battered(user_id, hit_type)
+    @communication_service.send_being_battered_message user_id, hit_type
   end
 
   def remote_collect_rubbish(rubbish)

@@ -120,6 +120,9 @@ class MainWindow < Gosu::Window
         y += 35
       end
     end
+
+    # img = MediaUtil.get_img 'action_effect/RunEffect_108.bmp'
+    # img.draw(0, 0, ZOrder::DIALOG_UI, 1.0, 1.0, 0xff_ffffff, mode = :additive)
   end
 
   def draw_fps

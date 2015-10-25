@@ -76,6 +76,12 @@ class Role
     FINGER_HIT = :finger_hit
     HEAD_HIT = :head_hit
     FART = :fart
+
+    TURN_TO_FINGER_BATTERED = :turn_to_finger_battered
+    FINGER_BATTERED = :finger_battered
+
+    TURN_TO_STUNNED = :turn_to_stunned
+    STUNNED = :stunned
   end
 
   module Action

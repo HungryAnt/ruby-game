@@ -60,6 +60,10 @@ lambda {
     new_role_anims(prefix, role_action_pattern, 'finger_battered', hor_nums_pair:[109, 110], up_nums_pair:[102, 103], down_nums_pair:[95, 96])
     new_role_anims(prefix, role_action_pattern, 'fart', hor_nums_pair:[121, 125], up_nums_pair:[116, 120], down_nums_pair:[111, 115])
     new_role_anims(prefix, role_action_pattern, 'head_hit', hor_nums_pair:[136, 140], up_nums_pair:[131, 135], down_nums_pair:[126, 130])
+    new_role_anims(prefix, role_action_pattern, 'turn_to_stunned', hor_nums_pair:[188, 194], up_nums_pair:[181, 187], down_nums_pair:[174, 180]) # Õı±»»÷ÔÎ
+
+    stuned_same_nums = [195, 202]
+    new_role_anims(prefix, role_action_pattern, 'stunned', hor_nums_pair:stuned_same_nums, up_nums_pair:stuned_same_nums, down_nums_pair:stuned_same_nums) # ÔÎÁË
 
 
     AnimationManager.new_centered_anims prefix do
