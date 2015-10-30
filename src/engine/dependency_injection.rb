@@ -1,4 +1,4 @@
-def init_dependency_injection
+lambda {
   map = {}
 
   Kernel.send :define_method, :get_instance do |clazz|
@@ -16,6 +16,4 @@ def init_dependency_injection
       instance_variable_set("@#{underscore_class_name}", get_instance(clazz))
     end
   end
-end
-
-init_dependency_injection
+}.call

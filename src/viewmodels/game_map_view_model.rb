@@ -25,7 +25,7 @@ class GameMapViewModel
 
     map_vm = @map_service.current_map
 
-    all_role_vms_do do |role_vm|
+    process_role_vms do |role_vm|
       role_vm.auto_move map_vm
       role_vm.update_eating_food
       role_vm.update_state
@@ -42,7 +42,7 @@ class GameMapViewModel
 
   def sort_visual_items
     @visual_items = []
-    all_role_vms_do do |role_vm|
+    process_role_vms do |role_vm|
       @visual_items << role_vm
     end
     get_large_rubbish_vms.each do |large_rubbish_vm|
@@ -60,7 +60,7 @@ class GameMapViewModel
   end
 
   def draw_role_vms
-    all_role_vms_do do |role_vm|
+    process_role_vms do |role_vm|
       role_vm.draw
     end
   end
@@ -69,7 +69,7 @@ class GameMapViewModel
     @mouse_vm.draw mouse_x, mouse_y
   end
 
-  def all_role_vms_do
+  def process_role_vms
     area_id = @map_service.current_area.id
     @role_vm_dict.each_value do |role_vm|
       yield role_vm if role_vm.area_id == area_id

@@ -17,36 +17,33 @@ module AntHttp
     end
 
     def params(params)
-      # @uri << to_url_params(params)
       @params = params
       self
     end
 
     def get
-      uri = get_uri
-      req = Net::HTTP::Get.new(uri)
-      execute(uri, req, nil)
+      run Net::HTTP::Get
     end
 
     def put(body=nil)
-      uri = get_uri
-      req = Net::HTTP::Put.new(uri)
-      execute(uri, req, body)
+      run Net::HTTP::Put, body
     end
 
     def post(body=nil)
-      uri = get_uri
-      req = Net::HTTP::Post.new(uri)
-      execute(uri, req, body)
+      run Net::HTTP::Post, body
     end
 
     def delete
-      uri = get_uri
-      req = Net::HTTP::Delete.new(uri)
-      execute(uri, req, body)
+      run Net::HTTP::Delete
     end
 
     private
+
+    def run(clazz, body=nil)
+      uri = get_uri
+      req = clazz.new(uri)
+      execute(uri, req, body)
+    end
 
     def get_uri
       uri = URI(@uri)
@@ -63,19 +60,5 @@ module AntHttp
       end
       res
     end
-
-    # def to_url_params(params)
-    #   uri = ''
-    #   if params.size > 0
-    #     uri << '?'
-    #     index = 0
-    #     params.each_pair do |k, v|
-    #       uri << "#{k.to_s}=#{v.to_s}"
-    #       index += 1
-    #       uri << '&' if index < params.size
-    #     end
-    #   end
-    #   uri
-    # end
   end
 end
