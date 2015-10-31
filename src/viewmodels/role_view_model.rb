@@ -1,5 +1,5 @@
 class RoleViewModel
-  attr_reader :role, :standing, :hitting, :battered, :finger_hitting, :farting, :head_hitting
+  attr_reader :role, :standing, :hitting, :battered
   attr_accessor :area_id, :vehicle
 
   def initialize(role)
@@ -20,6 +20,7 @@ class RoleViewModel
     init_hit_components
     init_sound
     reset_durable_state
+    @anim_init_timestamp = Gosu::milliseconds
   end
 
   def init_hit_components
@@ -72,7 +73,8 @@ class RoleViewModel
     %w(stand walk run eat hold_food drive hit turn_to_battered battered
       collecting_rubbish scare lecherous bye cry laugh
       finger_hit turn_to_finger_battered finger_battered
-      fart head_hit turn_to_stunned stunned).each do |state|
+      fart head_hit turn_to_stunned stunned
+      cast arrogant worry happy roll sleep).each do |state|
       %w(left right up down).each do |direction|
         self.instance_variable_set("@anim_#{state}_#{direction}",
                                    get_anim("#{role_type}_#{state}_#{direction}".to_sym))
@@ -147,8 +149,12 @@ class RoleViewModel
   end
 
   def set_durable_state(state)
+    return if state == Role::State::CAST # 投掷魔法球，暂不支持
     @role.durable_state = state
-    set_state(state)
+    update_state
+    if state == Role::State::ROLL
+      anim_goto_begin
+    end
   end
 
   def reset_durable_state
@@ -175,18 +181,6 @@ class RoleViewModel
     if @hitting
       return @hit_service.get_hitting_state(@hit_type)
     end
-
-    # if @finger_hitting
-    #   return Role::State::FINGER_HIT
-    # end
-    #
-    # if @farting
-    #   return Role::State::FART
-    # end
-    #
-    # if @head_hitting
-    #   return Role::State::HEAD_HIT
-    # end
 
     if @collecting_rubbish
       return Role::State::COLLECTING_RUBBISH
@@ -256,16 +250,6 @@ class RoleViewModel
     if @battered
       @battered = false if Gosu::milliseconds >= @battered_end_time
     end
-    # if @finger_hitting
-    #   @finger_hitting = false if Gosu::milliseconds >= @finger_hit_end_time
-    # end
-    # if @farting
-    #   @farting = false if Gosu::milliseconds >= @fart_end_time
-    # end
-    # if @head_hitting
-    #   @head_hitting = false if Gosu::milliseconds >= @head_hit_end_time
-    # end
-
     if @collecting_rubbish
       @collecting_rubbish = false if Gosu::milliseconds >= @collecting_rubbish_end_time
     end
@@ -286,7 +270,7 @@ class RoleViewModel
     @hit_type = hit_type
     @hit_end_time = calc_end_time
     update_state
-    @current_anim.goto_begin
+    anim_goto_begin
     unless quite
       @hit_service.play_hitting_sound(hit_type)
     end
@@ -303,29 +287,11 @@ class RoleViewModel
     @hit_service.play_battered_sound hit_type
   end
 
-  # def finger_hit
-  #   @finger_hitting = true
-  #   @finger_hit_end_time = calc_end_time
-  #   update_state
-  #   @current_anim.goto_begin
-  # end
-  #
-  # def fart
-  #   @farting = true
-  #   @fart_end_time = calc_end_time
-  #   update_state
-  #   @current_anim.goto_begin
-  #   @sound_fart.play
-  # end
-  #
-  # def head_hit
-  #   @head_hitting = true
-  #   @head_hit_end_time = calc_end_time
-  #   update_state
-  #   @current_anim.goto_begin
-  # end
-
   private
+
+  def anim_goto_begin
+    @anim_init_timestamp = Gosu::milliseconds
+  end
 
   def calc_end_time
     Gosu::milliseconds + 585
@@ -347,7 +313,7 @@ class RoleViewModel
 
   def draw_role_anim
     x, y = get_actual_role_location
-    @current_anim.draw(x, y, ZOrder::Player)
+    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp)
   end
 
   def draw_equipment

@@ -1,5 +1,11 @@
+
+
 def to_anim_nums(first_num, last_num)
   (first_num..last_num).to_a + (first_num + 1..last_num-1).to_a.reverse
+end
+
+def to_simple_anim_nums(first_num, last_num)
+  (first_num..last_num).to_a
 end
 
 lambda {
@@ -9,16 +15,16 @@ lambda {
 
   role_info_list = []
   role_info_list << [RoleType::WAN_GYE, 'WanGye']
-  role_info_list << [RoleType::SALARY, 'Salary']
+  role_info_list << [RoleType::SALARY, 'Salary', :img249] # 标记有img249的图片都多了一张210图片
   role_info_list << [RoleType::BANGYE, 'BanGye']
   role_info_list << [RoleType::DOOBU, 'Doobu']
   role_info_list << [RoleType::KIMCHI, 'Kimchi']
-  role_info_list << [RoleType::MANL, 'Manl']
-  role_info_list << [RoleType::MOO, 'Moo']
-  role_info_list << [RoleType::PASERY, 'Pasery']
+  role_info_list << [RoleType::MANL, 'Manl', :img249]
+  role_info_list << [RoleType::MOO, 'Moo', :img249]
+  role_info_list << [RoleType::PASERY, 'Pasery', :img249]
   role_info_list << [RoleType::PIMENTO, 'Pimento']
   role_info_list << [RoleType::RICE, 'Rice']
-  role_info_list << [RoleType::YANGBEA, 'Yangbea']
+  role_info_list << [RoleType::YANGBEA, 'Yangbea', :img249]
   role_info_list << [RoleType::YANGPA, 'Yangpa']
 
   def new_role_anims(prefix, pattern, action, anim_nums_map, anim_interval=150)
@@ -35,11 +41,28 @@ lambda {
     end
   end
 
+  def new_role_anims_with_same_imgs(prefix, pattern, action, raw_img_nums, anim_interval=150, reversed=true)
+    AnimationManager.new_centered_anims prefix do
+      if reversed
+        img_nums = to_anim_nums(*raw_img_nums)
+      else
+        img_nums = to_simple_anim_nums(*raw_img_nums)
+      end
+      {
+          "#{action}_left".to_sym => [pattern, img_nums, anim_interval],
+          "#{action}_right".to_sym => [pattern, img_nums, anim_interval],
+          "#{action}_up".to_sym => [pattern, img_nums, anim_interval],
+          "#{action}_down".to_sym => [pattern, img_nums, anim_interval]
+      }
+    end
+  end
+
   role_info_list.each do |role_info|
     role = role_info[0].to_s
     role_pattern = "role/#{role.to_s}/#{role_info[1]}_${num}.bmp"
     role_action_pattern = "role_action/#{role.to_s}/#{role_info[1]}_${num}.bmp"
     prefix = "#{role}_"
+    img249 = role_info[2] == :img249
 
     new_role_anims(prefix, role_pattern, 'walk', hor_nums_pair:[30, 34], up_nums_pair:[20, 24], down_nums_pair:[5, 9])
     new_role_anims(prefix, role_pattern, 'stand', hor_nums_pair:[25, 29], up_nums_pair:[15, 19], down_nums_pair:[0, 4])
@@ -62,9 +85,30 @@ lambda {
     new_role_anims(prefix, role_action_pattern, 'head_hit', hor_nums_pair:[136, 140], up_nums_pair:[131, 135], down_nums_pair:[126, 130])
     new_role_anims(prefix, role_action_pattern, 'turn_to_stunned', hor_nums_pair:[188, 194], up_nums_pair:[181, 187], down_nums_pair:[174, 180]) # 正被击晕
 
-    stuned_same_nums = [195, 202]
-    new_role_anims(prefix, role_action_pattern, 'stunned', hor_nums_pair:stuned_same_nums, up_nums_pair:stuned_same_nums, down_nums_pair:stuned_same_nums) # 晕了
+    new_role_anims_with_same_imgs(prefix, role_action_pattern, 'stunned', [195, 202]) # 晕了
 
+
+    arrogant_anim_interval = 250
+    worry_anim_interval = 250
+    happy_anim_interval = 250
+    roll_anim_interval = 200
+    sleep_anim_interval = 350
+    if img249
+      # 投掷（魔法球）
+      new_role_anims(prefix, role_action_pattern, 'cast', hor_nums_pair:[216, 220], up_nums_pair:[211, 215], down_nums_pair:[205, 209])
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'arrogant', [221, 225], arrogant_anim_interval)
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'worry', [226, 230], worry_anim_interval)
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'happy', [231, 235], happy_anim_interval)
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'roll', [236, 244], roll_anim_interval, false)
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'sleep', [245, 249], sleep_anim_interval)
+    else
+      new_role_anims(prefix, role_action_pattern, 'cast', hor_nums_pair:[215, 219], up_nums_pair:[210, 214], down_nums_pair:[205, 209])
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'arrogant', [220, 224], arrogant_anim_interval)
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'worry', [225, 229], worry_anim_interval)
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'happy', [230, 234], happy_anim_interval)
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'roll', [235, 243], roll_anim_interval, false)
+      new_role_anims_with_same_imgs(prefix, role_action_pattern, 'sleep', [244, 248], sleep_anim_interval)
+    end
 
     AnimationManager.new_centered_anims prefix do
       h_nums = [151, 152, 153, 154]

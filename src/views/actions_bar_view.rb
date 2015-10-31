@@ -161,15 +161,14 @@ class ActionsBarView
 
   def init_actions
     @action_items = []
-    add_action_item 0, Role::State::SCARE
-    add_action_item 1, Role::State::LECHEROUS
-    add_action_item 2, Role::State::BYE
-    add_action_item 3, Role::State::CRY
-    add_action_item 4, Role::State::LAUGH
-    add_action_item 5, Role::State::FINGER_HIT
-    add_action_item 6, Role::State::FART
-    add_action_item 7, Role::State::HEAD_HIT
-    add_action_item 8, Role::State::HIT
+    role_states = [Role::State::SCARE, Role::State::LECHEROUS, Role::State::BYE, Role::State::CRY,
+                   Role::State::LAUGH, Role::State::FINGER_HIT, Role::State::FART, Role::State::HEAD_HIT,
+                   Role::State::HIT, Role::State::CAST, Role::State::ARROGANT, Role::State::WORRY,
+                   Role::State::HAPPY, Role::State::ROLL, Role::State::SLEEP]
+    role_states.each_with_index do |action, i|
+      add_action_item i, action
+    end
+
     @page_no = 0
   end
 

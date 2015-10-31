@@ -82,6 +82,13 @@ class Role
 
     TURN_TO_STUNNED = :turn_to_stunned
     STUNNED = :stunned
+
+    CAST = :cast  # 投掷（魔法球）
+    ARROGANT = :arrogant  # 傲慢
+    WORRY = :worry  # 着急
+    HAPPY = :happy
+    ROLL = :roll  # 打滚
+    SLEEP = :sleep
   end
 
   module Action
