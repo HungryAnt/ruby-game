@@ -8,27 +8,21 @@ class UserService
 
   def initialize
     pwd = Dir::pwd
-    @file_path = File.join(pwd, 'user.dat')
-    init_user
+    @file_path = File.join(pwd, 'user2.dat')
     init_lv_exp
     @vehicles = []
     @update_lv_callback = nil
   end
 
-  def init_user
+  def init_user(user_id)
     if !GameConfig::USER_DEBUG && File.exist?(@file_path)
       @user_id, @user_name, @role_type = load_user
-      puts "#{@user_id}, #{@user_name}"
+      if @user_id != user_id
+        init_and_save_random_user user_id
+      end
     else
-      @user_id, @user_name, @role_type =  SecureRandom.uuid, '小空雅游客' + rand(1000).to_s, RoleType.default
-      save
+      init_and_save_random_user user_id
     end
-  end
-
-  def init_lv_exp
-    @lv = 1
-    @exp = 0
-    @data_synced = false
   end
 
   def update_user_data(lv, exp, vehicles, rubbishes, nutrients)
@@ -56,6 +50,17 @@ class UserService
   end
 
   private
+
+  def init_lv_exp
+    @lv = 1
+    @exp = 0
+    @data_synced = false
+  end
+
+  def init_and_save_random_user(user_id)
+    @user_id, @user_name, @role_type = user_id, '小空雅游客' + rand(1000).to_s, RoleType.default
+    save
+  end
 
   def load_user
     File.open(@file_path, 'r:UTF-8') do |f|

@@ -1,15 +1,21 @@
 class Application
   VERSION = 'v0.7.1 beta'
 
-  def start_up
-    @start_up_window = StartUpLoadingWindow.new VERSION
+  def startup
+    @start_up_window = StartupLoadingWindow.new VERSION
     @start_up_window.init_load_resources do
       yield
     end
   end
 
-  def init
+  def show_startup_error
+    @start_up_window = StartupArgsErrorWindow.new VERSION
+    @start_up_window.show
+  end
+
+  def init(user_id)
     autowired(NetworkService, UserService, CommunicationService)
+    @user_service.init_user user_id
   end
 
   def run
