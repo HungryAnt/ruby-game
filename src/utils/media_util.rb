@@ -26,12 +26,13 @@ class MediaUtil
 
   private
   def self.cache_get_img(path)
-    img = @@image_map[path]
-    if img.nil?
-      img = Gosu::Image.new(path)
-      @@image_map[path] = img
-    end
-    img
+    # img = @@image_map[path]
+    # if img.nil?
+    #   img = Gosu::Image.new(path)
+    #   @@image_map[path] = img
+    # end
+    # img
+    cache_get_tileable_img path
   end
 
   def self.cache_get_tileable_img(path)

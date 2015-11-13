@@ -20,6 +20,7 @@ lambda {
   add.call %w(梨子 奶油蛋糕 草莓蛋糕 华夫饼干 草莓饼干)
   add.call %w(虾条 西瓜 冰淇淋 双棒雪糕 樱桃)
   add.call %w(野菜面包 青柠檬 巧克力派 紫菜饭 猕猴桃)
-  add.call %w(热狗 羊肉串 炸鸡腿)
+  add.call %w(热狗 羊肉串 炸鸡腿 辣条 冰淇淋)
+  add.call %w(豆角 骨头)
 }.call
 

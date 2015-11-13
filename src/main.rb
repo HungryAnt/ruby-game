@@ -142,7 +142,7 @@ require 'views/startup_args_error_window'
 require 'application'
 app = Application.new
 
-if ARGV.size != 1 || ARGV[0] !~ /^[a-zA-Z0-9_-]{36}$/
+if !app.validate_args
   app.show_startup_error
 else
   app.startup do
@@ -157,7 +157,7 @@ else
     require 'config/role_config'
   end
 
-  app.init ARGV[0]
+  user_id, screen_mode = ARGV[0], ARGV[1]
+  app.init user_id, screen_mode
   app.run
 end
-

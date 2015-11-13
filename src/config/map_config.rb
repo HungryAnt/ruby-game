@@ -20,6 +20,6 @@ lambda {
   puts search_pattern
 
   Dir.glob(search_pattern).each do |file|
-    load file
+     require_relative file
   end
 }.call

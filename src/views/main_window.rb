@@ -1,9 +1,10 @@
 # coding: UTF-8
 
 class MainWindow < Gosu::Window
-  def initialize(version)
+  def initialize(version, screen_mode)
+    fullscreen = screen_mode == 'fullscreen'
     super GameConfig::MAP_WIDTH,
-          GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT, fullscreen:false, update_interval:1000/40
+          GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT, fullscreen:fullscreen, update_interval:1000/40
     autowired(WindowResourceService, PlayerService)
 
     @version = version
@@ -103,7 +104,7 @@ class MainWindow < Gosu::Window
     draw_fps
 
     Gosu::draw_rect 0, 0, 20 * 30, 20, 0xAA_EFEF56
-    message = '作者:Ant(群主大大大) QQ:517377100 活跃Q群:20977325'
+    message = '作者:Ant(群主大大大) QQ:517377100 千人火爆交流Q群:513951420'
 
     @font.draw(message, 11, 1,
                ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_9EC4FF)
