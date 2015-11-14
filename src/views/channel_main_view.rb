@@ -60,7 +60,7 @@ class ChannelMainView
     control_rubbish_station = create_channel_control(canvas, 7, 8, 276, 160, 138, 125,
                                                      28, 5, 5, 5, :rubbish_station)
     control_rubbish_station.on_mouse_left_button_down do
-      # 修建中
+      goto_map :waste_station
     end
 
     control_seven_star_hall = create_channel_control(canvas, 11, 12, 120, 50, 221, 238,
@@ -73,7 +73,7 @@ class ChannelMainView
                                              0, 59, 150, 29, :village, ZOrder::DIALOG_UI)
     control_village.on_mouse_left_button_down do
       # goto_map :house
-      show_map_selection_view(:grass_wood_back, :school, :church, :house, :cart,
+      show_map_selection_view(:my_room, :grass_wood_back, :school, :church, :house, :cart,
                               :ghost_house, :henhouse, :rainy_day, :sled, :market)
     end
 
