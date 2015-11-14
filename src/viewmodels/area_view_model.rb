@@ -1,5 +1,5 @@
 class AreaViewModel
-  attr_reader :image, :area, :item_vms
+  attr_reader :image, :area, :item_vms, :visual_element_vms
 
   def initialize(area)
     autowired(SongService)
@@ -11,6 +11,7 @@ class AreaViewModel
     @item_vms = []
     @large_rubbish_vms = []
     init_covering
+    init_visual_elements
     @mutex = Mutex.new
     # init_large_rubbish
   end
@@ -36,6 +37,13 @@ class AreaViewModel
       }
       covering_view[:zorder] = covering[:zorder] == :over ? ZOrder::Covering : ZOrder::Background
       @covering_views << covering_view
+    end
+  end
+
+  def init_visual_elements
+    @visual_element_vms = []
+    @area.visual_elements.each do |element|
+      @visual_element_vms << AreaVisualElementViewModel.new(element)
     end
   end
 

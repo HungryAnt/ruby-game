@@ -48,6 +48,9 @@ class GameMapViewModel
     get_large_rubbish_vms.each do |large_rubbish_vm|
       @visual_items << large_rubbish_vm
     end
+    get_current_area.visual_element_vms.each do |element_vm|
+      @visual_items << element_vm
+    end
     @visual_items.sort_by! {|item| item.y}
   end
 

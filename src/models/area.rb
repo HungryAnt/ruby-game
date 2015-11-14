@@ -3,7 +3,7 @@ class Area
   GRID_HEIGHT = 10
 
   attr_accessor :gateway
-  attr_reader :id, :image_path, :song_path, :tiles, :coverings, :initial_position
+  attr_reader :id, :image_path, :song_path, :tiles, :coverings, :initial_position, :visual_elements
 
   def initialize(id, image_path, song_path, tiles_text)
     @id = id
@@ -14,6 +14,7 @@ class Area
     @initial_position = get_initial_position
     @gateway = {}
     @coverings = []
+    @visual_elements = []
   end
 
   private
@@ -70,6 +71,15 @@ class Area
       convering[:zorder] = :over  # :surface / over
     end
     @coverings << convering
+  end
+
+  # visual_element 参与地图物品y坐标排序显示
+  def add_visual_element(params={})
+    image_path = params[:image_path]
+    left = params[:left]
+    top = params[:top]
+    y = params[:y]
+    @visual_elements << AreaVisualElement.new(image_path, left, top, y)
   end
 
   def tile_block?(x, y)
