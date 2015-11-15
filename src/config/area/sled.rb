@@ -130,7 +130,7 @@ BBBB                                                                         ###
 ################################################################################
 TILES
 
-area_sled2 = create_area(:sled1, 'map/sled/sled2/Sled2_0.png', 'map/sled.ogg', sled2_tiles_text)
+area_sled2 = create_area(:sled2, 'map/sled/sled2/Sled2_0.png', 'map/sled.ogg', sled2_tiles_text)
 
 
 area_sled1.gateway = {

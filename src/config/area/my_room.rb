@@ -65,6 +65,6 @@ tiles_text = <<TILES
 ################################################################################
 TILES
 
-area = create_area(:waste_station, 'map/my_room/MyRoom_0.png', 'map/my_room.ogg', tiles_text)
+area = create_area(:my_room, 'map/my_room/MyRoom_0.png', 'map/my_room.ogg', tiles_text)
 
 create_map(:my_room, '空雅の家', MapType::SPECIAL, [area])
