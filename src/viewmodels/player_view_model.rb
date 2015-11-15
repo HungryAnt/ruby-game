@@ -201,7 +201,7 @@ class PlayerViewModel
 
   def start_smash(large_rubbish_vm)
     discard
-    @smash_beging_update_time = @update_times % GameConfig::FPS
+    # @smash_beging_update_time = @update_times % GameConfig::FPS
     @smashing_large_rubbish_vm = large_rubbish_vm
   end
 
