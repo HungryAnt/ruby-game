@@ -31,14 +31,14 @@ module Movable
     stop
   end
 
+  def adjust_to_suit_direction(target_x, target_y)
+    @direction = calc_suit_direction target_x, target_y
+  end
+
   private
 
   def get_speed
     @speed
-  end
-
-  def adjust_to_suit_direction(target_x, target_y)
-    @direction = calc_suit_direction target_x, target_y
   end
 
   def calc_suit_direction(target_x, target_y)

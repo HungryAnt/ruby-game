@@ -78,7 +78,7 @@ class RoleViewModel
   end
 
   def appear_in_new_area
-    disable_auto_move
+    @role.disable_auto_move
     update_state
   end
 
@@ -116,29 +116,11 @@ class RoleViewModel
   def set_auto_move_to(x, y, &arrive_call_back)
     reset_durable_state
     @role.set_auto_move_to x, y, &arrive_call_back
-    # @auto_move_enabled = true
-    # @auto_move_angle = Gosu::angle(@role.x, @role.y, x, y)
-    # @auto_move_dest = {:x => x, :y => y}
-    # @arrive_call_back = arrive_call_back
-  end
-
-  def disable_auto_move
-    @role.disable_auto_move
-    # @auto_move_enabled = false
-    # stop
   end
 
   def auto_move(area)
     @role.auto_move area
-    # if @auto_move_enabled
-    #   adjust_to_suit_direction(@auto_move_dest[:x], @auto_move_dest[:y])
-    #   do_move @auto_move_angle, area, @auto_move_dest
-    # end
   end
-
-  # def adjust_to_suit_direction(target_x, target_y)
-  #   @role.direction = calc_suit_direction target_x, target_y
-  # end
 
   def update_eating_food
     @role.update_eating_food(*get_actual_role_location)
@@ -330,52 +312,9 @@ class RoleViewModel
     @chat_bubble_vm.draw_with_target x, y - 30
   end
 
-  # def do_move(angle, area, destination)
-  #   @running = @role.hp > 0
-  #   speed = get_speed
-  #
-  #   dest_x = destination[:x]
-  #   dest_y = destination[:y]
-  #   if Gosu::distance(@role.x, @role.y, dest_x, dest_y) <= speed
-  #     move_to_location(dest_x, dest_y)
-  #     complete_auto_move
-  #     @running = false
-  #     @standing = true
-  #     return
-  #   end
-  #
-  #   x = @role.x + Gosu::offset_x(angle, speed)
-  #   y = @role.y + Gosu::offset_y(angle, speed)
-  #
-  #   if area.tile_block? x, y
-  #     disable_auto_move
-  #   else
-  #     move_to_location(x, y)
-  #   end
-  # end
-
-
-
-
-
-  # def complete_auto_move
-  #   disable_auto_move
-  #   @arrive_call_back.call unless @arrive_call_back.nil?
-  # end
-
   def get_actual_role_location
     x, y = @role.x, @role.y - 30
     y = y - @vehicle_vm.vehicle_body_height if driving?
     [x, y]
   end
-
-  # def calc_suit_direction(target_x, target_y)
-  #   x_diff = target_x - @role.x
-  #   y_diff = target_y - @role.y
-  #   if x_diff.abs > y_diff.abs
-  #     x_diff < 0 ? Direction::LEFT : Direction::RIGHT
-  #   else
-  #     y_diff < 0 ? Direction::UP : Direction::DOWN
-  #   end
-  # end
 end

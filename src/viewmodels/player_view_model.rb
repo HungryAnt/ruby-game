@@ -155,7 +155,7 @@ class PlayerViewModel
 
   def do_hit(hit_type, cost_hp, hit_range)
     return if @role_vm.hitting || battered || @role.eating?
-    @role_vm.disable_auto_move
+    @role.disable_auto_move
     sync_role_appear
     return if @role.hp < cost_hp
     @role.dec_hp(cost_hp)
@@ -210,9 +210,9 @@ class PlayerViewModel
     return if !smashing?
     return if @role_vm.hitting || battered || @role.eating?
     large_rubbish_vm = @smashing_large_rubbish_vm
-    @role_vm.disable_auto_move
+    @role.disable_auto_move
     sync_role_appear
-    @role_vm.adjust_to_suit_direction(large_rubbish_vm.x, large_rubbish_vm.y)
+    @role.adjust_to_suit_direction(large_rubbish_vm.x, large_rubbish_vm.y)
     @role_vm.hit(:smash)
     remote_smash large_rubbish_vm.id
     # large_rubbish_vm.smash
