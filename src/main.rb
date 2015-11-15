@@ -91,7 +91,6 @@ require 'services/role_type_definition'
 
 require 'services/song_service'
 require 'services/map_service'
-require 'services/food_factory'
 require 'services/message_handler_service'
 require 'services/game_roles_service'
 require 'services/area_items_service'

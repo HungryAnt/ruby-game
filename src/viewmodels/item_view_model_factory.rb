@@ -11,7 +11,7 @@ class ItemViewModelFactory
   end
 
   def self.create_simple_food_vm(food_type_id)
-    food = Food.new('', 0, 0, food_type_id, 999)
+    food = Food.new('', 0, 0, food_type_id, 999, 999)
     food_vm = FoodViewModel.new(food)
     food_vm
   end
@@ -27,8 +27,9 @@ class ItemViewModelFactory
   def self.create_food_vm(item_map)
     id, x, y = item_map['id'], item_map['x'].to_i, item_map['y'].to_i
     food_type_id = item_map['food_type_id'].to_i
+    max_energy = item_map['max_energy'].to_f
     energy = item_map['energy'].to_f
-    food = Food.new(id, x, y, food_type_id, energy)
+    food = Food.new(id, x, y, food_type_id, max_energy, energy)
     food_vm = FoodViewModel.new(food)
     food_vm
   end

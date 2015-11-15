@@ -6,7 +6,7 @@ lambda {
   add = lambda do |names|
     names.each do |name|
       image_path = "food/#{id}.bmp"
-      food_type_info = FoodTypeInfo.new id, name, image_path, 50
+      food_type_info = FoodTypeInfo.new id, name, image_path
       MediaUtil::get_img(food_type_info.image_path) # 主线程初始加载图片，bugFix:子线程加载图片无法显示
       FoodTypeInfo.put id, food_type_info
       id += 1

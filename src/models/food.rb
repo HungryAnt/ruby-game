@@ -8,13 +8,13 @@ class Food < Item
   attr_accessor :eating, :covered
   attr_reader :energy, :max_energy
 
-  def initialize(id, x, y, food_type_id, energy)
+  def initialize(id, x, y, food_type_id, max_energy, energy)
     init_item(id, Item::ItemType::FOOD, x, y)
     init_visible
     @food_type_info = FoodTypeInfo.get(food_type_id)
     @eating = false
     @covered = false
-    @max_energy = @food_type_info.energy
+    @max_energy = max_energy
     @energy = energy
   end
 
@@ -36,6 +36,7 @@ class Food < Item
   def to_map
     item_map = super
     item_map['food_type_id'] = @food_type_info.id
+    item_map['max_energy'] = @max_energy
     item_map['energy'] = @energy
     item_map
   end
