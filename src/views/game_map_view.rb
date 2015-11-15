@@ -17,7 +17,6 @@ class GameMapView < ViewBase
     @font_chat_input = Gosu::Font.new(18)
     @package_items_view = PackageItemsView.new(@window, @game_map_view_model.package_items_view_model)
     init_chat_text_input
-    init_controls
     init_buttons
   end
 
@@ -27,10 +26,6 @@ class GameMapView < ViewBase
 
   def init_switch_map(map_id)
     @game_map_view_model.switch_map map_id
-  end
-
-  def quit_map
-    @game_map_view_model.quit_map
   end
 
   def update
@@ -87,12 +82,6 @@ class GameMapView < ViewBase
     @status_dialog.draw
   end
 
-  def draw_chat_text_box
-    text_box_x = 60
-    text_box_width = 333-60
-    @chat_text_box.draw text_box_x, 30, text_box_width, 50-30
-  end
-
   def button_down(id)
     if @ui_control_vm.actions_bar_visible
       return if @actions_bar_view.button_down(id)
@@ -128,47 +117,18 @@ class GameMapView < ViewBase
         end
       when Gosu::KbA
         @game_map_view_model.hit
+
+      when Gosu::MsRight
+        # 测试控制宠物
+        @game_map_view_model.pet_move_to(@window.mouse_x, @window.mouse_y)
     end
-  end
-
-  def init_chat_text_input
-    @chat_text_box = TextBox.new(false)
-    @window.text_input = nil
-    @sound_textbox = MediaUtil::get_sample('textbox.wav')
-  end
-
-  def switch_chat_text_input(is_cmd = false)
-    if chat_input_enabled?
-      text = @chat_text_box.text
-      @chat_text_box.clear
-      @chat_text_box.enabled = false
-
-      if is_cmd
-        # 发送命令消息
-        @game_map_view_model.command text if text.size > 0
-      else
-        # 发送聊天消息
-        @game_map_view_model.chat text if text.size > 0
-      end
-    else
-      @chat_text_box.enabled = true
-      @sound_textbox.play
-    end
-    @window.text_input = chat_input_enabled? ? @chat_text_box.text_input : nil
-  end
-
-  def chat_input_enabled?
-    @chat_text_box.enabled
   end
 
   def needs_cursor?
     @game_map_view_model.needs_cursor?
   end
 
-  def init_controls
-
-
-  end
+  private
 
   def init_buttons
     @status_dialog = AntGui::Dialog.new(0, 0, GameConfig::STATUS_BAR_WIDTH, GameConfig::STATUS_BAR_HEIGHT)
@@ -205,5 +165,45 @@ class GameMapView < ViewBase
                     normal_image_path, hover_image_path, &proc)
     @window_resource_service.create_button left, top, width, height,
                                            normal_image_path, hover_image_path, &proc
+  end
+
+  def quit_map
+    @game_map_view_model.quit_map
+  end
+
+  def draw_chat_text_box
+    text_box_x = 60
+    text_box_width = 333-60
+    @chat_text_box.draw text_box_x, 30, text_box_width, 50-30
+  end
+
+  def init_chat_text_input
+    @chat_text_box = TextBox.new(false)
+    @window.text_input = nil
+    @sound_textbox = MediaUtil::get_sample('textbox.wav')
+  end
+
+  def switch_chat_text_input(is_cmd = false)
+    if chat_input_enabled?
+      text = @chat_text_box.text
+      @chat_text_box.clear
+      @chat_text_box.enabled = false
+
+      if is_cmd
+        # 发送命令消息
+        @game_map_view_model.command text if text.size > 0
+      else
+        # 发送聊天消息
+        @game_map_view_model.chat text if text.size > 0
+      end
+    else
+      @chat_text_box.enabled = true
+      @sound_textbox.play
+    end
+    @window.text_input = chat_input_enabled? ? @chat_text_box.text_input : nil
+  end
+
+  def chat_input_enabled?
+    @chat_text_box.enabled
   end
 end

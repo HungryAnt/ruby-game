@@ -33,6 +33,12 @@ require 'engine/animation_container'
 require 'engine/animation_util'
 require 'engine/animation_manager'
 
+require 'models/location'
+require 'models/hp'
+require 'models/exp'
+require 'models/package'
+require 'models/movable'
+require 'models/vehicle'
 require 'models/area'
 require 'models/item'
 require 'models/food'
@@ -42,6 +48,8 @@ require 'models/nutrient'
 require 'models/nutrient_bin'
 require 'models/large_rubbish'
 require 'models/role_equipment'
+require 'models/pet_type_info'
+require 'models/pet'
 require 'models/role'
 require 'models/tiles'
 require 'models/equipment'
@@ -102,6 +110,7 @@ require 'services/large_rubbishes_service'
 require 'services/hit_service'
 
 require 'viewmodels/item_view_model'
+require 'viewmodels/pet_view_model'
 require 'viewmodels/role_view_model'
 require 'viewmodels/player_view_model'
 require 'viewmodels/area_view_model'
@@ -149,6 +158,9 @@ if !app.validate_args
 else
   app.startup do
     require 'config/anim_config'
+    require 'config/pet_anim_config'
+    require 'config/role_anim_config'
+    require 'config/map_anim_config'
     require 'config/equipment_vehicle_config'
     require 'config/equipment_config'
     require 'config/food_config'
@@ -157,6 +169,7 @@ else
     require 'config/large_rubbish_config'
     require 'config/map_config'
     require 'config/role_config'
+    require 'config/pet_config'
   end
 
   user_id, screen_mode = ARGV[0], ARGV[1]

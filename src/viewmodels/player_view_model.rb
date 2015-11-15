@@ -18,8 +18,8 @@ class PlayerViewModel
   end
 
   def update
-    have_a_rest if @role_vm.standing
-    eat if @role_vm.standing
+    have_a_rest if @role.standing
+    eat if @role.standing
     refresh_exp if @update_times % GameConfig::FPS == 0
     smash if @update_times % GameConfig::FPS == @smash_beging_update_time
     @update_times += 1
@@ -44,22 +44,11 @@ class PlayerViewModel
   end
 
   def equip(equipment_vm)
-    @role_vm.vehicle = equipment_vm
-  end
-
-  def move(direction, map_vm)
-    if direction != Direction::NONE
-      @auto_move_enabled = false
-      @role.direction = direction
-      angle = Direction::to_angle direction
-      @role_vm.control_move(angle, map_vm)
-    else
-      @role_vm.stop
-    end
+    @role_vm.vehicle_vm = equipment_vm
   end
 
   def pick_up(item_vms, item_vm)
-    return if @role_vm.battered
+    return if battered
     return unless item_vms.include? item_vm
 
     # 先尝试扔掉正在吃的食物
@@ -165,7 +154,7 @@ class PlayerViewModel
   end
 
   def do_hit(hit_type, cost_hp, hit_range)
-    return if @role_vm.hitting || @role_vm.battered || @role.eating?
+    return if @role_vm.hitting || battered || @role.eating?
     @role_vm.disable_auto_move
     sync_role_appear
     return if @role.hp < cost_hp
@@ -184,7 +173,7 @@ class PlayerViewModel
 
   def check_hit_battered(hit_type, hit_x, hit_y)
     return unless @hit_service.is_hit? hit_type
-    return if @role_vm.battered
+    return if battered
     return if @role_vm.driving_dragon?
     if Gosu::distance(@role.x, @role.y, hit_x, hit_y) < 28
       discard
@@ -196,7 +185,7 @@ class PlayerViewModel
   end
 
   def battered
-    @role_vm.battered
+    @role.battered
   end
 
   def start_smash(large_rubbish_vm)
@@ -219,7 +208,7 @@ class PlayerViewModel
 
   def smash
     return if !smashing?
-    return if @role_vm.hitting || @role_vm.battered || @role.eating?
+    return if @role_vm.hitting || battered || @role.eating?
     large_rubbish_vm = @smashing_large_rubbish_vm
     @role_vm.disable_auto_move
     sync_role_appear
@@ -246,7 +235,7 @@ class PlayerViewModel
       head_hit
       return
     end
-    return if @role_vm.hitting || @role_vm.battered
+    return if @role_vm.hitting || battered
     discard
     @role_vm.set_durable_state action
     sync_role_appear

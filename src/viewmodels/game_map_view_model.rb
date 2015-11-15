@@ -18,21 +18,26 @@ class GameMapViewModel
     @package_items_view_model = PackageItemsViewModel.new(@player_view_model)
     @update_times = 0
     @visual_items = []
+
+    @pet = Pet.new('xx', 'pet_1', 200, 200)
+    @pet_vm = PetViewModel.new @pet
   end
 
   def update
     @map_service.update_map
 
-    map_vm = @map_service.current_map
+    area = get_current_area.area
 
     process_role_vms do |role_vm|
-      role_vm.auto_move map_vm
+      role_vm.auto_move area
       role_vm.update_eating_food
       role_vm.update_state
       role_vm.update
     end
 
     @player_view_model.update
+
+    @pet_vm.auto_move area
 
     sort_visual_items
 
@@ -51,6 +56,7 @@ class GameMapViewModel
     get_current_area.visual_element_vms.each do |element_vm|
       @visual_items << element_vm
     end
+    @visual_items << @pet_vm
     @visual_items.sort_by! {|item| item.y}
   end
 
@@ -78,10 +84,6 @@ class GameMapViewModel
       yield role_vm if role_vm.area_id == area_id
     end
     yield @player_view_model.role_vm
-  end
-
-  def player_move(direction)
-    @player_view_model.move direction, @map_service::current_map
   end
 
   def update_mouse_type(mouse_x, mouse_y)
@@ -203,6 +205,14 @@ class GameMapViewModel
 
   def set_player_action(action)
     @player_view_model.set_action action
+  end
+
+  def pet_move_to(x, y)
+    map_vm = get_current_map
+    unless map_vm.tile_block? x, y
+      map_vm.mark_target(x, y) unless map_vm.nil?
+      @pet_vm.set_destination x, y
+    end
   end
 
   private

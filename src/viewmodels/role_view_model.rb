@@ -1,6 +1,6 @@
 class RoleViewModel
-  attr_reader :role, :standing, :hitting, :battered
-  attr_accessor :area_id, :vehicle
+  attr_reader :role, :hitting
+  attr_accessor :area_id, :vehicle_vm
 
   def initialize(role)
     autowired(MapService, HitService)
@@ -13,8 +13,7 @@ class RoleViewModel
     @arrive_call_back = nil
     stop
     @area_id = nil
-    @vehicle = nil
-    @driving = false
+    @vehicle_vm = nil
     @chat_bubble_vm = ChatBubbleViewModel.new
     @update_times = 0
     init_hit_components
@@ -25,8 +24,6 @@ class RoleViewModel
 
   def init_hit_components
     @hitting = false
-    @battered = false  # 被打扁的
-    @battered_by_hit_type = Role::State::HIT
   end
 
   def init_sound
@@ -41,21 +38,17 @@ class RoleViewModel
   end
 
   def driving?
-    @driving && !@vehicle.nil?
+    @role.driving && !@vehicle_vm.nil?
   end
 
   def set_driving(value)
-    @driving = value
-    if driving?
-      @role.vehicle = @vehicle.key
-    else
-      @role.vehicle = nil
-    end
+    @role.driving = value
+    @role.vehicle = driving? ? @vehicle_vm.vehicle : nil
     value
   end
 
   def driving
-    @driving
+    @role.driving
   end
 
   def drive(vehicle_key)
@@ -63,8 +56,8 @@ class RoleViewModel
       set_driving false
       return
     end
-    return if driving? && @vehicle.key == vehicle_key
-    @vehicle = EquipmentViewModelFactory.create_vehicle vehicle_key
+    return if driving? && @vehicle_vm.key == vehicle_key
+    @vehicle_vm = EquipmentViewModelFactory.create_vehicle vehicle_key
     set_driving true
   end
 
@@ -90,7 +83,7 @@ class RoleViewModel
   end
 
   def stop
-    @standing = true
+    @role.standing = true
     @running = false
   end
 
@@ -122,27 +115,30 @@ class RoleViewModel
 
   def set_auto_move_to(x, y, &arrive_call_back)
     reset_durable_state
-    @auto_move_enabled = true
-    @auto_move_angle = Gosu::angle(@role.x, @role.y, x, y)
-    @auto_move_dest = {:x => x, :y => y}
-    @arrive_call_back = arrive_call_back
+    @role.set_auto_move_to x, y, &arrive_call_back
+    # @auto_move_enabled = true
+    # @auto_move_angle = Gosu::angle(@role.x, @role.y, x, y)
+    # @auto_move_dest = {:x => x, :y => y}
+    # @arrive_call_back = arrive_call_back
   end
 
   def disable_auto_move
-    @auto_move_enabled = false
-    stop
+    @role.disable_auto_move
+    # @auto_move_enabled = false
+    # stop
   end
 
-  def auto_move(map_vm)
-    if @auto_move_enabled
-      adjust_to_suit_direction(@auto_move_dest[:x], @auto_move_dest[:y])
-      do_move @auto_move_angle, map_vm, @auto_move_dest
-    end
+  def auto_move(area)
+    @role.auto_move area
+    # if @auto_move_enabled
+    #   adjust_to_suit_direction(@auto_move_dest[:x], @auto_move_dest[:y])
+    #   do_move @auto_move_angle, area, @auto_move_dest
+    # end
   end
 
-  def adjust_to_suit_direction(target_x, target_y)
-    @role.direction = calc_suit_direction target_x, target_y
-  end
+  # def adjust_to_suit_direction(target_x, target_y)
+  #   @role.direction = calc_suit_direction target_x, target_y
+  # end
 
   def update_eating_food
     @role.update_eating_food(*get_actual_role_location)
@@ -171,11 +167,11 @@ class RoleViewModel
   end
 
   def get_state
-    if @battered
+    if @role.battered
       if Gosu::milliseconds < @turn_to_battered_end_time
-        return @hit_service.get_turn_to_battered_state(@battered_by_hit_type)
+        return @hit_service.get_turn_to_battered_state(@role.battered_by_hit_type)
       end
-      return @hit_service.get_battered_state(@battered_by_hit_type)
+      return @hit_service.get_battered_state(@role.battered_by_hit_type)
     end
 
     if @hitting
@@ -187,7 +183,7 @@ class RoleViewModel
     end
 
     if @role.eating?
-      if @standing
+      if @role.standing
         return Role::State::EATING
       else
         if driving?
@@ -197,7 +193,7 @@ class RoleViewModel
         end
       end
     else
-      if @standing
+      if @role.standing
         return @role.durable_state
       else
         if driving?
@@ -228,11 +224,7 @@ class RoleViewModel
   end
 
   def driving_dragon?
-    driving? && @vehicle.key.to_s.start_with?('dragon')
-  end
-
-  def control_move(angle, map_vm)
-    do_move angle, map_vm
+    driving? && @vehicle_vm.key.to_s.start_with?('dragon')
   end
 
   def add_chat_content(content)
@@ -247,8 +239,8 @@ class RoleViewModel
     if @hitting
       @hitting = false if Gosu::milliseconds >= @hit_end_time
     end
-    if @battered
-      @battered = false if Gosu::milliseconds >= @battered_end_time
+    if @role.battered
+      @role.battered = false if Gosu::milliseconds >= @battered_end_time
     end
     if @collecting_rubbish
       @collecting_rubbish = false if Gosu::milliseconds >= @collecting_rubbish_end_time
@@ -278,8 +270,8 @@ class RoleViewModel
 
   def being_battered(hit_type)
     return unless @hit_service.is_hit? hit_type
-    @battered = true
-    @battered_by_hit_type = hit_type
+    @role.battered = true
+    @role.battered_by_hit_type = hit_type
     @turn_to_battered_end_time = Gosu::milliseconds +
         @hit_service.get_turn_to_battered_duration_time(hit_type)
     @battered_end_time = @turn_to_battered_end_time +
@@ -318,7 +310,7 @@ class RoleViewModel
 
   def draw_equipment
     if driving?
-      @vehicle.draw(@role.x, @role.y, @role.direction)
+      @vehicle_vm.draw(@role.x, @role.y, @role.direction)
     end
   end
 
@@ -338,74 +330,52 @@ class RoleViewModel
     @chat_bubble_vm.draw_with_target x, y - 30
   end
 
-  def do_move(angle, map_vm, destination = nil)
-    @running = @role.hp > 0
-    speed = get_speed
+  # def do_move(angle, area, destination)
+  #   @running = @role.hp > 0
+  #   speed = get_speed
+  #
+  #   dest_x = destination[:x]
+  #   dest_y = destination[:y]
+  #   if Gosu::distance(@role.x, @role.y, dest_x, dest_y) <= speed
+  #     move_to_location(dest_x, dest_y)
+  #     complete_auto_move
+  #     @running = false
+  #     @standing = true
+  #     return
+  #   end
+  #
+  #   x = @role.x + Gosu::offset_x(angle, speed)
+  #   y = @role.y + Gosu::offset_y(angle, speed)
+  #
+  #   if area.tile_block? x, y
+  #     disable_auto_move
+  #   else
+  #     move_to_location(x, y)
+  #   end
+  # end
 
-    unless destination.nil?
-      dest_x = destination[:x]
-      dest_y = destination[:y]
-      if Gosu::distance(@role.x, @role.y, dest_x, dest_y) <= speed
-        move_to_location(dest_x, dest_y)
-        complete_auto_move
-        @running = false
-        @standing = true
-        return
-      end
-    end
 
-    x = @role.x + Gosu::offset_x(angle, speed)
-    y = @role.y + Gosu::offset_y(angle, speed)
 
-    if map_vm.tile_block? x, y
-      disable_auto_move
-      # 继续单方向检测
-      move_to_location(x, @role.y) unless map_vm.tile_block? x, @role.y
-      move_to_location(@role.x, y) unless map_vm.tile_block? @role.x, y
-    else
-      move_to_location(x, y)
-    end
-  end
 
-  def get_speed
-    if @battered
-      return 0 if @hit_service.cannot_move? @battered_by_hit_type
-    end
 
-    running = @running && !@battered
-    speed_rate = 1.0
-    speed_rate -= 0.5 unless running
-    speed_rate -= 0.25 if @battered || @role.eating?
-    speed_rate += @vehicle.speed_up if driving?
-    @speed * speed_rate
-  end
-
-  def move_to_location(x, y)
-    @standing = false
-    @role.x = x
-    @role.y = y
-    @move_timestamp = Gosu::milliseconds
-    @role.dec_hp(GameConfig::RUNNING_HP_DEC) if @running
-  end
-
-  def complete_auto_move
-    disable_auto_move
-    @arrive_call_back.call unless @arrive_call_back.nil?
-  end
+  # def complete_auto_move
+  #   disable_auto_move
+  #   @arrive_call_back.call unless @arrive_call_back.nil?
+  # end
 
   def get_actual_role_location
     x, y = @role.x, @role.y - 30
-    y = y - @vehicle.vehicle_body_height if driving?
+    y = y - @vehicle_vm.vehicle_body_height if driving?
     [x, y]
   end
 
-  def calc_suit_direction(target_x, target_y)
-    x_diff = target_x - @role.x
-    y_diff = target_y - @role.y
-    if x_diff.abs > y_diff.abs
-      x_diff < 0 ? Direction::LEFT : Direction::RIGHT
-    else
-      y_diff < 0 ? Direction::UP : Direction::DOWN
-    end
-  end
+  # def calc_suit_direction(target_x, target_y)
+  #   x_diff = target_x - @role.x
+  #   y_diff = target_y - @role.y
+  #   if x_diff.abs > y_diff.abs
+  #     x_diff < 0 ? Direction::LEFT : Direction::RIGHT
+  #   else
+  #     y_diff < 0 ? Direction::UP : Direction::DOWN
+  #   end
+  # end
 end

@@ -1,4 +1,5 @@
 require_relative 'location'
+require_relative 'movable'
 require_relative 'hp'
 require_relative 'exp'
 require_relative 'package'
@@ -98,16 +99,19 @@ class Role
   end
 
   include Location
+  include Movable
   include Hp
   include Exp
 
-  attr_accessor :state, :durable_state, :direction, :role_type, :hp, :vehicle
+  attr_accessor :state, :durable_state, :direction, :role_type,
+                :hp, :vehicle, :driving, :battered, :battered_by_hit_type
   attr_reader :package, :name, :rubbish_bin, :nutrient_bin
 
   def initialize(name, role_type, x, y)
     @name = name
     @role_type = role_type
     init_location x, y
+    init_movable 4.2
     init_hp
     init_exp
 
@@ -118,10 +122,41 @@ class Role
     @direction = Direction::DOWN
     @intake = GameConfig::ROLE_INTAKE
     @temp_exp = 0
-    @vehicle = nil  # "vehicle_#{id}"
+
+    @vehicle = nil
+    @driving = false
+
     @rubbish_bin = RubbishBin.new
     @nutrient_bin = NutrientBin.new
+
+    @battered = false  # ±»´ò±âµÄ
+    @battered_by_hit_type = Role::State::HIT
   end
+
+  def get_speed
+    if @battered
+      return 0 if @hit_service.cannot_move? @battered_by_hit_type
+    end
+
+    @running = @hp > 0
+
+    running = @running && !@battered
+    speed_rate = 1.0
+    speed_rate -= 0.5 unless running
+    speed_rate -= 0.25 if @battered || eating?
+    speed_rate += @vehicle.speed_up if driving && !@vehicle.nil?
+    @speed * speed_rate
+  end
+
+  def move_to_location(x, y)
+    # @role.standing = false
+    # @role.x = x
+    # @role.y = y
+    super
+    dec_hp(GameConfig::RUNNING_HP_DEC) if @running
+  end
+
+
 
   def start_eat(food)
     @eating_food = food
@@ -219,7 +254,7 @@ class Role
         state: @state.to_s,
         durable_state: @durable_state.to_s,
         direction: @direction,
-        vehicle: @vehicle
+        vehicle: (!@vehicle.nil? ? @vehicle.key: '') # "vehicle_#{id}"
     }
   end
 
