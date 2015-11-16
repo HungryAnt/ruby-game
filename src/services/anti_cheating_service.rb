@@ -36,9 +36,11 @@ class AntiCheatingService
   private
 
   def init_client_timestamp
+    init_base_timestamp
+
     params = {
         userId: @user_id,
-        timestamp: Time.now.to_i
+        timestamp: current_timestamp
     }
     http_client = HttpClientFactory.create
     http_client.path('antiCheating/initClientTimestamp')
@@ -53,7 +55,7 @@ class AntiCheatingService
   def check_cheating
     params = {
         userId: @user_id,
-        timestamp: Time.now.to_i
+        timestamp: current_timestamp
     }
     http_client = HttpClientFactory.create
     http_client.path('antiCheating/checkCheating')
@@ -65,5 +67,13 @@ class AntiCheatingService
     end
     is_cheating = res.body != 'false'
     call_cheating if is_cheating
+  end
+
+  def init_base_timestamp
+    @base_timestamp = Time.now.to_i - Gosu::milliseconds / 1000
+  end
+
+  def current_timestamp
+    @base_timestamp + Gosu::milliseconds / 1000
   end
 end
