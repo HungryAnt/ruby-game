@@ -38,6 +38,7 @@ class GameMapViewModel
     @player_view_model.update
 
     @pet_vm.auto_move area
+    @pet_vm.update_state
 
     sort_visual_items
 

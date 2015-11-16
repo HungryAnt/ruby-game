@@ -48,12 +48,16 @@ class PetViewModel
     draw_anim
   end
 
+  def update_state
+    set_state get_state
+  end
+
   private
 
   def init_animations
     pet_type = @pet.pet_type.to_s
     Pet::State::ALL_STATES.each do |state|
-      %w(left right up down).each do |direction|
+      %w(left right up down down_right).each do |direction|
         self.instance_variable_set(
             "@anim_#{state}_#{direction}",
             AnimationManager.get_anim("#{pet_type}_#{state}_#{direction}".to_sym))
@@ -76,4 +80,29 @@ class PetViewModel
     [@pet.x, @pet.y - 20]
   end
 
+  def set_state(state)
+    @pet.state = state
+    change_anim
+  end
+
+  def change_anim
+    state = @pet.state.to_s
+    direction = Direction::to_direction_text(@pet.direction)
+
+    # 宠物素材特殊性，向右下方移动做不同效果展示
+    if direction == 'down' && @pet.exact_direction == Direction::SOUTH_EAST
+      @current_anim = self.instance_variable_get("@anim_#{state}_down_right")
+      return unless @current_anim.nil?
+    end
+
+    @current_anim = self.instance_variable_get("@anim_#{state}_#{direction}")
+  end
+
+  def get_state
+    if @pet.standing
+      return Pet::State::STAND
+    else
+      return Pet::State::MOVE
+    end
+  end
 end

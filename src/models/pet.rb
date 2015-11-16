@@ -12,7 +12,7 @@ class Pet
     ALL_STATES = [STAND, MOVE, ATTACK, SLEEP, CUTE]
   end
 
-  attr_accessor :pet_type, :direction
+  attr_accessor :pet_type, :state
 
   include Location
   include Movable
@@ -22,7 +22,7 @@ class Pet
     init_movable 5, false
     @name = name
     @pet_type = pet_type
-    @direction = Direction::DOWN
+    @state = State::STAND
   end
 
 end

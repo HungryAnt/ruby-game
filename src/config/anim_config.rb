@@ -23,13 +23,20 @@ def new_direction_anims(prefix, pattern, action, anim_map = {})
   down_nums = to_anim_nums_with_options(*anim_map[:down_nums_pair], reversed)
   anim_interval = 150
   anim_interval = anim_map[:anim_interval].to_i if anim_map.include? :anim_interval
+
+  direction_anim_map = {
+      "#{action}_left".to_sym => [pattern, hor_nums, anim_interval],
+      "#{action}_right".to_sym => [pattern, hor_nums, anim_interval, -1],
+      "#{action}_up".to_sym => [pattern, up_nums, anim_interval],
+      "#{action}_down".to_sym => [pattern, down_nums, anim_interval]
+  }
+
+  if anim_map.include?(:need_down_right_anim) && anim_map[:need_down_right_anim]
+    direction_anim_map["#{action}_down_right".to_sym] = [pattern, down_nums, anim_interval, -1]
+  end
+
   AnimationManager.new_centered_anims prefix do
-    {
-        "#{action}_left".to_sym => [pattern, hor_nums, anim_interval],
-        "#{action}_right".to_sym => [pattern, hor_nums, anim_interval, -1],
-        "#{action}_up".to_sym => [pattern, up_nums, anim_interval],
-        "#{action}_down".to_sym => [pattern, down_nums, anim_interval]
-    }
+    direction_anim_map
   end
 end
 

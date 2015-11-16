@@ -1,5 +1,5 @@
 module Movable
-  attr_accessor :running, :standing
+  attr_accessor :running, :standing, :direction, :exact_direction
 
   def init_movable(speed, area_block_enabled = true)
     @area_block_enabled = area_block_enabled
@@ -10,6 +10,8 @@ module Movable
     @standing = true
     @arrive_call_back = nil
     @speed = speed
+    @direction = Direction::DOWN
+    @exact_direction = Direction::NONE
   end
 
   def set_auto_move_to(target_x, target_y, &arrive_call_back)
@@ -33,12 +35,20 @@ module Movable
 
   def adjust_to_suit_direction(target_x, target_y)
     @direction = calc_suit_direction target_x, target_y
+    @exact_direction = calc_exact_direction target_x, target_y
   end
 
   private
 
   def get_speed
     @speed
+  end
+
+  def calc_exact_direction(target_x, target_y)
+    x_diff = target_x - x
+    y_diff = target_y - y
+    (x_diff < 0 ? Direction::LEFT : Direction::RIGHT) |
+        (y_diff < 0 ? Direction::UP : Direction::DOWN)
   end
 
   def calc_suit_direction(target_x, target_y)
