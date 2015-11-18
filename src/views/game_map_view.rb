@@ -121,6 +121,12 @@ class GameMapView < ViewBase
       when Gosu::MsRight
         # ²âÊÔ¿ØÖÆ³èÎï
         @game_map_view_model.pet_move_to(@window.mouse_x, @window.mouse_y)
+      when Gosu::KbI
+        @game_map_view_model.pet_action Pet::State::ATTACK
+      when Gosu::KbO
+        @game_map_view_model.pet_action Pet::State::SLEEP
+      when Gosu::KbP
+        @game_map_view_model.pet_action Pet::State::CUTE
     end
   end
 

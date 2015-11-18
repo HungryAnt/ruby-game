@@ -19,8 +19,13 @@ class GameMapViewModel
     @update_times = 0
     @visual_items = []
 
-    @pet = Pet.new('xx', 'pet_1', 200, 200)
-    @pet_vm = PetViewModel.new @pet
+    @pets_vms = []
+    0.upto(4) do
+      @pet = Pet.new('xx', 'pet_1', 200, 200)
+      @pet_vm = PetViewModel.new @pet
+      @pets_vms << @pet_vm
+    end
+
   end
 
   def update
@@ -37,8 +42,9 @@ class GameMapViewModel
 
     @player_view_model.update
 
-    @pet_vm.auto_move area
-    @pet_vm.update_state
+    @pets_vms.each do |pet_vm|
+      pet_vm.update area, @player_view_model.role
+    end
 
     sort_visual_items
 
@@ -57,7 +63,8 @@ class GameMapViewModel
     get_current_area.visual_element_vms.each do |element_vm|
       @visual_items << element_vm
     end
-    @visual_items << @pet_vm
+    @pets_vms.each { |pet_vm| @visual_items << pet_vm }
+
     @visual_items.sort_by! {|item| item.y}
   end
 
@@ -212,8 +219,12 @@ class GameMapViewModel
     map_vm = get_current_map
     unless map_vm.tile_block? x, y
       map_vm.mark_target(x, y) unless map_vm.nil?
-      @pet_vm.set_destination x, y
+      @pets_vms.each {|pet_vm| pet_vm.set_destination x, y}
     end
+  end
+
+  def pet_action(state)
+    @pets_vms.each {|pet_vm| pet_vm.set_durable_state state}
   end
 
   private

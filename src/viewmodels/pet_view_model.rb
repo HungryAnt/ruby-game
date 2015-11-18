@@ -2,6 +2,8 @@ class PetViewModel
   def initialize(pet)
     @pet = pet
     init_animations
+    reset_durable_state
+    @update_times = 0
   end
 
   def x
@@ -13,6 +15,7 @@ class PetViewModel
   end
 
   def set_destination(target_x, target_y)
+    reset_durable_state
     @pet.set_auto_move_to target_x, target_y
   end
 
@@ -20,12 +23,36 @@ class PetViewModel
     @pet.auto_move area
   end
 
-  def move_random
-
+  def update(area, role)
+    @update_times += 1
+    if rand(5 * GameConfig::FPS) == 0
+      rand_num = rand 10
+      if rand_num < 4
+        move_random area
+      elsif rand_num < 6
+        move_to_owner role
+      elsif rand_num < 9
+        sleep
+      end
+    end
+    auto_move area
+    update_state
   end
 
-  def move_to_owner
+  def move_random(area)
+    set_destination *area.random_available_position
+  end
 
+  def move_to_owner(role)
+    if Gosu::distance(x, y, role.x, role.y) < 20
+      if rand(2) == 0
+        cute
+      else
+        sleep
+      end
+    else
+      set_destination *role_side_location(role)
+    end
   end
 
   def attack
@@ -33,15 +60,11 @@ class PetViewModel
   end
 
   def sleep
-
+    set_durable_state Pet::State::SLEEP
   end
 
   def cute
-
-  end
-
-  def change_action
-
+    set_durable_state Pet::State::CUTE
   end
 
   def draw
@@ -50,6 +73,14 @@ class PetViewModel
 
   def update_state
     set_state get_state
+  end
+
+  def set_durable_state(state)
+    @pet.durable_state = state
+    update_state
+    if state == Pet::State::ATTACK || state == Pet::State::CUTE
+      anim_goto_begin
+    end
   end
 
   private
@@ -100,9 +131,17 @@ class PetViewModel
 
   def get_state
     if @pet.standing
-      return Pet::State::STAND
+      return @pet.durable_state
     else
       return Pet::State::MOVE
     end
+  end
+
+  def reset_durable_state
+    @pet.durable_state = Pet::State::STAND
+  end
+
+  def role_side_location(role)
+    [role.x + 15 - rand(30), role.y + 1]
   end
 end
