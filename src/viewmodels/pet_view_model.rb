@@ -45,11 +45,7 @@ class PetViewModel
 
   def move_to_owner(role)
     if Gosu::distance(x, y, role.x, role.y) < 20
-      if rand(2) == 0
-        cute
-      else
-        sleep
-      end
+      cute
     else
       set_destination *role_side_location(role)
     end

@@ -21,7 +21,8 @@ class GameMapViewModel
 
     @pets_vms = []
     0.upto(4) do
-      @pet = Pet.new('xx', 'pet_1', 200, 200)
+      pet_id = rand(2)+1
+      @pet = Pet.new('xx', "pet_#{pet_id}", 200, 200)
       @pet_vm = PetViewModel.new @pet
       @pets_vms << @pet_vm
     end
