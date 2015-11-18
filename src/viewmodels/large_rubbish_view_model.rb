@@ -35,11 +35,11 @@ class LargeRubbishViewModel
 
   def draw
     image_index = @large_rubbish.images.size - 1 -
-        @large_rubbish.hp.to_i * @large_rubbish.images.size / (@large_rubbish.max_hp + 1)
+        (@large_rubbish.hp / ((@large_rubbish.max_hp + 1.0) / @large_rubbish.images.size)).to_i
     image = @large_rubbish.images[image_index]
-    if image_index == 3
-      puts 'OK!!!! image_index == 3'
-    end
+    # if image_index == 3
+    #   puts 'OK!!!! image_index == 3'
+    # end
     image.draw_rot(@large_rubbish.x, @large_rubbish.y, ZOrder::Player, 0,
                    0.5, 0.67)
     draw_info_board
