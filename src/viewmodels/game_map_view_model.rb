@@ -20,8 +20,13 @@ class GameMapViewModel
     @visual_items = []
 
     @pets_vms = []
-    0.upto(4) do
-      pet_id = rand(2)+1
+    pets_ids = []
+    # 1.upto(3).each { |i| pets_ids << "c#{i}" }
+    # 1.upto(3).each { |i| pets_ids << "f#{i}" }
+    pets_ids << 'c37'
+    0.upto(8).each { pets_ids << 'c37' }
+
+    pets_ids.each do |pet_id|
       @pet = Pet.new('xx', "pet_#{pet_id}", 200, 200)
       @pet_vm = PetViewModel.new @pet
       @pets_vms << @pet_vm
