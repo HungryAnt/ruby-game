@@ -70,6 +70,7 @@ class PackageItemsView
     rubbish_panel = init_rubbish_panel
     nutrient_panel = init_nutrient_panel
     vehicle_panel = init_vehicle_panel
+    pet_panel = init_pet_panel
 
     right_panel.content = rubbish_panel
 
@@ -77,34 +78,32 @@ class PackageItemsView
     rubbish_tab = AntGui::TextBlock.new(@prompt_font, '  垃圾')
     nutrient_tab = AntGui::TextBlock.new(@prompt_font, '  物资')
     vehicle_tab = AntGui::TextBlock.new(@prompt_font, '  载具')
+    pet_tab = AntGui::TextBlock.new(@prompt_font, '  萌宠!')
 
-    all_tabs = [rubbish_tab, nutrient_tab, vehicle_tab]
+    all_tabs = [rubbish_tab, nutrient_tab, vehicle_tab, pet_tab]
 
     rubbish_tab.background_color = 0x88_FFFFFF
-    # rubbish_tab.on_mouse_left_button_down do
-    #   all_tabs.each {|tab| set_unselected_tab_color tab}
-    #   set_selected_tab_color rubbish_tab
-    #   right_panel.content = rubbish_panel
-    #   @dialog.update_arrange
-    # end
 
-    # vehicle_tab.on_mouse_left_button_down do
-    #   all_tabs.each {|tab| set_unselected_tab_color tab}
-    #   set_selected_tab_color vehicle_tab
-    #   right_panel.content = vehicle_panel
-    #   @dialog.update_arrange
-    # end
+    parent_panel = right_panel
 
-    init_tab_event rubbish_tab, all_tabs, right_panel, rubbish_panel
-    init_tab_event nutrient_tab, all_tabs, right_panel, nutrient_panel
-    init_tab_event vehicle_tab, all_tabs, right_panel, vehicle_panel
+    init_tab_event = Proc.new do |item_tab, tab_related_panel|
+      item_tab.on_mouse_left_button_down do
+        all_tabs.each { |tab| set_unselected_tab_color tab }
+        set_selected_tab_color item_tab
+        parent_panel.content = tab_related_panel
+        @dialog.update_arrange
+      end
+    end
 
-    left_panel.add rubbish_tab
-    left_panel.add nutrient_tab
-    left_panel.add vehicle_tab
+    init_tab_event.call rubbish_tab, rubbish_panel
+    init_tab_event.call nutrient_tab, nutrient_panel
+    init_tab_event.call vehicle_tab, vehicle_panel
+    init_tab_event.call pet_tab, pet_panel
+
+    all_tabs.each { |tab| left_panel.add tab }
 
     y = 10
-    [rubbish_tab, nutrient_tab, vehicle_tab].each do |tab|
+    all_tabs.each do |tab|
       AntGui::Canvas.set_canvas_props tab, 0, y, LEFT_TAB_ITEM_WIDTH, LEFT_TAB_ITEM_HEIGHT
       y += LEFT_TAB_ITEM_HEIGHT + LEFT_TAB_ITEM_MARGIN
     end
@@ -114,15 +113,6 @@ class PackageItemsView
   end
 
   private
-
-  def init_tab_event(item_tab, all_tabs, parent_panel, tab_related_panel)
-    item_tab.on_mouse_left_button_down do
-      all_tabs.each {|tab| set_unselected_tab_color tab}
-      set_selected_tab_color item_tab
-      parent_panel.content = tab_related_panel
-      @dialog.update_arrange
-    end
-  end
 
   def set_unselected_tab_color(tab)
     tab.background_color = 0x00_FFFFFF
@@ -186,6 +176,25 @@ class PackageItemsView
 
   def create_vehicle_content(vehicle)
     image = EquipmentDefinition.get_item_image(vehicle.key)
+    AntGui::Image.new(image)
+  end
+
+  def init_pet_panel
+    pets = @package_items_vm.get_pets
+    items = pets.map do |pet|
+      {
+          data: pet,
+          content: create_pet_content(pet)
+      }
+    end
+    create_panel('点击召唤宠物', items) do |item|
+      @package_items_vm.choose_pet item[:data]
+      @visible = false
+    end
+  end
+
+  def create_pet_content(pet)
+    image = EquipmentDefinition.get_item_image(pet.pet_type)
     AntGui::Image.new(image)
   end
 

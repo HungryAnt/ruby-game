@@ -1,7 +1,7 @@
 require_relative 'role_view_model'
 
 class PlayerViewModel
-  attr_reader :role, :role_vm
+  attr_reader :role, :role_vm, :pets_vms
 
   HIT_COST_HP = 8
   BEING_BATTERED_COST_HP = 45
@@ -15,14 +15,35 @@ class PlayerViewModel
     @sound_run = MediaUtil.get_sample 'run.wav'
     @smash_beging_update_time = 0
     @smashing_large_rubbish_vm = nil
+
+    init_pets
   end
 
-  def update
+  def init_pets
+    @pets_vms = []
+    # pets_ids = []
+    # 1.upto(3).each { |i| pets_ids << "c#{i}" }
+    # 1.upto(3).each { |i| pets_ids << "f#{i}" }
+    # pets_ids << 'c37'
+    # # 0.upto(8).each { pets_ids << 'c37' }
+    #
+    # pets_ids.each do |pet_id|
+    #   pet = Pet.new("pet_#{pet_id}", 'xx', 200, 200)
+    #   pet_vm = PetViewModel.new pet
+    #   @pets_vms << pet_vm
+    # end
+  end
+
+  def update(area)
     have_a_rest if @role.standing
     eat if @role.standing
     refresh_exp if @update_times % GameConfig::FPS == 0
     smash if @update_times % GameConfig::FPS == @smash_beging_update_time
     @update_times += 1
+
+    @pets_vms.each do |pet_vm|
+      pet_vm.update area, @role
+    end
   end
 
   def refresh_exp
@@ -239,6 +260,18 @@ class PlayerViewModel
     discard
     @role_vm.set_durable_state action
     sync_role_appear
+  end
+
+  def choose_pet(pet)
+    @pets_vms = [ PetViewModel.new(pet) ]
+  end
+
+  def pet_move_to(x, y)
+    @pets_vms.each { |pet_vm| pet_vm.set_destination x, y }
+  end
+
+  def pet_action(state)
+    @pets_vms.each { |pet_vm| pet_vm.set_durable_state state }
   end
 
   private

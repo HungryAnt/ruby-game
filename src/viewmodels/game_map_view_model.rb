@@ -18,20 +18,6 @@ class GameMapViewModel
     @package_items_view_model = PackageItemsViewModel.new(@player_view_model)
     @update_times = 0
     @visual_items = []
-
-    @pets_vms = []
-    pets_ids = []
-    1.upto(3).each { |i| pets_ids << "c#{i}" }
-    1.upto(3).each { |i| pets_ids << "f#{i}" }
-    pets_ids << 'c37'
-    # 0.upto(8).each { pets_ids << 'c37' }
-
-    pets_ids.each do |pet_id|
-      @pet = Pet.new("pet_#{pet_id}", 'xx', 200, 200)
-      @pet_vm = PetViewModel.new @pet
-      @pets_vms << @pet_vm
-    end
-
   end
 
   def update
@@ -46,11 +32,7 @@ class GameMapViewModel
       role_vm.update
     end
 
-    @player_view_model.update
-
-    @pets_vms.each do |pet_vm|
-      pet_vm.update area, @player_view_model.role
-    end
+    @player_view_model.update area
 
     sort_visual_items
 
@@ -69,7 +51,7 @@ class GameMapViewModel
     get_current_area.visual_element_vms.each do |element_vm|
       @visual_items << element_vm
     end
-    @pets_vms.each { |pet_vm| @visual_items << pet_vm }
+    @player_view_model.pets_vms.each { |pet_vm| @visual_items << pet_vm }
 
     @visual_items.sort_by! {|item| item.y}
   end
@@ -225,12 +207,12 @@ class GameMapViewModel
     map_vm = get_current_map
     unless map_vm.tile_block? x, y
       map_vm.mark_target(x, y) unless map_vm.nil?
-      @pets_vms.each {|pet_vm| pet_vm.set_destination x, y}
+      @player_view_model.pet_move_to x, y
     end
   end
 
   def pet_action(state)
-    @pets_vms.each {|pet_vm| pet_vm.set_durable_state state}
+    @player_view_model.pet_action state
   end
 
   private

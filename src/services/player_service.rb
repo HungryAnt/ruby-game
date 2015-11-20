@@ -32,9 +32,13 @@ class PlayerService
         vehicle_key = "vehicle2_#{num}".to_sym
         @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
       end
-      ['DragonRed', 'DragonBlack', 'DragonBlue'].each do |dragon|
+      %w(DragonRed DragonBlack DragonBlue).each do |dragon|
         dragon_key = "dragon_#{dragon}".to_sym
         @role.package << Equipment.new(Equipment::Type::VEHICLE, dragon_key)
+      end
+
+      PetTypeInfo.all_pet_types.each do |pet_type|
+        @role.package << Pet.new(pet_type, 'xx', 200, 200)
       end
     else
       vehicles = @user_service.vehicles
