@@ -71,27 +71,24 @@ class ShoppingView < ViewBase
     tab_item_width = 120
     tab_item_height = height
     tab_item_margin = 5
-    vehicle_tab_button = create_button '载具'
-    AntGui::Canvas.set_canvas_props vehicle_tab_button, x, y, tab_item_width, tab_item_height
 
-    x += tab_item_width + tab_item_margin
-    nostalgic_vehicle_tab_button = create_button '怀旧载具'
-    AntGui::Canvas.set_canvas_props nostalgic_vehicle_tab_button, x, y, tab_item_width, tab_item_height
+    create_button_proc = Proc.new do |text, category|
+      button = create_button text
+      AntGui::Canvas.set_canvas_props button, x, y, tab_item_width, tab_item_height
+      x += tab_item_width + tab_item_margin
 
-    vehicle_tab_button.on_mouse_left_button_down do
-      @page_no = 1
-      @current_goods_category = :vehicles
-      update_ui
+      button.on_mouse_left_button_down do
+        @page_no = 1
+        @current_goods_category = category
+        update_ui
+      end
+      tab_panel.add button
     end
 
-    nostalgic_vehicle_tab_button.on_mouse_left_button_down do
-      @page_no = 1
-      @current_goods_category = :nostalgicVehicles
-      update_ui
-    end
+    create_button_proc.call '载具', :vehicles
+    create_button_proc.call '怀旧载具', :nostalgicVehicles
+    create_button_proc.call '宠物', :pets
 
-    tab_panel.add vehicle_tab_button
-    tab_panel.add nostalgic_vehicle_tab_button
     tab_panel
   end
 

@@ -17,11 +17,11 @@ class Pet
   include Location
   include Movable
 
-  def initialize(name, pet_type, x, y)
+  def initialize(pet_type, name, x, y)
     init_location x, y
     init_movable 5, false
-    @name = name
     @pet_type = pet_type
+    @name = name
     @state = State::STAND
     @durable_state = State::STAND
   end

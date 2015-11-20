@@ -7,13 +7,11 @@ class ShoppingViewModel
     autowired(ShoppingService, PlayerService, UserEquipmentService)
   end
 
-  def get_vehicle_goods(page_no)
-
-  end
-
   def get_goods(category, page_no)
     page_result = @shopping_service.get_goods(category, page_no, PAGE_SIZE)
     package_vehicle_keys_set = get_package_vehicle_keys_set
+    package_pet_keys_set = get_package_pet_keys_set
+
     items = []
     page_result.page.result.map do |data_map|
       goods = Goods.from_map data_map
@@ -23,7 +21,7 @@ class ShoppingViewModel
           key: key,
           image: image,
           price: goods.price,
-          existing: package_vehicle_keys_set.include?(key)
+          existing: package_vehicle_keys_set.include?(key) || package_pet_keys_set.include?(key)
       }
     end
     page_count = (page_result.page.total_count + PAGE_SIZE - 1) / PAGE_SIZE
@@ -31,8 +29,13 @@ class ShoppingViewModel
   end
 
   def get_package_vehicle_keys_set
-    vehicles = @player_service.role.package.items.find_all {|item| item.instance_of? Equipment}
+    vehicles = find_packege_items Equipment
     Set.new vehicles.map {|vehicle| vehicle.key}
+  end
+
+  def get_package_pet_keys_set
+    pets = find_packege_items Pet
+    Set.new pets.map {|pet| pet.pet_type}
   end
 
   def buy(key)
@@ -47,5 +50,11 @@ class ShoppingViewModel
   def convert_to_money
     @shopping_service.convert_to_money @player_service.user_id
     @player_service.clear_rubbishes
+  end
+
+  private
+
+  def find_packege_items(clazz)
+    @player_service.role.package.items.find_all {|item| item.instance_of? clazz}
   end
 end
