@@ -246,7 +246,7 @@ class GameMapViewModel
           role_vm.set_durable_state role_map['durable_state'].to_sym
           role_vm.set_direction role_map['direction'].to_i
 
-          if role_map['vehicle'].nil?
+          if role_map['vehicle'].nil? || role_map['vehicle'].length == 0
             vehicle_key = nil
           else
             vehicle_key = role_map['vehicle'].to_sym

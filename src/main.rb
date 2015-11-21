@@ -5,6 +5,7 @@ $:.unshift(File.dirname(__FILE__))
 require 'json'
 
 require 'gosu'
+require 'securerandom'
 require 'config/network_config'
 
 require 'utils/media_util'
@@ -171,6 +172,10 @@ else
     require 'config/map_config'
     require 'config/role_config'
     require 'config/pet_config'
+  end
+
+  if GameConfig::USER_DEBUG
+    ARGV=[SecureRandom.uuid, 'window']
   end
 
   user_id, screen_mode = ARGV[0], ARGV[1]
