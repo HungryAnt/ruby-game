@@ -13,9 +13,9 @@ class PetTypeInfo
     @@type_info.keys
   end
 
-  attr_reader :pet_type, :name
+  attr_reader :pet_type, :name, :height
 
-  def initialize(pet_type, name)
-    @pet_type, @name = pet_type, name
+  def initialize(pet_type, name, height)
+    @pet_type, @name, @height = pet_type, name, height
   end
 end

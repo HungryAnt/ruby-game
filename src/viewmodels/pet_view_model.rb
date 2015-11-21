@@ -1,6 +1,7 @@
 class PetViewModel
   def initialize(pet)
     @pet = pet
+    @height = PetTypeInfo.get(pet.pet_type).height
     init_animations
     reset_durable_state
     @update_times = 0
@@ -46,7 +47,7 @@ class PetViewModel
 
   def set_durable_state(state)
     @pet.durable_state = state
-    update_state
+    # update_state
     if state == Pet::State::ATTACK || state == Pet::State::CUTE
       anim_goto_begin
     end
@@ -77,7 +78,7 @@ class PetViewModel
   end
 
   def get_actual_pet_location
-    [@pet.x, @pet.y - 20]
+    [@pet.x, @pet.y - @height]
   end
 
   def set_state(state)
