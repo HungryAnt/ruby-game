@@ -187,7 +187,7 @@ class PackageItemsView
           content: create_pet_content(pet)
       }
     end
-    create_panel('点击召唤宠物', items) do |item|
+    create_panel('点击召唤宠物，W键收起宠物', items) do |item|
       @package_items_vm.choose_pet item[:data]
       @visible = false
     end

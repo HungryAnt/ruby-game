@@ -117,16 +117,17 @@ class GameMapView < ViewBase
         end
       when Gosu::KbA
         @game_map_view_model.hit
-
       when Gosu::MsRight
         # ²âÊÔ¿ØÖÆ³èÎï
         @game_map_view_model.pet_move_to(@window.mouse_x, @window.mouse_y)
-      when Gosu::KbI
-        @game_map_view_model.pet_action Pet::State::ATTACK
-      when Gosu::KbO
-        @game_map_view_model.pet_action Pet::State::SLEEP
-      when Gosu::KbP
-        @game_map_view_model.pet_action Pet::State::CUTE
+      when Gosu::KbW
+        @game_map_view_model.take_pets
+      # when Gosu::KbI
+      #   @game_map_view_model.pet_action Pet::State::ATTACK
+      # when Gosu::KbO
+      #   @game_map_view_model.pet_action Pet::State::SLEEP
+      # when Gosu::KbP
+      #   @game_map_view_model.pet_action Pet::State::CUTE
     end
   end
 

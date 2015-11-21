@@ -1,5 +1,7 @@
 # coding: UTF-8
 
+require 'securerandom'
+
 class PlayerService
   attr_reader :role, :user_id
 
@@ -38,7 +40,7 @@ class PlayerService
       end
 
       PetTypeInfo.all_pet_types.each do |pet_type|
-        @role.package << Pet.new(pet_type, 'xx', 200, 200)
+        @role.package << Pet.new(SecureRandom.uuid, pet_type, 200, 200)
       end
     else
       vehicles = @user_service.vehicles

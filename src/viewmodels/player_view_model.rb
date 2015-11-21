@@ -15,23 +15,7 @@ class PlayerViewModel
     @sound_run = MediaUtil.get_sample 'run.wav'
     @smash_beging_update_time = 0
     @smashing_large_rubbish_vm = nil
-
-    init_pets
-  end
-
-  def init_pets
     @pets_vms = []
-    # pets_ids = []
-    # 1.upto(3).each { |i| pets_ids << "c#{i}" }
-    # 1.upto(3).each { |i| pets_ids << "f#{i}" }
-    # pets_ids << 'c37'
-    # # 0.upto(8).each { pets_ids << 'c37' }
-    #
-    # pets_ids.each do |pet_id|
-    #   pet = Pet.new("pet_#{pet_id}", 'xx', 200, 200)
-    #   pet_vm = PetViewModel.new pet
-    #   @pets_vms << pet_vm
-    # end
   end
 
   def update(area)
@@ -116,15 +100,11 @@ class PlayerViewModel
     end
   end
 
-  def update_animations
-    @role_vm.init_animations
-    @role_vm.update_state
-  end
-
   def appear_in_new_area
     @role_vm.appear_in_new_area
     stop_smash
     sync_role_appear
+    @pets_vms.each { |pet_vm| pet_vm.appear_with_owner @role }
   end
 
   def switch_to_new_map
@@ -263,15 +243,17 @@ class PlayerViewModel
   end
 
   def choose_pet(pet)
-    @pets_vms = [ PetViewModel.new(pet) ]
+    player_pet_vm = PlayerPetViewModel.new(pet)
+    player_pet_vm.appear_with_owner @role
+    @pets_vms = [player_pet_vm]
   end
 
   def pet_move_to(x, y)
-    @pets_vms.each { |pet_vm| pet_vm.set_destination x, y }
+    @pets_vms.each { |pet_vm| pet_vm.move_to x, y }
   end
 
-  def pet_action(state)
-    @pets_vms.each { |pet_vm| pet_vm.set_durable_state state }
+  def take_pets
+    @pets_vms = []
   end
 
   private
@@ -335,10 +317,6 @@ class PlayerViewModel
     user_id = get_user_id
     @communication_service.send_eat_up_food_message(user_id)
   end
-
-  # def remote_update_lv
-  #   @communication_service.send_update_lv get_user_id, @role.lv, @role.exp
-  # end
 
   def remote_inc_exp(exp)
     @communication_service.send_inc_exp_message get_user_id, exp

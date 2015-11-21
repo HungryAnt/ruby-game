@@ -118,18 +118,6 @@ class GameMapViewModel
     @map_service.quit_map
   end
 
-  def switch_to_next_role_type
-    current_role_type = @player_view_model.role.role_type
-    @player_view_model.role.role_type = RoleType::next(current_role_type)
-    @player_view_model.update_animations
-  end
-
-  def switch_to_prev_role_type
-    current_role_type = @player_view_model.role.role_type
-    @player_view_model.role.role_type = RoleType::prev(current_role_type)
-    @player_view_model.update_animations
-  end
-
   def try_pick_up(mouse_x, mouse_y)
     return false if @player_view_model.battered
 
@@ -204,6 +192,7 @@ class GameMapViewModel
   end
 
   def pet_move_to(x, y)
+    return if @player_view_model.pets_vms.count == 0
     map_vm = get_current_map
     unless map_vm.tile_block? x, y
       map_vm.mark_target(x, y) unless map_vm.nil?
@@ -211,8 +200,8 @@ class GameMapViewModel
     end
   end
 
-  def pet_action(state)
-    @player_view_model.pet_action state
+  def take_pets
+    @player_view_model.take_pets
   end
 
   private
