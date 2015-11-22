@@ -48,18 +48,11 @@ class GameMapViewModel
 
   def sort_visual_items
     @visual_items = []
-    process_role_vms do |role_vm|
-      @visual_items << role_vm
-    end
-    get_large_rubbish_vms.each do |large_rubbish_vm|
-      @visual_items << large_rubbish_vm
-    end
-    get_current_area.visual_element_vms.each do |element_vm|
-      @visual_items << element_vm
-    end
+    process_role_vms { |role_vm| @visual_items << role_vm }
+    get_large_rubbish_vms.each { |large_rubbish_vm| @visual_items << large_rubbish_vm }
+    get_current_area.visual_element_vms.each { |element_vm| @visual_items << element_vm }
     @player_view_model.pets_vms.each { |pet_vm| @visual_items << pet_vm }
-
-    @pet_vm_dict.each_value { |pet_vm| @visual_items << pet_vm }
+    process_other_pet_vms { |pet_vm| @visual_items << pet_vm }
 
     @visual_items.sort_by! {|item| item.y}
   end
@@ -117,11 +110,13 @@ class GameMapViewModel
     return if !current_map.nil? && map_id == current_map.id.to_sym
     @map_service.switch_map map_id, @player_view_model.role
     @role_vm_dict.clear
+    @pet_vm_dict.clear
     @player_view_model.switch_to_new_map
     @sound_join_map.play
   end
 
   def quit_map
+    @player_view_model.disappear_pets
     @map_service.quit_map
   end
 
@@ -404,24 +399,29 @@ class GameMapViewModel
         destination = pet_msg.destination
         if !@player_view_model.contains_pet_id?(pet_id)
           update_pet pet_msg.area_id.to_sym, pet_msg.pet_id, pet_msg.pet_type.to_sym,
-                     pet_msg.pet_map, destination
+                     pet_msg.action, pet_msg.pet_map, destination
         end
       end
     end
   end
 
-  def update_pet(area_id, pet_id, pet_type, pet_map, destination)
-    pet_vm = get_pet_vm(pet_id, pet_type)
+  def update_pet(area_id, pet_id, pet_type, action, pet_map, destination)
+    if action == PetMessage::APPEAR
+      pet_vm = get_pet_vm(pet_id, pet_type)
 
-    pet_vm.area_id = area_id
-    pet_vm.pet.x = pet_map['x'].to_i
-    pet_vm.pet.y = pet_map['y'].to_i
-    pet_vm.pet.state = pet_map['state'].to_sym
-    pet_vm.pet.durable_state = pet_map['durable_state'].to_sym
-    pet_vm.pet.direction = pet_map['direction']
+      pet_vm.area_id = area_id
+      pet_vm.pet.x = pet_map['x'].to_i
+      pet_vm.pet.y = pet_map['y'].to_i
+      pet_vm.pet.state = pet_map['state'].to_sym
+      pet_vm.pet.durable_state = pet_map['durable_state'].to_sym
+      pet_vm.pet.direction = pet_map['direction']
 
-    if destination.size > 0
-      pet_vm.move_to destination['x'].to_i, destination['y'].to_i
+      if destination.size > 0
+        pet_vm.move_to destination['x'].to_i, destination['y'].to_i
+      end
+    else
+      pet_vm = @pet_vm_dict[pet_id]
+      pet_vm.area_id = :none unless pet_vm.nil?
     end
   end
 
@@ -504,7 +504,7 @@ class GameMapViewModel
   end
 
   def is_in_chat_map
-    !get_current_map.nil?
+    @map_service.is_in_chat_map?
   end
 
   def touch_item?(mouse_x, mouse_y)

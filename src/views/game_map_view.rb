@@ -160,8 +160,6 @@ class GameMapView < ViewBase
       @ui_control_vm.switch_chat_board_visible
     end
 
-
-
     canvas.add exit_button
     canvas.add actions_bar_checkbox
     canvas.add chat_board_checkbox

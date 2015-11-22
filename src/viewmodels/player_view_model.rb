@@ -105,6 +105,7 @@ class PlayerViewModel
     stop_smash
     sync_role_appear
     @pets_vms.each { |pet_vm| pet_vm.appear_with_owner @role }
+    appear_pets
   end
 
   def switch_to_new_map
@@ -243,9 +244,11 @@ class PlayerViewModel
   end
 
   def choose_pet(pet)
+    disappear_pets
     player_pet_vm = PlayerPetViewModel.new(pet)
     player_pet_vm.appear_with_owner @role
     @pets_vms = [player_pet_vm]
+    appear_pets
   end
 
   def pet_move_to(x, y)
@@ -261,6 +264,14 @@ class PlayerViewModel
       pet_vm.pet_id == pet_id
     end
     !pet_vm.nil?
+  end
+
+  def appear_pets
+    @pets_vms.each { |pet_vm| pet_vm.appear }
+  end
+
+  def disappear_pets
+    @pets_vms.each { |pet_vm| pet_vm.disappear }
   end
 
   private

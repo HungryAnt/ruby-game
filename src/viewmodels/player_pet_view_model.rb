@@ -6,6 +6,7 @@ class PlayerPetViewModel < PetViewModel
 
   def appear_with_owner(role)
     @pet.x, @pet.y = role_side_location(role, 20)
+    @pet.disable_auto_move
   end
 
   def update(area, role)
@@ -50,6 +51,14 @@ class PlayerPetViewModel < PetViewModel
     remote_sync_data
   end
 
+  def appear
+    remote_sync_data
+  end
+
+  def disappear
+    remote_sync_data PetMessage::DISAPPEAR
+  end
+
   private
 
   def role_side_location(role, offset)
@@ -58,11 +67,11 @@ class PlayerPetViewModel < PetViewModel
 
   def remote_move_to(target_x, target_y)
     destination = {x: target_x, y: target_y}
-    remote_sync_data destination
+    remote_sync_data PetMessage::APPEAR, destination
   end
 
-  def remote_sync_data(destination = {})
-    pet_msg = PetMessage.new @pet.pet_id, @pet.pet_type, @pet.to_map,
+  def remote_sync_data(action = PetMessage::APPEAR, destination = {})
+    pet_msg = PetMessage.new @pet.pet_id, @pet.pet_type, action, @pet.to_map,
                              get_current_map_id, get_current_area_id,
                              destination
     @communication_service.send_pet_message pet_msg

@@ -63,4 +63,8 @@ class MapService
   def all_maps
     @map_list
   end
+
+  def is_in_chat_map?
+    !@current_map.nil?
+  end
 end
