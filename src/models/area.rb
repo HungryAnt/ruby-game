@@ -75,11 +75,12 @@ class Area
 
   # visual_element 参与地图物品y坐标排序显示
   def add_visual_element(params={})
-    image_path = params[:image_path]
+    image_path = params.include?(:image_path) ? params[:image_path] : nil
+    anim_key = params.include?(:anim) ? params[:anim] : nil
     left = params[:left]
     top = params[:top]
     y = params[:y]
-    @visual_elements << AreaVisualElement.new(image_path, left, top, y)
+    @visual_elements << AreaVisualElement.new(image_path, anim_key, left, top, y)
   end
 
   def tile_block?(x, y)

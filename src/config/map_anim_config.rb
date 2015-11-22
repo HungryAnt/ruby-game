@@ -136,4 +136,9 @@ lambda {
 
   # waste_station
   new_map_covering_anim(:waste_clerk, 'map/waste_station/WasteMesh_${num}.bmp', 1, 8, 450, false)
+
+  # church
+  new_map_covering_anim(:church_inside_window, 'map/church/inside/X-Mas00_ChurchIn_${num}.bmp', 4, 6, 150, false)
+  new_map_covering_anim(:church_inside_treetop, 'map/church/inside/X-Mas00_ChurchIn_${num}.bmp', 8, 15, 150)
+  new_map_covering_anim(:church_inside_bear, 'map/church/inside/X-Mas00_ChurchIn_${num}.bmp', 16, 23, 150)
 }.call
