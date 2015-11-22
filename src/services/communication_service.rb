@@ -140,6 +140,11 @@ class CommunicationService
     }
   end
 
+  def send_pet_message(pet_msg)
+    puts 'send_pet_message'
+    send pet_msg
+  end
+
   private
   def init_message_handler
     @network_service.register('res_sync_user_message') do |msg_map, params|
@@ -229,6 +234,11 @@ class CommunicationService
     @network_service.register('smash_large_rubbish_message') do |msg_map, params|
       msg = SmashLargeRubbishMessage.from_map(msg_map)
       @game_roles_service.smash msg.user_id, msg.area_id.to_sym
+    end
+
+    @network_service.register('pet_message') do |msg_map, params|
+      msg = PetMessage.from_map(msg_map)
+      @game_roles_service.update_pet msg
     end
   end
 

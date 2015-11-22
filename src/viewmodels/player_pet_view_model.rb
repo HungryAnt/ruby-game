@@ -20,7 +20,7 @@ class PlayerPetViewModel < PetViewModel
         sleep
       end
     end
-    super
+    super(area)
   end
 
   def move_random(area)
@@ -42,12 +42,12 @@ class PlayerPetViewModel < PetViewModel
 
   def sleep
     super
-    remote_sleep
+    remote_sync_data
   end
 
   def cute
     super
-    remote_cute
+    remote_sync_data
   end
 
   private
@@ -56,19 +56,23 @@ class PlayerPetViewModel < PetViewModel
     [role.x + offset - rand(offset*2), role.y + offset - rand(offset*2)]
   end
 
+  def remote_move_to(target_x, target_y)
+    destination = {x: target_x, y: target_y}
+    remote_sync_data destination
+  end
+
+  def remote_sync_data(destination = {})
+    pet_msg = PetMessage.new @pet.pet_id, @pet.pet_type, @pet.to_map,
+                             get_current_map_id, get_current_area_id,
+                             destination
+    @communication_service.send_pet_message pet_msg
+  end
+
+  def get_current_map_id
+    @map_service.current_map.id.to_s
+  end
+
   def get_current_area_id
     @map_service.current_map.current_area.id.to_s
-  end
-
-  def remote_move_to(target_x, target_y)
-
-  end
-
-  def remote_sleep
-
-  end
-
-  def remote_cute
-
   end
 end

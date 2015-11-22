@@ -1,10 +1,17 @@
 class PetViewModel
+  attr_accessor :area_id
+  attr_reader :pet
+
   def initialize(pet)
     @pet = pet
     @height = PetTypeInfo.get(pet.pet_type).height
     init_animations
     reset_durable_state
     @update_times = 0
+  end
+
+  def pet_id
+    @pet.pet_id
   end
 
   def x
@@ -20,7 +27,7 @@ class PetViewModel
     @pet.set_auto_move_to target_x, target_y
   end
 
-  def update(area, role)
+  def update(area)
     @pet.auto_move area
     update_state
   end

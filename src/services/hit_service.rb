@@ -113,10 +113,6 @@ class HitService
     end
   end
 
-  def cannot_move?(hit_type)
-    [Role::State::FINGER_HIT, Role::State::FART, Role::State::HEAD_HIT].include? hit_type
-  end
-
   private
   def get_sound(sound_path)
     MediaUtil::get_sample(sound_path)

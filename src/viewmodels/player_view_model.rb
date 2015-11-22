@@ -256,6 +256,13 @@ class PlayerViewModel
     @pets_vms = []
   end
 
+  def contains_pet_id?(pet_id)
+    pet_vm = @pets_vms.find do |pet_vm|
+      pet_vm.pet_id == pet_id
+    end
+    !pet_vm.nil?
+  end
+
   private
 
   def eat

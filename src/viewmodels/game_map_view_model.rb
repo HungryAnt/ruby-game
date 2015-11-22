@@ -13,6 +13,7 @@ class GameMapViewModel
     @player_view_model = PlayerViewModel.new(RoleViewModel.new(role))
     @mouse_vm = MouseViewModel.new
     init_roles
+    init_pets
     init_area_items
     init_large_rubbishes
     @package_items_view_model = PackageItemsViewModel.new(@player_view_model)
@@ -34,6 +35,10 @@ class GameMapViewModel
 
     @player_view_model.update area
 
+    process_other_pet_vms do |pet_vm|
+      pet_vm.update area
+    end
+
     sort_visual_items
 
     goto_area
@@ -53,21 +58,15 @@ class GameMapViewModel
     end
     @player_view_model.pets_vms.each { |pet_vm| @visual_items << pet_vm }
 
+    @pet_vm_dict.each_value { |pet_vm| @visual_items << pet_vm }
+
     @visual_items.sort_by! {|item| item.y}
   end
 
   def draw
     @map_service.draw_map
-    # draw_role_vms
     get_item_vms.each { |item_vm| item_vm.draw }
-    # get_large_rubbish_vms.each {|large_rubbish_vm| large_rubbish_vm.draw}
     @visual_items.each {|item| item.draw}
-  end
-
-  def draw_role_vms
-    process_role_vms do |role_vm|
-      role_vm.draw
-    end
   end
 
   def draw_mouse(mouse_x, mouse_y)
@@ -75,11 +74,18 @@ class GameMapViewModel
   end
 
   def process_role_vms
-    area_id = @map_service.current_area.id
+    area_id = get_current_area.id
     @role_vm_dict.each_value do |role_vm|
       yield role_vm if role_vm.area_id == area_id
     end
     yield @player_view_model.role_vm
+  end
+
+  def process_other_pet_vms
+    area_id = get_current_area.id
+    @pet_vm_dict.each_value do |pet_vm|
+      yield pet_vm if pet_vm.area_id == area_id
+    end
   end
 
   def update_mouse_type(mouse_x, mouse_y)
@@ -219,6 +225,11 @@ class GameMapViewModel
     register_collecting_rubbish_call_back
     register_collecting_nutrient_call_back
     register_smash_callback
+  end
+
+  def init_pets
+    @pet_vm_dict = {}
+    register_update_pet_callback
   end
 
   def register_update_lv_callback
@@ -385,6 +396,34 @@ class GameMapViewModel
     end
   end
 
+  def register_update_pet_callback
+    @game_roles_service.register_update_pet_callback do |pet_msg|
+      if is_in_chat_map
+        pet_id = pet_msg.pet_id
+        destination = pet_msg.destination
+        if !@player_view_model.contains_pet_id?(pet_id)
+          update_pet pet_msg.area_id.to_sym, pet_msg.pet_id, pet_msg.pet_type.to_sym,
+                     pet_msg.pet_map, destination
+        end
+      end
+    end
+  end
+
+  def update_pet(area_id, pet_id, pet_type, pet_map, destination)
+    pet_vm = get_pet_vm(pet_id, pet_type)
+
+    pet_vm.area_id = area_id
+    pet_vm.pet.x = pet_map['x'].to_i
+    pet_vm.pet.y = pet_map['y'].to_i
+    pet_vm.pet.state = pet_map['state'].to_sym
+    pet_vm.pet.durable_state = pet_map['durable_state'].to_sym
+    pet_vm.pet.direction = pet_map['direction']
+
+    if destination.size > 0
+      pet_vm.move_to destination['x'].to_i, destination['y'].to_i
+    end
+  end
+
   def role_vm_eat_food(role_vm, food_type_id, quietly = false)
     food_vm = ItemViewModelFactory.create_simple_food_vm(food_type_id)
     if quietly || role_vm.area_id != get_current_area.id
@@ -437,6 +476,16 @@ class GameMapViewModel
       @role_vm_dict[user_id] = role_vm
     end
     role_vm
+  end
+
+  def get_pet_vm(pet_id, pet_type)
+    pet_vm = @pet_vm_dict[pet_id]
+    if pet_vm.nil?
+      pet = Pet.new(pet_id, pet_type, 110, 310)
+      pet_vm = PetViewModel.new(pet)
+      @pet_vm_dict[pet_id] = pet_vm
+    end
+    pet_vm
   end
 
   def get_current_map
