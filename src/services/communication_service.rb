@@ -2,8 +2,9 @@ class CommunicationService
   attr_reader :revision
 
   def initialize
-    autowired(NetworkService, UserService, GameRolesService, AreaItemsService,
-              MapUserCountService, LargeRubbishesService)
+    autowired(NetworkService, UserService,
+              GameRolesCommunicationHandler, PetCommunicationHandler,
+              AreaItemsService, MapUserCountService, LargeRubbishesService)
     @mutex = Mutex.new
     @chat_msgs = []
     @revision = 0
@@ -165,7 +166,7 @@ class CommunicationService
       chat_msg = ChatMessage.from_map(msg_map)
       # puts "[#{text_message.sender}: #{text_message.content}]"
       add_chat_msg chat_msg
-      @game_roles_service.chat chat_msg.user_id, chat_msg.user_name, chat_msg.content
+      @game_roles_communication_handler.chat chat_msg.user_id, chat_msg.user_name, chat_msg.content
     end
 
     @network_service.register('system_message') do |msg_map, params|
@@ -175,12 +176,12 @@ class CommunicationService
 
     @network_service.register('quit_message') do |msg_map, params|
       quit_msg = QuitMessage.from_map(msg_map)
-      @game_roles_service.delete_role quit_msg.user_id
+      @game_roles_communication_handler.delete_role quit_msg.user_id
     end
 
     @network_service.register('role_message') do |msg_map, params|
       role_msg = RoleMessage.from_map(msg_map)
-      @game_roles_service.add_role_msg role_msg
+      @game_roles_communication_handler.add_role_msg role_msg
     end
 
     @network_service.register('area_item_message') do |msg_map, params|
@@ -190,33 +191,33 @@ class CommunicationService
 
     @network_service.register('eating_food_message') do |msg_map, params|
       eating_food_msg = EatingFoodMessage.from_map(msg_map)
-      @game_roles_service.eating_food eating_food_msg.user_id, eating_food_msg.food_map['food_type_id'].to_i
+      @game_roles_communication_handler.eating_food eating_food_msg.user_id, eating_food_msg.food_map['food_type_id'].to_i
     end
 
     @network_service.register('eat_up_food_message') do |msg_map, params|
       eat_up_food_msg = EatUpFoodMessage.from_map(msg_map)
-      @game_roles_service.eat_up_food eat_up_food_msg.user_id
+      @game_roles_communication_handler.eat_up_food eat_up_food_msg.user_id
     end
 
     @network_service.register('hit_message') do |msg_map, params|
       hit_msg = HitMessage.from_map(msg_map)
-      @game_roles_service.hit hit_msg.user_id, hit_msg.area_id.to_sym,
+      @game_roles_communication_handler.hit hit_msg.user_id, hit_msg.area_id.to_sym,
                               hit_msg.hit_type.to_sym, hit_msg.target_x, hit_msg.target_y
     end
 
     @network_service.register('being_battered_message') do |msg_map, params|
       being_battered_msg = BeingBatteredMessage.from_map(msg_map)
-      @game_roles_service.being_battered being_battered_msg.user_id, being_battered_msg.hit_type
+      @game_roles_communication_handler.being_battered being_battered_msg.user_id, being_battered_msg.hit_type
     end
 
     @network_service.register('collecting_rubbish_message') do |msg_map, params|
       collecting_rubbish_msg = CollectingRubbishMessage.from_map(msg_map)
-      @game_roles_service.collecting_rubbish collecting_rubbish_msg.user_id
+      @game_roles_communication_handler.collecting_rubbish collecting_rubbish_msg.user_id
     end
 
     @network_service.register('collecting_nutrient_message') do |msg_map, params|
       collecting_nutrient_msg = CollectingNutrientMessage.from_map(msg_map)
-      @game_roles_service.collecting_nutrient collecting_nutrient_msg.user_id
+      @game_roles_communication_handler.collecting_nutrient collecting_nutrient_msg.user_id
     end
 
     @network_service.register('map_user_count_message') do |msg_map, params|
@@ -233,12 +234,12 @@ class CommunicationService
 
     @network_service.register('smash_large_rubbish_message') do |msg_map, params|
       msg = SmashLargeRubbishMessage.from_map(msg_map)
-      @game_roles_service.smash msg.user_id, msg.area_id.to_sym
+      @game_roles_communication_handler.smash msg.user_id, msg.area_id.to_sym
     end
 
     @network_service.register('pet_message') do |msg_map, params|
       msg = PetMessage.from_map(msg_map)
-      @game_roles_service.update_pet msg
+      @pet_communication_handler.update_pet msg
     end
   end
 

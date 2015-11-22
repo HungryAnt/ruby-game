@@ -1,4 +1,4 @@
-class GameRolesService
+class GameRolesCommunicationHandler
   def initialize
     @mutex = Mutex.new
     @role_msg_call_back = nil
@@ -16,8 +16,6 @@ class GameRolesService
     @collecting_nutrient_call_back = nil
 
     @smash_callback = nil
-
-    @update_pet_callback = nil
   end
 
   def register_role_msg_call_back(&role_msg_call_back)
@@ -58,10 +56,6 @@ class GameRolesService
 
   def register_smash_callback(&callback)
     @smash_callback = callback
-  end
-
-  def register_update_pet_callback(&callback)
-    @update_pet_callback = callback
   end
 
   def add_role_msg(role_msg)
@@ -110,9 +104,5 @@ class GameRolesService
 
   def smash(user_id, area_id)
     @smash_callback.call user_id, area_id
-  end
-
-  def update_pet(pet_msg)
-    @update_pet_callback.call pet_msg
   end
 end

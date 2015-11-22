@@ -3,7 +3,8 @@ class GameMapViewModel
 
   def initialize
     autowired(PlayerService, CommunicationService, MapService,
-              GameRolesService, AreaItemsService, NetworkService,
+              GameRolesCommunicationHandler, PetCommunicationHandler,
+              AreaItemsService, NetworkService,
               LargeRubbishesService, UserService)
     @sound_join_map = MediaUtil::get_sample('join_map.wav')
   end
@@ -239,7 +240,7 @@ class GameMapViewModel
   end
 
   def register_role_msg_call_back
-    @game_roles_service.register_role_msg_call_back do |role_msg|
+    @game_roles_communication_handler.register_role_msg_call_back do |role_msg|
       if is_in_chat_map
         user_id = role_msg.user_id
 
@@ -289,14 +290,14 @@ class GameMapViewModel
   end
 
   def register_delete_role_call_back
-    @game_roles_service.register_delete_role_call_back do |user_id|
+    @game_roles_communication_handler.register_delete_role_call_back do |user_id|
       role_vm = @role_vm_dict[user_id]
       role_vm.area_id = :none unless role_vm.nil?
     end
   end
 
   def register_eating_food_call_back
-    @game_roles_service.register_eating_food_call_back do |user_id, food_type_id|
+    @game_roles_communication_handler.register_eating_food_call_back do |user_id, food_type_id|
       if is_in_chat_map
         if @player_service.user_id != user_id
           role_vm = @role_vm_dict[user_id]
@@ -307,7 +308,7 @@ class GameMapViewModel
   end
 
   def register_eat_up_food_call_back
-    @game_roles_service.register_eat_up_food_call_back do |user_id|
+    @game_roles_communication_handler.register_eat_up_food_call_back do |user_id|
       if @player_service.user_id != user_id
         role_vm = @role_vm_dict[user_id]
         role_vm.clear_food unless role_vm.nil?
@@ -316,7 +317,7 @@ class GameMapViewModel
   end
 
   def register_chat_call_back
-    @game_roles_service.register_chat_call_back do |user_id, user_name, content|
+    @game_roles_communication_handler.register_chat_call_back do |user_id, user_name, content|
       if @player_service.user_id == user_id
         role_vm = @player_view_model.role_vm
       else
@@ -327,7 +328,7 @@ class GameMapViewModel
   end
 
   def register_hit_call_back
-    @game_roles_service.register_hit_call_back do |user_id, area_id, hit_type, target_x, target_y|
+    @game_roles_communication_handler.register_hit_call_back do |user_id, area_id, hit_type, target_x, target_y|
       if is_in_chat_map
         if @player_service.user_id != user_id && is_current_area(area_id)
           role_vm = @role_vm_dict[user_id]
@@ -341,7 +342,7 @@ class GameMapViewModel
   end
 
   def register_being_battered_call_back
-    @game_roles_service.register_being_battered_call_back do |user_id, hit_type|
+    @game_roles_communication_handler.register_being_battered_call_back do |user_id, hit_type|
       if is_in_chat_map
         if @player_service.user_id != user_id
           role_vm = @role_vm_dict[user_id]
@@ -354,7 +355,7 @@ class GameMapViewModel
   end
 
   def register_collecting_rubbish_call_back
-    @game_roles_service.register_collecting_rubbish_call_back do |user_id|
+    @game_roles_communication_handler.register_collecting_rubbish_call_back do |user_id|
       if is_in_chat_map
         if @player_service.user_id != user_id
           role_vm = @role_vm_dict[user_id]
@@ -367,7 +368,7 @@ class GameMapViewModel
   end
 
   def register_collecting_nutrient_call_back
-    @game_roles_service.register_collecting_nutrient_call_back do |user_id|
+    @game_roles_communication_handler.register_collecting_nutrient_call_back do |user_id|
       if is_in_chat_map
         if @player_service.user_id != user_id
           role_vm = @role_vm_dict[user_id]
@@ -380,7 +381,7 @@ class GameMapViewModel
   end
 
   def register_smash_callback
-    @game_roles_service.register_smash_callback do |user_id, area_id|
+    @game_roles_communication_handler.register_smash_callback do |user_id, area_id|
       call_role_vm(user_id, area_id) {|role_vm| role_vm.hit(:smash)}
     end
   end
@@ -397,7 +398,7 @@ class GameMapViewModel
   end
 
   def register_update_pet_callback
-    @game_roles_service.register_update_pet_callback do |pet_msg|
+    @pet_communication_handler.register_update_pet_callback do |pet_msg|
       if is_in_chat_map
         pet_id = pet_msg.pet_id
         destination = pet_msg.destination
