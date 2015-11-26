@@ -129,13 +129,15 @@ class MainWindow < Gosu::Window
     if GameConfig::DEBUG
       diff = Gosu::milliseconds - @begin_times
       return if diff == 0
-      update_rate = @update_times * 1000 / diff
-      @font.draw("update: #{update_rate} per second", 10, 30,
-                 ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
 
-      draw_rate = @draw_times * 1000 / diff
-      @font.draw("draw: #{draw_rate} per second", 10, 50,
-                 ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+      @font.draw('Debug', 10, 30, ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+      # update_rate = @update_times * 1000 / diff
+      # @font.draw("update: #{update_rate} per second", 10, 30,
+      #            ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
+      #
+      # draw_rate = @draw_times * 1000 / diff
+      # @font.draw("draw: #{draw_rate} per second", 10, 50,
+      #            ZOrder::UI, 1.0, 1.0, 0xff_ffff00)
     end
   end
 

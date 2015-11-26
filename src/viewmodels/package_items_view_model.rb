@@ -16,7 +16,7 @@ class PackageItemsViewModel
   end
 
   def get_pets
-    @player_vm.role.package.items.find_all {|item| item.instance_of? Pet}
+    @player_vm.role.pet_package.items
   end
 
   def choose_equipment(equipment)

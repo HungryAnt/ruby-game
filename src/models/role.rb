@@ -53,7 +53,7 @@ class Role
 
   attr_accessor :state, :durable_state, :direction, :role_type,
                 :hp, :vehicle, :driving, :battered, :battered_by_hit_type
-  attr_reader :package, :name, :rubbish_bin, :nutrient_bin
+  attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package
 
   def initialize(name, role_type, x, y)
     @name = name
@@ -64,6 +64,8 @@ class Role
     init_exp
 
     @package = Package.new 100
+    @pet_package = Package.new 100
+
     @eating_food = nil
     @state = State::STANDING
     @durable_state = State::STANDING
@@ -103,8 +105,6 @@ class Role
     super
     dec_hp(GameConfig::RUNNING_HP_DEC) if @running
   end
-
-
 
   def start_eat(food)
     @eating_food = food

@@ -34,13 +34,14 @@ class ShoppingViewModel
   end
 
   def get_package_pet_keys_set
-    pets = find_packege_items Pet
+    pets = @player_service.role.pet_package.items
     Set.new pets.map {|pet| pet.pet_type}
   end
 
   def buy(key)
     @shopping_service.buy(@player_service.user_id, key)
     @user_equipment_service.update
+    @player_service.update_pets
   end
 
   def apply_gift_vehicle

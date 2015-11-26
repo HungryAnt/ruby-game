@@ -89,6 +89,8 @@ require 'messages/inc_exp_message'
 require 'messages/collecting_nutrient_message'
 require 'messages/pet_message'
 
+require 'clients/yecai_web_client'
+
 require 'services/http_client_factory'
 require 'services/equipment_definition'
 require 'services/role_type_definition'
