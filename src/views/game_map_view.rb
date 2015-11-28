@@ -83,7 +83,7 @@ class GameMapView < ViewBase
   end
 
   def button_down(id)
-    if @ui_control_vm.actions_bar_visible
+    if !chat_input_enabled? && @ui_control_vm.actions_bar_visible
       return if @actions_bar_view.button_down(id)
     end
 

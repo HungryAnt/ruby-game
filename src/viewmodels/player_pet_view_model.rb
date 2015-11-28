@@ -1,6 +1,7 @@
 class PlayerPetViewModel < PetViewModel
   def initialize(pet)
     autowired(MapService, CommunicationService)
+    @order_time_stamp = 0
     super
   end
 
@@ -9,16 +10,23 @@ class PlayerPetViewModel < PetViewModel
     @pet.disable_auto_move
   end
 
+  def order_move_to(target_x, target_y)
+    move_to target_x, target_y
+    @order_time_stamp = Gosu::milliseconds
+  end
+
   def update(area, role)
     @update_times += 1
-    if rand(5 * GameConfig::FPS) == 0
-      rand_num = rand 10
-      if rand_num < 4
-        move_random area
-      elsif rand_num < 6
-        move_to_owner role
-      elsif rand_num < 9
-        sleep
+    if Gosu::milliseconds - @order_time_stamp > 8000
+      if rand(5 * GameConfig::FPS) == 0
+        rand_num = rand 10
+        if rand_num < 4
+          move_random area
+        elsif rand_num < 6
+          move_to_owner role
+        else
+          sleep
+        end
       end
     end
     super(area)

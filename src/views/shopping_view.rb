@@ -192,7 +192,7 @@ class ShoppingView < ViewBase
 
     recharge_button = create_button '【土豪充值入口】'
     recharge_button.on_mouse_left_button_down do
-      recharge_url = "http://#{NetworkConfig::HOST_NAME}/yecai/chongzhi.html"
+      recharge_url = NetworkConfig::RECHARGE_URL
       system "start explorer #{recharge_url}"
     end
 

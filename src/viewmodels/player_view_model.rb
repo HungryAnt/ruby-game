@@ -252,7 +252,7 @@ class PlayerViewModel
   end
 
   def pet_move_to(x, y)
-    @pets_vms.each { |pet_vm| pet_vm.move_to x, y }
+    @pets_vms.each { |pet_vm| pet_vm.order_move_to x, y }
   end
 
   def take_pets

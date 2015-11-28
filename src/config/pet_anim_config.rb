@@ -9,7 +9,8 @@ lambda {
     new_direction_anims pet_type_prefix, pet_pattern, 'stand',
                         hor_nums_pair:options[:stand_hor],
                         up_nums_pair:options[:stand_up],
-                        down_nums_pair:options[:stand_down]
+                        down_nums_pair:options[:stand_down],
+                        anim_interval:250
 
     new_direction_anims pet_type_prefix, pet_pattern, 'move',
                         hor_nums_pair:options[:move_hor],
