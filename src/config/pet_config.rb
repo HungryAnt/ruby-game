@@ -16,4 +16,9 @@ lambda {
   add.call 'f', 1, '紫圈', 24
   add.call 'f', 2, '辉巴', 20
   add.call 'f', 3, '皮克', 37
+
+  add.call 'g', 1, '达伊', 23
+  add.call 'g', 2, '萍萍', 25
+  add.call 'g', 3, '紫尾巴', 26
+  add.call 'g', 4, '明明', 25
 }.call

@@ -62,4 +62,21 @@ lambda {
                 move_hor:[108, 113], move_up:[72, 77], move_down:[12, 17],
                 attack_hor:[114, 131], attack_up:[78, 95], attack_down:[18, 35],
                 sleep:[36, 47], cute:[48, 59]
+
+  new_pet_anims 'g', 1, stand_down:[0, 3], move_down:[4, 7], attack_down:[8, 28],
+                sleep:[29, 32], cute:[33, 36], stand_up:[37, 40], move_up:[41, 44],
+                attack_up:[45, 65], stand_hor:[66, 69], move_hor:[70, 73], attack_hor:[74, 94]
+
+  new_pet_anims 'g', 2, stand_down:[0, 3], move_down:[4, 7], attack_down:[8, 24],
+                sleep:[25, 28], cute:[29, 36], stand_up:[37, 40], move_up:[41, 44],
+                attack_up:[45, 62], stand_hor:[63, 66], move_hor:[67, 70], attack_hor:[71, 88]
+
+  new_pet_anims 'g', 3, stand_down:[0, 3], move_down:[4, 9], attack_down:[10, 19],
+                sleep:[20, 23], cute:[24, 29], stand_up:[41, 44], move_up:[45, 48],
+                attack_up:[49, 58], stand_hor:[59, 62], move_hor:[63, 70], attack_hor:[71, 80]
+
+  new_pet_anims 'g', 4, stand_down:[0, 3], move_down:[4, 7], attack_down:[8, 18],
+                sleep:[19, 22], cute:[23, 26], stand_up:[27, 30], move_up:[31, 34],
+                attack_up:[35, 45], stand_hor:[46, 49], move_hor:[50, 53], attack_hor:[54, 64]
+
 }.call
