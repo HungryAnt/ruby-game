@@ -1,23 +1,22 @@
-class VehicleViewModel
-  attr_reader :key, :vehicle, :vehicle_body_height, :speed_up
+class EquipmentViewModel
+  attr_reader :equipment, :key
 
-  def initialize(key)
-    @key = key
-    init_anims key
-    props = EquipmentDefinition.get_props key
-    @vehicle_body_height = props[:body_height]
-    @speed_up = props[:speed_up]
+  def initialize(equipment)
+    @equipment = equipment
+    @key = equipment.key
+    init_anims
+    props = EquipmentDefinition.get_props @key
     @location_offset = props[:offset]
-    @vehicle = Vehicle.new(key, @speed_up)
   end
 
   def type
-    Equipment::Type::VEHICLE
+    @equipment.type
   end
 
   def draw(role_x, role_y, direction)
     direction_text = Direction::to_direction_text direction
     anim = self.instance_variable_get("@anim_#{direction_text}")
+    return if anim.nil?
     x, y = role_x, role_y - 30
     offset_x, offset_y = @location_offset[direction_text.to_sym]
     anim.draw(x + offset_x, y + offset_y, ZOrder::Player)
@@ -25,10 +24,10 @@ class VehicleViewModel
 
   private
 
-  def init_anims(key)
+  def init_anims
     %w(left right up down).each do |direction|
       self.instance_variable_set("@anim_#{direction}",
-                                 get_anim("#{key}_#{direction}".to_sym))
+                                 get_anim("#{@key}_#{direction}".to_sym))
     end
   end
 

@@ -70,6 +70,7 @@ class PackageItemsView
     rubbish_panel = init_rubbish_panel
     nutrient_panel = init_nutrient_panel
     vehicle_panel = init_vehicle_panel
+    eye_wear_panel = init_equipment_eye_wear
     pet_panel = init_pet_panel
 
     right_panel.content = rubbish_panel
@@ -78,9 +79,10 @@ class PackageItemsView
     rubbish_tab = AntGui::TextBlock.new(@prompt_font, '  垃圾')
     nutrient_tab = AntGui::TextBlock.new(@prompt_font, '  物资')
     vehicle_tab = AntGui::TextBlock.new(@prompt_font, '  载具')
+    eye_wear_tab = AntGui::TextBlock.new(@prompt_font, '  眼部饰品')
     pet_tab = AntGui::TextBlock.new(@prompt_font, '  萌宠!')
 
-    all_tabs = [rubbish_tab, nutrient_tab, vehicle_tab, pet_tab]
+    all_tabs = [rubbish_tab, nutrient_tab, vehicle_tab, eye_wear_tab, pet_tab]
 
     rubbish_tab.background_color = 0x88_FFFFFF
 
@@ -98,6 +100,7 @@ class PackageItemsView
     init_tab_event.call rubbish_tab, rubbish_panel
     init_tab_event.call nutrient_tab, nutrient_panel
     init_tab_event.call vehicle_tab, vehicle_panel
+    init_tab_event.call eye_wear_tab, eye_wear_panel
     init_tab_event.call pet_tab, pet_panel
 
     all_tabs.each { |tab| left_panel.add tab }
@@ -165,7 +168,7 @@ class PackageItemsView
     items = vehicles.map do |vehicle|
       {
           data: vehicle,
-          content: create_vehicle_content(vehicle)
+          content: create_equipment_content(vehicle)
       }
     end
     create_panel('点击切换载具，Q键上下车', items) do |item|
@@ -174,8 +177,26 @@ class PackageItemsView
     end
   end
 
-  def create_vehicle_content(vehicle)
-    image = EquipmentDefinition.get_item_image(vehicle.key)
+  def init_equipment_eye_wear
+    init_common_equipment_panel '眼部饰品', :get_eye_wears
+  end
+
+  def init_common_equipment_panel(prompt_text, query_method)
+    equipments = @package_items_vm.send query_method
+    items = equipments.map do |equipment|
+      {
+          data: equipment,
+          content: create_equipment_content(equipment)
+      }
+    end
+    create_panel(prompt_text, items) do |item|
+      @package_items_vm.choose_equipment item[:data]
+      @visible = false
+    end
+  end
+
+  def create_equipment_content(equipment)
+    image = EquipmentDefinition.get_item_image(equipment.key)
     AntGui::Image.new(image)
   end
 

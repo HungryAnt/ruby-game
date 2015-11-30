@@ -19,9 +19,12 @@ class PackageItemsViewModel
     @player_vm.role.pet_package.items
   end
 
+  def get_eye_wears
+    @player_vm.role.eye_wear_package.items
+  end
+
   def choose_equipment(equipment)
     @player_vm.equip(EquipmentViewModelFactory.create_equipment(equipment))
-    @player_vm.set_driving true
   end
 
   def choose_pet(pet)

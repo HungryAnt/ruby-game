@@ -53,7 +53,7 @@ class Role
 
   attr_accessor :state, :durable_state, :direction, :role_type,
                 :hp, :vehicle, :driving, :battered, :battered_by_hit_type
-  attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package
+  attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package, :eye_wear_package
 
   def initialize(name, role_type, x, y)
     @name = name
@@ -65,6 +65,7 @@ class Role
 
     @package = Package.new 100
     @pet_package = Package.new 100
+    @eye_wear_package = Package.new 100
 
     @eating_food = nil
     @state = State::STANDING

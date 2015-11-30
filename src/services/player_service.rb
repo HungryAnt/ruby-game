@@ -43,6 +43,12 @@ class PlayerService
       PetTypeInfo.all_pet_types.each do |pet_type|
         @role.pet_package << Pet.new(SecureRandom.uuid, pet_type, 200, 200)
       end
+
+      [1, 17, 20, 21, 97].each do |num|
+        key = "eye_wear_#{num}".to_sym
+        @role.eye_wear_package << Equipment.new(Equipment::Type::EYE_WEAR, key);
+      end
+
     else
       vehicles = @user_service.vehicles
       update_vehicles vehicles

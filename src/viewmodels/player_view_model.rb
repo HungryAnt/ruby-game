@@ -49,7 +49,15 @@ class PlayerViewModel
   end
 
   def equip(equipment_vm)
-    @role_vm.vehicle_vm = equipment_vm
+    case equipment_vm.type
+      when Equipment::Type::VEHICLE
+        @role_vm.vehicle_vm = equipment_vm
+        set_driving true
+      when Equipment::Type::EYE_WEAR
+        @role_vm.eye_wear_vm = equipment_vm
+      else
+        # type code here
+    end
   end
 
   def pick_up(item_vms, item_vm)

@@ -1,6 +1,6 @@
 class RoleViewModel
   attr_reader :role, :hitting
-  attr_accessor :area_id, :vehicle_vm
+  attr_accessor :area_id, :vehicle_vm, :eye_wear_vm
 
   def initialize(role)
     autowired(MapService, HitService)
@@ -13,13 +13,18 @@ class RoleViewModel
     @arrive_call_back = nil
     stop
     @area_id = nil
-    @vehicle_vm = nil
+    init_equipments
     @chat_bubble_vm = ChatBubbleViewModel.new
     @update_times = 0
     init_hit_components
     init_sound
     reset_durable_state
     @anim_init_timestamp = Gosu::milliseconds
+  end
+
+  def init_equipments
+    @vehicle_vm = nil
+    @eye_wear_vm = nil
   end
 
   def init_hit_components
@@ -294,6 +299,7 @@ class RoleViewModel
     if driving?
       @vehicle_vm.draw(@role.x, @role.y, @role.direction)
     end
+    @eye_wear_vm.draw(@role.x, @role.y, @role.direction) unless @eye_wear_vm.nil?
   end
 
   def draw_level_and_name
