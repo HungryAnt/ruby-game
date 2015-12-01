@@ -128,6 +128,10 @@ class GameMapView < ViewBase
       #   @game_map_view_model.pet_action Pet::State::SLEEP
       # when Gosu::KbP
       #   @game_map_view_model.pet_action Pet::State::CUTE
+      when Gosu::KbRight
+        @game_map_view_model.switch_to_next_role_type
+      when Gosu::KbLeft
+        @game_map_view_model.switch_to_prev_role_type
     end
   end
 

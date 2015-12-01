@@ -282,6 +282,11 @@ class PlayerViewModel
     @pets_vms.each { |pet_vm| pet_vm.disappear }
   end
 
+  def update_animations
+    @role_vm.init_animations
+    @role_vm.update_state
+  end
+
   private
 
   def eat

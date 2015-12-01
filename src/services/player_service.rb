@@ -44,7 +44,7 @@ class PlayerService
         @role.pet_package << Pet.new(SecureRandom.uuid, pet_type, 200, 200)
       end
 
-      [1, 17, 20, 21, 97].each do |num|
+      [17, 20, 21, 97, 282].each do |num|
         key = "eye_wear_#{num}".to_sym
         @role.eye_wear_package << Equipment.new(Equipment::Type::EYE_WEAR, key);
       end

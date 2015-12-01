@@ -206,6 +206,18 @@ class GameMapViewModel
     @player_view_model.take_pets
   end
 
+  def switch_to_next_role_type
+    current_role_type = @player_view_model.role.role_type
+    @player_view_model.role.role_type = RoleType::next(current_role_type)
+    @player_view_model.update_animations
+  end
+
+  def switch_to_prev_role_type
+    current_role_type = @player_view_model.role.role_type
+    @player_view_model.role.role_type = RoleType::prev(current_role_type)
+    @player_view_model.update_animations
+  end
+
   private
 
   def init_roles
