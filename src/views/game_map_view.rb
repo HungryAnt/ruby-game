@@ -18,6 +18,16 @@ class GameMapView < ViewBase
     @package_items_view = PackageItemsView.new(@window, @game_map_view_model.package_items_view_model)
     init_chat_text_input
     init_buttons
+    init_monsters
+  end
+
+  def init_monsters
+    @monster_vms = []
+    monster = Monster.new('xxx', 'monster_0002', 300, 300)
+    @monster_vms << MonsterViewModel.new(monster)
+
+    monster = Monster.new('xxx', 'monster_0004', 600, 300)
+    @monster_vms << MonsterViewModel.new(monster)
   end
 
   def on_exit(&exit_call_back)
@@ -80,6 +90,8 @@ class GameMapView < ViewBase
 
     @game_map_view_model.draw_mouse @window.mouse_x, @window.mouse_y
     @status_dialog.draw
+
+    @monster_vms.each { |monster_vm| monster_vm.draw }
   end
 
   def button_down(id)
