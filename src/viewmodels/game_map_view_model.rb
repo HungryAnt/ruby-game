@@ -3,23 +3,23 @@ class GameMapViewModel
 
   include GameMouse
   include GameRole
+  include GameMap
   include GamePet
-  include GameMonster
   include GameAreaItems
   include GameLargeRubbish
-  include GameMap
+  include GameMonster
 
   def initialize
     autowired(PlayerService, CommunicationService, MapService,
               GameRolesCommunicationHandler, PetCommunicationHandler,
               AreaItemsService, NetworkService,
               LargeRubbishesService, UserService)
-    @sound_join_map = MediaUtil::get_sample('join_map.wav')
   end
 
   def init
     init_mouse
     init_roles
+    init_map
     init_pets
     init_area_items
     init_large_rubbishes
@@ -45,6 +45,10 @@ class GameMapViewModel
 
     travel_other_pet_vms do |pet_vm|
       pet_vm.update area
+    end
+
+    travel_monsters do |monster_vm|
+      monster_vm.update area
     end
 
     sort_visual_items

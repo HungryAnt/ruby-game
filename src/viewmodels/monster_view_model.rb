@@ -16,6 +16,15 @@ class MonsterViewModel
     @monster.y
   end
 
+  def move_to(x, y)
+    @monster.set_auto_move_to x, y
+  end
+
+  def update(area)
+    @monster.auto_move area
+    update_state
+  end
+
   private
 
   def init_animations
@@ -42,5 +51,28 @@ class MonsterViewModel
 
   def get_actual_pet_location
     [@monster.x, @monster.y - @height]
+  end
+
+  def update_state
+    set_state get_state
+  end
+
+  def set_state(state)
+    @monster.state = state
+    change_anim
+  end
+
+  def get_state
+    if @monster.standing
+      @monster.durable_state
+    else
+      Monster::State::MOVE
+    end
+  end
+
+  def change_anim
+    state = @monster.state.to_s
+    direction = Direction::to_direction_text(@monster.direction)
+    @current_anim = self.instance_variable_get("@anim_#{state}_#{direction}")
   end
 end

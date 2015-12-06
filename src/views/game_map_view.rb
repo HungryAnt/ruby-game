@@ -136,8 +136,8 @@ class GameMapView < ViewBase
 
     if GameConfig::TEST_MONSTER
       case id
-        when Gosu::KbRight
-          nil
+        when Gosu::MsRight
+          @game_map_view_model.monster_move_to *get_mouse_location
       end
     end
 
@@ -148,6 +148,10 @@ class GameMapView < ViewBase
   end
 
   private
+
+  def get_mouse_location
+    return @window.mouse_x, @window.mouse_y
+  end
 
   def init_buttons
     @status_dialog = AntGui::Dialog.new(0, 0, GameConfig::STATUS_BAR_WIDTH, GameConfig::STATUS_BAR_HEIGHT)

@@ -1,4 +1,8 @@
 module GameMap
+  def init_map
+    @sound_join_map = MediaUtil::get_sample('join_map.wav')
+  end
+
   def switch_map(map_id)
     current_map = get_current_map
     return if !current_map.nil? && map_id == current_map.id.to_sym

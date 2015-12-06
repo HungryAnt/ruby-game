@@ -11,7 +11,7 @@ class Monster
     ALL_STATES = [STAND, MOVE, ATTACK, CAPITULATE]
   end
 
-  attr_accessor :state
+  attr_accessor :state, :durable_state
   attr_reader :monster_id, :monster_type
 
   include Location
@@ -23,6 +23,7 @@ class Monster
     @monster_id = monster_id
     @monster_type = monster_type
     @state = State::STAND
+    @durable_state = State::STAND
   end
 
   def to_map
