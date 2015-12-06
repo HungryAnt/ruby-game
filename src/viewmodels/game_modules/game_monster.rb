@@ -16,4 +16,8 @@ module GameMonster
     return if @monster_vms.count == 0
     @monster_vms.each { |monster_vm| monster_vm.move_to x, y }
   end
+
+  def set_monster_action(state)
+    @monster_vms.each { |monster_vm| monster_vm.set_durable_state state }
+  end
 end

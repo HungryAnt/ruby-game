@@ -138,6 +138,8 @@ class GameMapView < ViewBase
       case id
         when Gosu::MsRight
           @game_map_view_model.monster_move_to *get_mouse_location
+        when Gosu::KbI
+          @game_map_view_model.set_monster_action Monster::State::ATTACK
       end
     end
 

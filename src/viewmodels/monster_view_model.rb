@@ -25,6 +25,13 @@ class MonsterViewModel
     update_state
   end
 
+  def set_durable_state(state)
+    @monster.durable_state = state
+    if state == Pet::State::ATTACK
+      anim_goto_begin
+    end
+  end
+
   private
 
   def init_animations
