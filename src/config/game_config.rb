@@ -1,6 +1,7 @@
 module GameConfig
   DEBUG = true
   USER_DEBUG = true
+  TEST_MONSTER = true
 
   MAP_WIDTH = 800
   MAP_HEIGHT = 600

@@ -36,10 +36,6 @@ class MouseViewModel
     @picture.draw x, y, ZOrder::Mouse unless @picture.nil?
   end
 
-  def needs_cursor?
-    false
-  end
-
   private
   def init_images
     @images_map = {}

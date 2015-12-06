@@ -12,6 +12,10 @@ class MonsterViewModel
     draw_anim
   end
 
+  def y
+    @monster.y
+  end
+
   private
 
   def init_animations
