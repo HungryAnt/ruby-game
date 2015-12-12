@@ -131,6 +131,8 @@ require 'viewmodels/nutrient_view_model'
 require 'viewmodels/mouse_view_model'
 require 'viewmodels/chat_board_view_model'
 
+require 'viewmodels/common_modules/mouse_tips'
+
 require 'viewmodels/game_modules/game_mouse'
 require 'viewmodels/game_modules/game_role'
 require 'viewmodels/game_modules/game_map'

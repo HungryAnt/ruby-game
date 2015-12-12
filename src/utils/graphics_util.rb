@@ -23,4 +23,8 @@ class GraphicsUtil
     font.draw(text, x+1, y, z, scale_x, scale_y, border_color)
     font.draw(text, x, y, z, scale_x, scale_y, color)
   end
+
+  def self.pt_in_rect?(x, y, left, top, width, height)
+    x >= left && x < left + width && y >= top && y < top + height
+  end
 end

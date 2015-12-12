@@ -56,6 +56,8 @@ class GameMapView < ViewBase
     @status_dialog.mouse_move @window.mouse_x, @window.mouse_y
 
     @actions_bar_view.update
+
+    @status_bar_view.update_mouse @window.mouse_x, @window.mouse_y
   end
 
   def draw
@@ -80,6 +82,8 @@ class GameMapView < ViewBase
 
     @game_map_view_model.draw_mouse @window.mouse_x, @window.mouse_y
     @status_dialog.draw
+
+    @status_bar_view.draw_mouse_tips @window.mouse_x, @window.mouse_y, 0, - 20
   end
 
   def button_down(id)
