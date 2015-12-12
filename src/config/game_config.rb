@@ -30,6 +30,9 @@ module GameConfig
 
   RUNNING_HP_DEC = 0.2
   REST_HP_INC = 0.05
+  REST_MANA_INC = 0.5
+
+  CAST_MANA_DEC = 20
 
   ROLE_INTAKE = 0.2
 

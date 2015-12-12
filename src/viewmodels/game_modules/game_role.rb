@@ -76,6 +76,10 @@ module GameRole
     @player_view_model.set_action action
   end
 
+  def player_cast
+    @player_view_model.cast
+  end
+
   private
 
   def process_role_vms

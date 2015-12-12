@@ -5,6 +5,7 @@ class StatusBarView
     @hp_width = 0
     @exp_width = 0
     @font = Gosu::Font.new(14)
+    init_mana
   end
 
   def update
@@ -18,5 +19,23 @@ class StatusBarView
     Gosu::draw_rect(480, 44, @exp_width, 5, 0xFF_F4003D, ZOrder::UI)
     @font.draw_rel("lv.#{@player.lv}", 416, 39,
                ZOrder::UI, 0.5, 0.5, 1.0, 1.0, 0xFF_EFC39E)
+    draw_mana
+  end
+
+  private
+
+  def init_mana
+    @mana_anims = []
+
+    0.upto(9) do |i|
+      key = "mana_#{i}".to_sym
+      @mana_anims << AnimationManager.get_anim(key)
+    end
+  end
+
+  def draw_mana
+    mana_index = (@player.mana / 100.1 * 10).to_i
+    mana_anim = @mana_anims[mana_index]
+    mana_anim.draw(6, 4, ZOrder::UI)
   end
 end

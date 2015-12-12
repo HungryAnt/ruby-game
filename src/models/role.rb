@@ -50,6 +50,7 @@ class Role
   include Movable
   include Hp
   include Exp
+  include Mana
 
   attr_accessor :state, :durable_state, :direction, :role_type,
                 :hp, :vehicle, :driving, :battered, :battered_by_hit_type
@@ -62,6 +63,7 @@ class Role
     init_movable 4.2
     init_hp
     init_exp
+    init_mana
 
     @package = Package.new 100
     @pet_package = Package.new 100

@@ -287,6 +287,10 @@ class PlayerViewModel
     @role_vm.update_state
   end
 
+  def cast
+    @role.dec_mana GameConfig::CAST_MANA_DEC
+  end
+
   private
 
   def eat
@@ -304,6 +308,7 @@ class PlayerViewModel
 
   def have_a_rest
     @role.inc_hp(GameConfig::REST_HP_INC)
+    @role.inc_mana(GameConfig::REST_MANA_INC)
   end
 
   def sync_role_appear
