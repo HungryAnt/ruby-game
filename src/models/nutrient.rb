@@ -11,6 +11,10 @@ class Nutrient < Item
     @nutrient_type_info = NutrientTypeInfo.get(nutrient_type_id)
   end
 
+  def name
+    @nutrient_type_info.name
+  end
+
   def image_path
     @nutrient_type_info.image_path
   end

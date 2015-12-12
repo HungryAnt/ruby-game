@@ -5,6 +5,15 @@ module AntGui
     WIDTH = :width
     HEIGHT = :height
 
+    def initialize
+      super()
+
+      if block_given?
+        items = yield
+        items.each { |item| add(item) }
+      end
+    end
+
     def arrange(left, top, width, height)
       super
       @items.each do |control|

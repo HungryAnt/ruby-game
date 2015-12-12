@@ -13,7 +13,8 @@ class GameMapViewModel
     autowired(PlayerService, CommunicationService, MapService,
               GameRolesCommunicationHandler, PetCommunicationHandler,
               AreaItemsService, NetworkService,
-              LargeRubbishesService, UserService)
+              LargeRubbishesService, UserService,
+              WindowResourceService)
   end
 
   def init

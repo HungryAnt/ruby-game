@@ -9,6 +9,10 @@ module AntGui
       @hor_align, @ver_align = hor_align, ver_align
     end
 
+    def messure_text_size
+      return @font.text_width(@text), @font.height
+    end
+
     def do_draw(z)
       super
       if @hor_align == :left

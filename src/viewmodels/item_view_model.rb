@@ -16,4 +16,8 @@ class ItemViewModel
   def can_pick_up?(role)
     Gosu::distance(@item.x, @item.y, role.x, role.y) < 45
   end
+
+  def name
+    @item.name
+  end
 end

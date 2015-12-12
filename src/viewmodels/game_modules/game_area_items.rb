@@ -18,11 +18,6 @@ module GameAreaItems
 
   private
 
-  def touch_item?(mouse_x, mouse_y)
-    item_vm = get_touch_item(mouse_x, mouse_y, get_item_vms)
-    !item_vm.nil?
-  end
-
   def get_touch_item(mouse_x, mouse_y, item_vms)
     item_vms.each do |item_vm|
       return item_vm if item_vm.mouse_touch?(mouse_x, mouse_y)

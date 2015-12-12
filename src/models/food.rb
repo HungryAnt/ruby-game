@@ -18,6 +18,10 @@ class Food < Item
     @energy = energy
   end
 
+  def name
+    @food_type_info.name
+  end
+
   def eatable?
     true
   end

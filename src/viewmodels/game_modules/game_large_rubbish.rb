@@ -19,11 +19,6 @@ module GameLargeRubbish
 
   private
 
-  def touch_large_rubbish?(mouse_x, mouse_y)
-    item_vm = get_touch_rubbish(mouse_x, mouse_y)
-    !item_vm.nil?
-  end
-
   def get_large_rubbish_vms
     @map_service.current_map.current_area.get_large_rubbish_vms
   end

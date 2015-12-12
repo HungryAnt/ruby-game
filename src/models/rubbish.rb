@@ -9,6 +9,10 @@ class Rubbish < Item
     @rubbish_type_info = RubbishTypeInfo.get(rubbish_type_id)
   end
 
+  def name
+    @rubbish_type_info.name
+  end
+
   def image_path
     @rubbish_type_info.image_path
   end
