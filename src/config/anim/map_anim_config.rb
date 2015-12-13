@@ -141,4 +141,28 @@ lambda {
   new_map_covering_anim(:church_inside_window, 'map/church/inside/X-Mas00_ChurchIn_${num}.bmp', 4, 6, 150, false)
   new_map_covering_anim(:church_inside_treetop, 'map/church/inside/X-Mas00_ChurchIn_${num}.bmp', 8, 15, 150)
   new_map_covering_anim(:church_inside_bear, 'map/church/inside/X-Mas00_ChurchIn_${num}.bmp', 16, 23, 150)
+
+  # snow_village
+  new_map_covering_anim(:snow_village_2_rill,
+                        'map/snow_village/snow_village_2/SnowFlowerVillage2_${num}.bmp', 5, 7, 150)
+
+  new_map_covering_anim(:snow_village_3_rill,
+                        'map/snow_village/snow_village_3/SnowFlowerVillage3_${num}.bmp', 6, 8, 150, false)
+
+  new_map_covering_anim(:snow_village_4_fire,
+                        'map/snow_village/snow_village_4/SnowFlowerVillage4_${num}.bmp', 6, 9, 150, false)
+
+  new_map_covering_anim(:snow_village_5_left_candle,
+                        'map/snow_village/snow_village_5/SnowFlowerVillage5_${num}.bmp', 5, 9, 150, false)
+
+  new_map_covering_anim(:snow_village_5_right_candle,
+                        'map/snow_village/snow_village_5/SnowFlowerVillage5_${num}.bmp', 10, 14, 150, false)
+
+  # river_side
+  new_map_covering_anim(:river_side_lobster,
+                        'map/river_side/Riverside_${num}.bmp', 13, 16, 150, false)
+
+  new_map_covering_anim(:river_side_fish, 'map/river_side/Riverside_${num}.bmp', 9, 12, 150)
+  new_map_covering_anim(:river_side_tortoises, 'map/river_side/Riverside_${num}.bmp', 5, 6, 150, false)
+  new_map_covering_anim(:river_side_tortoise, 'map/river_side/Riverside_${num}.bmp', 7, 8, 150, false)
 }.call

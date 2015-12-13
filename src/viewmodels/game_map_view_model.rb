@@ -65,7 +65,7 @@ class GameMapViewModel
     get_current_area.visual_element_vms.each { |element_vm| @visual_items << element_vm }
     @player_view_model.pets_vms.each { |pet_vm| @visual_items << pet_vm }
     travel_other_pet_vms { |pet_vm| @visual_items << pet_vm }
-    travel_monsters { |monster_vm| @visual_items << monster_vm }
+    # travel_monsters { |monster_vm| @visual_items << monster_vm }
 
     @visual_items.sort_by! { |item| item.y }
   end
