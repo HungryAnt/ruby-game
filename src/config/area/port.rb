@@ -29,7 +29,7 @@ port_tiles_text = <<TILES
 ####AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA                                           #
 ####AAAAAAAAAAAAAAAAAAAAAAAAAAA                                                #
 ####AAAAAAAAAAAAAAAAAAA                                                        #
-####AAAAAAAAAAAAA                                                              #
+####AAAAAAAAAAAAA       B                                                      #
 ####AAAAAAAAAAAAA                                                              #
 ####AAAAA                                                                  X   #
 ####                                                                           #
@@ -82,13 +82,13 @@ ship_deck_tiles_text = <<TILES
 ################################################################################
 ################################################################################
 ################################################################################
-################################################       #########################
-##############################################           #######################
-###########################################                 ####################
-#########################################                       ################
-#######################################                             ############
-####################################                                    ########
-##################################                                         #####
+################################################################################
+################################################################################
+################################################################################
+####################################################            ################
+##################################################                  ############
+################################################                        ########
+##############################################                             #####
 ###############################                                             BBB#
 ############################                                                BBB#
 #########################                                                   BBB#
@@ -141,16 +141,21 @@ ship_deck_area.gateway = {
 }
 
 # 设置遮盖物
-# outside_area.add_covering(:image_path => 'map/church/outside/snowman.bmp', :x => 0, :y => 299)
-# outside_area.add_covering(:anim => :church_outside_cat, :x => 560, :y => 420)
-#
-# inside_area.add_surface(:anim => :church_inside_window, :x => 580, :y => 0)
-# inside_area.add_covering(:anim => :church_inside_treetop, :x => 640, :y => 0)
-#
-# inside_area.add_visual_element(image_path: 'map/church/inside/X-Mas00_ChurchIn_7.bmp',
-#                                left: 448, top: 240, y: 367) # 挡板
-#
-# inside_area.add_visual_element(:anim => :church_inside_bear, left: 523, top: 220, y:379)
+port_area.add_surface(anim: :port_ships, x: 0, y: 0)
+port_area.add_surface(anim: :port_wave, x: 0, y: 491)
+
+port_area.add_visual_element(image_path: 'map/port/port/Port_4.bmp', left: 100, top: 305, y:326)
+port_area.add_visual_element(image_path: 'map/port/port/Port_5.bmp', left: 425, top: 245, y:262)
+port_area.add_visual_element(image_path: 'map/port/port/Port_6.bmp', left: 545, top: 215, y:225)
+
+port_area.add_covering(image_path: 'map/port/port/Port_3.bmp', :x => 540, :y => 340)
+
+ship_deck_area.add_covering(image_path: 'map/port/ship_deck/ShipDeck_2.bmp', :x => 0, :y => 350)
+ship_deck_area.add_covering(image_path: 'map/port/ship_deck/ShipDeck_3.bmp', :x => 280, :y => 470)
+
+ship_deck_area.add_surface(anim: :ship_deck_boat, :x => 0, :y => 0) # 小船
+ship_deck_area.add_surface(anim: :ship_deck_right_octopus, :x => 436, :y => 87) # 右侧章鱼
+ship_deck_area.add_surface(anim: :ship_deck_left_octopus, :x => 365, :y => 105) # 左侧章鱼
 
 create_map(:port, '野菜村码头', MapType::VILLAGE, [port_area, ship_deck_area])
 

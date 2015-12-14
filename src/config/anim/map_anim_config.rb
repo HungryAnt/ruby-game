@@ -165,4 +165,13 @@ lambda {
   new_map_covering_anim(:river_side_fish, 'map/river_side/Riverside_${num}.bmp', 9, 12, 150)
   new_map_covering_anim(:river_side_tortoises, 'map/river_side/Riverside_${num}.bmp', 5, 6, 150, false)
   new_map_covering_anim(:river_side_tortoise, 'map/river_side/Riverside_${num}.bmp', 7, 8, 150, false)
+
+  # port
+  new_map_covering_anim(:port_ships, 'map/port/port/Port_${num}.bmp', 19, 30, 150, false)
+  new_map_covering_anim(:port_wave, 'map/port/port/Port_${num}.bmp', 7, 18, 150, false)
+
+  new_map_covering_anim(:ship_deck_boat, 'map/port/ship_deck/ShipDeck_${num}.bmp', 4, 9, 150, false)
+  new_map_covering_anim(:ship_deck_right_octopus, 'map/port/ship_deck/ShipDeck_${num}.bmp', 10, 12, 150, false)
+  new_map_covering_anim(:ship_deck_left_octopus, 'map/port/ship_deck/ShipDeck_${num}.bmp', 13, 21, 150, false)
+
 }.call

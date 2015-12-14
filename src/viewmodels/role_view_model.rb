@@ -88,8 +88,7 @@ class RoleViewModel
   end
 
   def stop
-    @role.standing = true
-    @running = false
+    @role.stop
   end
 
   def eat_food(food_vm)
@@ -186,7 +185,7 @@ class RoleViewModel
         if driving?
           return Role::State::DRIVING
         else
-          return @running ? Role::State::RUNNING : Role::State::WALKING
+          return @role.running ? Role::State::RUNNING : Role::State::WALKING
         end
       end
     end

@@ -85,9 +85,10 @@ class VillageMapSelectionView
 
   def init_map_selector(map_vms)
     count = map_vms.length
+    row_count = (count + 1) / 2
 
-    dialog_width = ITEM_WIDTH + PADDING * 2
-    dialog_height = ITEM_HEIGHT * count + PADDING * 2 + MARGIN * (count - 1)
+    dialog_width = (ITEM_WIDTH + PADDING) * 2 + MARGIN
+    dialog_height = ITEM_HEIGHT * row_count + PADDING * 2 + MARGIN * (row_count - 1)
     dialog_left = (GameConfig::MAP_WIDTH - dialog_width) / 2
     dialog_top = (GameConfig::MAP_HEIGHT - dialog_height) / 2
 
@@ -98,6 +99,7 @@ class VillageMapSelectionView
 
     x = PADDING
     y = PADDING
+    index = 0
     map_vms.each do |map_vm|
       control = MapItemControl.new(map_vm)
       # control.background_color = 0xDE_D0B848
@@ -110,6 +112,11 @@ class VillageMapSelectionView
       end
       canvas.add control
       y += ITEM_HEIGHT + MARGIN
+      index += 1
+      if index == row_count
+        x += ITEM_WIDTH + MARGIN
+        y = PADDING
+      end
     end
 
     @map_selector_dialog.update_arrange

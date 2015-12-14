@@ -38,6 +38,11 @@ module Movable
     @exact_direction = calc_exact_direction target_x, target_y
   end
 
+  def stop
+    @standing = true
+    @running = false
+  end
+
   private
 
   def get_speed
@@ -81,11 +86,6 @@ module Movable
     else
       move_to_location next_x, next_y
     end
-  end
-
-  def stop
-    @standing = true
-    @running = false
   end
 
   def move_to_location(loc_x, loc_y)
