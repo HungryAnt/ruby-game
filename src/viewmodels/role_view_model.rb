@@ -196,6 +196,12 @@ class RoleViewModel
   end
 
   def draw
+    draw_with_area_addition nil
+  end
+
+  def draw_with_area_addition(additional_equipment_vm)
+    additional_equipment_vm.draw(@role.x, @role.y, @role.direction) unless additional_equipment_vm.nil?
+
     if driving_dragon? && @role.direction == Direction::UP
       draw_equipment
       draw_role_anim

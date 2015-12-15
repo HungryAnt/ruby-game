@@ -2,7 +2,7 @@ class Area
   GRID_WIDTH = 10
   GRID_HEIGHT = 10
 
-  attr_accessor :gateway
+  attr_accessor :gateway, :additional_equipment
   attr_reader :id, :image_path, :song_path, :tiles, :coverings, :initial_position, :visual_elements
 
   def initialize(id, image_path, song_path, tiles_text)
@@ -15,6 +15,7 @@ class Area
     @gateway = {}
     @coverings = []
     @visual_elements = []
+    @additional_equipment = nil
   end
 
   private

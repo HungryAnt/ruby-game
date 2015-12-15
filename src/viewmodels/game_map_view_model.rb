@@ -73,7 +73,15 @@ class GameMapViewModel
   def draw
     @map_service.draw_map
     get_item_vms.each { |item_vm| item_vm.draw }
-    @visual_items.each {|item| item.draw}
+
+    additional_equipment_vm = get_current_area.additional_equipment_vm
+    @visual_items.each do |item|
+      if item.respond_to? :draw_with_area_addition
+        item.draw_with_area_addition additional_equipment_vm
+      else
+        item.draw
+      end
+    end
   end
 
   def needs_cursor?

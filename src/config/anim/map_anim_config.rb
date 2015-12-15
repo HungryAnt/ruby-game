@@ -174,4 +174,10 @@ lambda {
   new_map_covering_anim(:ship_deck_right_octopus, 'map/port/ship_deck/ShipDeck_${num}.bmp', 10, 12, 150, false)
   new_map_covering_anim(:ship_deck_left_octopus, 'map/port/ship_deck/ShipDeck_${num}.bmp', 13, 21, 150, false)
 
+  # pool
+  new_map_covering_anim(:pool_1_element_1, 'map/pool/pool_1/Pool_${num}.bmp', 30, 35, 150, false)
+  new_map_covering_anim(:pool_1_element_2, 'map/pool/pool_1/Pool_${num}.bmp', 36, 41, 150, false)
+  new_map_covering_anim(:pool_1_element_3, 'map/pool/pool_1/Pool_${num}.bmp', 42, 47, 150, false)
+  new_map_covering_anim(:pool_1_element_4, 'map/pool/pool_1/Pool_${num}.bmp', 48, 53, 150, false)
+  new_map_covering_anim(:pool_1_flower, 'map/pool/pool_1/Pool_${num}.bmp', 54, 58, 150, false)
 }.call

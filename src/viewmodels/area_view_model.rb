@@ -1,5 +1,5 @@
 class AreaViewModel
-  attr_reader :image, :area, :item_vms, :visual_element_vms
+  attr_reader :image, :area, :item_vms, :visual_element_vms, :additional_equipment_vm
 
   def initialize(area)
     autowired(SongService)
@@ -12,6 +12,7 @@ class AreaViewModel
     @large_rubbish_vms = []
     init_covering
     init_visual_elements
+    init_additional_equipment
     @mutex = Mutex.new
     # init_large_rubbish
   end
@@ -45,6 +46,13 @@ class AreaViewModel
     @area.visual_elements.each do |element|
       @visual_element_vms << AreaVisualElementViewModel.new(element)
     end
+  end
+
+  def init_additional_equipment
+    @additional_equipment_vm = nil
+    return if @area.additional_equipment.nil?
+    @additional_equipment_vm = EquipmentViewModelFactory.create_equipment_from_key(
+        Equipment::Type::AREA_ADDITION, @area.additional_equipment)
   end
 
   def id

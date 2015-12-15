@@ -140,4 +140,16 @@ area_pool_1.gateway = {
 area_pool_2.gateway = {
     :B => {:area => area_pool_1, :direction => Direction::LEFT},
 }
+
+# 设置遮盖物
+area_pool_1.add_surface(anim: :pool_1_element_1, x: 334, y: 130)
+area_pool_1.add_surface(anim: :pool_1_element_2, x: 440, y: 156)
+area_pool_1.add_surface(anim: :pool_1_element_3, x: 630, y: 256)
+area_pool_1.add_surface(anim: :pool_1_element_4, x: 738, y: 304)
+area_pool_1.add_surface(anim: :pool_1_flower, x: 0, y: 0)
+area_pool_1.add_covering(image_path: 'map/pool/pool_1/Pool_3.bmp', x: 0, y: 320)
+area_pool_1.add_visual_element(image_path: 'map/pool/pool_1/Pool_2.bmp', left: 70, top: 240, y:310)
+
+area_pool_1.additional_equipment = :area_addition_pool_1
+
 create_map(:pool, '山涧水洼', MapType::VILLAGE, [area_pool_1, area_pool_2])

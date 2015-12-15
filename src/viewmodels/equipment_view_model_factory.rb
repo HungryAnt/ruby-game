@@ -8,6 +8,12 @@ class EquipmentViewModelFactory
     end
   end
 
+  def self.create_equipment_from_key(equipment_type, key)
+    equipment = Equipment.new equipment_type, key
+    equipment_vm = EquipmentViewModel.new(equipment)
+    equipment_vm
+  end
+
   def self.create_vehicle(key)
     equipment_vm = VehicleViewModel.new(key)
     equipment_vm
