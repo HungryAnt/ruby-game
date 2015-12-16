@@ -175,9 +175,18 @@ lambda {
   new_map_covering_anim(:ship_deck_left_octopus, 'map/port/ship_deck/ShipDeck_${num}.bmp', 13, 21, 150, false)
 
   # pool
-  new_map_covering_anim(:pool_1_element_1, 'map/pool/pool_1/Pool_${num}.bmp', 30, 35, 150, false)
-  new_map_covering_anim(:pool_1_element_2, 'map/pool/pool_1/Pool_${num}.bmp', 36, 41, 150, false)
-  new_map_covering_anim(:pool_1_element_3, 'map/pool/pool_1/Pool_${num}.bmp', 42, 47, 150, false)
-  new_map_covering_anim(:pool_1_element_4, 'map/pool/pool_1/Pool_${num}.bmp', 48, 53, 150, false)
-  new_map_covering_anim(:pool_1_flower, 'map/pool/pool_1/Pool_${num}.bmp', 54, 58, 150, false)
+  pattern_pool_1 = 'map/pool/pool_1/Pool_${num}.bmp'
+  new_map_covering_anim(:pool_1_element_1, pattern_pool_1, 30, 35, 150, false)
+  new_map_covering_anim(:pool_1_element_2, pattern_pool_1, 36, 41, 150, false)
+  new_map_covering_anim(:pool_1_element_3, pattern_pool_1, 42, 47, 150, false)
+  new_map_covering_anim(:pool_1_element_4, pattern_pool_1, 48, 53, 150, false)
+  new_map_covering_anim(:pool_1_flower, pattern_pool_1, 54, 58, 150, false)
+
+  pattern_pool_2 = 'map/pool/pool_2/Pool2_${num}.bmp'
+  new_map_covering_anim(:pool_2_water_1, pattern_pool_2, 7, 12, 150, false)
+  new_map_covering_anim(:pool_2_water_2, pattern_pool_2, 13, 17, 150, false)
+  new_map_covering_anim(:pool_2_water_3, pattern_pool_2, 18, 20, 150, false)
+  new_map_covering_anim(:pool_2_rabbit_1, pattern_pool_2, 21, 25, 200, false)
+  new_map_covering_anim(:pool_2_rabbit_2, pattern_pool_2, 26, 35, 200, false)
+
 }.call

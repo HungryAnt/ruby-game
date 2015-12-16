@@ -47,21 +47,21 @@ pool_1_tiles_text = <<TILES
 #######                                                                      ###
 #######                                                                      ###
 #######                                                                      ###
-#######                                                                      ###
-#######                                                                      ###
-#######                                                                      ###
-#######                                                                  AAAAAA#
-#######                                                                AAAAAAAA#
-#######                                                           B  AAAAAAAAAA#
-#######                                                            AAAAAAAAAAAA#
-#######                                                          AAAAAAAAAAAAAA#
-########                                                        AAAAAAAAAAAAAAA#
-########                                                       AAAAAAAAAAAAAAAA#
-#########                                                      AAAAAAAAAAAAAAAA#
-##########                                                    AAAAAAAAAAAAAAAAA#
-##############                                                AAAAAAAAAAAAAAAAA#
-##############################################################AAAAAAAAAAAAAAAAA#
-##############################################################AAAAAAAAAAAAAAAAA#
+#######                                                                     AAA#
+#######                                                                   AAAAA#
+#######                                                                 AAAAAAA#
+#######                                                               AAAAAAAAA#
+#######                                                          B  AAAAAAAAAAA#
+#######                                                           AAAAAAAAAAAAA#
+#######                                                         AAAAAAAAAAAAAAA#
+#######                                                        AAAAAAAAAAAAAAAA#
+########                                                      AAAAAAAAAAAAAAAAA#
+########                                                     AAAAAAAAAAAAAAAAAA#
+#########                                                   AAAAAAAAAAAAAAAAAAA#
+##########                                                 AAAAAAAAAAAAAAAAAAAA#
+##############                                             AAAAAAAAAAAAAAAAAAAA#
+###########################################################AAAAAAAAAAAAAAAAAAAA#
+###########################################################AAAAAAAAAAAAAAAAAAAA#
 ################################################################################
 TILES
 
@@ -150,6 +150,23 @@ area_pool_1.add_surface(anim: :pool_1_flower, x: 0, y: 0)
 area_pool_1.add_covering(image_path: 'map/pool/pool_1/Pool_3.bmp', x: 0, y: 320)
 area_pool_1.add_visual_element(image_path: 'map/pool/pool_1/Pool_2.bmp', left: 70, top: 240, y:310)
 
-area_pool_1.additional_equipment = :area_addition_pool_1
+
+area_pool_2.add_covering(image_path: 'map/pool/pool_2/Pool2_1.bmp', x: 700, y: 80)
+area_pool_2.add_visual_element(image_path: 'map/pool/pool_2/Pool2_2.bmp', left: 150, top: 170, y:210)
+area_pool_2.add_visual_element(image_path: 'map/pool/pool_2/Pool2_3.bmp', left: 50, top: 295, y:370)
+area_pool_2.add_visual_element(image_path: 'map/pool/pool_2/Pool2_4.bmp', left: 40, top: 420, y:580)
+
+area_pool_2.add_surface(anim: :pool_2_water_1, x: 720, y: 220)
+area_pool_2.add_surface(anim: :pool_2_water_2, x: 265, y: 165)
+area_pool_2.add_surface(anim: :pool_2_water_3, x: 460, y: 70)
+
+area_pool_2.add_covering(anim: :pool_2_rabbit_1, x: 0, y: 340) # 兔子左
+area_pool_2.add_covering(anim: :pool_2_rabbit_2, x: 58, y: 360) # 兔子右
+area_pool_2.add_covering(image_path: 'map/pool/pool_2/Pool2_5.bmp', x: 0, y: 442) # 左下 花
+
+# 设置区域附加装备
+area_pool_1.additional_equipment = :area_addition_pool_1 # 漂浮的树叶
+area_pool_2.additional_equipment = :area_addition_pool_2 # 漂浮的荷叶
+
 
 create_map(:pool, '山涧水洼', MapType::VILLAGE, [area_pool_1, area_pool_2])
