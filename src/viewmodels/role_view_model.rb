@@ -202,13 +202,20 @@ class RoleViewModel
   def draw_with_area_addition(additional_equipment_vm)
     additional_equipment_vm.draw(@role.x, @role.y, @role.direction) unless additional_equipment_vm.nil?
 
-    if driving_dragon? && @role.direction == Direction::UP
-      draw_equipment
+    should_draw_vehicle_first = driving_dragon? && @role.direction == Direction::UP
+    unless should_draw_vehicle_first
+      should_draw_vehicle_first = driving? && @vehicle_vm.is_behind_role
+    end
+
+    if should_draw_vehicle_first
+      draw_vehicle
       draw_role_anim
     else
       draw_role_anim
-      draw_equipment
+      draw_vehicle
     end
+
+    draw_equipments
 
     @eating_food_vm.draw unless @eating_food_vm.nil?
     draw_level_and_name
@@ -300,10 +307,13 @@ class RoleViewModel
     @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp)
   end
 
-  def draw_equipment
+  def draw_vehicle
     if driving?
       @vehicle_vm.draw(@role.x, @role.y, @role.direction)
     end
+  end
+
+  def draw_equipments
     @eye_wear_vm.draw(@role.x, @role.y, @role.direction) unless @eye_wear_vm.nil?
   end
 

@@ -26,15 +26,17 @@ class PlayerService
     if GameConfig::DEBUG
       #[39, 40, 50, 58, 59, 67, 74, 75, 81, 82, 83, 89, 90, 91, 604, 828,
       # 96, 97, 103, 104, 108, 109, 114, 115, 119, 121
-      [138, 228, 301, 402, 450, 552, 558, 569, 144, 163, 220].each do |num|
+      [#138, 228, 301, 402, 450, 552, 558, 569, 144, 163, 220,
+          321, 322, 326, 327, 331, 332, 336, 340, 345, 346, 354, 359, 234
+      ].each do |num|
         vehicle_key = "vehicle_#{num}".to_sym
         @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
       end
-      [10, 24, 26, 35, 39, 41, 43, 69, 119
-      ].each do |num|
-        vehicle_key = "vehicle2_#{num}".to_sym
-        @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
-      end
+      # [10, 24, 26, 35, 39, 41, 43, 69, 119
+      # ].each do |num|
+      #   vehicle_key = "vehicle2_#{num}".to_sym
+      #   @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
+      # end
       %w(DragonRed DragonBlack DragonBlue).each do |dragon|
         dragon_key = "dragon_#{dragon}".to_sym
         @role.package << Equipment.new(Equipment::Type::VEHICLE, dragon_key)

@@ -18,11 +18,16 @@ def create_vehicle_anims(vehicle_id, anim_nums_map, vehicle='vehicle')
   end
 end
 
-def set_vehicle_properties(id, body_height, speed_up, offset, vehicle='vehicle')
+def set_vehicle_properties(id, body_height, speed_up, options, vehicle='vehicle')
   key = "#{vehicle}_#{id}".to_sym
+  offset = {}
+  offset[:left] = options[:left]
+  offset[:up] = options[:up]
+  offset[:down] = options[:down]
   offset_left = offset[:left]
   offset[:right] = [-offset_left[0], offset_left[1]]
-  EquipmentDefinition.set_props key, offset:offset, body_height:body_height, speed_up:speed_up
+  EquipmentDefinition.set_props key, offset:offset, body_height:body_height, speed_up:speed_up,
+                                is_behind_role: options[:is_behind_role]
   EquipmentDefinition.set_item_image key, "#{vehicle}/#{id}/#{id}_0.bmp"
 end
 
@@ -30,8 +35,8 @@ def create_vehicle2_anims(vehicle_id, anim_nums_map)
   create_vehicle_anims vehicle_id, anim_nums_map, 'vehicle2'
 end
 
-def set_vehicle2_properties(id, body_height, speed_up, offset)
-  set_vehicle_properties id, body_height, speed_up, offset, 'vehicle2'
+def set_vehicle2_properties(id, body_height, speed_up, options)
+  set_vehicle_properties id, body_height, speed_up, options, 'vehicle2'
 end
 
 def create_dragon_anims(dragon, anim_nums_map)
@@ -163,6 +168,49 @@ set_vehicle_properties(163, 10, 0.8, left: [-9, -3], up: [-2, -6], down: [-3, -6
 
 create_vehicle_anims(220, hor_nums_pair:[8, 11], up_nums_pair:[4, 7], down_nums_pair:[0, 3])
 set_vehicle_properties(220, 7, 0.8, left: [-5, 0], up: [0, -5], down: [-0, -5])
+
+
+
+# v1.0ÐÂ³µ
+
+create_vehicle_anims(321, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
+set_vehicle_properties(321, 9, 0.8, down: [0, 0], up: [0, -3], left: [0, -4])
+
+create_vehicle_anims(322, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
+set_vehicle_properties(322, 9, 0.8, down: [0, 0], up: [0, -3], left: [0, 18])
+
+create_vehicle_anims(326, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
+set_vehicle_properties(326, 18, 0.8, down: [0, 0], up: [0, -3], left: [-32, -9])
+
+create_vehicle_anims(327, down_nums_pair:[0, 5], up_nums_pair:[6, 9], hor_nums_pair:[10, 13])
+set_vehicle_properties(327, 27, 1.3, down: [0, 6], up: [0, 16], left: [-6, 10])
+
+create_vehicle_anims(331, down_nums_pair:[0, 3], up_nums_pair:[4, 5], hor_nums_pair:[6, 9])
+set_vehicle_properties(331, 18, 0.8, down: [0, 5], up: [0, 1], left: [-15, 7])
+
+create_vehicle_anims(332, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+set_vehicle_properties(332, 18, 0.8, down: [0, -3], up: [0, -6], left: [-4, -5])
+
+create_vehicle_anims(336, down_nums_pair:[16, 23], up_nums_pair:[0, 7], hor_nums_pair:[8, 15])
+set_vehicle_properties(336, 9, 0.8, down: [0, -6], up: [0, -8], left: [10, -8])
+
+create_vehicle_anims(340, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
+set_vehicle_properties(340, 15, 0.8, down: [0, 5], up: [0, -6], left: [-9, -4])
+
+create_vehicle_anims(345, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
+set_vehicle_properties(345, 28, 0.8, down: [0, 5], up: [0, 4], left: [-12, 4])
+
+create_vehicle_anims(346, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+set_vehicle_properties(346, 12, 0.8, down: [0, 0], up: [0, -2], left: [-12, -10])
+
+create_vehicle_anims(354, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
+set_vehicle_properties(354, 15, 0.8, down: [0, -3], up: [0, -6], left: [-9, -7])
+
+create_vehicle_anims(359, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
+set_vehicle_properties(359, 23, 0.8, down: [-1, -6], up: [-1, -9], left: [-9, -3])
+
+create_vehicle_anims(234, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17]) # Ê÷Ò¶×øÆï
+set_vehicle_properties(234, 6, 0.8, down: [0, -4], up: [0, -6], left: [0, -7], is_behind_role: true)
 
 # »³¾É³µÁ¾
 create_vehicle2_anims(10, hor_nums_pair:[2, 2], up_nums_pair:[1, 1], down_nums_pair:[0, 0])

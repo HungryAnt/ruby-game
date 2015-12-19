@@ -226,7 +226,7 @@ garret_room_area.add_visual_element(image_path: 'map/xiujuan_house/garret_room/G
                                     left: 613, top: 431, y: 554) # 左侧栏杆
 garret_room_area.add_covering(image_path: 'map/xiujuan_house/garret_room/GarretRoom_33.bmp', x: 0, y: 288) # toys
 
-inner_room_area.add_surface(image_path: 'map/xiujuan_house/inner_room/InnerRoom_10.bmp', x: 0, y: 327) # opened_door
+inner_room_area.add_surface(image_path: 'map/xiujuan_house/inner_room/InnerRoom_10.bmp', x: 0, y: 0) # opened_door
 inner_room_area.add_covering(image_path: 'map/xiujuan_house/inner_room/InnerRoom_1.bmp', x: 0, y: 327) # tv
 inner_room_area.add_covering(image_path: 'map/xiujuan_house/inner_room/InnerRoom_2.bmp', x: 230, y: 442) # books
 inner_room_area.add_visual_element(anim: :xiujuan_house_3_old_man, left: 458, top: 0, y: 146)
