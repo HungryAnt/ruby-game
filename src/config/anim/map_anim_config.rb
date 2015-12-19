@@ -189,4 +189,14 @@ lambda {
   new_map_covering_anim(:pool_2_rabbit_1, pattern_pool_2, 21, 25, 200, false)
   new_map_covering_anim(:pool_2_rabbit_2, pattern_pool_2, 26, 35, 200, false)
 
+  # xiujuan house
+  pattern_xiujuan_house_1 = 'map/xiujuan_house/hall_wooden/HallWooden_${num}.bmp'
+  new_map_covering_anim(:xiujuan_house_1_dogs, pattern_xiujuan_house_1, 2, 15, 200, false)
+
+  pattern_xiujuan_house_2 = 'map/xiujuan_house/garret_room/GarretRoom_${num}.bmp'
+  new_map_covering_anim(:xiujuan_house_2_droplight, pattern_xiujuan_house_2, 2, 16, 200, false)
+  new_map_covering_anim(:xiujuan_house_2_sunshine, pattern_xiujuan_house_2, 17, 31, 200, false)
+
+  pattern_xiujuan_house_3 = 'map/xiujuan_house/inner_room/InnerRoom_${num}.bmp'
+  new_map_covering_anim(:xiujuan_house_3_old_man, pattern_xiujuan_house_3, 15, 19, 300)
 }.call

@@ -9,5 +9,5 @@ lambda {
   create_equipment_anims(area_addition, 'pool_2',
                          pattern: 'map/pool/pool_2/Pool2_${num}.bmp',
                          same_nums_pair:[6, 6])
-  set_equipment_properties(area_addition, 'pool_2', left: [0, 29], up: [0, 28], down: [0, 28], ignore_image: true)
+  set_equipment_properties(area_addition, 'pool_2', left: [0, 29], up: [0, 29], down: [0, 29], ignore_image: true)
 }.call
