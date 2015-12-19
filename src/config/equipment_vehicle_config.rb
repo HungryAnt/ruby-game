@@ -209,12 +209,25 @@ set_vehicle_properties(354, 15, 0.8, down: [0, -3], up: [0, -6], left: [-9, -7])
 create_vehicle_anims(359, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
 set_vehicle_properties(359, 23, 0.8, down: [-1, -6], up: [-1, -9], left: [-9, -3])
 
+# 重型坦克
+create_vehicle_anims(521, down_nums_pair:[0, 7], up_nums_pair:[8, 11], hor_nums_pair:[12, 19])
+set_vehicle_properties(521, 28, 0.8, down: [-0.8, 0], up: [-1, -4], left: [-30, -1])
+
+# 天启坦克
+create_vehicle_anims(662, down_nums_pair:[0, 15], up_nums_pair:[16, 31], hor_nums_pair:[32, 47])
+set_vehicle_properties(662, 32, 0.8, down: [0, -9], up: [-1, 8], left: [-16, -5])
+
 create_vehicle_anims(802, down_nums_pair:[0, 10], up_nums_pair:[11, 22], hor_nums_pair:[23, 34])
 set_vehicle_properties(802, 15, 0.8, down: [0, 4], up: [0, -6], left: [-14, -9])
 
-# ------------------ 树叶坐骑
+# ------------------ 树叶
 create_vehicle_anims(234, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
 set_vehicle_properties(234, 6, 0.8, down: [0, -4], up: [0, -6], left: [0, -7], is_behind_role: true)
+
+# ------------------ 木马
+anim_nums_381 = [0, 3]
+create_vehicle_anims(381, down_nums_pair:anim_nums_381, up_nums_pair:anim_nums_381, hor_nums_pair:anim_nums_381)
+set_vehicle_properties(381, 22, 0.8, down: [-8, -10], up: [-8, -10], left: [-14, -10])
 
 # ------------------ 圣诞节车辆
 create_vehicle_anims(168, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
@@ -227,10 +240,10 @@ create_vehicle_anims(178, down_nums_pair:[0, 3], up_nums_pair:[4, 5], hor_nums_p
 set_vehicle_properties(178, 16, 0.8, down: [0, -7], up: [0, -13], left: [-20, -13])
 
 create_vehicle_anims(188, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
-set_vehicle_properties(188, 7, 0.8, left: [-5, -3], up: [0, -5], down: [0, -2])
+set_vehicle_properties(188, 7, 0.8, down: [0, -2], up: [0, -5], left: [-5, -3])
 
 create_vehicle_anims(222, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
-set_vehicle_properties(222, 5, 0.8, left: [-5, -9], up: [0, -9], down: [0, -9])
+set_vehicle_properties(222, 5, 0.8, down: [0, -9], up: [0, -9], left: [-5, -9])
 
 create_vehicle_anims(710, down_nums_pair:[0, 11], up_nums_pair:[12, 19], hor_nums_pair:[20, 31])
 set_vehicle_properties(710, 15, 0.8, down: [2, 5], up: [0, 3], left: [-28, -3])
@@ -240,26 +253,32 @@ set_vehicle_properties(711, 16, 0.8, down: [0, -3], up: [0, -7], left: [-20, -6]
 
 # ------------------ 披风
 create_vehicle_anims(433, down_nums_pair:[0, 5], up_nums_pair:[6, 9], hor_nums_pair:[10, 15])
-set_vehicle_properties(433, 0, 0.8, left: [8, 8], up: [0, 8], down: [0, 12])
+set_vehicle_properties(433, 0, 0.8, down: [0, 12], up: [0, 8], left: [8, 8])
 
 create_vehicle_anims(497, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
-set_vehicle_properties(497, 0, 0.8, left: [10, 8], up: [0, 8], down: [0, 12])
+set_vehicle_properties(497, 0, 0.8, down: [0, 12], up: [0, 8], left: [10, 8])
 
 create_vehicle_anims(574, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
-set_vehicle_properties(574, 0, 0.8, left: [18, 10], up: [0, 6], down: [0, 14])
+set_vehicle_properties(574, 0, 0.8, down: [0, 14], up: [0, 6], left: [18, 10])
 
 create_vehicle_anims(598, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
-set_vehicle_properties(598, 0, 0.8, left: [6, 8], up: [0, 8], down: [0, 12])
+set_vehicle_properties(598, 0, 0.8, down: [0, 12], up: [0, 8], left: [6, 8])
 
 create_vehicle_anims(708, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
-set_vehicle_properties(708, 0, 0.8, left: [7, -7], up: [-1, -2], down: [-3, -5])
+set_vehicle_properties(708, 0, 0.8, down: [-3, -5], up: [-1, -2], left: [7, -7])
 
 create_vehicle_anims(723, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
-set_vehicle_properties(723, 0, 0.8, left: [16, -6], up: [-1, 5], down: [-1, 2])
+set_vehicle_properties(723, 0, 0.8, down: [-1, 2], up: [-1, 5], left: [16, -6])
 
 # ----------------- 时装载具
 create_vehicle_anims(697, down_nums_pair:[0, 9], up_nums_pair:[10, 19], hor_nums_pair:[20, 24])
-set_vehicle_properties(697, 18, 0.8, left: [0, -20], up: [0, -20], down: [0, -20])
+set_vehicle_properties(697, 18, 0.8, down: [0, -20], up: [0, -20], left: [0, -20])
+
+create_vehicle_anims(376, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+set_vehicle_properties(376, 18, 0.8, down: [-1, -2], up: [0, -3], left: [-15, -1])
+
+create_vehicle_anims(456, down_nums_pair:[0, 7], up_nums_pair:[8, 11], hor_nums_pair:[12, 15])
+set_vehicle_properties(456, 18, 0.8, down: [0, 3], up: [0, -3], left: [-6, 7])
 
 # ================== 怀旧车辆
 create_vehicle2_anims(10, hor_nums_pair:[2, 2], up_nums_pair:[1, 1], down_nums_pair:[0, 0])
