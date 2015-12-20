@@ -217,8 +217,8 @@ class RoleViewModel
 
     draw_equipments
 
-    @eating_food_vm.draw unless @eating_food_vm.nil?
     draw_level_and_name
+    @eating_food_vm.draw unless @eating_food_vm.nil?
     draw_chat_bubble
   end
 

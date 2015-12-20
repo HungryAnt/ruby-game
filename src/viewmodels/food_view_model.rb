@@ -2,6 +2,7 @@ class FoodViewModel < ItemViewModel
   attr_reader :food
 
   ENERGY_BAR_WIDTH = 40
+  ENERGY_BAR_HEIGHT = 4
 
   def initialize(food)
     super food
@@ -17,7 +18,7 @@ class FoodViewModel < ItemViewModel
       if @food.energy < @food.max_energy
         energy_bar_width = ENERGY_BAR_WIDTH * @food.energy / @food.max_energy
         Gosu::draw_rect @food.x-energy_bar_width/2, @food.y+18,
-                        energy_bar_width, 4, 0xFF_0090F7
+                        energy_bar_width, ENERGY_BAR_HEIGHT, 0xFF_0090F7, z_order
       end
     end
   end

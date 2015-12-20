@@ -20,7 +20,6 @@ module GameMouse
     mouse_left_down = Gosu::button_down?(Gosu::MsLeft)
     if map_vm.gateway? mouse_x, mouse_y
       @mouse_vm.set_mouse_type MouseType::GOTO_AREA
-      set_tips_text '前往'
       return
     end
 

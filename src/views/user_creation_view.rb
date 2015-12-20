@@ -120,13 +120,13 @@ class UserCreationView
 
     center_y = GameConfig::MAP_HEIGHT/2
 
-    @font.draw_rel('直接键盘输入昵称，按回车键进入游戏', GameConfig::MAP_WIDTH/2, center_y + 40,
+    @font.draw_rel('输入昵称，回车开始游戏', GameConfig::MAP_WIDTH/2, center_y + 40,
                    ZOrder::Background, 0.5, 0.0, 1.0, 1.0, 0xff_f0f0f0, :additive)
 
     @user_name_text_box.draw((GameConfig::MAP_WIDTH - USER_NAME_TEXT_BOX_WIDTH)/2, center_y + 100,
                              USER_NAME_TEXT_BOX_WIDTH, USER_NAME_TEXT_BOX_HEIGHT)
 
-    @font.draw_rel('游戏过程中 数字键切换地图 回车键聊天', GameConfig::MAP_WIDTH/2, center_y + 180,
+    @font.draw_rel('回车键聊天', GameConfig::MAP_WIDTH/2, center_y + 180,
                    ZOrder::Background, 0.5, 0.0, 1.0, 1.0, 0xff_ffff00, :additive)
   end
 
