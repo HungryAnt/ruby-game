@@ -10,18 +10,12 @@ class AreaViewModel
     @anim_container = AnimationContainer.new
     @item_vms = []
     @large_rubbish_vms = []
+    @monster_vms = []
     init_covering
     init_visual_elements
     init_additional_equipment
     @mutex = Mutex.new
-    # init_large_rubbish
   end
-
-  # def init_large_rubbish
-  #   large_rubbish = LargeRubbish.new 'id', 400, 300, rand(10), 1000, 800
-  #   large_rubbish_vm = LargeRubbishViewModel.new(large_rubbish)
-  #   @large_rubbish_vms << large_rubbish_vm
-  # end
 
   def init_covering
     @covering_views = []
@@ -118,7 +112,9 @@ class AreaViewModel
   end
 
   def get_large_rubbish_vms
-    @large_rubbish_vms
+    @mutex.synchronize {
+      return @large_rubbish_vms
+    }
   end
 
   def add_large_rubbish_vm(large_rubbish_vm)
@@ -144,9 +140,45 @@ class AreaViewModel
     }
   end
 
-  def clear_large_rubbish_vms
+  def clear_enemy_vms
     @mutex.synchronize {
       @large_rubbish_vms = []
+      @monster_vms = []
+    }
+  end
+
+  def get_monster_vms
+    @mutex.synchronize {
+      return @monster_vms
+    }
+  end
+
+  def add_monster_vm(monster_vm)
+    @mutex.synchronize {
+      @monster_vms << monster_vm
+    }
+  end
+
+  def update_monster_vm(monster_vm)
+    @mutex.synchronize {
+      target_vm = @monster_vms.find {|item| item.id == monster_vm.id}
+      if target_vm.nil?
+        @monster_vms << monster_vm
+      else
+        target_vm.update_monster monster_vm.monster
+      end
+    }
+  end
+
+  def destroy_monster_vm(id)
+    @mutex.synchronize {
+      @monster_vms.delete_if {|item| item.id == id}
+    }
+  end
+
+  def clear_monster_vms
+    @mutex.synchronize {
+      @monster_vms = []
     }
   end
 

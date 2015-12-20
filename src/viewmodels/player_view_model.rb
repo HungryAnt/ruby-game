@@ -13,8 +13,8 @@ class PlayerViewModel
     @move_timestamp = Gosu::milliseconds
     @update_times = 0
     @sound_run = MediaUtil.get_sample 'run.wav'
-    @smash_beging_update_time = 0
-    @smashing_large_rubbish_vm = nil
+    @smash_begin_update_time = 0
+    @smashing_enemy_vm = nil
     @pets_vms = []
   end
 
@@ -22,7 +22,7 @@ class PlayerViewModel
     have_a_rest if @role.standing
     eat if @role.standing
     refresh_exp if @update_times % GameConfig::FPS == 0
-    smash if @update_times % GameConfig::FPS == @smash_beging_update_time
+    smash if @update_times % GameConfig::FPS == @smash_begin_update_time
     @update_times += 1
 
     @pets_vms.each do |pet_vm|
@@ -88,11 +88,11 @@ class PlayerViewModel
     set_destination_with_target x, y
   end
 
-  def set_destination_for_smash(large_rubbish_vm)
-    x, y = large_rubbish_vm.get_destination @role
+  def set_destination_for_smash(enemy_vm)
+    x, y = enemy_vm.get_destination @role
     @role_vm.set_auto_move_to(x, y) {
       sync_role_appear
-      start_smash(large_rubbish_vm) unless large_rubbish_vm.nil?
+      start_smash(enemy_vm) unless enemy_vm.nil?
     }
     set_destination_with_target x, y
   end
@@ -198,34 +198,32 @@ class PlayerViewModel
     @role.battered
   end
 
-  def start_smash(large_rubbish_vm)
+  def start_smash(enemy_vm)
     discard
-    # @smash_beging_update_time = @update_times % GameConfig::FPS
-    @smashing_large_rubbish_vm = large_rubbish_vm
+    @smashing_enemy_vm = enemy_vm
   end
 
   def stop_smash
-    @smashing_large_rubbish_vm = nil
+    @smashing_enemy_vm = nil
   end
 
-  def stop_smash_large_rubbish(large_rubbish_id)
-    stop_smash if smashing? && @smashing_large_rubbish_vm.id == large_rubbish_id
+  def stop_smash_enemy(enemy_id)
+    stop_smash if smashing? && @smashing_enemy_vm.id == enemy_id
   end
 
   def smashing?
-    !@smashing_large_rubbish_vm.nil?
+    !@smashing_enemy_vm.nil?
   end
 
   def smash
     return if !smashing?
     return if @role_vm.hitting || battered || @role.eating?
-    large_rubbish_vm = @smashing_large_rubbish_vm
+    enemy_vm = @smashing_enemy_vm
     @role.disable_auto_move
     sync_role_appear
-    @role.adjust_to_suit_direction(large_rubbish_vm.x, large_rubbish_vm.y)
+    @role.adjust_to_suit_direction(enemy_vm.x, enemy_vm.y)
     @role_vm.hit(:smash)
-    remote_smash large_rubbish_vm.id
-    # large_rubbish_vm.smash
+    remote_smash enemy_vm.id
   end
 
   def set_action(action)
@@ -330,7 +328,7 @@ class PlayerViewModel
 
     @communication_service.send_roles_query_message map_id
     @communication_service.send_area_items_query_message map_id
-    @communication_service.send_area_large_rubbishes_query_message map_id
+    @communication_service.send_area_enemies_query_message map_id
   end
 
   def remote_discard_item(item)
@@ -376,10 +374,10 @@ class PlayerViewModel
     @communication_service.send_collect_nutrient_message(user_id, nutrient.to_nutrient_map)
   end
 
-  def remote_smash(large_rubbish_id)
+  def remote_smash(enemy_id)
     user_id = get_user_id
     area_id = get_current_area_id
-    @communication_service.send_smash_large_rubbish_message(user_id, area_id, large_rubbish_id)
+    @communication_service.send_smash_enemy_message(user_id, area_id, enemy_id)
   end
 
   def get_current_area_id

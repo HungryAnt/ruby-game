@@ -44,8 +44,8 @@ module GameRole
     end
   end
 
-  def set_destination_for_smash(large_rubbish_vm)
-    @player_view_model.set_destination_for_smash large_rubbish_vm
+  def set_destination_for_smash(enemy_vm)
+    @player_view_model.set_destination_for_smash enemy_vm
   end
 
   def discard

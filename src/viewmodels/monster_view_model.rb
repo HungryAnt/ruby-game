@@ -8,6 +8,10 @@ class MonsterViewModel
     init_animations
   end
 
+  def update_monster(monster)
+    @monster = monster
+  end
+
   def draw
     draw_anim
   end
@@ -35,12 +39,12 @@ class MonsterViewModel
   private
 
   def init_animations
-    monster_type = @monster.monster_type.to_s
+    monster_type_id = @monster.monster_type_id.to_s
     Monster::State::ALL_STATES.each do |state|
       %w(left right up down down_right).each do |direction|
         self.instance_variable_set(
             "@anim_#{state}_#{direction}",
-            AnimationManager.get_anim("#{monster_type}_#{state}_#{direction}".to_sym))
+            AnimationManager.get_anim("#{monster_type_id}_#{state}_#{direction}".to_sym))
       end
     end
     @current_anim = @anim_stand_down

@@ -92,6 +92,9 @@ require 'messages/area_large_rubbishes_query_message'
 require 'messages/inc_exp_message'
 require 'messages/collecting_nutrient_message'
 require 'messages/pet_message'
+require 'messages/monster_message'
+require 'messages/area_enemies_query_message'
+require 'messages/smash_monster_message'
 
 require 'clients/yecai_web_client'
 
@@ -118,10 +121,12 @@ require 'services/anti_cheating_service'
 require 'services/user_equipment_service'
 require 'services/large_rubbishes_service'
 require 'services/hit_service'
+require 'services/monsters_service'
 
 require 'viewmodels/item_view_model'
 require 'viewmodels/pet_view_model'
 require 'viewmodels/monster_view_model'
+require 'viewmodels/monster_view_model_factory'
 require 'viewmodels/player_pet_view_model'
 require 'viewmodels/role_view_model'
 require 'viewmodels/player_view_model'
@@ -198,6 +203,7 @@ else
     require 'config/map_config'
     require 'config/role_config'
     require 'config/pet_config'
+    require 'config/monster_config'
   end
 
   if GameConfig::USER_DEBUG

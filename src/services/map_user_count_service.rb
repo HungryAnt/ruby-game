@@ -6,10 +6,11 @@ class MapUserCountService
   end
 
   def refresh_map_user_count(map_user_count_dict, all_user_count,
-                             map_large_rubbish_dict)
+                             map_large_rubbish_dict, map_monster_dict)
     @map_user_count_dict = map_user_count_dict
     @all_user_count = all_user_count
     @map_large_rubbish_dict = map_large_rubbish_dict
+    @map_monster_dict = map_monster_dict
   end
 
   def get_map_user_count(map_id)
@@ -27,5 +28,10 @@ class MapUserCountService
   def has_large_rubbish?(map_id)
     return false unless @map_large_rubbish_dict.include? map_id
     @map_large_rubbish_dict[map_id]
+  end
+
+  def has_monster?(map_id)
+    return false unless @map_monster_dict.include? map_id
+    @map_monster_dict[map_id]
   end
 end

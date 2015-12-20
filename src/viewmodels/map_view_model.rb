@@ -54,7 +54,7 @@ class MapViewModel
   def clear_items
     @areas.each do |area_vm|
       area_vm.clear_item_vms
-      area_vm.clear_large_rubbish_vms
+      area_vm.clear_enemy_vms
     end
   end
 end

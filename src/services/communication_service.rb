@@ -4,7 +4,8 @@ class CommunicationService
   def initialize
     autowired(NetworkService, UserService,
               GameRolesCommunicationHandler, PetCommunicationHandler,
-              AreaItemsService, MapUserCountService, LargeRubbishesService)
+              AreaItemsService, MapUserCountService, LargeRubbishesService,
+              MonstersService)
     @mutex = Mutex.new
     @chat_msgs = []
     @revision = 0
@@ -58,9 +59,9 @@ class CommunicationService
     send query_msg
   end
 
-  def send_area_large_rubbishes_query_message(map_id)
-    puts "send_area_large_rubbish_query_message map_id:#{map_id}"
-    msg = AreaLargeRubbishesQueryMessage.new map_id
+  def send_area_enemies_query_message(map_id)
+    puts "send_area_enemies_query_message map_id:#{map_id}"
+    msg = AreaEnemiesQueryMessage.new map_id
     send msg
   end
 
@@ -113,9 +114,9 @@ class CommunicationService
     send CollectingNutrientMessage.new(user_id, nutrient_map)
   end
 
-  def send_smash_large_rubbish_message(user_id, area_id, large_rubbish_id)
+  def send_smash_enemy_message(user_id, area_id, enemy_id)
     puts 'send_smash_large_rubbish_message'
-    send SmashLargeRubbishMessage.new(user_id, area_id, large_rubbish_id)
+    send SmashLargeRubbishMessage.new(user_id, area_id, enemy_id)
   end
 
   def add_chat_msg(msg)
@@ -224,7 +225,8 @@ class CommunicationService
       map_user_count_msg = MapUserCountMessage.from_map(msg_map)
       @map_user_count_service.refresh_map_user_count map_user_count_msg.map_user_count_dict,
                                                      map_user_count_msg.all_user_count,
-                                                     map_user_count_msg.map_large_rubbish_dict
+                                                     map_user_count_msg.map_large_rubbish_dict,
+                                                     map_user_count_msg.map_monster_dict
     end
 
     @network_service.register('large_rubbish_message') do |msg_map, params|
@@ -240,6 +242,16 @@ class CommunicationService
     @network_service.register('pet_message') do |msg_map, params|
       msg = PetMessage.from_map(msg_map)
       @pet_communication_handler.update_pet msg
+    end
+
+    @network_service.register('monster_message') do |msg_map, params|
+      msg = MonsterMessage.from_map msg_map
+      @monsters_service.add_monster_msg msg
+    end
+
+    @network_service.register('smash_monster_message') do |msg_map, params|
+      msg = SmashMonsterMessage.from_map(msg_map)
+      @game_roles_communication_handler.smash msg.user_id, msg.area_id.to_sym
     end
   end
 

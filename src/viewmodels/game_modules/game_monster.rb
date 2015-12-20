@@ -1,15 +1,29 @@
 module GameMonster
   def init_monsters
-    @monster_vms = []
-    monster = Monster.new('xxx', 'monster_0002', 300, 300)
-    @monster_vms << MonsterViewModel.new(monster)
+    @monsters_service.register_monster_msg_callback do |monster_msg|
+      area_id = monster_msg.area_id
+      item_map = monster_msg.item_map
+      area_vm = @map_service.get_area(area_id)
+      case monster_msg.action
+        when LargeRubbishMessage::Action::CREATE
+          area_vm.add_monster_vm MonsterViewModelFactory.create_monster_vm(item_map)
+        when LargeRubbishMessage::Action::UPDATE
+          area_vm.update_monster_vm MonsterViewModelFactory.create_monster_vm(item_map)
+        when LargeRubbishMessage::Action::DESTROY
+          monster_id = item_map['id']
+          area_vm.destroy_monster_vm monster_id
+          @player_view_model.stop_smash_enemy monster_id
+      end
+    end
 
-    # monster = Monster.new('xxx', 'monster_0004', 600, 300)
-    # @monster_vms << MonsterViewModel.new(monster)
+  end
+
+  def get_monster_vms
+    @map_service.current_map.current_area.get_monster_vms
   end
 
   def travel_monsters
-    @monster_vms.each { |monster_vm| yield monster_vm }
+    # @monster_vms.each { |monster_vm| yield monster_vm }
   end
 
   def monster_move_to(x, y)

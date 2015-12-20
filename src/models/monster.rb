@@ -1,6 +1,8 @@
 require_relative 'location'
 require_relative 'movable'
+require_relative 'monster_type_info'
 
+# ´å×¯Ò°¹Ö
 class Monster
   module State
     STAND = :stand
@@ -12,28 +14,24 @@ class Monster
   end
 
   attr_accessor :state, :durable_state
-  attr_reader :monster_id, :monster_type
+  attr_reader :id, :monster_type_id, :name, :max_hp, :hp
 
   include Location
   include Movable
 
-  def initialize(monster_id, monster_type, x, y)
+  def initialize(id, monster_type_id, max_hp, hp, x, y)
     init_location x, y
     init_movable 5, false
-    @monster_id = monster_id
-    @monster_type = monster_type
+    @id = id
+    @monster_type_id = monster_type_id
+    monster_type_info = MonsterTypeInfo.get monster_type_id
+    @name = monster_type_info.name
     @state = State::STAND
     @durable_state = State::STAND
+    @max_hp, @hp = max_hp, hp
   end
 
-  def to_map
-    {
-        monster_id: @monster_id,
-        monster_type: @monster_type.to_s,
-        x: @x,
-        y: @y,
-        state: @state.to_s,
-        direction: @direction
-    }
+  def update_hp(hp)
+    @hp = hp
   end
 end

@@ -13,7 +13,7 @@ class GameMapViewModel
     autowired(PlayerService, CommunicationService, MapService,
               GameRolesCommunicationHandler, PetCommunicationHandler,
               AreaItemsService, NetworkService,
-              LargeRubbishesService, UserService,
+              LargeRubbishesService, MonstersService, UserService,
               WindowResourceService)
   end
 
@@ -62,10 +62,10 @@ class GameMapViewModel
     @visual_items = []
     process_role_vms { |role_vm| @visual_items << role_vm }
     get_large_rubbish_vms.each { |large_rubbish_vm| @visual_items << large_rubbish_vm }
+    get_monster_vms.each { |monster_vm| @visual_items << monster_vm }
     get_current_area.visual_element_vms.each { |element_vm| @visual_items << element_vm }
     @player_view_model.pets_vms.each { |pet_vm| @visual_items << pet_vm }
     travel_other_pet_vms { |pet_vm| @visual_items << pet_vm }
-    # travel_monsters { |monster_vm| @visual_items << monster_vm }
 
     @visual_items.sort_by! { |item| item.y }
   end
@@ -92,7 +92,5 @@ class GameMapViewModel
     user_id = @player_service.user_id
     @communication_service.command cmd.chomp('`'), user_id, get_current_map.id, get_current_area.id.to_s
   end
-
-  private
 
 end

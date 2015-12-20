@@ -27,8 +27,12 @@ class MapItemControl < AntGui::Control
     @font_normal.draw_rel("空雅数:#{user_count}  ",
                           left + width, top + height, z, 1.0, 1.0, 1.0, 1.0, 0xBB_000000)
 
-    if @map_user_count_service.has_large_rubbish? @map_id
-      @font_normal.draw_rel('大型垃圾  ',
+    enemy_prompt_text = ''
+    enemy_prompt_text << '大型垃圾 ' if @map_user_count_service.has_large_rubbish? @map_id
+    enemy_prompt_text << '野怪 ' if @map_user_count_service.has_monster? @map_id
+
+    unless enemy_prompt_text.nil?
+      @font_normal.draw_rel(enemy_prompt_text + ' ',
                             left + width, top, z, 1.0, 0.0, 1.0, 1.0, 0xBB_EE0000)
     end
   end

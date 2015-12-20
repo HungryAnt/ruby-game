@@ -12,7 +12,7 @@ module GameLargeRubbish
         when LargeRubbishMessage::Action::DESTROY
           large_rubbish_id = item_map['id']
           area_vm.destroy_large_rubbish_vm large_rubbish_id
-          @player_view_model.stop_smash_large_rubbish large_rubbish_id
+          @player_view_model.stop_smash_enemy large_rubbish_id
       end
     end
   end
