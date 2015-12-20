@@ -22,10 +22,6 @@ class WindowResourceService
     MediaUtil.get_sample 'button.wav'
   end
 
-  def get_channel_back_music
-    MediaUtil.get_song 'channel/back.ogg'
-  end
-
   def get_channel(key)
     MediaUtil.get_sample "channel/#{key.to_s}.wav"
   end

@@ -21,7 +21,8 @@ class MediaUtil
   def self::get_sample(path)
     full_path = "#{@@bash_media_path}/voice/#{path}"
     check_file full_path
-    LazyLoadResource.new { cache_get_sample full_path }
+    sample = LazyLoadResource.new { cache_get_sample full_path }
+    MusicSample.new sample
   end
 
   def self::get_song(path)

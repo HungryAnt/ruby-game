@@ -5,6 +5,7 @@ class ChannelMainView
   def initialize(window)
     autowired(WindowResourceService, SongService, MapService, MapUserCountService)
     @window = window
+    @font_normal = @window_resource_service.get_normal_font
     init_channel_anims
     init_channel_element
     @background_image = MediaUtil::get_tileable_img('channel_main/ChannelMain_0.bmp')
@@ -14,7 +15,6 @@ class ChannelMainView
       hide_map_selection_view
       goto_map map_id
     end
-    @font_normal = @window_resource_service.get_normal_font
   end
 
   def on_shop(&shopping_call_back)
@@ -52,7 +52,7 @@ class ChannelMainView
   end
 
   def init_channel_element
-    @main_dialog = AntGui::Dialog.new(0, 0, GameConfig::MAP_WIDTH, GameConfig::MAP_HEIGHT)
+    @main_dialog = AntGui::Dialog.new(0, 0, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT)
     canvas = AntGui::Canvas.new
     @main_dialog.content = canvas
     @sample_instances = []
@@ -103,7 +103,44 @@ class ChannelMainView
     AntGui::Canvas.set_canvas_props(exit_button, 630, 486, 170, 114)
     canvas.add exit_button
 
+    is_background_sound_on = true
+    background_sound_button = create_button(168, GameConfig::MAP_HEIGHT + 5,
+                                            150, GameConfig::BOTTOM_HEIGHT - 10,
+                                            '开启/关闭背景音乐') do
+      is_background_sound_on = !is_background_sound_on
+      if is_background_sound_on
+        @song_service.turn_on
+        turn_on_samples
+      else
+        @song_service.turn_off
+        turn_off_samples
+      end
+    end
+
+    is_music_sample_on = true
+    music_sample_button = create_button(350, GameConfig::MAP_HEIGHT + 5,
+                                        128, GameConfig::BOTTOM_HEIGHT - 10,
+                                        '开启/关闭音效') do
+      is_music_sample_on = !is_music_sample_on
+      if is_music_sample_on
+        MusicSample.turn_on
+      else
+        MusicSample.turn_off
+      end
+    end
+
+    canvas.add background_sound_button
+    canvas.add music_sample_button
     @main_dialog.update_arrange
+  end
+
+  def create_button(left, top, width, height, text, &mouse_left_button_down_action)
+    button = AntGui::TextBlock.new(@font_normal, text, :center)
+    button.z_order = ZOrder::DIALOG_UI
+    button.background_color = 0xFF_D0B848
+    AntGui::Canvas.set_canvas_props(button, left, top, width, height)
+    button.on_mouse_left_button_down &mouse_left_button_down_action
+    button
   end
 
   def goto_map(map_id)
@@ -138,12 +175,10 @@ class ChannelMainView
     end
 
     control.on_mouse_enter do
-      # image_back.visible = false
       image_active.visible = true
       music_sample_instance.resume unless music_sample_instance.nil?
     end
     control.on_mouse_leave do
-      # image_back.visible = true
       image_active.visible = false
       music_sample_instance.pause unless music_sample_instance.nil?
     end
@@ -215,5 +250,13 @@ class ChannelMainView
 
   def pause_all_sample_instances
     @sample_instances.each {|sample_instance| sample_instance.pause}
+  end
+
+  def turn_off_samples
+    @sample_instances.each {|sample_instance| sample_instance.volume = 0}
+  end
+
+  def turn_on_samples
+    @sample_instances.each {|sample_instance| sample_instance.volume = 1}
   end
 end

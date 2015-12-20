@@ -34,6 +34,7 @@ require 'engine/animation_container'
 require 'engine/animation_util'
 require 'engine/animation_manager'
 require 'engine/lazy_load_resource'
+require 'engine/music_sample'
 
 require 'models/location'
 require 'models/hp'
