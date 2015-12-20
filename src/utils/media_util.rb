@@ -9,30 +9,33 @@ class MediaUtil
   @@sample_map = {}
 
   def self::get_img(path)
-    cache_get_img("#{@@bash_media_path}/img/#{path}")
+    get_tileable_img path
   end
 
   def self::get_tileable_img(path)
-    cache_get_tileable_img "#{@@bash_media_path}/img/#{path}"
+    full_path = "#{@@bash_media_path}/img/#{path}"
+    check_file full_path
+    LazyLoadResource.new { cache_get_tileable_img full_path }
   end
 
   def self::get_sample(path)
-    cache_get_sample "#{@@bash_media_path}/voice/#{path}"
+    full_path = "#{@@bash_media_path}/voice/#{path}"
+    check_file full_path
+    LazyLoadResource.new { cache_get_sample full_path }
   end
 
   def self::get_song(path)
-    cache_get_song "#{@@bash_media_path}/song/#{path}"
+    full_path = "#{@@bash_media_path}/song/#{path}"
+    check_file full_path
+    LazyLoadResource.new { cache_get_song full_path }
   end
 
   private
-  def self.cache_get_img(path)
-    # img = @@image_map[path]
-    # if img.nil?
-    #   img = Gosu::Image.new(path)
-    #   @@image_map[path] = img
-    # end
-    # img
-    cache_get_tileable_img path
+
+  def self::check_file(path)
+    unless File.exist?(path)
+      raise RuntimeError.new("file not found: #{path}")
+    end
   end
 
   def self.cache_get_tileable_img(path)

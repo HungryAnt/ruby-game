@@ -27,9 +27,10 @@ class StartupLoadingWindow < Gosu::Window
   end
 
   def draw
-    Gosu::draw_rect 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFF_005020, ZOrder::Background
+    # Gosu::draw_rect 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0xFF_005020, ZOrder::Background
+    GraphicsUtil.draw_linear_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, ZOrder::Background, 0xFF_005020, 0xFF_2DBF68)
 
-    @font.draw_rel('加载游戏资源数据中，所需时间较长，请耐心等待...', WINDOW_WIDTH/2, WINDOW_HEIGHT/2,
+    @font.draw_rel('加载游戏资源数据中，请稍作等待...', WINDOW_WIDTH/2, WINDOW_HEIGHT/2,
                    ZOrder::Background, 0.5, 0.5, 1.0, 1.0, 0xff_f0f0f0, :additive)
   end
 end

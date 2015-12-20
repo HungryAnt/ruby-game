@@ -33,6 +33,7 @@ require 'engine/animation_holder'
 require 'engine/animation_container'
 require 'engine/animation_util'
 require 'engine/animation_manager'
+require 'engine/lazy_load_resource'
 
 require 'models/location'
 require 'models/hp'

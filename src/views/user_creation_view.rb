@@ -105,7 +105,9 @@ class UserCreationView
   end
 
   def draw
-    Gosu::draw_rect 0, 0, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT, 0xFF_005020, ZOrder::Background
+    # Gosu::draw_rect 0, 0, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT, 0xFF_005020, ZOrder::Background
+    GraphicsUtil.draw_linear_rect(0, 0, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT,
+                                  ZOrder::Background, 0xFF_005020, 0xFF_2DBF68)
 
     if @network_service.has_error?
       @font_net_error.draw("#{@network_service.connection_error}", 0, 30, ZOrder::Background,
