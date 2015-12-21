@@ -23,15 +23,19 @@ module GameMonster
   end
 
   def travel_monsters
-    # @monster_vms.each { |monster_vm| yield monster_vm }
+    get_monster_vms.each { |monster_vm| yield monster_vm }
   end
 
   def monster_move_to(x, y)
-    return if @monster_vms.count == 0
-    @monster_vms.each { |monster_vm| monster_vm.move_to x, y }
+    return if get_monster_vms.count == 0
+    get_monster_vms.each { |monster_vm| monster_vm.move_to x, y }
   end
 
-  def set_monster_action(state)
-    @monster_vms.each { |monster_vm| monster_vm.set_durable_state state }
+  def monster_atack
+    get_monster_vms.each { |monster_vm| monster_vm.attack }
   end
+
+  # def set_monster_action(state)
+  #   get_monster_vms.each { |monster_vm| monster_vm.set_durable_state state }
+  # end
 end

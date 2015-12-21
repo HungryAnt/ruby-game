@@ -10,7 +10,8 @@ class HitService
         Role::State::HIT => get_sound('being_battered.wav'),
         Role::State::FINGER_HIT => get_sound('being_stunned.wav'),
         Role::State::FART => get_sound('fart.wav'),
-        Role::State::HEAD_HIT => get_sound('being_stunned.wav')
+        Role::State::HEAD_HIT => get_sound('being_stunned.wav'),
+        Monster::State::ATTACK => get_sound('being_stunned.wav'),
     }
   end
 
@@ -29,7 +30,7 @@ class HitService
           return Role::State::TURN_TO_BATTERED
         when Role::State::FINGER_HIT
           return Role::State::TURN_TO_FINGER_BATTERED
-        when Role::State::FART, Role::State::HEAD_HIT
+        when Role::State::FART, Role::State::HEAD_HIT, Monster::State::ATTACK
           return Role::State::TURN_TO_STUNNED
       end
     end
@@ -43,7 +44,7 @@ class HitService
           return Role::State::BATTERED
         when Role::State::FINGER_HIT
           return Role::State::FINGER_BATTERED
-        when Role::State::FART, Role::State::HEAD_HIT
+        when Role::State::FART, Role::State::HEAD_HIT, Monster::State::ATTACK
           return Role::State::STUNNED
       end
     end
@@ -68,7 +69,7 @@ class HitService
 
   def is_hit?(hit_type)
     [Role::State::HIT, Role::State::FINGER_HIT,
-     Role::State::FART, Role::State::HEAD_HIT].include? hit_type
+     Role::State::FART, Role::State::HEAD_HIT, Monster::State::ATTACK].include? hit_type
   end
 
   def get_battered_cost_hp(hit_type)
@@ -82,6 +83,8 @@ class HitService
         return 25
       when Role::State::HEAD_HIT
         return 25
+      when Monster::State::ATTACK
+        return 35
     end
   end
 
@@ -95,6 +98,8 @@ class HitService
       when Role::State::FART
         return 1020
       when Role::State::HEAD_HIT
+        return 1020
+      when Monster::State::ATTACK
         return 1020
     end
   end
@@ -110,6 +115,18 @@ class HitService
         return 1700
       when Role::State::HEAD_HIT
         return 1700
+      when Monster::State::ATTACK
+        return 1700
+    end
+  end
+
+  def in_hit_range?(hit_type, x0, y0, x1, y1)
+    raise_error(hit_type) unless is_hit? hit_type
+    case hit_type
+      when Monster::State::ATTACK
+        return GraphicsUtil.pt_in_ellipse? x0, y0, x1, y1, 350, 200
+      else
+        return Gosu::distance(x0, y0, x1, y1) < 28
     end
   end
 

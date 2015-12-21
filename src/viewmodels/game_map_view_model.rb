@@ -49,7 +49,7 @@ class GameMapViewModel
     end
 
     travel_monsters do |monster_vm|
-      monster_vm.update area
+      monster_vm.update area, @player_view_model
     end
 
     sort_visual_items

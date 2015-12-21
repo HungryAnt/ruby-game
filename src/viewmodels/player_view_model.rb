@@ -185,7 +185,7 @@ class PlayerViewModel
     return unless @hit_service.is_hit? hit_type
     return if battered
     return if @role_vm.driving_dragon?
-    if Gosu::distance(@role.x, @role.y, hit_x, hit_y) < 28
+    if @hit_service.in_hit_range? hit_type, @role.x, @role.y, hit_x, hit_y
       discard
       battered_cost_hp = @hit_service.get_battered_cost_hp hit_type
       @role.dec_hp(battered_cost_hp)

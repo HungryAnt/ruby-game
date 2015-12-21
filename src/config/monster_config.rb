@@ -7,6 +7,6 @@ lambda {
     MonsterTypeInfo.put monster_type_id, monster_type_info
   end
 
-  add.call '0002', '大猫'
-  add.call '0004', '大老鼠'
+  add.call '0002', '野猫'
+  add.call '0004', '变异鼠'
 }.call

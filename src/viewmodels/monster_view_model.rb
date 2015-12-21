@@ -1,4 +1,11 @@
 class MonsterViewModel
+  HP_BAR_WIDTH = 64
+  HP_BAR_HEIGHT = 5
+  HP_BAR_BORDER = 3
+
+  ATTACKING_DURATION_IN_MS = 5000
+  ATTACKING_INTERVAL_IN_S = 1
+
   attr_reader :monster
 
   def initialize(monster)
@@ -6,6 +13,11 @@ class MonsterViewModel
     @monster = monster
     @height = 50
     init_animations
+    @attack_begin_time = 0
+    @one_attack_begin_time = 0
+    @attack_update_times = 0
+
+    @update_times = 0
   end
 
   def update_monster(monster)
@@ -14,6 +26,8 @@ class MonsterViewModel
 
   def draw
     draw_anim
+    draw_name
+    draw_hp
   end
 
   def y
@@ -24,19 +38,41 @@ class MonsterViewModel
     @monster.set_auto_move_to x, y
   end
 
-  def update(area)
+  def update(area, player_vm)
     @monster.auto_move area
+
+    if Gosu::milliseconds - @attack_begin_time < ATTACKING_DURATION_IN_MS
+      if (@update_times - @attack_update_times) % (GameConfig::FPS * ATTACKING_INTERVAL_IN_S).to_i == 0
+        do_one_attack player_vm
+      end
+    end
+
     update_state
+
+    @update_times += 1
   end
 
   def set_durable_state(state)
     @monster.durable_state = state
-    if state == Pet::State::ATTACK
-      anim_goto_begin
-    end
+  end
+
+  def attack
+    @attack_begin_time = Gosu::milliseconds
+    @attack_update_times = @update_times
+    anim_goto_begin
   end
 
   private
+
+  def do_one_attack(player_vm)
+    # ´¥·¢¹¥»÷Ñ£ÔÎ
+    puts 'attack'
+    player_vm.check_hit_battered Monster::State::ATTACK, @monster.x, @monster.y
+  end
+
+  def in_attacking
+    Gosu::milliseconds - @attack_begin_time <= ATTACKING_DURATION_IN_MS
+  end
 
   def init_animations
     monster_type_id = @monster.monster_type_id.to_s
@@ -75,6 +111,9 @@ class MonsterViewModel
 
   def get_state
     if @monster.standing
+      if in_attacking
+        return Pet::State::ATTACK
+      end
       @monster.durable_state
     else
       Monster::State::MOVE
@@ -86,4 +125,33 @@ class MonsterViewModel
     direction = Direction::to_direction_text(@monster.direction)
     @current_anim = self.instance_variable_get("@anim_#{state}_#{direction}")
   end
+
+  def draw_name
+    font = @window_resource_service.get_font_16
+    text_width = font.text_width(name)
+    x = @monster.x - text_width / 2
+    y = @monster.y + 41
+    GraphicsUtil.draw_text_with_border(name, font, x, y,
+                                       ZOrder::Player, 1, 1, 0xFF_F5CAA8, 0xEE_210B00)
+  end
+
+  def name
+    @monster.name
+  end
+
+  def draw_hp
+    rate = 1.0 * @monster.hp / @monster.max_hp
+    current_hp_width = HP_BAR_WIDTH * rate
+    x = @monster.x - HP_BAR_WIDTH / 2
+    y = @monster.y + 35
+    GraphicsUtil::draw_rect_border x-1, y-1, HP_BAR_WIDTH + 3, HP_BAR_HEIGHT + 3, 0xFF_F5CAA8, ZOrder::Player
+    GraphicsUtil::draw_rect_border x, y, HP_BAR_WIDTH + 1, HP_BAR_HEIGHT + 1, 0xEE_210B00, ZOrder::Player
+
+    c0 = Gosu::Color.new(0xFF, 0xEA, 0x53, 0x20)
+    c1 = Gosu::Color.new(0xFF, 0xEA, 0x53 + ((0xF6 - 0x53) * rate).to_i, 0x20)
+    GraphicsUtil::draw_linear_rect(x, y, current_hp_width, HP_BAR_HEIGHT,
+                                   ZOrder::Player, c0, c1, direction:'hor')
+  end
+
+
 end

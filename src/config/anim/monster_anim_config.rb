@@ -20,6 +20,7 @@ lambda {
                         hor_nums_pair:options[:attack_hor],
                         up_nums_pair:options[:attack_up],
                         down_nums_pair:options[:attack_down],
+                        anim_interval:250,
                         reversed:false
   end
 

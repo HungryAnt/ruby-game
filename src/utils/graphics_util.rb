@@ -27,4 +27,10 @@ class GraphicsUtil
   def self.pt_in_rect?(x, y, left, top, width, height)
     x >= left && x < left + width && y >= top && y < top + height
   end
+
+  def self.pt_in_ellipse?(x, y, x0, y0, a, b)
+    dx = (x - x0).abs.to_f
+    dy = (y - y0).abs.to_f
+    dx*dx/(a*a) + dy*dy/(b*b) < 1
+  end
 end
