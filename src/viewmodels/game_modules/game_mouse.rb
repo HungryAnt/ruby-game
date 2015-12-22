@@ -32,6 +32,13 @@ module GameMouse
         return
       end
 
+      touch_monster = get_touch_monster(mouse_x, mouse_y)
+      unless touch_monster.nil?
+        set_tips_text "#{touch_monster.name}"
+        @mouse_vm.set_mouse_type(mouse_left_down ? MouseType::ATTACK_BUTTON_DOWN : MouseType::ATTACK)
+        return
+      end
+
       touch_large_rubbish = get_touch_rubbish(mouse_x, mouse_y)
       unless touch_large_rubbish.nil?
         set_tips_text "#{touch_large_rubbish.name}"

@@ -20,16 +20,22 @@ module GameRole
     true
   end
 
-  def try_smash_rubbish(mouse_x, mouse_y)
+  def try_smash_enemy(mouse_x, mouse_y)
     return false if @player_view_model.battered
-    large_rubbish_vm = get_touch_rubbish mouse_x, mouse_y
-    return false if large_rubbish_vm.nil?
-    if large_rubbish_vm.can_smash?(@player_view_model.role)
-      @player_view_model.start_smash large_rubbish_vm
+    enemy_vm = get_touch_enemy mouse_x, mouse_y
+    return false if enemy_vm.nil?
+    if enemy_vm.can_smash?(@player_view_model.role)
+      @player_view_model.start_smash enemy_vm
       return true
     end
-    set_destination_for_smash large_rubbish_vm
+    set_destination_for_smash enemy_vm
     true
+  end
+
+  def get_touch_enemy(mouse_x, mouse_y)
+    monster_vm = get_touch_monster mouse_x, mouse_y
+    return monster_vm unless monster_vm.nil?
+    get_touch_rubbish mouse_x, mouse_y
   end
 
   def stop_smash

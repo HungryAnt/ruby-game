@@ -223,7 +223,7 @@ class PlayerViewModel
     sync_role_appear
     @role.adjust_to_suit_direction(enemy_vm.x, enemy_vm.y)
     @role_vm.hit(:smash)
-    remote_smash enemy_vm.id
+    remote_smash enemy_vm.enemy_type, enemy_vm.id
   end
 
   def set_action(action)
@@ -374,10 +374,15 @@ class PlayerViewModel
     @communication_service.send_collect_nutrient_message(user_id, nutrient.to_nutrient_map)
   end
 
-  def remote_smash(enemy_id)
+  def remote_smash(enemy_type, enemy_id)
     user_id = get_user_id
     area_id = get_current_area_id
-    @communication_service.send_smash_enemy_message(user_id, area_id, enemy_id)
+    case enemy_type
+      when LargeRubbish::ENEMY_TYPE
+        @communication_service.send_smash_large_rubbish_message(user_id, area_id, enemy_id)
+      when Monster::ENEMY_TYPE
+        @communication_service.send_smash_monster_message(user_id, area_id, enemy_id)
+    end
   end
 
   def get_current_area_id

@@ -114,9 +114,14 @@ class CommunicationService
     send CollectingNutrientMessage.new(user_id, nutrient_map)
   end
 
-  def send_smash_enemy_message(user_id, area_id, enemy_id)
-    puts 'send_smash_large_rubbish_message'
+  def send_smash_large_rubbish_message(user_id, area_id, enemy_id)
+    puts 'send_large_rubbish_message'
     send SmashLargeRubbishMessage.new(user_id, area_id, enemy_id)
+  end
+
+  def send_smash_monster_message(user_id, area_id, enemy_id)
+    puts 'send_smash_monster_message'
+    send SmashMonsterMessage.new(user_id, area_id, enemy_id)
   end
 
   def add_chat_msg(msg)

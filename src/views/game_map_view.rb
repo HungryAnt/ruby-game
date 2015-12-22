@@ -103,7 +103,7 @@ class GameMapView < ViewBase
         @game_map_view_model.stop_smash
         done = @game_map_view_model.try_pick_up(@window.mouse_x, @window.mouse_y)
         return if done
-        done = @game_map_view_model.try_smash_rubbish(@window.mouse_x, @window.mouse_y)
+        done = @game_map_view_model.try_smash_enemy(@window.mouse_x, @window.mouse_y)
         return if done
         @game_map_view_model.set_destination(@window.mouse_x, @window.mouse_y)
       when Gosu::KbF

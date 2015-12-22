@@ -3,6 +3,8 @@ require_relative 'location'
 
 # ´óÐÍÀ¬»ø
 class LargeRubbish
+  ENEMY_TYPE = :large_rubbish
+
   attr_reader :id, :name, :max_hp, :hp, :images
 
   include Location

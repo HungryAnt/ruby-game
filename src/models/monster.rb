@@ -4,6 +4,8 @@ require_relative 'monster_type_info'
 
 # ´å×¯Ò°¹Ö
 class Monster
+  ENEMY_TYPE = :monster
+
   module State
     STAND = :stand
     MOVE = :move

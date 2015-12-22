@@ -1,5 +1,5 @@
-class LargeRubbishViewModel
-  SMASH_DISTANCE = 90
+class LargeRubbishViewModel < EnemyViewModel
+
   INFO_BOARD_WIDTH = 106
   INFO_BOARD_HEIGHT = 37
   HP_BAR_WIDTH = 64
@@ -9,28 +9,18 @@ class LargeRubbishViewModel
   attr_reader :large_rubbish
 
   def initialize(large_rubbish)
+    super(large_rubbish)
     autowired(WindowResourceService)
     @large_rubbish = large_rubbish
   end
 
-  def id
-    @large_rubbish.id
-  end
-
-  def x
-    @large_rubbish.x
-  end
-
-  def y
-    @large_rubbish.y
-  end
-
-  def name
-    @large_rubbish.name
+  def enemy_type
+    LargeRubbish::ENEMY_TYPE
   end
 
   def update_large_rubbish(large_rubbish)
     @large_rubbish = large_rubbish
+    @enemy = large_rubbish
   end
 
   def draw
@@ -77,31 +67,5 @@ class LargeRubbishViewModel
     c1 = Gosu::Color.new(0xFF, 0xEA, 0x53 + ((0xF6 - 0x53) * rate).to_i, 0x20)
     GraphicsUtil::draw_linear_rect(x, y, current_hp_width, HP_BAR_HEIGHT,
                                    ZOrder::UI, c0, c1, direction:'hor')
-  end
-
-  def mouse_touch?(mouse_x, mouse_y)
-    distance(mouse_x, mouse_y) < 60
-  end
-
-  def can_smash?(role)
-    distance(role.x, role.y) < SMASH_DISTANCE
-  end
-
-  def get_destination(role)
-    angle = Gosu::angle(@large_rubbish.x, @large_rubbish.y, role.x, role.y)
-    dest_x = @large_rubbish.x + Gosu::offset_x(angle, SMASH_DISTANCE)
-    dest_y = @large_rubbish.y + Gosu::offset_y(angle, SMASH_DISTANCE)
-    [dest_x, dest_y]
-  end
-
-  # def smash
-  #   hp_dec = 3
-  #   hp_dec = @large_rubbish.hp if hp_dec > @large_rubbish.hp
-  #   @large_rubbish.update_hp @large_rubbish.hp - hp_dec
-  # end
-
-  private
-  def distance(x, y)
-    Gosu::distance(@large_rubbish.x, @large_rubbish.y, x, y)
   end
 end

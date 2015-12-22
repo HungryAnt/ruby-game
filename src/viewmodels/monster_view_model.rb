@@ -1,4 +1,4 @@
-class MonsterViewModel
+class MonsterViewModel < EnemyViewModel
   HP_BAR_WIDTH = 64
   HP_BAR_HEIGHT = 5
   HP_BAR_BORDER = 3
@@ -9,6 +9,7 @@ class MonsterViewModel
   attr_reader :monster
 
   def initialize(monster)
+    super(monster)
     autowired(WindowResourceService)
     @monster = monster
     @height = 50
@@ -20,8 +21,13 @@ class MonsterViewModel
     @update_times = 0
   end
 
+  def enemy_type
+    Monster::ENEMY_TYPE
+  end
+
   def update_monster(monster)
     @monster = monster
+    @enemy = monster
   end
 
   def draw
@@ -29,10 +35,6 @@ class MonsterViewModel
     draw_anim
     draw_name
     draw_hp
-  end
-
-  def y
-    @monster.y
   end
 
   def move_to(x, y)
@@ -133,10 +135,6 @@ class MonsterViewModel
     y = @monster.y + 41
     GraphicsUtil.draw_text_with_border(name, font, x, y,
                                        ZOrder::Player, 1, 1, 0xFF_F5CAA8, 0xEE_210B00)
-  end
-
-  def name
-    @monster.name
   end
 
   def draw_hp

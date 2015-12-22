@@ -38,4 +38,11 @@ module GameMonster
   # def set_monster_action(state)
   #   get_monster_vms.each { |monster_vm| monster_vm.set_durable_state state }
   # end
+
+  def get_touch_monster(mouse_x, mouse_y)
+    get_monster_vms.each do |item_vm|
+      return item_vm if item_vm.mouse_touch?(mouse_x, mouse_y)
+    end
+    nil
+  end
 end

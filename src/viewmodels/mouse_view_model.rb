@@ -6,6 +6,8 @@ class MouseType
   GOTO_AREA = 4
   SMASH = 5
   SMASH_BUTTON_DOWN = 6
+  ATTACK = 7
+  ATTACK_BUTTON_DOWN = 8
 end
 
 class MouseViewModel
@@ -45,6 +47,8 @@ class MouseViewModel
     @images_map[MouseType::PICK_UP_BUTTON_DOWN] = get_image(3)
     @images_map[MouseType::SMASH] = get_image(4)
     @images_map[MouseType::SMASH_BUTTON_DOWN] = get_image(5)
+    @images_map[MouseType::ATTACK] = get_image(6)
+    @images_map[MouseType::ATTACK_BUTTON_DOWN] = get_image(7)
   end
 
   def get_image(num)
