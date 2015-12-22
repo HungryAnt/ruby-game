@@ -3,8 +3,9 @@ class Image
     @image, @center_x, @center_y = image, center_x, center_y
   end
 
-  def draw(x, y, z)
-    @image.draw(x - @center_x, y - @center_y, z)
+  def draw(x, y, z, options={})
+    mode = options.include?(:mode) ? options[:mode] : :default
+    @image.draw(x - @center_x, y - @center_y, z, 1, 1, 0xFF_FFFFFF, mode)
   end
 end
 
@@ -13,7 +14,8 @@ class CenteredImage
     @image, @scale_x, @scale_y = image, scale_x, scale_y
   end
 
-  def draw(x, y, z)
-    @image.draw_rot(x, y, z, 0, 0.5, 0.5, @scale_x, @scale_y)
+  def draw(x, y, z, options={})
+    mode = options.include?(:mode) ? options[:mode] : :default
+    @image.draw_rot(x, y, z, 0, 0.5, 0.5, @scale_x, @scale_y, 0xFF_FFFFFF, mode)
   end
 end

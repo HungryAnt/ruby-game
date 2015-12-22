@@ -25,9 +25,9 @@ class Animation
     @init_timestamp = Gosu::milliseconds
   end
 
-  def draw(x, y, z, option={})
-    if option.include? :init_timestamp
-      init_timestamp = option[:init_timestamp]
+  def draw(x, y, z, options={})
+    if options.include? :init_timestamp
+      init_timestamp = options[:init_timestamp]
     else
       init_timestamp = @init_timestamp
     end
@@ -36,7 +36,7 @@ class Animation
     time = (Gosu::milliseconds - init_timestamp) % (anim_duration_time + @delay)
     if time >= @delay
       img = @images[(time - @delay) / @interval % @images.size]
-      img.draw(x + @offset_x, y + @offset_y, z)
+      img.draw(x + @offset_x, y + @offset_y, z, options)
     end
   end
 end

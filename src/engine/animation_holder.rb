@@ -9,8 +9,8 @@ class AnimationHolder
     end
   end
 
-  def draw
-    @anim.draw @x, @y, @z
+  def draw(options={})
+    @anim.draw @x, @y, @z, options
   end
 
   def finish?

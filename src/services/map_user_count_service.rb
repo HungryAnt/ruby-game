@@ -3,6 +3,7 @@ class MapUserCountService
     @map_user_count_dict = {}
     @all_user_count = 0
     @map_large_rubbish_dict = {}
+    @map_monster_dict = {}
   end
 
   def refresh_map_user_count(map_user_count_dict, all_user_count,

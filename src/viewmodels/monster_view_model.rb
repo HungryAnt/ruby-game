@@ -25,6 +25,7 @@ class MonsterViewModel
   end
 
   def draw
+    draw_effect
     draw_anim
     draw_name
     draw_hp
@@ -49,6 +50,8 @@ class MonsterViewModel
 
     update_state
 
+    @anim_container.update
+
     @update_times += 1
   end
 
@@ -60,19 +63,13 @@ class MonsterViewModel
     @attack_begin_time = Gosu::milliseconds
     @attack_update_times = @update_times
     anim_goto_begin
+
+    @anim_monster_attack_effect.goto_begin
+    anim_holder = AnimationHolder.new @anim_monster_attack_effect, @monster.x, @monster.y, ZOrder::Player, false
+    @anim_container << anim_holder
   end
 
   private
-
-  def do_one_attack(player_vm)
-    # ´¥·¢¹¥»÷Ñ£ÔÎ
-    puts 'attack'
-    player_vm.check_hit_battered Monster::State::ATTACK, @monster.x, @monster.y
-  end
-
-  def in_attacking
-    Gosu::milliseconds - @attack_begin_time <= ATTACKING_DURATION_IN_MS
-  end
 
   def init_animations
     monster_type_id = @monster.monster_type_id.to_s
@@ -85,6 +82,9 @@ class MonsterViewModel
     end
     @current_anim = @anim_stand_down
     anim_goto_begin
+
+    @anim_monster_attack_effect = AnimationManager.get_anim :monster_attack_effect
+    @anim_container = AnimationContainer.new
   end
 
   def draw_anim
@@ -153,5 +153,17 @@ class MonsterViewModel
                                    ZOrder::Player, c0, c1, direction:'hor')
   end
 
+  def do_one_attack(player_vm)
+    # ´¥·¢¹¥»÷Ñ£ÔÎ
+    puts 'attack'
+    player_vm.check_hit_battered Monster::State::ATTACK, @monster.x, @monster.y
+  end
 
+  def in_attacking
+    Gosu::milliseconds - @attack_begin_time <= ATTACKING_DURATION_IN_MS
+  end
+
+  def draw_effect
+    @anim_container.draw mode: :additive
+  end
 end

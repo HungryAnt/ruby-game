@@ -124,7 +124,7 @@ class HitService
     raise_error(hit_type) unless is_hit? hit_type
     case hit_type
       when Monster::State::ATTACK
-        return GraphicsUtil.pt_in_ellipse? x0, y0, x1, y1, 350, 200
+        return GraphicsUtil.pt_in_ellipse? x0, y0, x1, y1, 175, 100
       else
         return Gosu::distance(x0, y0, x1, y1) < 28
     end

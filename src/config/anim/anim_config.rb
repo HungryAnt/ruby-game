@@ -56,3 +56,10 @@ def new_direction_anims_with_same_imgs(prefix, pattern, action, raw_img_nums, an
     }
   end
 end
+
+def new_centered_anim(key, pattern, num_pair, interval)
+  nums = to_simple_anim_nums *num_pair
+  AnimationManager.new_centered_anim(key) {
+    [pattern, nums, interval]
+  }
+end

@@ -15,9 +15,9 @@ class AnimationContainer
     @anims.reject! {|anim| anim.finish?}
   end
 
-  def draw
+  def draw(options={})
     @anims.each do |anim|
-      anim.draw
+      anim.draw options
     end
   end
 end
