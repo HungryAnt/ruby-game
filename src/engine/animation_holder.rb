@@ -3,13 +3,17 @@ class AnimationHolder
                  loop_forever = true, loop_count = 1)
     @anim, @x, @y, @z = anim, x, y, z
     @loop_forever = loop_forever
+    @start_timestamp = Gosu::milliseconds
     unless loop_forever
       @duraion = anim.interval * anim.img_count * loop_count
-      @start_timestamp = Gosu::milliseconds
     end
   end
 
   def draw(options={})
+    unless options.include? :init_timestamp
+      options = options.clone
+      options[:init_timestamp] = @start_timestamp
+    end
     @anim.draw @x, @y, @z, options
   end
 

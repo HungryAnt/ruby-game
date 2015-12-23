@@ -16,7 +16,7 @@ class Monster
   end
 
   attr_accessor :state, :durable_state
-  attr_reader :id, :monster_type_id, :name, :max_hp, :hp
+  attr_reader :id, :monster_type_id, :name, :max_hp, :hp, :height
 
   include Location
   include Movable
@@ -31,6 +31,7 @@ class Monster
     @state = State::STAND
     @durable_state = State::STAND
     @max_hp, @hp = max_hp, hp
+    @height = monster_type_info.height
   end
 
   def update_hp(hp)

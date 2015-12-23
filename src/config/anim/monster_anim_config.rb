@@ -25,7 +25,7 @@ lambda {
   end
 
   # ¹¥»÷·¶Î§¶¯»­Ð§¹û
-  new_centered_anim :monster_attack_effect, 'monster/effect/Effect_${num}.bmp', [3, 17], 150
+  new_centered_anim :monster_attack_effect, 'monster/effect/Effect_${num}.bmp', [3, 17], 220
 
   new_monster_anims '0002', stand_down:[0, 3], move_down:[4, 7], attack_down:[9, 12],
                     stand_up:[13, 16], move_up:[17, 21], attack_up:[22, 25],

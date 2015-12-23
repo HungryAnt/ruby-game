@@ -11,9 +11,9 @@ class MonsterTypeInfo
     @@type_info[id]
   end
 
-  attr_reader :id, :name
+  attr_reader :id, :name, :height
 
-  def initialize(id, name)
-    @id, @name = id, name
+  def initialize(id, name, height)
+    @id, @name, @height = id, name, height
   end
 end

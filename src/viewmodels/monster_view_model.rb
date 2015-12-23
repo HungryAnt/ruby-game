@@ -3,8 +3,11 @@ class MonsterViewModel < EnemyViewModel
   HP_BAR_HEIGHT = 5
   HP_BAR_BORDER = 3
 
-  ATTACKING_DURATION_IN_MS = 5000
+  EFFECT_ANIM_IMAGES_COUNT = 15
+  ATTACKING_DURATION_IN_MS = EFFECT_ANIM_IMAGES_COUNT * 220 # 3300
   ATTACKING_INTERVAL_IN_S = 1
+
+  EFFECT_ANIM_Y_OFFSET = 44
 
   attr_reader :monster
 
@@ -12,7 +15,6 @@ class MonsterViewModel < EnemyViewModel
     super(monster)
     autowired(WindowResourceService)
     @monster = monster
-    @height = 50
     init_animations
     @attack_begin_time = 0
     @one_attack_begin_time = 0
@@ -66,8 +68,9 @@ class MonsterViewModel < EnemyViewModel
     @attack_update_times = @update_times
     anim_goto_begin
 
-    @anim_monster_attack_effect.goto_begin
-    anim_holder = AnimationHolder.new @anim_monster_attack_effect, @monster.x, @monster.y, ZOrder::Player, false
+    # @anim_monster_attack_effect.goto_begin
+    anim_holder = AnimationHolder.new @anim_monster_attack_effect,
+                                      @monster.x, @monster.y - EFFECT_ANIM_Y_OFFSET, ZOrder::Player, false
     @anim_container << anim_holder
   end
 
@@ -90,16 +93,17 @@ class MonsterViewModel < EnemyViewModel
   end
 
   def draw_anim
-    x, y = get_actual_pet_location
+    x, y = get_anim_center_location
     @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp)
+    # Gosu::draw_rect(@monster.x, @monster.y, 1, 1, 0xFF_FF0000, ZOrder::Player)
   end
 
   def anim_goto_begin
     @anim_init_timestamp = Gosu::milliseconds
   end
 
-  def get_actual_pet_location
-    [@monster.x, @monster.y - @height]
+  def get_anim_center_location
+    [@monster.x, @monster.y - @monster.height / 2]
   end
 
   def update_state
