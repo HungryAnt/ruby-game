@@ -170,10 +170,22 @@ class AreaViewModel
     }
   end
 
+  def update_monster_hp(monster)
+    find_monster_and(monster.id) { |target_vm| target_vm.update_hp monster.hp }
+  end
+
   def destroy_monster_vm(id)
     @mutex.synchronize {
       @monster_vms.delete_if {|item| item.id == id}
     }
+  end
+
+  def monster_move_to(monster_id, x, y)
+    find_monster_and(monster_id) { |target_vm| target_vm.move_to(x, y) }
+  end
+
+  def monster_attack(monster_id)
+    find_monster_and(monster_id) { |target_vm| target_vm.attack }
   end
 
   def clear_monster_vms
@@ -183,6 +195,14 @@ class AreaViewModel
   end
 
   private
+
+  def find_monster_and(monster_id)
+    @mutex.synchronize {
+      target_vm = @monster_vms.find {|item| item.id == monster_id}
+      yield target_vm unless target_vm.nil?
+    }
+  end
+
   def draw_covering
     @covering_views.each do |covering_view|
       covering_view[:visual].draw(covering_view[:x], covering_view[:y], covering_view[:zorder])

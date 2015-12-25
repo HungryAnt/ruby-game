@@ -216,14 +216,22 @@ class PlayerViewModel
   end
 
   def smash
-    return if !smashing?
+    return unless smashing?
     return if @role_vm.hitting || battered || @role.eating?
     enemy_vm = @smashing_enemy_vm
-    @role.disable_auto_move
+
+    if enemy_vm.can_smash? @role
+      @role.disable_auto_move
+
+      @role.adjust_to_suit_direction(enemy_vm.x, enemy_vm.y)
+      @role_vm.hit(:smash)
+      remote_smash enemy_vm.enemy_type, enemy_vm.id
+    else
+      # µÐÈËÒÑ³¬³ö¿É¹¥»÷·¶Î§£¬Í£Ö¹¹¥»÷
+      stop_smash
+    end
+
     sync_role_appear
-    @role.adjust_to_suit_direction(enemy_vm.x, enemy_vm.y)
-    @role_vm.hit(:smash)
-    remote_smash enemy_vm.enemy_type, enemy_vm.id
   end
 
   def set_action(action)

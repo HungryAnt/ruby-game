@@ -28,7 +28,7 @@ class EnemyViewModel
   end
 
   def can_smash?(role)
-    distance(role.x, role.y) < SMASH_DISTANCE
+    distance(role.x, role.y) <= SMASH_DISTANCE + 1
   end
 
   def get_destination(role)

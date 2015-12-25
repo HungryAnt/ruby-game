@@ -1,5 +1,5 @@
 class Application
-  VERSION = 'v0.9.0 beta'
+  VERSION = 'v1.0.0'
 
   def validate_args
     return false if ARGV.size != 2

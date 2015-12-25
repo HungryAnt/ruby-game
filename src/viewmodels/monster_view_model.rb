@@ -32,6 +32,10 @@ class MonsterViewModel < EnemyViewModel
     @enemy = monster
   end
 
+  def update_hp(hp)
+    @monster.update_hp hp
+  end
+
   def draw
     draw_effect
     draw_anim
@@ -136,7 +140,7 @@ class MonsterViewModel < EnemyViewModel
     font = @window_resource_service.get_font_16
     text_width = font.text_width(name)
     x = @monster.x - text_width / 2
-    y = @monster.y + 41
+    y = @monster.y + 21
     GraphicsUtil.draw_text_with_border(name, font, x, y,
                                        ZOrder::Player, 1, 1, 0xFF_F5CAA8, 0xEE_210B00)
   end
@@ -145,7 +149,7 @@ class MonsterViewModel < EnemyViewModel
     rate = 1.0 * @monster.hp / @monster.max_hp
     current_hp_width = HP_BAR_WIDTH * rate
     x = @monster.x - HP_BAR_WIDTH / 2
-    y = @monster.y + 35
+    y = @monster.y + 15
     GraphicsUtil::draw_rect_border x-1, y-1, HP_BAR_WIDTH + 3, HP_BAR_HEIGHT + 3, 0xFF_F5CAA8, ZOrder::Player
     GraphicsUtil::draw_rect_border x, y, HP_BAR_WIDTH + 1, HP_BAR_HEIGHT + 1, 0xEE_210B00, ZOrder::Player
 

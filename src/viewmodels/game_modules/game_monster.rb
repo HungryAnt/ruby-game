@@ -3,19 +3,28 @@ module GameMonster
     @monsters_service.register_monster_msg_callback do |monster_msg|
       area_id = monster_msg.area_id
       item_map = monster_msg.item_map
+      detail = monster_msg.detail
       area_vm = @map_service.get_area(area_id)
+      monster_id = item_map['id']
+
       case monster_msg.action
-        when LargeRubbishMessage::Action::CREATE
+        when MonsterMessage::Action::CREATE
           area_vm.add_monster_vm MonsterViewModelFactory.create_monster_vm(item_map)
-        when LargeRubbishMessage::Action::UPDATE
-          area_vm.update_monster_vm MonsterViewModelFactory.create_monster_vm(item_map)
-        when LargeRubbishMessage::Action::DESTROY
-          monster_id = item_map['id']
+        when MonsterMessage::Action::UPDATE
+          update_monster area_vm, item_map
+        when MonsterMessage::Action::UPDATE_HP
+          area_vm.update_monster_hp MonsterViewModelFactory.to_monster(item_map)
+        when MonsterMessage::Action::MOVE
+          update_monster area_vm, item_map
+          area_vm.monster_move_to monster_id, detail['x'].to_i, detail['y'].to_i
+        when MonsterMessage::Action::ATTACK
+          update_monster area_vm, item_map
+          area_vm.monster_attack monster_id
+        when MonsterMessage::Action::DESTROY
           area_vm.destroy_monster_vm monster_id
           @player_view_model.stop_smash_enemy monster_id
       end
     end
-
   end
 
   def get_monster_vms
@@ -44,5 +53,11 @@ module GameMonster
       return item_vm if item_vm.mouse_touch?(mouse_x, mouse_y)
     end
     nil
+  end
+
+  private
+
+  def update_monster(area_vm, item_map)
+    area_vm.update_monster_vm MonsterViewModelFactory.create_monster_vm(item_map)
   end
 end
