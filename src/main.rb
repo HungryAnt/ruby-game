@@ -94,6 +94,7 @@ require 'messages/pet_message'
 require 'messages/monster_message'
 require 'messages/area_enemies_query_message'
 require 'messages/smash_monster_message'
+require 'messages/pet_attack_enemy_message'
 
 require 'clients/yecai_web_client'
 
@@ -122,6 +123,9 @@ require 'services/large_rubbishes_service'
 require 'services/hit_service'
 require 'services/monsters_service'
 
+require 'viewmodels/common_modules/mouse_tips'
+require 'viewmodels/common_modules/player_common_module'
+
 require 'viewmodels/item_view_model'
 require 'viewmodels/pet_view_model'
 require 'viewmodels/player_pet_view_model'
@@ -134,8 +138,6 @@ require 'viewmodels/rubbish_view_model'
 require 'viewmodels/nutrient_view_model'
 require 'viewmodels/mouse_view_model'
 require 'viewmodels/chat_board_view_model'
-
-require 'viewmodels/common_modules/mouse_tips'
 
 require 'viewmodels/game_modules/game_mouse'
 require 'viewmodels/game_modules/game_role'

@@ -22,7 +22,7 @@ class MapService
   end
 
   def get_area(key)
-    @area_vm_dict[key]
+    @area_vm_dict[key.to_s]
   end
 
   def switch_map(key, role)

@@ -1,6 +1,7 @@
 class PetMessage
   APPEAR = 'appear'
   DISAPPEAR = 'disappear'
+  ATTACK = 'attack'
 
   attr_reader :pet_id, :pet_type, :action, :pet_map, :map_id, :area_id, :destination
 

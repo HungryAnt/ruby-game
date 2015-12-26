@@ -9,7 +9,9 @@ class MonsterViewModel < EnemyViewModel
 
   EFFECT_ANIM_Y_OFFSET = 44
 
-  attr_reader :monster
+  CAPITULATE_DURING_TIME = 4000
+
+  attr_reader :monster, :is_capitulate
 
   def initialize(monster)
     super(monster)
@@ -19,6 +21,9 @@ class MonsterViewModel < EnemyViewModel
     @attack_begin_time = 0
     @one_attack_begin_time = 0
     @attack_update_times = 0
+
+    @capitulate_time = 0
+    @is_capitulate = false
 
     @update_times = 0
   end
@@ -39,8 +44,11 @@ class MonsterViewModel < EnemyViewModel
   def draw
     draw_effect
     draw_anim
-    draw_name
-    draw_hp
+
+    unless @is_capitulate
+      draw_name
+      draw_hp
+    end
   end
 
   def move_to(x, y)
@@ -60,11 +68,14 @@ class MonsterViewModel < EnemyViewModel
 
     @anim_container.update
 
-    @update_times += 1
-  end
+    if @is_capitulate
+      rate = (Gosu::milliseconds - @capitulate_time).to_f / CAPITULATE_DURING_TIME
+      if rate > 0 && rate <= 1
+        @anim_color = Gosu::Color.new(0xFF - (0xFF * rate).to_i, 0xFF, 0xFF, 0xFF)
+      end
+    end
 
-  def set_durable_state(state)
-    @monster.durable_state = state
+    @update_times += 1
   end
 
   def attack
@@ -76,6 +87,16 @@ class MonsterViewModel < EnemyViewModel
     anim_holder = AnimationHolder.new @anim_monster_attack_effect,
                                       @monster.x, @monster.y - EFFECT_ANIM_Y_OFFSET, ZOrder::Player, false
     @anim_container << anim_holder
+  end
+
+  def capitulate
+    @capitulate_time = Gosu::milliseconds
+    @is_capitulate = true
+    anim_goto_begin
+  end
+
+  def should_destroy?
+    @is_capitulate && Gosu::milliseconds - @capitulate_time >= CAPITULATE_DURING_TIME
   end
 
   private
@@ -94,11 +115,13 @@ class MonsterViewModel < EnemyViewModel
 
     @anim_monster_attack_effect = AnimationManager.get_anim :monster_attack_effect
     @anim_container = AnimationContainer.new
+
+    @anim_color = 0xFF_FFFFFF
   end
 
   def draw_anim
     x, y = get_anim_center_location
-    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp)
+    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp, color:@anim_color)
     # Gosu::draw_rect(@monster.x, @monster.y, 1, 1, 0xFF_FF0000, ZOrder::Player)
   end
 
@@ -120,9 +143,12 @@ class MonsterViewModel < EnemyViewModel
   end
 
   def get_state
+    if @is_capitulate
+      return Monster::State::CAPITULATE
+    end
     if @monster.standing
       if in_attacking
-        return Pet::State::ATTACK
+        return Monster::State::ATTACK
       end
       @monster.durable_state
     else

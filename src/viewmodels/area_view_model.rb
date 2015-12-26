@@ -147,6 +147,13 @@ class AreaViewModel
     }
   end
 
+  def refresh_monster_vms
+    @mutex.synchronize {
+      @monster_vms = @monster_vms.reject {|item| item.should_destroy? }
+      return @monster_vms
+    }
+  end
+
   def get_monster_vms
     @mutex.synchronize {
       return @monster_vms
@@ -175,9 +182,10 @@ class AreaViewModel
   end
 
   def destroy_monster_vm(id)
-    @mutex.synchronize {
-      @monster_vms.delete_if {|item| item.id == id}
-    }
+    # @mutex.synchronize {
+    #   @monster_vms = @monster_vms.reject {|item| item.id == id}
+    # }
+    find_monster_and(id) { |target_vm| target_vm.capitulate }
   end
 
   def monster_move_to(monster_id, x, y)

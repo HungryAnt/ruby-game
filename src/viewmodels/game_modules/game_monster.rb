@@ -23,8 +23,13 @@ module GameMonster
         when MonsterMessage::Action::DESTROY
           area_vm.destroy_monster_vm monster_id
           @player_view_model.stop_smash_enemy monster_id
+
       end
     end
+  end
+
+  def refresh_monster_vms
+    @map_service.current_map.current_area.refresh_monster_vms
   end
 
   def get_monster_vms
@@ -32,7 +37,7 @@ module GameMonster
   end
 
   def travel_monsters
-    get_monster_vms.each { |monster_vm| yield monster_vm }
+    refresh_monster_vms.each { |monster_vm| yield monster_vm }
   end
 
   def monster_move_to(x, y)

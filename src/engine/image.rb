@@ -16,6 +16,7 @@ class CenteredImage
 
   def draw(x, y, z, options={})
     mode = options.include?(:mode) ? options[:mode] : :default
-    @image.draw_rot(x, y, z, 0, 0.5, 0.5, @scale_x, @scale_y, 0xFF_FFFFFF, mode)
+    color = options.include?(:color) ? options[:color] : 0xFF_FFFFFF
+    @image.draw_rot(x, y, z, 0, 0.5, 0.5, @scale_x, @scale_y, color, mode)
   end
 end

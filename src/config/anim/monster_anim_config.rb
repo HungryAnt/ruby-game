@@ -22,6 +22,13 @@ lambda {
                         down_nums_pair:options[:attack_down],
                         anim_interval:250,
                         reversed:false
+
+    new_direction_anims prefix, pattern, 'capitulate',
+                        hor_nums_pair:options[:capitulate],
+                        up_nums_pair:options[:capitulate],
+                        down_nums_pair:options[:capitulate],
+                        anim_interval:250,
+                        reversed:false
   end
 
   # ¹¥»÷·¶Î§¶¯»­Ð§¹û

@@ -33,22 +33,26 @@ module GamePet
   end
 
   def update_pet(area_id, pet_id, pet_type, action, pet_map, destination)
-    if action == PetMessage::APPEAR
-      pet_vm = get_pet_vm(pet_id, pet_type)
+    case action
+      when PetMessage::APPEAR
+        pet_vm = get_pet_vm(pet_id, pet_type)
 
-      pet_vm.area_id = area_id
-      pet_vm.pet.x = pet_map['x'].to_i
-      pet_vm.pet.y = pet_map['y'].to_i
-      pet_vm.pet.state = pet_map['state'].to_sym
-      pet_vm.pet.durable_state = pet_map['durable_state'].to_sym
-      pet_vm.pet.direction = pet_map['direction']
+        pet_vm.area_id = area_id
+        pet_vm.pet.x = pet_map['x'].to_i
+        pet_vm.pet.y = pet_map['y'].to_i
+        pet_vm.pet.state = pet_map['state'].to_sym
+        pet_vm.pet.durable_state = pet_map['durable_state'].to_sym
+        pet_vm.pet.direction = pet_map['direction']
 
-      if destination.size > 0
-        pet_vm.move_to destination['x'].to_i, destination['y'].to_i
-      end
-    else
-      pet_vm = @pet_vm_dict[pet_id]
-      pet_vm.area_id = :none unless pet_vm.nil?
+        if destination.size > 0
+          pet_vm.move_to destination['x'].to_i, destination['y'].to_i
+        end
+      when PetMessage::DISAPPEAR
+        pet_vm = @pet_vm_dict[pet_id]
+        pet_vm.area_id = :none unless pet_vm.nil?
+      when PetMessage::ATTACK
+        pet_vm = @pet_vm_dict[pet_id]
+        pet_vm.attack unless pet_vm.nil?
     end
   end
 

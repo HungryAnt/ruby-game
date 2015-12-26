@@ -115,13 +115,18 @@ class CommunicationService
   end
 
   def send_smash_large_rubbish_message(user_id, area_id, enemy_id)
-    puts 'send_large_rubbish_message'
+    puts 'send_smash_large_rubbish_message'
     send SmashLargeRubbishMessage.new(user_id, area_id, enemy_id)
   end
 
   def send_smash_monster_message(user_id, area_id, enemy_id)
     puts 'send_smash_monster_message'
     send SmashMonsterMessage.new(user_id, area_id, enemy_id)
+  end
+
+  def send_pet_attack_enemy_message(pet_id, user_id, area_id, enemy_type, enemy_id)
+    puts 'send_pet_attack_enemy_message'
+    send PetAttackEnemyMessage.new pet_id, user_id, area_id, enemy_type.to_s, enemy_id
   end
 
   def add_chat_msg(msg)
@@ -244,6 +249,11 @@ class CommunicationService
       @game_roles_communication_handler.smash msg.user_id, msg.area_id.to_sym
     end
 
+    @network_service.register('smash_monster_message') do |msg_map, params|
+      msg = SmashMonsterMessage.from_map(msg_map)
+      @game_roles_communication_handler.smash msg.user_id, msg.area_id.to_sym
+    end
+
     @network_service.register('pet_message') do |msg_map, params|
       msg = PetMessage.from_map(msg_map)
       @pet_communication_handler.update_pet msg
@@ -252,11 +262,6 @@ class CommunicationService
     @network_service.register('monster_message') do |msg_map, params|
       msg = MonsterMessage.from_map msg_map
       @monsters_service.add_monster_msg msg
-    end
-
-    @network_service.register('smash_monster_message') do |msg_map, params|
-      msg = SmashMonsterMessage.from_map(msg_map)
-      @game_roles_communication_handler.smash msg.user_id, msg.area_id.to_sym
     end
   end
 

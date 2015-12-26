@@ -1,4 +1,6 @@
 class PetViewModel
+  ATTACKING_DURATION_IN_MS = 3000
+
   attr_accessor :area_id
   attr_reader :pet
 
@@ -8,6 +10,7 @@ class PetViewModel
     init_animations
     reset_durable_state
     @update_times = 0
+    @attack_begin_time = 0
   end
 
   def pet_id
@@ -22,9 +25,9 @@ class PetViewModel
     @pet.y
   end
 
-  def move_to(target_x, target_y)
+  def move_to(target_x, target_y, &arrive_call_back)
     reset_durable_state
-    @pet.set_auto_move_to target_x, target_y
+    @pet.set_auto_move_to target_x, target_y, &arrive_call_back
   end
 
   def update(area)
@@ -37,7 +40,8 @@ class PetViewModel
   end
 
   def attack
-
+    @attack_begin_time = Gosu::milliseconds
+    anim_goto_begin
   end
 
   def sleep
@@ -108,13 +112,20 @@ class PetViewModel
 
   def get_state
     if @pet.standing
-      return @pet.durable_state
+      if in_attacking
+        return Pet::State::ATTACK
+      end
+      @pet.durable_state
     else
-      return Pet::State::MOVE
+      Pet::State::MOVE
     end
   end
 
   def reset_durable_state
     @pet.durable_state = Pet::State::STAND
+  end
+
+  def in_attacking
+    Gosu::milliseconds - @attack_begin_time <= ATTACKING_DURATION_IN_MS
   end
 end
