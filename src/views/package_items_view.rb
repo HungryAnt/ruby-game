@@ -71,6 +71,8 @@ class PackageItemsView
     nutrient_panel = init_nutrient_panel
     vehicle_panel = init_vehicle_panel
     eye_wear_panel = init_equipment_eye_wear
+    wing_panel = init_equipment_wing
+    hat_panel = init_equipment_hat
     pet_panel = init_pet_panel
 
     right_panel.content = rubbish_panel
@@ -80,9 +82,11 @@ class PackageItemsView
     nutrient_tab = AntGui::TextBlock.new(@prompt_font, '  物资')
     vehicle_tab = AntGui::TextBlock.new(@prompt_font, '  载具')
     eye_wear_tab = AntGui::TextBlock.new(@prompt_font, '  眼部饰品')
+    wing_tab = AntGui::TextBlock.new(@prompt_font, '  翅膀')
+    hat_tab = AntGui::TextBlock.new(@prompt_font, '  帽子/头盔')
     pet_tab = AntGui::TextBlock.new(@prompt_font, '  萌宠!')
 
-    all_tabs = [rubbish_tab, nutrient_tab, vehicle_tab, eye_wear_tab, pet_tab]
+    all_tabs = [rubbish_tab, nutrient_tab, vehicle_tab, eye_wear_tab, wing_tab, hat_tab, pet_tab]
 
     rubbish_tab.background_color = 0x88_FFFFFF
 
@@ -101,6 +105,8 @@ class PackageItemsView
     init_tab_event.call nutrient_tab, nutrient_panel
     init_tab_event.call vehicle_tab, vehicle_panel
     init_tab_event.call eye_wear_tab, eye_wear_panel
+    init_tab_event.call wing_tab, wing_panel
+    init_tab_event.call hat_tab, hat_panel
     init_tab_event.call pet_tab, pet_panel
 
     all_tabs.each { |tab| left_panel.add tab }
@@ -179,6 +185,14 @@ class PackageItemsView
 
   def init_equipment_eye_wear
     init_common_equipment_panel '眼部饰品', :get_eye_wears
+  end
+
+  def init_equipment_wing
+    init_common_equipment_panel '翅膀', :get_wings
+  end
+
+  def init_equipment_hat
+    init_common_equipment_panel '帽子', :get_hats
   end
 
   def init_common_equipment_panel(prompt_text, query_method)

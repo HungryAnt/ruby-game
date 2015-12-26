@@ -17,7 +17,7 @@ class EquipmentViewModel
     direction_text = Direction::to_direction_text direction
     anim = self.instance_variable_get("@anim_#{direction_text}")
     return if anim.nil?
-    x, y = role_x, role_y - 30
+    x, y = role_x, role_y
     offset_x, offset_y = @location_offset[direction_text.to_sym]
     anim.draw(x + offset_x, y + offset_y, ZOrder::Player)
   end

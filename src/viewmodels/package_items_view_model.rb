@@ -23,6 +23,14 @@ class PackageItemsViewModel
     @player_vm.role.eye_wear_package.items
   end
 
+  def get_wings
+    @player_vm.role.wing_package.items
+  end
+
+  def get_hats
+    @player_vm.role.hat_package.items
+  end
+
   def choose_equipment(equipment)
     @player_vm.equip(EquipmentViewModelFactory.create_equipment(equipment))
   end

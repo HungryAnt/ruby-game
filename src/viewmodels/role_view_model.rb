@@ -1,6 +1,6 @@
 class RoleViewModel
   attr_reader :role, :hitting
-  attr_accessor :area_id, :vehicle_vm, :eye_wear_vm
+  attr_accessor :area_id, :vehicle_vm, :eye_wear_vm, :wing_vm, :hat_vm
 
   def initialize(role)
     autowired(MapService, HitService)
@@ -25,6 +25,8 @@ class RoleViewModel
   def init_equipments
     @vehicle_vm = nil
     @eye_wear_vm = nil
+    @wing_vm = nil
+    @hat_vm = nil
   end
 
   def init_hit_components
@@ -207,15 +209,16 @@ class RoleViewModel
       should_draw_vehicle_first = driving? && @vehicle_vm.is_behind_role
     end
 
-    if should_draw_vehicle_first
-      draw_vehicle
-      draw_role_anim
-    else
-      draw_role_anim
-      draw_vehicle
-    end
+    draw_wing if @role.direction == Direction::DOWN # ¡Ÿ ±∑Ω∞∏
+    draw_vehicle if should_draw_vehicle_first
+
+    draw_role_anim
 
     draw_equipments
+    draw_hat
+
+    draw_vehicle unless should_draw_vehicle_first
+    draw_wing unless @role.direction == Direction::DOWN
 
     draw_level_and_name
     @eating_food_vm.draw unless @eating_food_vm.nil?
@@ -314,7 +317,18 @@ class RoleViewModel
   end
 
   def draw_equipments
-    @eye_wear_vm.draw(@role.x, @role.y, @role.direction) unless @eye_wear_vm.nil?
+    x, y = get_actual_role_location
+    @eye_wear_vm.draw(x, y, @role.direction) unless @eye_wear_vm.nil?
+  end
+
+  def draw_wing
+    x, y = get_actual_role_location
+    @wing_vm.draw(x, y, @role.direction) unless @wing_vm.nil?
+  end
+
+  def draw_hat
+    x, y = get_actual_role_location
+    @hat_vm.draw(x, y, @role.direction) unless @hat_vm.nil?
   end
 
   def draw_level_and_name

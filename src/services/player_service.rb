@@ -27,7 +27,7 @@ class PlayerService
       #[39, 40, 50, 58, 59, 67, 74, 75, 81, 82, 83, 89, 90, 91, 604, 828,
       # 96, 97, 103, 104, 108, 109, 114, 115, 119, 121
       [#138, 228, 301, 402, 450, 552, 558, 569, 144, 163, 220,
-          321, 322, 326, 327, 331, 332, 336, 340, 345, 346, 354, 359, 234,
+          321, 322, 326, 327, 331, 332, 336, 340, 345, 346, 354, 359,
           168, 172, 178, 188, 222, 433, 497, 574, 598, 708, 723, 697, 710, 711, 802, 402, 521, 662, 376, 456, 381, 439
       ].each do |num|
         vehicle_key = "vehicle_#{num}".to_sym
@@ -49,7 +49,18 @@ class PlayerService
 
       [17, 20, 21, 97, 282].each do |num|
         key = "eye_wear_#{num}".to_sym
-        @role.eye_wear_package << Equipment.new(Equipment::Type::EYE_WEAR, key);
+        @role.eye_wear_package << Equipment.new(Equipment::Type::EYE_WEAR, key)
+      end
+
+      [16, 48, 51, 52, 94, 130, 131, 253, 278, 316, 338, 355,
+       394, 430, 467, 486, 559, 587, 617, 686, 715, 772, 795, 819].each do |num|
+        key = "wing_#{num}".to_sym
+        @role.wing_package << Equipment.new(Equipment::Type::WING, key)
+      end
+
+      [2, 18, 20, 21, 22, 24, 37, 38, 392, 395].each do |num|
+        key = "hat_#{num}".to_sym
+        @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
       end
 
     else

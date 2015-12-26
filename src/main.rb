@@ -199,6 +199,8 @@ else
     require 'config/equipment_vehicle_config'
     require 'config/equipment_eye_wear_config'
     require 'config/equipment_area_addition_config'
+    require 'config/equipment_wing_config'
+    require 'config/equipment_hat_config'
     require 'config/food_config'
     require 'config/rubbish_config'
     require 'config/nutrient_config'

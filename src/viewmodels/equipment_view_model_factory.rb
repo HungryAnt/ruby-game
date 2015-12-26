@@ -4,7 +4,11 @@ class EquipmentViewModelFactory
       when Equipment::Type::VEHICLE
         return create_vehicle(equipment.key)
       when Equipment::Type::EYE_WEAR
-        return create_eye_wear(equipment)
+        return create_common_equipment(equipment)
+      when Equipment::Type::WING
+        return create_common_equipment(equipment)
+      when Equipment::Type::HAT
+        return create_common_equipment(equipment)
     end
   end
 
@@ -19,7 +23,7 @@ class EquipmentViewModelFactory
     equipment_vm
   end
 
-  def self.create_eye_wear(equipment)
+  def self.create_common_equipment(equipment)
     equipment_vm = EquipmentViewModel.new(equipment)
     equipment_vm
   end

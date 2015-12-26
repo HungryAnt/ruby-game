@@ -55,6 +55,10 @@ class PlayerViewModel
         set_driving true
       when Equipment::Type::EYE_WEAR
         @role_vm.eye_wear_vm = equipment_vm
+      when Equipment::Type::WING
+        @role_vm.wing_vm = equipment_vm
+      when Equipment::Type::HAT
+        @role_vm.hat_vm = equipment_vm
       else
         # type code here
     end

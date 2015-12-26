@@ -221,8 +221,8 @@ create_vehicle_anims(802, down_nums_pair:[0, 10], up_nums_pair:[11, 22], hor_num
 set_vehicle_properties(802, 15, 0.8, down: [0, 4], up: [0, -6], left: [-14, -9])
 
 # ------------------ Ê÷Ò¶
-create_vehicle_anims(234, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
-set_vehicle_properties(234, 6, 0.8, down: [0, -4], up: [0, -6], left: [0, -7], is_behind_role: true)
+# create_vehicle_anims(234, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
+# set_vehicle_properties(234, 6, 0.8, down: [0, -4], up: [0, -6], left: [0, -7], is_behind_role: true)
 
 # ------------------ Ä¾Âí
 anim_nums_381 = [0, 3]
