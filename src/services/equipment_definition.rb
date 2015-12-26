@@ -17,4 +17,16 @@ class EquipmentDefinition
   def self.get_props(key)
     @@props_map[key]
   end
+
+  def self.get_item_animation(goods_category, key)
+    case goods_category
+      when :vehicles, :nostalgicVehicles
+        anim_key = "#{key}_down"
+      when :pets
+        anim_key = "#{key}_stand_down"
+      else
+        raise ArgumentError 'unexpected goods_category:' + goods_category
+    end
+    AnimationManager.get_anim anim_key.to_sym
+  end
 end

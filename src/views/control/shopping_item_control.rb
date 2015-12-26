@@ -1,8 +1,9 @@
 class ShoppingItemControl < AntGui::Control
-  def initialize(image, price)
+  def initialize(image, anim, price)
     super()
     autowired(WindowResourceService)
     @image = image
+    @anim = anim
     @gold = price / 100
     @silver = price % 100
     @image_gold = @window_resource_service.get_gold_image
@@ -24,7 +25,8 @@ class ShoppingItemControl < AntGui::Control
       top = control_top + (control_height - @image.height)/2
       scale_x = scale_y = 1
     end
-    @image.draw(left, top, z, scale_x, scale_y, 0xff_ffffff, mode=:default)
+    # @image.draw(left, top, z, scale_x, scale_y, 0xff_ffffff, mode=:default)
+    @anim.draw @actual_left + @actual_width / 2, top + control_height / 2, z, scale_x: scale_x, scale_y: scale_y
     draw_price z
   end
 

@@ -108,7 +108,7 @@ class ShoppingView < ViewBase
           AntGui::Canvas.set_canvas_props item_canvas, item_left, item_top, GOODS_ITEM_WIDTH, GOODS_ITEM_HEIGHT
           goods_panel.add item_canvas
 
-          item_image = ShoppingItemControl.new item[:image], item[:price]
+          item_image = ShoppingItemControl.new item[:image], item[:anim], item[:price]
           item_image.background_color = 0x44_EADAC5
           AntGui::Canvas.set_canvas_props item_image, 0, 0, GOODS_ITEM_WIDTH, GOODS_IMAGE_HEIGHT
 

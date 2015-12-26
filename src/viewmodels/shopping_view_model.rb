@@ -17,9 +17,11 @@ class ShoppingViewModel
       goods = Goods.from_map data_map
       key = goods.key.to_sym
       image = EquipmentDefinition.get_item_image key
+      anim = EquipmentDefinition.get_item_animation category, key
       items << {
           key: key,
           image: image,
+          anim: anim,
           price: goods.price,
           existing: package_vehicle_keys_set.include?(key) || package_pet_keys_set.include?(key)
       }
