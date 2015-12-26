@@ -6,6 +6,7 @@ module GameMonster
       detail = monster_msg.detail
       area_vm = @map_service.get_area(area_id)
       monster_id = item_map['id']
+      quiet = !is_current_area(area_id.to_sym)
 
       case monster_msg.action
         when MonsterMessage::Action::CREATE
@@ -16,14 +17,13 @@ module GameMonster
           area_vm.update_monster_hp MonsterViewModelFactory.to_monster(item_map)
         when MonsterMessage::Action::MOVE
           update_monster area_vm, item_map
-          area_vm.monster_move_to monster_id, detail['x'].to_i, detail['y'].to_i
+          area_vm.monster_move_to monster_id, detail['x'].to_i, detail['y'].to_i, quiet
         when MonsterMessage::Action::ATTACK
           update_monster area_vm, item_map
-          area_vm.monster_attack monster_id
+          area_vm.monster_attack monster_id, quiet
         when MonsterMessage::Action::DESTROY
-          area_vm.destroy_monster_vm monster_id
+          area_vm.destroy_monster_vm monster_id, quiet
           @player_view_model.stop_smash_enemy monster_id
-
       end
     end
   end
@@ -40,13 +40,13 @@ module GameMonster
     refresh_monster_vms.each { |monster_vm| yield monster_vm }
   end
 
-  def monster_move_to(x, y)
+  def monster_move_to(x, y, quiet)
     return if get_monster_vms.count == 0
-    get_monster_vms.each { |monster_vm| monster_vm.move_to x, y }
+    get_monster_vms.each { |monster_vm| monster_vm.move_to x, y, quiet }
   end
 
-  def monster_atack
-    get_monster_vms.each { |monster_vm| monster_vm.attack }
+  def monster_atack(quiet)
+    get_monster_vms.each { |monster_vm| monster_vm.attack quiet }
   end
 
   # def set_monster_action(state)

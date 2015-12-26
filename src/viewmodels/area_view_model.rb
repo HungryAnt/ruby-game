@@ -181,19 +181,19 @@ class AreaViewModel
     find_monster_and(monster.id) { |target_vm| target_vm.update_hp monster.hp }
   end
 
-  def destroy_monster_vm(id)
+  def destroy_monster_vm(id, quiet)
     # @mutex.synchronize {
     #   @monster_vms = @monster_vms.reject {|item| item.id == id}
     # }
-    find_monster_and(id) { |target_vm| target_vm.capitulate }
+    find_monster_and(id) { |target_vm| target_vm.capitulate quiet }
   end
 
-  def monster_move_to(monster_id, x, y)
-    find_monster_and(monster_id) { |target_vm| target_vm.move_to(x, y) }
+  def monster_move_to(monster_id, x, y, quiet)
+    find_monster_and(monster_id) { |target_vm| target_vm.move_to(x, y, quiet) }
   end
 
-  def monster_attack(monster_id)
-    find_monster_and(monster_id) { |target_vm| target_vm.attack }
+  def monster_attack(monster_id, quiet)
+    find_monster_and(monster_id) { |target_vm| target_vm.attack quiet }
   end
 
   def clear_monster_vms

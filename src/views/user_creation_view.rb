@@ -34,7 +34,7 @@ class UserCreationView
   ROLE_SELECTOR_ROW_COUNT = 2
 
   def initialize(window)
-    autowired(NetworkService, UserService, WindowResourceService)
+    autowired(NetworkService, UserService, WindowResourceService, SongService)
     @window = window
 
     @font = Gosu::Font.new(30)
@@ -42,6 +42,8 @@ class UserCreationView
     init_user_name_text_box
     init_role_type_selector
     update_role_type_selector @user_service.role_type
+
+    @song_service.play_song('Title_New.ogg')
   end
 
   def init_user_name_text_box

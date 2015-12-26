@@ -11,6 +11,7 @@ class PetViewModel
     reset_durable_state
     @update_times = 0
     @attack_begin_time = 0
+    @sound_smash = MediaUtil.get_sample 'smash.wav'
   end
 
   def pet_id
@@ -40,6 +41,7 @@ class PetViewModel
   end
 
   def attack
+    @sound_smash.play
     @attack_begin_time = Gosu::milliseconds
     anim_goto_begin
   end

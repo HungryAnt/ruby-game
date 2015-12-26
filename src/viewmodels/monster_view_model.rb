@@ -51,7 +51,8 @@ class MonsterViewModel < EnemyViewModel
     end
   end
 
-  def move_to(x, y)
+  def move_to(x, y, quiet=false)
+    play_sound(:move) unless quiet
     @monster.set_auto_move_to x, y
   end
 
@@ -78,7 +79,8 @@ class MonsterViewModel < EnemyViewModel
     @update_times += 1
   end
 
-  def attack
+  def attack(quiet=false)
+    play_sound(:attack) unless quiet
     @attack_begin_time = Gosu::milliseconds
     @attack_update_times = @update_times
     anim_goto_begin
@@ -89,7 +91,8 @@ class MonsterViewModel < EnemyViewModel
     @anim_container << anim_holder
   end
 
-  def capitulate
+  def capitulate(quiet=false)
+    play_sound(:capitulate) unless quiet
     @capitulate_time = Gosu::milliseconds
     @is_capitulate = true
     anim_goto_begin
@@ -100,6 +103,11 @@ class MonsterViewModel < EnemyViewModel
   end
 
   private
+
+  def play_sound(action)
+    sound_path = @monster.monster_type_info.send "sound_#{action}"
+    MediaUtil.get_sample(sound_path).play
+  end
 
   def init_animations
     monster_type_id = @monster.monster_type_id.to_s

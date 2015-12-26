@@ -16,7 +16,7 @@ class Monster
   end
 
   attr_accessor :state, :durable_state
-  attr_reader :id, :monster_type_id, :name, :max_hp, :hp, :height
+  attr_reader :id, :monster_type_id, :name, :max_hp, :hp, :height, :monster_type_info
 
   include Location
   include Movable
@@ -27,6 +27,7 @@ class Monster
     @id = id
     @monster_type_id = monster_type_id
     monster_type_info = MonsterTypeInfo.get monster_type_id
+    @monster_type_info = monster_type_info
     @name = monster_type_info.name
     @state = State::STAND
     @durable_state = State::STAND
