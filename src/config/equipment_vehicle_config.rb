@@ -256,7 +256,10 @@ create_vehicle_anims(433, down_nums_pair:[0, 5], up_nums_pair:[6, 9], hor_nums_p
 set_vehicle_properties(433, 0, 0.8, down: [0, 12], up: [0, 8], left: [8, 8], is_cloak: true)
 
 create_vehicle_anims(497, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
-set_vehicle_properties(497, 0, 0.8, down: [0, 12], up: [0, 8], left: [10, 8], is_cloak: true)
+set_vehicle_properties(497, 0, 0.8, down: [0, 12], up: [0, 8], left: [10, 12], is_cloak: true)
+
+create_vehicle_anims(514, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+set_vehicle_properties(514, 0, 0.8, down: [0, -5], up: [0, -1], left: [-5, 2], is_cloak: true)
 
 create_vehicle_anims(574, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
 set_vehicle_properties(574, 0, 0.8, down: [0, 14], up: [0, 6], left: [18, 10], is_cloak: true)

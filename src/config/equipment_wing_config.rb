@@ -9,7 +9,7 @@ lambda {
   set_equipment_properties(wing, 48, left: [0, 0], up: [0, 0], down: [0, 0])
 
   create_equipment_anims(wing, 51, down_nums_pair:[0, 2], up_nums_pair:[0, 2], hor_nums_pair:[3, 5])
-  set_equipment_properties(wing, 51, left: [1, -1], up: [0, 5], down: [0, 5])
+  set_equipment_properties(wing, 51, left: [2, -1], up: [0, 4], down: [0, 4])
 
   create_equipment_anims(wing, 52, down_nums_pair:[0, 3], up_nums_pair:[0, 3], hor_nums_pair:[4, 7])
   set_equipment_properties(wing, 52, left: [15, -2], up: [0, 0], down: [0, 0])
@@ -73,4 +73,15 @@ lambda {
 
   create_equipment_anims(wing, 819, down_nums_pair:[0, 15], up_nums_pair:[0, 15], hor_nums_pair:[16, 31])
   set_equipment_properties(wing, 819, left: [30, 0], up: [0, 0], down: [0, 0])
+
+  wing2 = 'wing2'
+
+  create_equipment_anims(wing2, 13, down_nums_pair:[0, 2], up_nums_pair:[3, 5], hor_nums_pair:[6, 8])
+  set_equipment_properties(wing2, 13, left: [-4, -2], up: [0, -2], down: [-2, 4])
+
+  create_equipment_anims(wing2, 15, down_nums_pair:[0, 2], up_nums_pair:[0, 2], hor_nums_pair:[3, 5])
+  set_equipment_properties(wing2, 15, left: [2, -1], up: [0, 4], down: [0, 4])
+
+  create_equipment_anims(wing2, 16, down_nums_pair:[0, 3], up_nums_pair:[0, 3], hor_nums_pair:[4, 7])
+  set_equipment_properties(wing2, 16, left: [16, -6], up: [0, 0], down: [0, 0])
 }.call
