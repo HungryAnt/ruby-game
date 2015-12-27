@@ -27,7 +27,7 @@ def set_vehicle_properties(id, body_height, speed_up, options, vehicle='vehicle'
   offset_left = offset[:left]
   offset[:right] = [-offset_left[0], offset_left[1]]
   EquipmentDefinition.set_props key, offset:offset, body_height:body_height, speed_up:speed_up,
-                                is_behind_role: options[:is_behind_role]
+                                is_behind_role: options[:is_behind_role], is_cloak: options[:is_cloak]
   EquipmentDefinition.set_item_image key, "#{vehicle}/#{id}/#{id}_0.bmp"
 end
 
@@ -253,22 +253,22 @@ set_vehicle_properties(711, 16, 0.8, down: [0, -3], up: [0, -7], left: [-20, -6]
 
 # ------------------ 披风
 create_vehicle_anims(433, down_nums_pair:[0, 5], up_nums_pair:[6, 9], hor_nums_pair:[10, 15])
-set_vehicle_properties(433, 0, 0.8, down: [0, 12], up: [0, 8], left: [8, 8])
+set_vehicle_properties(433, 0, 0.8, down: [0, 12], up: [0, 8], left: [8, 8], is_cloak: true)
 
 create_vehicle_anims(497, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
-set_vehicle_properties(497, 0, 0.8, down: [0, 12], up: [0, 8], left: [10, 8])
+set_vehicle_properties(497, 0, 0.8, down: [0, 12], up: [0, 8], left: [10, 8], is_cloak: true)
 
 create_vehicle_anims(574, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
-set_vehicle_properties(574, 0, 0.8, down: [0, 14], up: [0, 6], left: [18, 10])
+set_vehicle_properties(574, 0, 0.8, down: [0, 14], up: [0, 6], left: [18, 10], is_cloak: true)
 
 create_vehicle_anims(598, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
-set_vehicle_properties(598, 0, 0.8, down: [0, 12], up: [0, 8], left: [6, 8])
+set_vehicle_properties(598, 0, 0.8, down: [0, 12], up: [0, 8], left: [6, 8], is_cloak: true)
 
 create_vehicle_anims(708, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
-set_vehicle_properties(708, 0, 0.8, down: [-3, -5], up: [-1, -2], left: [7, -7])
+set_vehicle_properties(708, 0, 0.8, down: [-3, -5], up: [-1, -2], left: [7, -7], is_cloak: true)
 
 create_vehicle_anims(723, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
-set_vehicle_properties(723, 0, 0.8, down: [-1, 2], up: [-1, 5], left: [16, -6])
+set_vehicle_properties(723, 0, 0.8, down: [-1, 2], up: [-1, 5], left: [16, -6], is_cloak: true)
 
 # ----------------- 时装载具
 create_vehicle_anims(697, down_nums_pair:[0, 9], up_nums_pair:[10, 19], hor_nums_pair:[20, 24])

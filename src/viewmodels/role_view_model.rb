@@ -48,6 +48,10 @@ class RoleViewModel
     @role.driving && !@vehicle_vm.nil?
   end
 
+  def wear_cloak?
+    driving? && @vehicle_vm.is_cloak
+  end
+
   def set_driving(value)
     @role.driving = value
     @role.vehicle = driving? ? @vehicle_vm.vehicle : nil
@@ -184,7 +188,7 @@ class RoleViewModel
       if @role.standing
         return @role.durable_state
       else
-        if driving?
+        if driving? && !wear_cloak?
           return Role::State::DRIVING
         else
           return @role.running ? Role::State::RUNNING : Role::State::WALKING

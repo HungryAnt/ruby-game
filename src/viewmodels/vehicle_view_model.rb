@@ -1,5 +1,5 @@
 class VehicleViewModel
-  attr_reader :key, :vehicle, :vehicle_body_height, :speed_up, :is_behind_role
+  attr_reader :key, :vehicle, :vehicle_body_height, :speed_up, :is_behind_role, :is_cloak
 
   def initialize(key)
     @key = key
@@ -10,6 +10,7 @@ class VehicleViewModel
     @location_offset = props[:offset]
     @vehicle = Vehicle.new(key, @speed_up)
     @is_behind_role = props[:is_behind_role]
+    @is_cloak = props[:is_cloak]
   end
 
   def type
