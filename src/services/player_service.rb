@@ -28,7 +28,8 @@ class PlayerService
       # 96, 97, 103, 104, 108, 109, 114, 115, 119, 121
       [#138, 228, 301, 402, 450, 552, 558, 569, 144, 163, 220,
           321, 322, 326, 327, 331, 332, 336, 340, 345, 346, 354, 359,
-          168, 172, 178, 188, 222, 433, 497, 574, 598, 708, 723, 697, 710, 711, 802, 402, 521, 662, 376, 456, 381, 439
+          168, 172, 178, 188, 222, 433, 497, 574, 598, 708, 723, 697, 710, 711, 802, 402, 521, 662, 376, 456, 381, 439,
+          450
       ].each do |num|
         vehicle_key = "vehicle_#{num}".to_sym
         @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
@@ -63,6 +64,10 @@ class PlayerService
         @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
       end
 
+      [12, 23, 25, 42, 47, 49].each do |num|
+        key = "hat2_#{num}".to_sym
+        @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
+      end
     else
       vehicles = @user_service.vehicles
       update_vehicles vehicles
