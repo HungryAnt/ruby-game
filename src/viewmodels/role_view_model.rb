@@ -221,8 +221,9 @@ class RoleViewModel
     draw_equipments
     draw_hat
 
+    draw_wing if @role.direction == Direction::UP
     draw_vehicle unless should_draw_vehicle_first
-    draw_wing unless @role.direction == Direction::DOWN
+    draw_wing if @role.direction == Direction::LEFT || @role.direction == Direction::RIGHT
 
     draw_level_and_name
     @eating_food_vm.draw unless @eating_food_vm.nil?
