@@ -66,13 +66,14 @@ class GameMapViewModel
     get_current_area.visual_element_vms.each { |element_vm| @visual_items << element_vm }
     @player_view_model.pets_vms.each { |pet_vm| @visual_items << pet_vm }
     travel_other_pet_vms { |pet_vm| @visual_items << pet_vm }
+    get_item_vms.each { |item_vm| @visual_items << item_vm }
 
     @visual_items.sort_by! { |item| item.y }
   end
 
   def draw
     @map_service.draw_map
-    get_item_vms.each { |item_vm| item_vm.draw }
+    # get_item_vms.each { |item_vm| item_vm.draw }
 
     additional_equipment_vm = get_current_area.additional_equipment_vm
     @visual_items.each do |item|

@@ -12,7 +12,7 @@ class NutrientViewModel < ItemViewModel
   end
 
   def draw
-    @image.draw_rot(@nutrient.x, @nutrient.y, ZOrder::AREA_ITEM, 0)
+    @image.draw_rot(@nutrient.x, @nutrient.y, ZOrder::Player, 0)
   end
 
   def pick_up(player_vm)

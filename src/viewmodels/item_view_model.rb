@@ -9,6 +9,10 @@ class ItemViewModel
     @item.id
   end
 
+  def y
+    @item.y
+  end
+
   def mouse_touch?(mouse_x, mouse_y)
     Gosu::distance(@item.x, @item.y, mouse_x, mouse_y) < 23
   end

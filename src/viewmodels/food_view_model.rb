@@ -12,7 +12,7 @@ class FoodViewModel < ItemViewModel
 
   def draw
     if @food.visible
-      z_order = @food.eating && !@food.covered ? ZOrder::Player : ZOrder::Food
+      z_order = ZOrder::Player # @food.eating && !@food.covered ? ZOrder::Player : ZOrder::Food
       @image.draw_rot(@food.x, @food.y, z_order, 0)
 
       if @food.energy < @food.max_energy
