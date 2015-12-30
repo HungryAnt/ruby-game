@@ -1,6 +1,6 @@
 class RoleViewModel
   attr_reader :role, :hitting
-  attr_accessor :area_id, :vehicle_vm, :eye_wear_vm, :wing_vm, :hat_vm
+  attr_accessor :area_id, :vehicle_vm, :eye_wear_vm
 
   def initialize(role)
     autowired(MapService, HitService)
@@ -27,6 +27,16 @@ class RoleViewModel
     @eye_wear_vm = nil
     @wing_vm = nil
     @hat_vm = nil
+  end
+
+  def wing_vm=(wing_vm)
+    @wing_vm = wing_vm
+    @role.wing = wing_vm.equipment
+  end
+
+  def hat_vm=(hat_vm)
+    @hat_vm = hat_vm
+    @role.hat = hat_vm.equipment
   end
 
   def init_hit_components
@@ -284,6 +294,12 @@ class RoleViewModel
     @battered_end_time = @turn_to_battered_end_time +
         @hit_service.get_battered_duration_time(hit_type)
     @hit_service.play_battered_sound hit_type
+  end
+
+  def try_miss
+    return false if @hat_vm.nil?
+    return false if @hat_vm.miss.nil?
+    rand < @hat_vm.miss
   end
 
   private

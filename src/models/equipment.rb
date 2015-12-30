@@ -9,10 +9,15 @@ class Equipment
     HAT = :hat # Ã±×Ó
   end
 
-  attr_reader :key, :type
+  attr_reader :key, :type, :location_offset, :miss, :speed_up
 
   def initialize(type, key)
     @type = type
     @key = key
+
+    props = EquipmentDefinition.get_props @key
+    @location_offset = props[:offset]
+    @miss = props[:miss] # ÉÁ±Ü
+    @speed_up = props[:speed_up] # ¼ÓËÙ
   end
 end

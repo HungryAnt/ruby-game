@@ -5,8 +5,14 @@ class EquipmentViewModel
     @equipment = equipment
     @key = equipment.key
     init_anims
-    props = EquipmentDefinition.get_props @key
-    @location_offset = props[:offset]
+  end
+
+  def miss
+    @equipment.miss
+  end
+
+  def speed_up
+    @equipment.speed_up
   end
 
   def type
@@ -18,7 +24,7 @@ class EquipmentViewModel
     anim = self.instance_variable_get("@anim_#{direction_text}")
     return if anim.nil?
     x, y = role_x, role_y
-    offset_x, offset_y = @location_offset[direction_text.to_sym]
+    offset_x, offset_y = @equipment.location_offset[direction_text.to_sym]
     anim.draw(x + offset_x, y + offset_y, ZOrder::Player)
   end
 

@@ -56,6 +56,8 @@ class Role
                 :hp, :vehicle, :driving, :battered, :battered_by_hit_type
   attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package, :eye_wear_package, :wing_package, :hat_package
 
+  attr_accessor :wing, :hat
+
   def initialize(name, role_type, x, y)
     @name = name
     @role_type = role_type
@@ -86,6 +88,9 @@ class Role
 
     @battered = false  # 被打扁的
     @battered_by_hit_type = Role::State::HIT
+
+    @wing = nil # 翅膀
+    @hat = nil # 帽子头盔
   end
 
   def get_speed
@@ -100,6 +105,7 @@ class Role
     speed_rate -= 0.5 unless running
     speed_rate -= 0.25 if @battered || eating?
     speed_rate += @vehicle.speed_up if driving && !@vehicle.nil?
+    speed_rate += @wing.speed_up unless @wing.nil?
     @speed * speed_rate
   end
 

@@ -190,7 +190,7 @@ class PlayerViewModel
     return if battered
     return if @role_vm.driving_dragon?
     if @hit_service.in_hit_range? hit_type, @role.x, @role.y, hit_x, hit_y
-      if try_dodge hit_type
+      if @role_vm.try_miss
         # …¡±‹≥…π¶
         return
       end
@@ -199,15 +199,6 @@ class PlayerViewModel
       @role.dec_hp(battered_cost_hp)
       @role_vm.being_battered hit_type
       remote_being_battered get_user_id, hit_type
-    end
-  end
-
-  # …¡±‹
-  def try_dodge(hit_type)
-    if hit_type == Monster::State::ATTACK
-      rand(10) < 5 # “∞π÷π•ª˜£¨50%º∏¬ …¡±‹
-    else
-      false
     end
   end
 

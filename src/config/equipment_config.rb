@@ -35,7 +35,7 @@ def set_equipment_properties(equipment, id, options={})
     offset[:right] = [-offset[:left][0], offset[:left][1]]
   end
 
-  EquipmentDefinition.set_props key, offset: offset
+  EquipmentDefinition.set_props key, offset: offset, miss: options[:miss], speed_up: options[:speed_up]
 
   unless options.include? :ignore_image
     EquipmentDefinition.set_item_image key, "#{equipment}/#{id}/#{id}_0.bmp"
