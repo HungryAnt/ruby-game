@@ -40,7 +40,7 @@ module GameMonster
     refresh_monster_vms.each { |monster_vm| yield monster_vm }
   end
 
-  def monster_move_to(x, y, quiet)
+  def monster_move_to(x, y, quiet=false)
     return if get_monster_vms.count == 0
     get_monster_vms.each { |monster_vm| monster_vm.move_to x, y, quiet }
   end

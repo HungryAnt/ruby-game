@@ -22,5 +22,8 @@ lambda {
   add.call %w(野菜面包 青柠檬 巧克力派 紫菜饭 猕猴桃)
   add.call %w(热狗 羊肉串 炸鸡腿 辣条 冰淇淋)
   add.call %w(豆角 骨头)
+  # add.call %w(水蜜桃)
+  # add.call %w(小苹果 平安夜大苹果 水果冰淇淋 巨无霸安保 拉面 巧克力甜甜圈)
+
 }.call
 

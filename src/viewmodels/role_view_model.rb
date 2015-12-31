@@ -216,7 +216,7 @@ class RoleViewModel
   end
 
   def draw_with_area_addition(additional_equipment_vm)
-    additional_equipment_vm.draw(@role.x, @role.y, @role.direction) unless additional_equipment_vm.nil?
+    additional_equipment_vm.draw(*get_actual_role_location, @role.direction) unless additional_equipment_vm.nil?
 
     should_draw_vehicle_first = driving_dragon? && @role.direction == Direction::UP
     unless should_draw_vehicle_first
