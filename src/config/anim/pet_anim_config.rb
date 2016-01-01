@@ -120,11 +120,39 @@ lambda {
                 sleep:[20, 23], cute:[24, 43], stand_up:[44, 49], move_up:[50, 54],
                 attack_up:[55, 63], stand_hor:[64, 68], move_hor:[69, 74], attack_hor:[75, 82]
 
-  # new_pet_anims 'g', 10, stand_down:[0, ], move_down:[, ], attack_down:[, ],
+  new_pet_anims 'g', 15, stand_down:[0, 4], move_down:[5, 11], attack_down:[12, 23],
+                sleep:[24, 27], cute:[28, 37], stand_up:[38, 39], move_up:[40, 48],
+                attack_up:[49, 64], stand_hor:[65, 70], move_hor:[71, 76], attack_hor:[77, 88]
+
+  new_pet_anims 'g', 16, stand_down:[0, 4], move_down:[5, 10], attack_down:[11, 21],
+                sleep:[22, 27], cute:[28, 37], stand_up:[38, 42], move_up:[43, 48],
+                attack_up:[49, 58], stand_hor:[59, 63], move_hor:[64, 69], attack_hor:[70, 80]
+
+  new_pet_anims 'g', 17, stand_down:[0, 3], move_down:[4, 9], attack_down:[10, 17],
+                sleep:[18, 25], cute:[26, 35], stand_up:[36, 39], move_up:[40, 43],
+                attack_up:[44, 51], stand_hor:[52, 55], move_hor:[56, 62], attack_hor:[63, 69]
+
+  new_pet_anims 'g', 18, stand_down:[0, 3], move_down:[4, 8], attack_down:[9, 17],
+                sleep:[18, 21], cute:[22, 36], stand_up:[37, 41], move_up:[42, 45],
+                attack_up:[46, 53], stand_hor:[54, 57], move_hor:[58, 62], attack_hor:[63, 70]
+
+  new_pet_anims 'g', 19, stand_down:[0, 7], move_down:[8, 16], attack_down:[17, 25],
+                sleep:[26, 33], cute:[34, 51], stand_up:[52, 55], move_up:[56, 60],
+                attack_up:[61, 69], stand_hor:[70, 77], move_hor:[78, 86], attack_hor:[87, 95]
+
+  # new_pet_anims 'g', 20, stand_down:[0, ], move_down:[, ], attack_down:[, ],
   #               sleep:[, ], cute:[, ], stand_up:[, ], move_up:[, ],
   #               attack_up:[, ], stand_hor:[, ], move_hor:[, ], attack_hor:[, ]
   #
-  # new_pet_anims 'g', 10, stand_down:[0, ], move_down:[, ], attack_down:[, ],
+  # new_pet_anims 'g', 21, stand_down:[0, ], move_down:[, ], attack_down:[, ],
+  #               sleep:[, ], cute:[, ], stand_up:[, ], move_up:[, ],
+  #               attack_up:[, ], stand_hor:[, ], move_hor:[, ], attack_hor:[, ]
+  #
+  # new_pet_anims 'g', 22, stand_down:[0, ], move_down:[, ], attack_down:[, ],
+  #               sleep:[, ], cute:[, ], stand_up:[, ], move_up:[, ],
+  #               attack_up:[, ], stand_hor:[, ], move_hor:[, ], attack_hor:[, ]
+  #
+  # new_pet_anims 'g', 23, stand_down:[0, ], move_down:[, ], attack_down:[, ],
   #               sleep:[, ], cute:[, ], stand_up:[, ], move_up:[, ],
   #               attack_up:[, ], stand_hor:[, ], move_hor:[, ], attack_hor:[, ]
 }.call
