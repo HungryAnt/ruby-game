@@ -140,19 +140,19 @@ lambda {
                 sleep:[26, 33], cute:[34, 51], stand_up:[52, 55], move_up:[56, 60],
                 attack_up:[61, 69], stand_hor:[70, 77], move_hor:[78, 86], attack_hor:[87, 95]
 
-  # new_pet_anims 'g', 20, stand_down:[0, ], move_down:[, ], attack_down:[, ],
-  #               sleep:[, ], cute:[, ], stand_up:[, ], move_up:[, ],
-  #               attack_up:[, ], stand_hor:[, ], move_hor:[, ], attack_hor:[, ]
-  #
-  # new_pet_anims 'g', 21, stand_down:[0, ], move_down:[, ], attack_down:[, ],
-  #               sleep:[, ], cute:[, ], stand_up:[, ], move_up:[, ],
-  #               attack_up:[, ], stand_hor:[, ], move_hor:[, ], attack_hor:[, ]
-  #
-  # new_pet_anims 'g', 22, stand_down:[0, ], move_down:[, ], attack_down:[, ],
-  #               sleep:[, ], cute:[, ], stand_up:[, ], move_up:[, ],
-  #               attack_up:[, ], stand_hor:[, ], move_hor:[, ], attack_hor:[, ]
-  #
-  # new_pet_anims 'g', 23, stand_down:[0, ], move_down:[, ], attack_down:[, ],
-  #               sleep:[, ], cute:[, ], stand_up:[, ], move_up:[, ],
-  #               attack_up:[, ], stand_hor:[, ], move_hor:[, ], attack_hor:[, ]
+  new_pet_anims 'g', 20, stand_down:[0, 3], move_down:[4, 8], attack_down:[9, 17],
+                sleep:[18, 25], cute:[26, 46], stand_up:[47, 50], move_up:[51, 55],
+                attack_up:[56, 64], stand_hor:[65, 68], move_hor:[69, 72], attack_hor:[73, 82]
+
+  new_pet_anims 'g', 21, stand_down:[0, 3], move_down:[4, 7], attack_down:[8, 18],
+                sleep:[19, 22], cute:[23, 38], stand_up:[39, 42], move_up:[43, 46],
+                attack_up:[47, 57], stand_hor:[58, 61], move_hor:[62, 65], attack_hor:[66, 76]
+
+  new_pet_anims 'g', 22, stand_down:[0, 5], move_down:[6, 11], attack_down:[12, 19],
+                sleep:[27, 32], cute:[20, 26], stand_up:[33, 38], move_up:[39, 44],
+                attack_up:[45, 52], stand_hor:[53, 58], move_hor:[59, 64], attack_hor:[65, 72]
+
+  new_pet_anims 'g', 23, stand_down:[0, 7], move_down:[8, 13], attack_down:[14, 22],
+                sleep:[23, 28], cute:[29, 40], stand_up:[41, 48], move_up:[49, 56],
+                attack_up:[57, 65], stand_hor:[66, 72], move_hor:[73, 82], attack_hor:[83, 91]
 }.call

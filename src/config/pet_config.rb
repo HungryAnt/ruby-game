@@ -33,11 +33,11 @@ lambda {
   add.call 'g', 14, '普劳尔', 25
   add.call 'g', 15, '舒伯灵', 25
   add.call 'g', 16, '梅得莫夫', 25
-  add.call 'g', 17, '', 25
-  add.call 'g', 18, '', 25
-  add.call 'g', 19, '', 25
-#   add.call 'g', 20, '', 25
-#   add.call 'g', 21, '', 25
-#   add.call 'g', 22, '', 25
-#   add.call 'g', 23, '', 25
+  add.call 'g', 17, '', 27
+  add.call 'g', 18, '', 49
+  add.call 'g', 19, '', 35
+  add.call 'g', 20, '', 25
+  add.call 'g', 21, '', 25
+  add.call 'g', 22, '', 25
+  add.call 'g', 23, '', 28
 }.call
