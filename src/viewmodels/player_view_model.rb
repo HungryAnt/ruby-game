@@ -64,6 +64,21 @@ class PlayerViewModel
     end
   end
 
+  def un_equip(equipment_type)
+    case equipment_type
+      when Equipment::Type::VEHICLE
+        set_driving false
+      when Equipment::Type::EYE_WEAR
+        @role_vm.eye_wear_vm = nil
+      when Equipment::Type::WING
+        @role_vm.wing_vm = nil
+      when Equipment::Type::HAT
+        @role_vm.hat_vm = nil
+      else
+        # type code here
+    end
+  end
+
   def pick_up(item_vms, item_vm)
     return if battered
     return unless item_vms.include? item_vm

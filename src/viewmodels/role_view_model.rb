@@ -1,6 +1,6 @@
 class RoleViewModel
   attr_reader :role, :hitting
-  attr_accessor :area_id, :vehicle_vm, :eye_wear_vm
+  attr_accessor :area_id, :vehicle_vm
 
   def initialize(role)
     autowired(MapService, HitService)
@@ -29,14 +29,19 @@ class RoleViewModel
     @hat_vm = nil
   end
 
+  def eye_wear_vm=(eye_wear_vm)
+    @eye_wear_vm = eye_wear_vm.nil? ? nil : eye_wear_vm
+    @role.eye_wear = eye_wear_vm.nil? ? nil : eye_wear_vm.equipment
+  end
+
   def wing_vm=(wing_vm)
-    @wing_vm = wing_vm
-    @role.wing = wing_vm.equipment
+    @wing_vm = wing_vm.nil? ? nil : wing_vm
+    @role.wing = wing_vm.nil? ? nil : wing_vm.equipment
   end
 
   def hat_vm=(hat_vm)
-    @hat_vm = hat_vm
-    @role.hat = hat_vm.equipment
+    @hat_vm = hat_vm.nil? ? nil : hat_vm
+    @role.hat = hat_vm.nil? ? nil : hat_vm.equipment
   end
 
   def init_hit_components

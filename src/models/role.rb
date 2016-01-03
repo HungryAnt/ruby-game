@@ -56,7 +56,7 @@ class Role
                 :hp, :vehicle, :driving, :battered, :battered_by_hit_type
   attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package, :eye_wear_package, :wing_package, :hat_package
 
-  attr_accessor :wing, :hat
+  attr_accessor :eye_wear, :wing, :hat
 
   def initialize(name, role_type, x, y)
     @name = name
@@ -89,6 +89,7 @@ class Role
     @battered = false  # 被打扁的
     @battered_by_hit_type = Role::State::HIT
 
+    @eye_wear = nil # 眼部饰品
     @wing = nil # 翅膀
     @hat = nil # 帽子头盔
   end

@@ -35,6 +35,10 @@ class PackageItemsViewModel
     @player_vm.equip(EquipmentViewModelFactory.create_equipment(equipment))
   end
 
+  def choose_none_equipment(equipment_type)
+    @player_vm.un_equip equipment_type
+  end
+
   def choose_pet(pet)
     @player_vm.choose_pet pet
   end

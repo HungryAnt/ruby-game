@@ -3,7 +3,7 @@
 class PackageItemsView
   attr_accessor :visible
 
-  ROW_COUNT = 6
+  ROW_COUNT = 7
   COL_COUNT = 6
 
   PROMPT_HEIGHT = 30
@@ -184,27 +184,41 @@ class PackageItemsView
   end
 
   def init_equipment_eye_wear
-    init_common_equipment_panel '眼部饰品', :get_eye_wears
+    init_common_equipment_panel '眼部饰品', Equipment::Type::EYE_WEAR, :get_eye_wears
   end
 
   def init_equipment_wing
-    init_common_equipment_panel '翅膀', :get_wings
+    init_common_equipment_panel '翅膀', Equipment::Type::WING, :get_wings
   end
 
   def init_equipment_hat
-    init_common_equipment_panel '帽子', :get_hats
+    init_common_equipment_panel '帽子', Equipment::Type::HAT, :get_hats
   end
 
-  def init_common_equipment_panel(prompt_text, query_method)
+  def init_common_equipment_panel(prompt_text, equipment_type, query_method)
     equipments = @package_items_vm.send query_method
     items = equipments.map do |equipment|
       {
+          type: :equipment,
           data: equipment,
           content: create_equipment_content(equipment)
       }
     end
+    none_equipment = {
+        type: :none_equipment,
+        data: equipment_type,
+        content: AntGui::Control.new
+    }
+    items.insert 0, none_equipment
+
+
     create_panel(prompt_text, items) do |item|
-      @package_items_vm.choose_equipment item[:data]
+      if item[:type] == :none_equipment
+        # 卸下装备
+        @package_items_vm.choose_none_equipment item[:data]
+      else
+        @package_items_vm.choose_equipment item[:data]
+      end
       @visible = false
     end
   end
