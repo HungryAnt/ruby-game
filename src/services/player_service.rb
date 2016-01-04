@@ -30,7 +30,7 @@ class PlayerService
           321, 322, 326, 327, 331, 332, 336, 340, 345, 346, 354, 359,
           168, 172, 178, 188, 222, 433, 497, 514, 574, 598, 708, 723,
           697, 710, 711, 802, 402, 521, 662, 376, 456, 381, 439,
-          450
+          450, 192, 461
       ].each do |num|
         vehicle_key = "vehicle_#{num}".to_sym
         @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)

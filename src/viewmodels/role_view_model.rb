@@ -20,6 +20,7 @@ class RoleViewModel
     init_sound
     reset_durable_state
     @anim_init_timestamp = Gosu::milliseconds
+    @scale = 1.0
   end
 
   def init_equipments
@@ -220,7 +221,9 @@ class RoleViewModel
     draw_with_area_addition nil
   end
 
-  def draw_with_area_addition(additional_equipment_vm)
+  def draw_with_area_addition(additional_equipment_vm, scale=0.6)
+    @scale = 0.35 + 0.75 * @role.y / GameConfig::MAP_HEIGHT
+
     additional_equipment_vm.draw(*get_actual_role_location, @role.direction) unless additional_equipment_vm.nil?
 
     should_draw_vehicle_first = driving_dragon? && @role.direction == Direction::UP
@@ -333,28 +336,28 @@ class RoleViewModel
 
   def draw_role_anim
     x, y = get_actual_role_location
-    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp)
+    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp, scale_x:@scale, scale_y:@scale)
   end
 
   def draw_vehicle
     if driving?
-      @vehicle_vm.draw(@role.x, @role.y, @role.direction)
+      @vehicle_vm.draw(@role.x, @role.y, @role.direction, @scale)
     end
   end
 
   def draw_equipments
     x, y = get_actual_role_location
-    @eye_wear_vm.draw(x, y, @role.direction) unless @eye_wear_vm.nil?
+    @eye_wear_vm.draw(x, y, @role.direction, @scale) unless @eye_wear_vm.nil?
   end
 
   def draw_wing
     x, y = get_actual_role_location
-    @wing_vm.draw(x, y, @role.direction) unless @wing_vm.nil?
+    @wing_vm.draw(x, y, @role.direction, @scale) unless @wing_vm.nil?
   end
 
   def draw_hat
     x, y = get_actual_role_location
-    @hat_vm.draw(x, y, @role.direction) unless @hat_vm.nil?
+    @hat_vm.draw(x, y, @role.direction, @scale) unless @hat_vm.nil?
   end
 
   def draw_level_and_name
@@ -374,8 +377,8 @@ class RoleViewModel
   end
 
   def get_actual_role_location
-    x, y = @role.x, @role.y - 30
-    y = y - @vehicle_vm.vehicle_body_height if driving?
+    x, y = @role.x, @role.y - 30 * @scale
+    y = y - @vehicle_vm.vehicle_body_height * @scale if driving?
     [x, y]
   end
 end

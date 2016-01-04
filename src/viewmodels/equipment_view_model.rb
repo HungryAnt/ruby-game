@@ -19,13 +19,14 @@ class EquipmentViewModel
     @equipment.type
   end
 
-  def draw(role_x, role_y, direction)
+  def draw(role_x, role_y, direction, scale=1)
+    @scale = scale
     direction_text = Direction::to_direction_text direction
     anim = self.instance_variable_get("@anim_#{direction_text}")
     return if anim.nil?
     x, y = role_x, role_y
     offset_x, offset_y = @equipment.location_offset[direction_text.to_sym]
-    anim.draw(x + offset_x, y + offset_y, ZOrder::Player)
+    anim.draw(x + offset_x * @scale, y + offset_y * @scale, ZOrder::Player, scale_x:@scale, scale_y:@scale)
   end
 
   private

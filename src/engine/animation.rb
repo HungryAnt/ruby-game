@@ -32,11 +32,14 @@ class Animation
       init_timestamp = @init_timestamp
     end
     return if @images.size == 0
+    scale_x = options.include?(:scale_x) ? options[:scale_x] : 1.0
+    scale_y = options.include?(:scale_y) ? options[:scale_y] : 1.0
+
     anim_duration_time = @interval * @images.size
     time = (Gosu::milliseconds - init_timestamp) % (anim_duration_time + @delay)
     if time >= @delay
       img = @images[(time - @delay) / @interval % @images.size]
-      img.draw(x + @offset_x, y + @offset_y, z, options)
+      img.draw(x + @offset_x * scale_x, y + @offset_y * scale_y, z, options)
     end
   end
 end
