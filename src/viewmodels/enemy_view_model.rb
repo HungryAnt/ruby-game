@@ -1,9 +1,12 @@
 class EnemyViewModel
   SMASH_DISTANCE = 90
 
+  include AutoScaleModule
+
   attr_accessor :enemy
 
   def initialize(enemy)
+    init_auto_scale
     @enemy = enemy
   end
 

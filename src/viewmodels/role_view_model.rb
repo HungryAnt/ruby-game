@@ -1,9 +1,12 @@
 class RoleViewModel
+  include AutoScaleModule
+
   attr_reader :role, :hitting
   attr_accessor :area_id, :vehicle_vm
 
   def initialize(role)
     autowired(MapService, HitService)
+    init_auto_scale
     @player = @role = role
     @font = Gosu::Font.new(15)
     init_animations
@@ -20,7 +23,6 @@ class RoleViewModel
     init_sound
     reset_durable_state
     @anim_init_timestamp = Gosu::milliseconds
-    @scale = 1.0
   end
 
   def init_equipments
@@ -149,7 +151,7 @@ class RoleViewModel
   end
 
   def update_eating_food
-    @role.update_eating_food(*get_actual_role_location)
+    @role.update_eating_food(*get_actual_role_location, scale_value)
   end
 
   def set_durable_state(state)
@@ -217,12 +219,12 @@ class RoleViewModel
     @role.direction = direction
   end
 
-  def draw
-    draw_with_area_addition nil
+  def draw(auto_scale)
+    draw_with_area_addition nil, auto_scale
   end
 
-  def draw_with_area_addition(additional_equipment_vm, scale=0.6)
-    @scale = 0.35 + 0.75 * @role.y / GameConfig::MAP_HEIGHT
+  def draw_with_area_addition(additional_equipment_vm, auto_scale)
+    update_scale @role.y if auto_scale
 
     additional_equipment_vm.draw(*get_actual_role_location, @role.direction) unless additional_equipment_vm.nil?
 
@@ -244,7 +246,7 @@ class RoleViewModel
     draw_wing if @role.direction == Direction::LEFT || @role.direction == Direction::RIGHT
 
     draw_level_and_name
-    @eating_food_vm.draw unless @eating_food_vm.nil?
+    @eating_food_vm.draw auto_scale unless @eating_food_vm.nil?
     draw_chat_bubble
   end
 
@@ -332,32 +334,33 @@ class RoleViewModel
 
   def get_anim(key)
     AnimationManager.get_anim key
+    AnimationManager.get_anim key
   end
 
   def draw_role_anim
     x, y = get_actual_role_location
-    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp, scale_x:@scale, scale_y:@scale)
+    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp, scale_x:scale_value, scale_y:scale_value)
   end
 
   def draw_vehicle
     if driving?
-      @vehicle_vm.draw(@role.x, @role.y, @role.direction, @scale)
+      @vehicle_vm.draw(@role.x, @role.y, @role.direction, scale_value)
     end
   end
 
   def draw_equipments
     x, y = get_actual_role_location
-    @eye_wear_vm.draw(x, y, @role.direction, @scale) unless @eye_wear_vm.nil?
+    @eye_wear_vm.draw(x, y, @role.direction, scale_value) unless @eye_wear_vm.nil?
   end
 
   def draw_wing
     x, y = get_actual_role_location
-    @wing_vm.draw(x, y, @role.direction, @scale) unless @wing_vm.nil?
+    @wing_vm.draw(x, y, @role.direction, scale_value) unless @wing_vm.nil?
   end
 
   def draw_hat
     x, y = get_actual_role_location
-    @hat_vm.draw(x, y, @role.direction, @scale) unless @hat_vm.nil?
+    @hat_vm.draw(x, y, @role.direction, scale_value) unless @hat_vm.nil?
   end
 
   def draw_level_and_name
@@ -377,8 +380,8 @@ class RoleViewModel
   end
 
   def get_actual_role_location
-    x, y = @role.x, @role.y - 30 * @scale
-    y = y - @vehicle_vm.vehicle_body_height * @scale if driving?
+    x, y = @role.x, @role.y - 30 * scale_value
+    y = y - @vehicle_vm.vehicle_body_height * scale_value if driving?
     [x, y]
   end
 end

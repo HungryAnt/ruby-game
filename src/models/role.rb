@@ -144,13 +144,13 @@ class Role
     !@eating_food.nil?
   end
 
-  def update_eating_food(origin_x, origin_y)
+  def update_eating_food(origin_x, origin_y, scale_value)
     food = @eating_food
     return if food.nil?
 
     if holding_food?
       food.visible = true
-      food.x, food.y = origin_x, origin_y-21
+      food.x, food.y = origin_x, origin_y-21*scale_value
       food.covered = @direction == Direction::UP
       return
     end
@@ -161,15 +161,15 @@ class Role
       food.visible = true
 
       if Direction::is_direct_to_down @direction
-        food.x, food.y = origin_x, origin_y + 30
+        food.x, food.y = origin_x, origin_y + 30*scale_value
       end
 
       if Direction::is_direct_to_left @direction
-        food.x, food.y = origin_x-27, origin_y + 22
+        food.x, food.y = origin_x-27*scale_value, origin_y + 22*scale_value
       end
 
       if Direction::is_direct_to_right @direction
-        food.x, food.y = origin_x+32, origin_y + 22
+        food.x, food.y = origin_x+32*scale_value, origin_y + 22*scale_value
       end
     end
   end

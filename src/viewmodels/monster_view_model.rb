@@ -41,7 +41,8 @@ class MonsterViewModel < EnemyViewModel
     @monster.update_hp hp
   end
 
-  def draw
+  def draw(auto_scale)
+    update_scale y if auto_scale
     draw_effect
     draw_anim
 
@@ -129,7 +130,8 @@ class MonsterViewModel < EnemyViewModel
 
   def draw_anim
     x, y = get_anim_center_location
-    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp, color:@anim_color)
+    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp, color:@anim_color,
+                       scale_x:scale_value, scale_y:scale_value)
     # Gosu::draw_rect(@monster.x, @monster.y, 1, 1, 0xFF_FF0000, ZOrder::Player)
   end
 
@@ -204,6 +206,6 @@ class MonsterViewModel < EnemyViewModel
   end
 
   def draw_effect
-    @anim_container.draw mode: :additive
+    @anim_container.draw mode: :additive, scale_x:scale_value, scale_y:scale_value
   end
 end

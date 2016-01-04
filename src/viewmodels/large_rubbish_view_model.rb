@@ -23,7 +23,9 @@ class LargeRubbishViewModel < EnemyViewModel
     @enemy = large_rubbish
   end
 
-  def draw
+  def draw(auto_scale)
+    update_scale y if auto_scale
+
     image_index = @large_rubbish.images.size - 1 -
         (@large_rubbish.hp / ((@large_rubbish.max_hp + 1.0) / @large_rubbish.images.size)).to_i
     image = @large_rubbish.images[image_index]
@@ -31,7 +33,7 @@ class LargeRubbishViewModel < EnemyViewModel
     #   puts 'OK!!!! image_index == 3'
     # end
     image.draw_rot(@large_rubbish.x, @large_rubbish.y, ZOrder::Player, 0,
-                   0.5, 0.67)
+                   0.5, 0.67, scale_value, scale_value)
     draw_info_board
     draw_name
     draw_hp

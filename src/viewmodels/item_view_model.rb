@@ -1,7 +1,10 @@
 class ItemViewModel
+  include AutoScaleModule
+
   attr_reader :item
 
   def initialize(item)
+    init_auto_scale
     @item = item
   end
 

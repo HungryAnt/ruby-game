@@ -49,6 +49,10 @@ class AreaViewModel
         Equipment::Type::AREA_ADDITION, @area.additional_equipment)
   end
 
+  def auto_scale
+    @area.auto_scale
+  end
+
   def id
     @area.id
   end

@@ -10,7 +10,7 @@ class AreaVisualElementViewModel
     @y = element.y
   end
 
-  def draw
+  def draw(auto_scale)
     @image.draw(@element.left, @element.top, ZOrder::Player) unless @image.nil?
     @animation.draw(@element.left, @element.top, ZOrder::Player) unless @animation.nil?
   end

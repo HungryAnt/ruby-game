@@ -1,10 +1,13 @@
 class PetViewModel
   ATTACKING_DURATION_IN_MS = 3000
 
+  include AutoScaleModule
+
   attr_accessor :area_id
   attr_reader :pet
 
   def initialize(pet)
+    init_auto_scale
     @pet = pet
     @height = PetTypeInfo.get(pet.pet_type).height
     init_animations
@@ -36,7 +39,8 @@ class PetViewModel
     update_state
   end
 
-  def draw
+  def draw(auto_scale)
+    update_scale y if auto_scale
     draw_anim
   end
 
@@ -83,7 +87,8 @@ class PetViewModel
 
   def draw_anim
     x, y = get_actual_pet_location
-    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp)
+    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp,
+                       scale_x:scale_value, scale_y:scale_value)
   end
 
   def anim_goto_begin

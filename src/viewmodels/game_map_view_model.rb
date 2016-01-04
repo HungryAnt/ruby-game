@@ -76,11 +76,13 @@ class GameMapViewModel
     # get_item_vms.each { |item_vm| item_vm.draw }
 
     additional_equipment_vm = get_current_area.additional_equipment_vm
+    auto_scale = get_current_area.auto_scale
+
     @visual_items.each do |item|
       if item.respond_to? :draw_with_area_addition
-        item.draw_with_area_addition additional_equipment_vm
+        item.draw_with_area_addition additional_equipment_vm, auto_scale
       else
-        item.draw
+        item.draw auto_scale
       end
     end
   end

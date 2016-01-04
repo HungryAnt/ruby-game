@@ -125,6 +125,7 @@ require 'services/monsters_service'
 
 require 'viewmodels/common_modules/mouse_tips'
 require 'viewmodels/common_modules/player_common_module'
+require 'viewmodels/common_modules/auto_scale_module'
 
 require 'viewmodels/item_view_model'
 require 'viewmodels/pet_view_model'
