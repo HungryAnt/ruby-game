@@ -15,6 +15,7 @@ class AreaViewModel
     init_visual_elements
     init_additional_equipment
     @mutex = Mutex.new
+    @offset_x = @offset_y = 0
   end
 
   def init_covering
@@ -65,6 +66,29 @@ class AreaViewModel
     @anim_container.update
   end
 
+  def update_area_scroll_view(player_x, player_y)
+    if @area.scroll_background
+      w = GameConfig::MAP_WIDTH
+      h = GameConfig::MAP_HEIGHT
+      if player_x > w/2
+        @offset_x = -[player_x - w/2, @image.width - w].min
+      else
+        @offset_x = 0
+      end
+
+      if player_y > h/2
+        @offset_y = -[player_y - h/2, @image.height - h].min
+      else
+        @offset_y = 0
+      end
+    end
+    get_area_offset
+  end
+
+  def get_area_offset
+    return @offset_x, @offset_y
+  end
+
   def draw(player_x, player_y)
     if @area.dynamic_background
       rate_x = player_x.to_f / GameConfig::MAP_WIDTH
@@ -73,6 +97,8 @@ class AreaViewModel
       @image.draw(-@image.width * rate_x + player_x,
                   -@image.height * rate_y + player_y,
                   ZOrder::Background, 1, 1)
+    elsif @area.scroll_background
+      @image.draw(*get_area_offset, ZOrder::Background, 1, 1)
     else
       @image.draw(0, 0, ZOrder::Background, @scale_x, @scale_y)
     end

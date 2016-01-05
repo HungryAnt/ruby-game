@@ -32,6 +32,7 @@ class GameMapViewModel
 
   def update
     @map_service.update_map
+    get_current_area.update_area_scroll_view *@player_view_model.actual_role_location
 
     area = get_current_area.area
 
@@ -78,13 +79,15 @@ class GameMapViewModel
     additional_equipment_vm = get_current_area.additional_equipment_vm
     auto_scale = get_current_area.auto_scale
 
-    @visual_items.each do |item|
-      if item.respond_to? :draw_with_area_addition
-        item.draw_with_area_addition additional_equipment_vm, auto_scale
-      else
-        item.draw auto_scale
+    Gosu::translate(*get_current_area.get_area_offset) {
+      @visual_items.each do |item|
+        if item.respond_to? :draw_with_area_addition
+          item.draw_with_area_addition additional_equipment_vm, auto_scale
+        else
+          item.draw auto_scale
+        end
       end
-    end
+    }
   end
 
   def needs_cursor?

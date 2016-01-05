@@ -60,7 +60,7 @@ class MapEditorView
 
     draw_tile_grid
 
-    @window.translate(0, GameConfig::MAP_HEIGHT) do
+    Gosu::translate(0, GameConfig::MAP_HEIGHT) do
       @tile_selector.draw
     end
 

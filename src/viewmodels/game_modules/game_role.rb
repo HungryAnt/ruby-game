@@ -7,8 +7,10 @@ module GameRole
   def try_pick_up(mouse_x, mouse_y)
     return false if @player_view_model.battered
 
+    actual_x, actual_y = to_area_actual_location mouse_x, mouse_y
+
     item_vms = get_item_vms
-    item_vm = get_touch_item mouse_x, mouse_y, item_vms
+    item_vm = get_touch_item actual_x, actual_y, item_vms
     return false if item_vm.nil?
 
     if item_vm.can_pick_up?(@player_view_model.role)
@@ -16,13 +18,15 @@ module GameRole
       return true
     end
 
-    set_destination mouse_x, mouse_y, item_vm
+    set_destination actual_x, actual_y, item_vm
     true
   end
 
   def try_smash_enemy(mouse_x, mouse_y)
     return false if @player_view_model.battered
-    enemy_vm = get_touch_enemy mouse_x, mouse_y
+    actual_x, actual_y = to_area_actual_location mouse_x, mouse_y
+
+    enemy_vm = get_touch_enemy actual_x, actual_y
     return false if enemy_vm.nil?
     if enemy_vm.can_smash?(@player_view_model.role)
       @player_view_model.start_smash enemy_vm
@@ -33,9 +37,10 @@ module GameRole
   end
 
   def get_touch_enemy(mouse_x, mouse_y)
-    monster_vm = get_touch_monster mouse_x, mouse_y
+    actual_x, actual_y = to_area_actual_location mouse_x, mouse_y
+    monster_vm = get_touch_monster actual_x, actual_y
     return monster_vm unless monster_vm.nil?
-    get_touch_rubbish mouse_x, mouse_y
+    get_touch_rubbish actual_x, actual_y
   end
 
   def stop_smash
@@ -43,10 +48,11 @@ module GameRole
   end
 
   def set_destination(mouse_x, mouse_y, item_vm = nil)
+    actual_x, actual_y = to_area_actual_location mouse_x, mouse_y
     map_vm = get_current_map
-    unless map_vm.tile_block? mouse_x, mouse_y
-      map_vm.mark_target(mouse_x, mouse_y) unless map_vm.nil?
-      @player_view_model.set_destination mouse_x, mouse_y, item_vm
+    unless map_vm.tile_block? actual_x, actual_y
+      map_vm.mark_target(actual_x, actual_y) unless map_vm.nil?
+      @player_view_model.set_destination actual_x, actual_y, item_vm
     end
   end
 

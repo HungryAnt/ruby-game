@@ -63,19 +63,19 @@ class GameMapView < ViewBase
   def draw
     @package_items_view.draw
     @game_map_view_model.draw
-    @window.translate(0, GameConfig::STATUS_BAR_Y) do
+    Gosu::translate(0, GameConfig::STATUS_BAR_Y) do
       @status_bar_view.draw
       draw_chat_text_box
     end
 
     if @ui_control_vm.chat_board_visible
-      @window.translate(*@ui_control_vm.chat_board_location) do
+      Gosu::translate(*@ui_control_vm.chat_board_location) do
         @chat_board_view.draw
       end
     end
 
     if @ui_control_vm.actions_bar_visible
-      @window.translate(*@ui_control_vm.actions_bar_location) do
+      Gosu::translate(*@ui_control_vm.actions_bar_location) do
         @actions_bar_view.draw
       end
     end

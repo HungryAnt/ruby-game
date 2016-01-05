@@ -37,4 +37,9 @@ module GameMap
   def is_in_chat_map
     @map_service.is_in_chat_map?
   end
+
+  def to_area_actual_location(mouse_x, mouse_y)
+    offset_x, offset_y = get_current_area.get_area_offset
+    return mouse_x - offset_x, mouse_y - offset_y
+  end
 end
