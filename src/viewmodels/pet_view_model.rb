@@ -40,7 +40,7 @@ class PetViewModel
   end
 
   def draw(auto_scale)
-    update_scale y if auto_scale
+    update_scale auto_scale, y
     draw_anim
   end
 

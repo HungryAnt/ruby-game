@@ -56,8 +56,8 @@ class MapService
     @current_map.update unless @current_map.nil?
   end
 
-  def draw_map
-    @current_map.draw unless @current_map.nil?
+  def draw_map(player_x, player_y)
+    @current_map.draw player_x, player_y unless @current_map.nil?
   end
 
   def all_maps

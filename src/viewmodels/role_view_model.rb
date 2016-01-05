@@ -224,7 +224,7 @@ class RoleViewModel
   end
 
   def draw_with_area_addition(additional_equipment_vm, auto_scale)
-    update_scale @role.y if auto_scale
+    update_scale auto_scale, @role.y
 
     additional_equipment_vm.draw(*get_actual_role_location, @role.direction) unless additional_equipment_vm.nil?
 
@@ -312,6 +312,12 @@ class RoleViewModel
     rand < @hat_vm.miss
   end
 
+  def get_actual_role_location
+    x, y = @role.x, @role.y - 30 * scale_value
+    y = y - @vehicle_vm.vehicle_body_height * scale_value if driving?
+    [x, y]
+  end
+
   private
 
   def anim_goto_begin
@@ -377,11 +383,5 @@ class RoleViewModel
   def draw_chat_bubble
     x, y = get_actual_role_location
     @chat_bubble_vm.draw_with_target x, y - 30
-  end
-
-  def get_actual_role_location
-    x, y = @role.x, @role.y - 30 * scale_value
-    y = y - @vehicle_vm.vehicle_body_height * scale_value if driving?
-    [x, y]
   end
 end

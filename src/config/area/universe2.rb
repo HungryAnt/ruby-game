@@ -65,8 +65,8 @@ tiles_text = <<TILES
 ################################################################################
 TILES
 
-area = create_area(:universe1, 'map/universe1/universe1.jpg', 'map/universe1.ogg', tiles_text)
+area = create_area(:universe2, 'map/universe2/universe2.jpg', 'map/universe2.ogg', tiles_text)
 area.auto_scale = true
 area.dynamic_background = true
 
-create_map(:universe1, '宇宙1', MapType::VILLAGE, [area])
+create_map(:universe2, '宇宙2', MapType::VILLAGE, [area])

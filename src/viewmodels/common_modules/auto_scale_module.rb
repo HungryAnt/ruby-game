@@ -7,7 +7,11 @@ module AutoScaleModule
     @scale
   end
 
-  def update_scale(y)
-    @scale = 0.35 + 0.75 * y / GameConfig::MAP_HEIGHT
+  def update_scale(auto_scale, y)
+    if auto_scale
+      @scale = 0.35 + 0.75 * y / GameConfig::MAP_HEIGHT
+    else
+      @scale = 1.0
+    end
   end
 end

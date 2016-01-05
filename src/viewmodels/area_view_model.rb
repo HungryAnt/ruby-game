@@ -65,8 +65,18 @@ class AreaViewModel
     @anim_container.update
   end
 
-  def draw
-    @image.draw(0, 0, ZOrder::Background, @scale_x, @scale_y)
+  def draw(player_x, player_y)
+    if @area.dynamic_background
+      rate_x = player_x.to_f / GameConfig::MAP_WIDTH
+      rate_y = player_y.to_f / GameConfig::MAP_HEIGHT
+
+      @image.draw(-@image.width * rate_x + player_x,
+                  -@image.height * rate_y + player_y,
+                  ZOrder::Background, 1, 1)
+    else
+      @image.draw(0, 0, ZOrder::Background, @scale_x, @scale_y)
+    end
+
     @anim_container.draw
     draw_covering
   end

@@ -24,7 +24,7 @@ class LargeRubbishViewModel < EnemyViewModel
   end
 
   def draw(auto_scale)
-    update_scale y if auto_scale
+    update_scale auto_scale, y
 
     image_index = @large_rubbish.images.size - 1 -
         (@large_rubbish.hp / ((@large_rubbish.max_hp + 1.0) / @large_rubbish.images.size)).to_i

@@ -42,7 +42,7 @@ class MonsterViewModel < EnemyViewModel
   end
 
   def draw(auto_scale)
-    update_scale y if auto_scale
+    update_scale auto_scale, y
     draw_effect
     draw_anim
 

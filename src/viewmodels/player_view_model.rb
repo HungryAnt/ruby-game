@@ -18,6 +18,10 @@ class PlayerViewModel
     @pets_vms = []
   end
 
+  def actual_role_location
+    @role_vm.get_actual_role_location
+  end
+
   def update(area)
     have_a_rest if @role.standing
     eat if @role.standing

@@ -72,7 +72,7 @@ class GameMapViewModel
   end
 
   def draw
-    @map_service.draw_map
+    @map_service.draw_map *@player_view_model.actual_role_location
     # get_item_vms.each { |item_vm| item_vm.draw }
 
     additional_equipment_vm = get_current_area.additional_equipment_vm

@@ -13,8 +13,8 @@ class MapViewModel
     @current_area.update
   end
 
-  def draw
-    @current_area.draw
+  def draw(player_x, player_y)
+    @current_area.draw player_x, player_y
   end
 
   def activate

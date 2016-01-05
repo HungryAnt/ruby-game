@@ -11,7 +11,7 @@ class FoodViewModel < ItemViewModel
   end
 
   def draw(auto_scale)
-    update_scale y if auto_scale
+    update_scale auto_scale, y
 
     if @food.visible
       z_order = ZOrder::Player # @food.eating && !@food.covered ? ZOrder::Player : ZOrder::Food

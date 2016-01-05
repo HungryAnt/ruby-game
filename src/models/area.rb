@@ -2,7 +2,7 @@ class Area
   GRID_WIDTH = 10
   GRID_HEIGHT = 10
 
-  attr_accessor :gateway, :additional_equipment, :auto_scale
+  attr_accessor :gateway, :additional_equipment, :auto_scale, :dynamic_background
   attr_reader :id, :image_path, :song_path, :tiles, :coverings, :initial_position, :visual_elements
 
   def initialize(id, image_path, song_path, tiles_text)
@@ -16,7 +16,8 @@ class Area
     @coverings = []
     @visual_elements = []
     @additional_equipment = nil
-    @auto_scale = true
+    @auto_scale = false
+    @dynamic_background = false
   end
 
   private
