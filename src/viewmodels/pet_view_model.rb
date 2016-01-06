@@ -39,8 +39,8 @@ class PetViewModel
     update_state
   end
 
-  def draw(auto_scale)
-    update_scale auto_scale, y
+  def draw(auto_scale_info)
+    update_scale auto_scale_info, y
     draw_anim
   end
 

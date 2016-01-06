@@ -219,12 +219,12 @@ class RoleViewModel
     @role.direction = direction
   end
 
-  def draw(auto_scale)
-    draw_with_area_addition nil, auto_scale
+  def draw(auto_scale_info)
+    draw_with_area_addition nil, auto_scale_info
   end
 
-  def draw_with_area_addition(additional_equipment_vm, auto_scale)
-    update_scale auto_scale, @role.y
+  def draw_with_area_addition(additional_equipment_vm, auto_scale_info)
+    update_scale auto_scale_info, @role.y
 
     additional_equipment_vm.draw(*get_actual_role_location, @role.direction) unless additional_equipment_vm.nil?
 

@@ -11,8 +11,8 @@ class RubbishViewModel < ItemViewModel
     @rubbish.rubbish_type_id
   end
 
-  def draw(auto_scale)
-    update_scale auto_scale, y
+  def draw(auto_scale_info)
+    update_scale auto_scale_info, y
     @image.draw_rot(@rubbish.x, @rubbish.y, ZOrder::Player, 0, 0.5, 0.5, scale_value, scale_value)
   end
 

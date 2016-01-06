@@ -77,14 +77,14 @@ class GameMapViewModel
     # get_item_vms.each { |item_vm| item_vm.draw }
 
     additional_equipment_vm = get_current_area.additional_equipment_vm
-    auto_scale = get_current_area.auto_scale
+    auto_scale_info = get_current_area.auto_scale_info
 
     Gosu::translate(*get_current_area.get_area_offset) {
       @visual_items.each do |item|
         if item.respond_to? :draw_with_area_addition
-          item.draw_with_area_addition additional_equipment_vm, auto_scale
+          item.draw_with_area_addition additional_equipment_vm, auto_scale_info
         else
-          item.draw auto_scale
+          item.draw auto_scale_info
         end
       end
     }

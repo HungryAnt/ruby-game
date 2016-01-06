@@ -10,8 +10,8 @@ class FoodViewModel < ItemViewModel
     @image = MediaUtil::get_img(food.image_path)
   end
 
-  def draw(auto_scale)
-    update_scale auto_scale, y
+  def draw(auto_scale_info)
+    update_scale auto_scale_info, y
 
     if @food.visible
       z_order = ZOrder::Player # @food.eating && !@food.covered ? ZOrder::Player : ZOrder::Food

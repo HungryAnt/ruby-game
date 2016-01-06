@@ -66,7 +66,7 @@ custom1_roof_tiles_text = <<TILES
 TILES
 
 
-custom1_roof_area = create_area(:custom1_roof, 'map/custom1/roof.jpg', nil, custom1_roof_tiles_text)
+custom1_roof_area = create_area(:custom1_roof, 'map/custom1/roof.jpg', 'map/custom1.ogg', custom1_roof_tiles_text)
 
 
 custom1_tree_tiles_text = <<TILES
@@ -132,7 +132,7 @@ custom1_tree_tiles_text = <<TILES
 ################################################################################
 TILES
 
-custom1_tree_area = create_area(:custom1_tree, 'map/custom1/tree.jpg', nil, custom1_tree_tiles_text)
+custom1_tree_area = create_area(:custom1_tree, 'map/custom1/tree.jpg', 'map/custom1.ogg', custom1_tree_tiles_text)
 
 custom1_roof_area.gateway = {
     :A => {:area => custom1_tree_area, :direction => Direction::DOWN}
