@@ -6,7 +6,6 @@ module GameRole
 
   def try_pick_up(mouse_x, mouse_y)
     return false if @player_view_model.battered
-
     actual_x, actual_y = to_area_actual_location mouse_x, mouse_y
 
     item_vms = get_item_vms
@@ -18,7 +17,7 @@ module GameRole
       return true
     end
 
-    set_destination actual_x, actual_y, item_vm
+    set_destination mouse_x, mouse_y, item_vm
     true
   end
 
@@ -36,8 +35,7 @@ module GameRole
     true
   end
 
-  def get_touch_enemy(mouse_x, mouse_y)
-    actual_x, actual_y = to_area_actual_location mouse_x, mouse_y
+  def get_touch_enemy(actual_x, actual_y)
     monster_vm = get_touch_monster actual_x, actual_y
     return monster_vm unless monster_vm.nil?
     get_touch_rubbish actual_x, actual_y

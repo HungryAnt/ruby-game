@@ -246,7 +246,7 @@ class RoleViewModel
     draw_wing if @role.direction == Direction::LEFT || @role.direction == Direction::RIGHT
 
     draw_level_and_name
-    @eating_food_vm.draw auto_scale unless @eating_food_vm.nil?
+    @eating_food_vm.draw auto_scale_info unless @eating_food_vm.nil?
     draw_chat_bubble
   end
 

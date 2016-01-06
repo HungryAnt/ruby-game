@@ -76,7 +76,7 @@ class ChannelMainView
       show_map_selection_view(:my_room, :grass_wood_back, :school, :church, :house, :cart,
                               :ghost_house, :henhouse, :rainy_day, :sled, :market,
                               :snow_village, :river_side, :port, :pool, :xiujuan_house,
-                              :universe1, :universe2, :custom1)
+                              :universe1, :universe2, :custom1, :vegetable_field)
     end
 
     control_police_station = create_channel_control(canvas, 13, 14, 430, 160, 103, 79,

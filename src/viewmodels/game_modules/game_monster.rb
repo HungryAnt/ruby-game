@@ -53,9 +53,9 @@ module GameMonster
   #   get_monster_vms.each { |monster_vm| monster_vm.set_durable_state state }
   # end
 
-  def get_touch_monster(mouse_x, mouse_y)
+  def get_touch_monster(actual_x, actual_y)
     get_monster_vms.each do |item_vm|
-      return item_vm if item_vm.mouse_touch?(mouse_x, mouse_y)
+      return item_vm if item_vm.mouse_touch?(actual_x, actual_y)
     end
     nil
   end

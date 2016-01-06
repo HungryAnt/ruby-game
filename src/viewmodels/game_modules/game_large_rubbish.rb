@@ -23,9 +23,9 @@ module GameLargeRubbish
     @map_service.current_map.current_area.get_large_rubbish_vms
   end
 
-  def get_touch_rubbish(mouse_x, mouse_y)
+  def get_touch_rubbish(actual_x, actual_y)
     get_large_rubbish_vms.each do |item_vm|
-      return item_vm if item_vm.mouse_touch?(mouse_x, mouse_y)
+      return item_vm if item_vm.mouse_touch?(actual_x, actual_y)
     end
     nil
   end
