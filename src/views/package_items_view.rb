@@ -207,7 +207,7 @@ class PackageItemsView
     none_equipment = {
         type: :none_equipment,
         data: equipment_type,
-        content: AntGui::Control.new
+        content: create_empty_equipment_content
     }
     items.insert 0, none_equipment
 
@@ -226,6 +226,14 @@ class PackageItemsView
   def create_equipment_content(equipment)
     image = EquipmentDefinition.get_item_image(equipment.key)
     AntGui::Image.new(image)
+  end
+
+  def create_empty_equipment_content
+    text_block = AntGui::TextBlock.new @prompt_font, '空', :center, :center
+    text_block.foreground_color = 0xDD_BBBBBB
+    control = AntGui::Control.new
+    control.content = text_block
+    control
   end
 
   def init_pet_panel

@@ -171,6 +171,10 @@ module GameRole
           end
           role_vm.drive(vehicle_key)
 
+          role_vm.wing_vm = check_and_generate_equipment_vm role_map, 'wing', Equipment::Type::WING
+          role_vm.eye_wear_vm = check_and_generate_equipment_vm role_map, 'eye_wear', Equipment::Type::EYE_WEAR
+          role_vm.hat_vm = check_and_generate_equipment_vm role_map, 'hat', Equipment::Type::HAT
+
           action = role_map['action'].to_sym
           detail = role_map['detail']
           case action
@@ -192,6 +196,15 @@ module GameRole
           end
         end
       end # is_in_chat_map
+    end
+  end
+
+  def check_and_generate_equipment_vm(role_map, map_key, equipment_type)
+    equipment_key = role_map[map_key]
+    if !equipment_key.nil? && equipment_key != ''
+      EquipmentViewModelFactory.create_equipment_from_key equipment_type, equipment_key
+    else
+      nil
     end
   end
 

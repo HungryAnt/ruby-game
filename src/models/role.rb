@@ -214,7 +214,10 @@ class Role
         state: @state.to_s,
         durable_state: @durable_state.to_s,
         direction: @direction,
-        vehicle: (!@vehicle.nil? ? @vehicle.key: '') # "vehicle_#{id}"
+        vehicle: (!@vehicle.nil? ? @vehicle.key: ''), # "vehicle_#{id}"
+        wing: @wing.nil? ? '' : @wing.key.to_s,
+        eye_wear: @eye_wear.nil? ? '' : @eye_wear.key.to_s,
+        hat: @hat.nil? ? '' : @hat.key.to_s
     }
   end
 

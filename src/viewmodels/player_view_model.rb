@@ -56,7 +56,7 @@ class PlayerViewModel
     case equipment_vm.type
       when Equipment::Type::VEHICLE
         @role_vm.vehicle_vm = equipment_vm
-        set_driving true
+        @role_vm.set_driving true
       when Equipment::Type::EYE_WEAR
         @role_vm.eye_wear_vm = equipment_vm
       when Equipment::Type::WING
@@ -66,12 +66,13 @@ class PlayerViewModel
       else
         # type code here
     end
+    sync_role_appear
   end
 
   def un_equip(equipment_type)
     case equipment_type
       when Equipment::Type::VEHICLE
-        set_driving false
+        @role_vm.set_driving false
       when Equipment::Type::EYE_WEAR
         @role_vm.eye_wear_vm = nil
       when Equipment::Type::WING
@@ -81,6 +82,7 @@ class PlayerViewModel
       else
         # type code here
     end
+    sync_role_appear
   end
 
   def pick_up(item_vms, item_vm)
