@@ -19,9 +19,10 @@ class MapItemControl < AntGui::Control
     Gosu::draw_triangle(left, top, color_0, left, top + height, color_1, left + width, top + height, color_1, z)
     Gosu::draw_triangle(left, top, color_0, left + width, top + height, color_1, left + width, top, color_0, z)
 
-    center_x = @actual_left + @actual_width / 2
+    # center_x = @actual_left + @actual_width / 2
     center_y = @actual_top + @actual_height / 2
-    @font_map_name.draw_rel(@map_name, center_x, center_y, z, 0.6, 0.5, 1.0, 1.0, 0xFF_905810)
+    # @font_map_name.draw_rel(@map_name, center_x, center_y, z, 0.6, 0.5, 1.0, 1.0, 0xFF_905810)
+    @font_map_name.draw_rel(@map_name, @actual_left + 20, center_y, z, 0.0, 0.5, 1.0, 1.0, 0xFF_905810)
 
     user_count = @map_user_count_service.get_map_user_count(@map_id)
     @font_normal.draw_rel("空雅数:#{user_count}  ",
@@ -39,10 +40,11 @@ class MapItemControl < AntGui::Control
 end
 
 class VillageMapSelectionView
-  ITEM_HEIGHT = 40
-  ITEM_WIDTH = 250
+  ITEM_HEIGHT = 50
+  ITEM_WIDTH = 270
   PADDING = 8
   MARGIN = 5
+  HOR_MARGIN = 8
 
   attr_reader :visible
 
@@ -91,7 +93,7 @@ class VillageMapSelectionView
     count = map_vms.length
     row_count = (count + 1) / 2
 
-    dialog_width = (ITEM_WIDTH + PADDING) * 2 + MARGIN
+    dialog_width = (ITEM_WIDTH + PADDING) * 2 + HOR_MARGIN
     dialog_height = ITEM_HEIGHT * row_count + PADDING * 2 + MARGIN * (row_count - 1)
     dialog_left = (GameConfig::MAP_WIDTH - dialog_width) / 2
     dialog_top = (GameConfig::MAP_HEIGHT - dialog_height) / 2
@@ -118,7 +120,7 @@ class VillageMapSelectionView
       y += ITEM_HEIGHT + MARGIN
       index += 1
       if index == row_count
-        x += ITEM_WIDTH + MARGIN
+        x += ITEM_WIDTH + HOR_MARGIN
         y = PADDING
       end
     end

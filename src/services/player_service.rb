@@ -3,11 +3,12 @@
 require 'securerandom'
 
 class PlayerService
-  attr_reader :role, :user_id
+  attr_reader :role, :user_id, :wears
 
   def initialize
     autowired(UserService, CommunicationService)
     @user_id = ''
+    @wears = {}
   end
 
   def init
@@ -78,6 +79,7 @@ class PlayerService
     else
       vehicles = @user_service.vehicles
       update_vehicles vehicles
+      @wears = @user_service.wears
     end
 
     @role.rubbish_bin.update(@user_service.rubbishes)

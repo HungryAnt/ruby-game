@@ -160,10 +160,10 @@ class CommunicationService
   private
   def init_message_handler
     @network_service.register('res_sync_user_message') do |msg_map, params|
-      res_sync_user_msg = ResSyncUserMessage.from_map(msg_map)
-      @user_service.update_user_data res_sync_user_msg.lv, res_sync_user_msg.exp,
-                                     res_sync_user_msg.vehicles, res_sync_user_msg.rubbishes,
-                                     res_sync_user_msg.nutrients
+      msg = ResSyncUserMessage.from_map(msg_map)
+      @user_service.update_user_data msg.lv, msg.exp,
+                                     msg.vehicles, msg.rubbishes,
+                                     msg.nutrients, msg.wears
     end
 
     @network_service.register('update_lv_message') do |msg_map, params|

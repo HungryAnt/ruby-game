@@ -16,6 +16,7 @@ class PlayerViewModel
     @smash_begin_update_time = 0
     @smashing_enemy_vm = nil
     @pets_vms = []
+    init_wears
   end
 
   def actual_role_location
@@ -52,7 +53,24 @@ class PlayerViewModel
     sync_role_appear
   end
 
-  def equip(equipment_vm)
+  # 初始化人物装备
+  def init_wears
+    wears = @player_service.wears
+    vehicle_key = wears[Equipment::Type::VEHICLE.to_s]
+    unless vehicle_key.nil? || vehicle_key == ''
+      equip(EquipmentViewModelFactory.create_vehicle(vehicle_key.to_sym), false)
+    end
+
+    [Equipment::Type::WING, Equipment::Type::HAT, Equipment::Type::EYE_WEAR].each do |equipment_type|
+      equipment_key = wears[equipment_type.to_s]
+      unless equipment_key.nil? || equipment_key == ''
+        equip((EquipmentViewModelFactory.create_equipment_from_key equipment_type, equipment_key.to_sym), false)
+      end
+    end
+  end
+
+  def equip(equipment_vm, remote_sync=true)
+    return if equipment_vm.nil?
     case equipment_vm.type
       when Equipment::Type::VEHICLE
         @role_vm.vehicle_vm = equipment_vm
@@ -66,7 +84,7 @@ class PlayerViewModel
       else
         # type code here
     end
-    sync_role_appear
+    sync_role_appear if remote_sync
   end
 
   def un_equip(equipment_type)
