@@ -18,6 +18,7 @@ class PlayerService
     @role = Role.new(user_name, role_type, 100, 300)
     @communication_service.init_sync_user @user_id, user_name
     update_pets unless GameConfig::DEBUG
+    update_equipments unless GameConfig::DEBUG
   end
 
   def update_sync_data
@@ -77,7 +78,6 @@ class PlayerService
     else
       vehicles = @user_service.vehicles
       update_vehicles vehicles
-      update_equipments
     end
 
     @role.rubbish_bin.update(@user_service.rubbishes)
@@ -103,7 +103,21 @@ class PlayerService
   end
 
   def update_equipments
-    equipments = YecaiWebClient.get_equipments_by_user_id(@user_id)
+    @role.wing_package.clear
+    @role.hat_package.clear
+    @role.eye_wear_package.clear
 
+    equipments = YecaiWebClient.get_equipments_by_user_id(@user_id)
+    return if equipments.nil? || equipments.length == 0
+    equipments.each do |equipment|
+      case equipment.type
+        when Equipment::Type::WING
+          @role.wing_package << equipment
+        when Equipment::Type::HAT
+          @role.hat_package << equipment
+        when Equipment::Type::EYE_WEAR
+          @role.eye_wear_package << equipment
+      end
+    end
   end
 end

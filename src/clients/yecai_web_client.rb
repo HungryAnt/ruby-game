@@ -20,12 +20,19 @@ class YecaiWebClient
 
   def self.get_equipments_by_user_id(user_id)
     http_client = HttpClientFactory.create
-    http_client.path 'equipments/'
+    http_client.path 'userEquipment/'
     http_client.params(userId: user_id)
     res = http_client.get
     if res.code != '200'
       puts "res.code: #{res.code} res.body: #{res.body}"
       return []
+    end
+
+    raw_equipments = JSON.parse(res.body)
+    raw_equipments.map do |raw_equipment|
+      equipment_type = raw_equipment['equipmentType'].gsub(/(.)([A-Z])/, '\1_\2').downcase
+      equipment_key = raw_equipment['equipmentKey']
+      Equipment.new(equipment_type.to_sym, equipment_key.to_sym)
     end
   end
 end

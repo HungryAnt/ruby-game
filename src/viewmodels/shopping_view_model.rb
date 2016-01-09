@@ -59,6 +59,7 @@ class ShoppingViewModel
     @shopping_service.buy(@player_service.user_id, key)
     @user_equipment_service.update
     @player_service.update_pets
+    @player_service.update_equipments
   end
 
   def apply_gift_vehicle
