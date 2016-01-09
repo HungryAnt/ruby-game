@@ -12,7 +12,7 @@ class RoleViewModel
     init_animations
     @eating_food_vm = nil
     @auto_move_enabled = false
-    @speed = 4.2
+    @speed = 5.3
     @arrive_call_back = nil
     stop
     @area_id = nil
@@ -307,9 +307,11 @@ class RoleViewModel
   end
 
   def try_miss
-    return false if @hat_vm.nil?
-    return false if @hat_vm.miss.nil?
-    rand < @hat_vm.miss
+    miss = 0
+    miss = @hat_vm.miss if !@hat_vm.nil? && !@hat_vm.miss.nil?
+    miss = [miss, @vehicle_vm.miss].max if driving? && !@vehicle_vm.miss.nil?
+    return false if miss == 0
+    rand < miss
   end
 
   def get_actual_role_location

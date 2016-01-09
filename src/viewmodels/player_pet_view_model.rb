@@ -1,6 +1,8 @@
 class PlayerPetViewModel < PetViewModel
   include PlayerCommonModule
 
+  ONE_ATTACK_DURATION_TIME_IN_S = 1.6
+
   def initialize(pet)
     autowired(MapService, CommunicationService, PlayerService)
     @order_time_stamp = 0
@@ -40,7 +42,7 @@ class PlayerPetViewModel < PetViewModel
       else
         # 发现野怪，优先攻击野怪
         set_target_enemy enemy_vm
-        if (@update_times % GameConfig::FPS == 0) && attacking_enemy?
+        if (@update_times % (GameConfig::FPS * ONE_ATTACK_DURATION_TIME_IN_S) == 0) && attacking_enemy?
           begin_attack
         end
       end

@@ -19,5 +19,5 @@ lambda {
   set_equipment_properties(eye_wear, 97, left: [-16, 12], up: [0, 0], down: [-2, 8])
 
   create_equipment_anims(eye_wear, 282, down_nums_pair:[0, 3], hor_nums_pair:[4, 7])
-  set_equipment_properties(eye_wear, 282, left: [-16, 12], up: [0, 0], down: [-2, 8])
+  set_equipment_properties(eye_wear, 282, left: [-11, 6], up: [0, 0], down: [0, 3])
 }.call
