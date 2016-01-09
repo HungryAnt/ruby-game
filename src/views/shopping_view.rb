@@ -14,9 +14,9 @@ class ShoppingView < ViewBase
     super
     autowired(WindowResourceService, AccountService, UserService, ShoppingViewModel)
     init_money
-    @font = @window_resource_service.get_font_25
+    @font = @window_resource_service.get_font 20
     @page_no = @total_page_count = 1
-    @current_goods_category = :vehicles
+    @current_goods_category = :newVehicles
   end
 
   def on_exit(&exit_call_back)
@@ -68,7 +68,7 @@ class ShoppingView < ViewBase
     tab_panel = AntGui::Canvas.new
     AntGui::Canvas.set_canvas_props tab_panel, left, top, width, height
     x = y = 0
-    tab_item_width = 120
+    tab_item_width = 88
     tab_item_height = height
     tab_item_margin = 5
 
@@ -85,9 +85,13 @@ class ShoppingView < ViewBase
       tab_panel.add button
     end
 
+    create_button_proc.call '新品载具', :newVehicles
     create_button_proc.call '载具', :vehicles
     create_button_proc.call '怀旧载具', :nostalgicVehicles
     create_button_proc.call '宠物', :pets
+    create_button_proc.call '翅膀', :wings
+    create_button_proc.call '帽子/头盔', :hats
+    create_button_proc.call '眼镜', :eyeWears
 
     tab_panel
   end

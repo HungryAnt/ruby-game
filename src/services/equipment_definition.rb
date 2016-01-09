@@ -20,7 +20,8 @@ class EquipmentDefinition
 
   def self.get_item_animation(goods_category, key)
     case goods_category
-      when :vehicles, :nostalgicVehicles
+      when :newVehicles, :vehicles, :nostalgicVehicles,
+          :wings, :hats, :eyeWears
         anim_key = "#{key}_down"
       when :pets
         anim_key = "#{key}_stand_down"

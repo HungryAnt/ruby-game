@@ -77,6 +77,7 @@ class PlayerService
     else
       vehicles = @user_service.vehicles
       update_vehicles vehicles
+      update_equipments
     end
 
     @role.rubbish_bin.update(@user_service.rubbishes)
@@ -99,5 +100,10 @@ class PlayerService
     return if pets.length == 0
     @role.pet_package.clear
     pets.each { |pet| @role.pet_package << pet }
+  end
+
+  def update_equipments
+    equipments = YecaiWebClient.get_equipments_by_user_id(@user_id)
+
   end
 end

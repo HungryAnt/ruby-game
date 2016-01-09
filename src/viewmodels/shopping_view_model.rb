@@ -11,6 +11,7 @@ class ShoppingViewModel
     page_result = @shopping_service.get_goods(category, page_no, PAGE_SIZE)
     package_vehicle_keys_set = get_package_vehicle_keys_set
     package_pet_keys_set = get_package_pet_keys_set
+    all_equipment_keys_set = get_all_equipment_keys_set
 
     items = []
     page_result.page.result.map do |data_map|
@@ -23,7 +24,8 @@ class ShoppingViewModel
           image: image,
           anim: anim,
           price: goods.price,
-          existing: package_vehicle_keys_set.include?(key) || package_pet_keys_set.include?(key)
+          existing: package_vehicle_keys_set.include?(key) || package_pet_keys_set.include?(key) ||
+              all_equipment_keys_set.include?(key)
       }
     end
     page_count = (page_result.page.total_count + PAGE_SIZE - 1) / PAGE_SIZE
@@ -38,6 +40,19 @@ class ShoppingViewModel
   def get_package_pet_keys_set
     pets = @player_service.role.pet_package.items
     Set.new pets.map {|pet| pet.pet_type}
+  end
+
+  def get_all_equipment_keys_set
+    set = Set.new
+    role = @player_service.role
+    [
+        get_equipment_keys(role.wing_package),
+        get_equipment_keys(role.hat_package),
+        get_equipment_keys(role.eye_wear_package)
+    ].each do |keys|
+      keys.each { |key| set.add key}
+    end
+    set
   end
 
   def buy(key)
@@ -59,5 +74,9 @@ class ShoppingViewModel
 
   def find_packege_items(clazz)
     @player_service.role.package.items.find_all {|item| item.instance_of? clazz}
+  end
+
+  def get_equipment_keys(package)
+    package.items.map { |equipment| equipment.key }
   end
 end

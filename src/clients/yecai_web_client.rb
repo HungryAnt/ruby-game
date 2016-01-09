@@ -17,4 +17,15 @@ class YecaiWebClient
     end
     pets
   end
+
+  def self.get_equipments_by_user_id(user_id)
+    http_client = HttpClientFactory.create
+    http_client.path 'equipments/'
+    http_client.params(userId: user_id)
+    res = http_client.get
+    if res.code != '200'
+      puts "res.code: #{res.code} res.body: #{res.body}"
+      return []
+    end
+  end
 end
