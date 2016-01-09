@@ -78,7 +78,7 @@ class Role
     @durable_state = State::STANDING
     @direction = Direction::DOWN
     @intake = GameConfig::ROLE_INTAKE
-    @temp_exp = 0
+    @temp_eating_food_exp = {}
 
     @vehicle = nil
     @driving = false
@@ -128,7 +128,12 @@ class Role
       intake = @eating_food.eat @intake
       if intake > 0
         # inc_exp intake
-        @temp_exp += intake
+        food_id = @eating_food.id
+        if @temp_eating_food_exp.include? food_id
+          @temp_eating_food_exp[food_id] += intake
+        else
+          @temp_eating_food_exp[food_id] = intake
+        end
       else
         eat_done
       end
@@ -178,17 +183,16 @@ class Role
     @state == State::HOLDING_FOOD
   end
 
-  # def refresh_exp
-  #   if @temp_exp > 0
-  #     inc_exp(@temp_exp)
-  #     @temp_exp = 0
-  #   end
-  # end
-
   def query_and_dec_temp_exp
-    exp = @temp_exp.to_i
-    @temp_exp -= exp
-    exp
+    food_exp_infos = []
+    @temp_eating_food_exp.each_pair do |food_id, exp|
+      exp_int_value = exp.to_i
+      if exp_int_value > 0
+        @temp_eating_food_exp[food_id] -= exp_int_value
+        food_exp_infos << { food_id: food_id, exp: exp_int_value }
+      end
+    end
+    food_exp_infos
   end
 
   def discard

@@ -89,9 +89,9 @@ class CommunicationService
     send eat_up_food_msg
   end
 
-  def send_inc_exp_message(user_id, exp)
+  def send_inc_exp_message(user_id, food_exp_infos)
     puts 'send_inc_exp_message'
-    send IncExpMessage.new(user_id, exp)
+    send IncExpMessage.new(user_id, food_exp_infos)
   end
 
   def send_hit_message(user_id, area_id, hit_type, target_x, target_y)

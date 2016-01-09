@@ -35,8 +35,8 @@ class PlayerViewModel
   end
 
   def refresh_exp
-    exp = @role.query_and_dec_temp_exp
-    remote_inc_exp(exp) if exp > 0
+    food_exp_infos = @role.query_and_dec_temp_exp
+    remote_inc_exp(food_exp_infos) if food_exp_infos.size > 0
   end
 
   def draw
@@ -338,7 +338,6 @@ class PlayerViewModel
   def eat_up
     @role_vm.clear_food
     remote_eat_up_food
-    # remote_update_lv
   end
 
   def have_a_rest
@@ -389,8 +388,8 @@ class PlayerViewModel
     @communication_service.send_eat_up_food_message(user_id)
   end
 
-  def remote_inc_exp(exp)
-    @communication_service.send_inc_exp_message get_user_id, exp
+  def remote_inc_exp(food_exp_infos)
+    @communication_service.send_inc_exp_message get_user_id, food_exp_infos
   end
 
   def remote_hit(user_id, area_id, hit_type, target_x, target_y)
