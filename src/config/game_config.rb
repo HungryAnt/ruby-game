@@ -1,5 +1,5 @@
 module GameConfig
-  DEBUG = false
+  DEBUG = true
   USER_DEBUG = false
   TEST_MONSTER = false
 
