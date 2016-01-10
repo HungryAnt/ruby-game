@@ -10,7 +10,7 @@ class MainWindow < Gosu::Window
     @version = version
 
     @window_resource_service.init(self)
-    self.caption = "童年记忆 - Ant版野菜部落 网络版 #{@version}"
+    self.caption = "Ant野菜部落 华丽正式版 #{@version}    —— 交流QQ群:513951420"
 
     @warning_font = @window_resource_service.get_warning_font
     @is_cheating = false
@@ -103,13 +103,13 @@ class MainWindow < Gosu::Window
 
     draw_fps
 
-    Gosu::draw_rect 0, 0, 20 * 30, 20, 0xAA_EFEF56
-    message = '作者:Ant(群主大大大) QQ:517377100 千人火爆交流Q群:513951420'
-
-    @font.draw(message, 11, 1,
-               ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_9EC4FF)
-    @font.draw(message, 10, 0,
-               ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_2054A3)
+    # Gosu::draw_rect 0, 0, 20 * 30, 20, 0xAA_EFEF56
+    # message = '作者:Ant(群主大大大) QQ:517377100 千人火爆交流Q群:513951420'
+    #
+    # @font.draw(message, 11, 1,
+    #            ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_9EC4FF)
+    # @font.draw(message, 10, 0,
+    #            ZOrder::DIALOG_UI, 1.0, 1.0, 0xFF_2054A3)
 
     if @is_cheating
       Gosu::draw_rect 0, 0, GameConfig::WHOLE_WIDTH, GameConfig::WHOLE_HEIGHT, 0xAA_550015, ZOrder::DIALOG_UI

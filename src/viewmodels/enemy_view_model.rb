@@ -35,14 +35,22 @@ class EnemyViewModel
   end
 
   def get_destination(role)
-    angle = Gosu::angle(@enemy.x, @enemy.y, role.x, role.y)
-    dest_x = @enemy.x + Gosu::offset_x(angle, SMASH_DISTANCE)
-    dest_y = @enemy.y + Gosu::offset_y(angle, SMASH_DISTANCE)
+    angle = Gosu::angle(enemy_target_x, enemy_target_y, role.x, role.y)
+    dest_x = enemy_target_x + Gosu::offset_x(angle, SMASH_DISTANCE)
+    dest_y = enemy_target_y + Gosu::offset_y(angle, SMASH_DISTANCE)
     [dest_x, dest_y]
   end
 
   private
   def distance(x, y)
-    Gosu::distance(@enemy.x, @enemy.y, x, y)
+    Gosu::distance(enemy_target_x, enemy_target_y, x, y)
+  end
+
+  def enemy_target_x
+    @enemy.x
+  end
+
+  def enemy_target_y
+    @enemy.y - 42
   end
 end
