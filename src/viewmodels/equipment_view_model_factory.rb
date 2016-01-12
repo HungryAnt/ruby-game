@@ -3,12 +3,8 @@ class EquipmentViewModelFactory
     case equipment.type
       when Equipment::Type::VEHICLE
         return create_vehicle(equipment.key)
-      when Equipment::Type::EYE_WEAR
-        return create_common_equipment(equipment)
-      when Equipment::Type::WING
-        return create_common_equipment(equipment)
-      when Equipment::Type::HAT
-        return create_common_equipment(equipment)
+      when Equipment::Type::EYE_WEAR, Equipment::Type::WING, Equipment::Type::HAT, Equipment::Type::UNDERPAN
+        return create_common_equipment equipment
     end
   end
 

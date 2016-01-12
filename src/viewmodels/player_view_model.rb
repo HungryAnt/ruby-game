@@ -61,7 +61,8 @@ class PlayerViewModel
       equip(EquipmentViewModelFactory.create_vehicle(vehicle_key.to_sym), false)
     end
 
-    [Equipment::Type::WING, Equipment::Type::HAT, Equipment::Type::EYE_WEAR].each do |equipment_type|
+    [Equipment::Type::WING, Equipment::Type::HAT, Equipment::Type::EYE_WEAR,
+     Equipment::Type::UNDERPAN].each do |equipment_type|
       equipment_key = wears[equipment_type.to_s]
       unless equipment_key.nil? || equipment_key == ''
         equip((EquipmentViewModelFactory.create_equipment_from_key equipment_type, equipment_key.to_sym), false)
@@ -81,6 +82,8 @@ class PlayerViewModel
         @role_vm.wing_vm = equipment_vm
       when Equipment::Type::HAT
         @role_vm.hat_vm = equipment_vm
+      when Equipment::Type::UNDERPAN
+        @role_vm.underpan_vm = equipment_vm
       else
         # type code here
     end

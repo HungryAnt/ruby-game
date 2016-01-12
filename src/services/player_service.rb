@@ -76,6 +76,11 @@ class PlayerService
         key = "hat2_#{num}".to_sym
         @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
       end
+
+      [13, 17, 102, 234, 349, 418, 443, 454, 471].each do |num|
+        key = "underpan_#{num}".to_sym
+        @role.underpan_package << Equipment.new(Equipment::Type::UNDERPAN, key)
+      end
     else
       vehicles = @user_service.vehicles
       update_vehicles vehicles

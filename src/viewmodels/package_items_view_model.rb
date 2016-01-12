@@ -31,6 +31,10 @@ class PackageItemsViewModel
     @player_vm.role.hat_package.items
   end
 
+  def get_underpans
+    @player_vm.role.underpan_package.items
+  end
+
   def choose_equipment(equipment)
     @player_vm.equip(EquipmentViewModelFactory.create_equipment(equipment))
   end

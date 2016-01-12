@@ -3,11 +3,11 @@ def create_equipment_anims(equipment, id, options = {})
   pattern = options.include?(:pattern) ? options[:pattern] : "#{equipment}/#{id}/#{id}_${num}.bmp"
 
   if options.include?(:same_nums_pair)
-    hor_nums = up_nums = down_nums = to_anim_nums(*options[:same_nums_pair])
+    hor_nums = up_nums = down_nums = to_simple_anim_nums(*options[:same_nums_pair])
   else
-    hor_nums = options.include?(:hor_nums_pair) ? to_anim_nums(*options[:hor_nums_pair]) : nil
-    up_nums = options.include?(:up_nums_pair) ? to_anim_nums(*options[:up_nums_pair]) : nil
-    down_nums = options.include?(:down_nums_pair) ? to_anim_nums(*options[:down_nums_pair]) : nil
+    hor_nums = options.include?(:hor_nums_pair) ? to_simple_anim_nums(*options[:hor_nums_pair]) : nil
+    up_nums = options.include?(:up_nums_pair) ? to_simple_anim_nums(*options[:up_nums_pair]) : nil
+    down_nums = options.include?(:down_nums_pair) ? to_simple_anim_nums(*options[:down_nums_pair]) : nil
   end
 
   AnimationManager.new_centered_anims '' do

@@ -54,9 +54,10 @@ class Role
 
   attr_accessor :state, :durable_state, :direction, :role_type,
                 :hp, :vehicle, :driving, :battered, :battered_by_hit_type
-  attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package, :eye_wear_package, :wing_package, :hat_package
+  attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package, :eye_wear_package,
+              :wing_package, :hat_package, :underpan_package
 
-  attr_accessor :eye_wear, :wing, :hat
+  attr_accessor :eye_wear, :wing, :hat, :underpan
 
   def initialize(name, role_type, x, y)
     @name = name
@@ -72,6 +73,7 @@ class Role
     @eye_wear_package = Package.new 100
     @wing_package = Package.new 100
     @hat_package = Package.new 100
+    @underpan_package = Package.new 100
 
     @eating_food = nil
     @state = State::STANDING
@@ -92,6 +94,7 @@ class Role
     @eye_wear = nil # ÑÛ²¿ÊÎÆ·
     @wing = nil # ³á°ò
     @hat = nil # Ã±×ÓÍ·¿ø
+    @underpan = nil # µ×ÅÌ
   end
 
   def get_speed
@@ -107,6 +110,7 @@ class Role
     speed_rate -= 0.25 if @battered || eating?
     speed_rate += @vehicle.speed_up if driving && !@vehicle.nil?
     speed_rate += @wing.speed_up unless @wing.nil?
+    speed_rate += @underpan.speed_up unless @underpan.nil?
     @speed * speed_rate
   end
 
@@ -221,7 +225,8 @@ class Role
         vehicle: (!@vehicle.nil? ? @vehicle.key: ''), # "vehicle_#{id}"
         wing: @wing.nil? ? '' : @wing.key.to_s,
         hat: @hat.nil? ? '' : @hat.key.to_s,
-        eye_wear: @eye_wear.nil? ? '' : @eye_wear.key.to_s
+        eye_wear: @eye_wear.nil? ? '' : @eye_wear.key.to_s,
+        underpan: @underpan.nil? ? '' : @underpan.key.to_s
     }
   end
 

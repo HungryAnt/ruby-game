@@ -7,6 +7,7 @@ class Equipment
     AREA_ADDITION = :area_addition # ³¡¾°¸½¼Ó
     WING = :wing # ³á°ò
     HAT = :hat # Ã±×Ó
+    UNDERPAN = :underpan # µ×ÅÌ
   end
 
   attr_reader :key, :type, :location_offset, :miss, :speed_up

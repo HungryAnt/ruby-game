@@ -30,6 +30,7 @@ class RoleViewModel
     @eye_wear_vm = nil
     @wing_vm = nil
     @hat_vm = nil
+    @underpan_vm = nil
   end
 
   def eye_wear_vm=(eye_wear_vm)
@@ -45,6 +46,11 @@ class RoleViewModel
   def hat_vm=(hat_vm)
     @hat_vm = hat_vm.nil? ? nil : hat_vm
     @role.hat = hat_vm.nil? ? nil : hat_vm.equipment
+  end
+
+  def underpan_vm=(underpan_vm)
+    @underpan_vm = underpan_vm.nil? ? nil : underpan_vm
+    @role.underpan = underpan_vm.nil? ? nil : underpan_vm.equipment
   end
 
   def init_hit_components
@@ -233,12 +239,14 @@ class RoleViewModel
       should_draw_vehicle_first = driving? && @vehicle_vm.is_behind_role
     end
 
+    draw_underpan
+
     draw_wing if @role.direction == Direction::DOWN # ¡Ÿ ±∑Ω∞∏
     draw_vehicle if should_draw_vehicle_first
 
     draw_role_anim
 
-    draw_equipments
+    draw_eye_wear
     draw_hat
 
     draw_wing if @role.direction == Direction::UP
@@ -356,19 +364,26 @@ class RoleViewModel
     end
   end
 
-  def draw_equipments
-    x, y = get_actual_role_location
-    @eye_wear_vm.draw(x, y, @role.direction, scale_value) unless @eye_wear_vm.nil?
+  def draw_underpan
+    x, y = @role.x, @role.y
+    @underpan_vm.draw(x, y, @role.direction, scale_value) unless @underpan_vm.nil?
+  end
+
+  def draw_eye_wear
+    draw_equipment @eye_wear_vm
   end
 
   def draw_wing
-    x, y = get_actual_role_location
-    @wing_vm.draw(x, y, @role.direction, scale_value) unless @wing_vm.nil?
+    draw_equipment @wing_vm
   end
 
   def draw_hat
+    draw_equipment @hat_vm
+  end
+
+  def draw_equipment(equipment_vm)
     x, y = get_actual_role_location
-    @hat_vm.draw(x, y, @role.direction, scale_value) unless @hat_vm.nil?
+    equipment_vm.draw(x, y, @role.direction, scale_value) unless equipment_vm.nil?
   end
 
   def draw_level_and_name
