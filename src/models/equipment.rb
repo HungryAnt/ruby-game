@@ -10,7 +10,7 @@ class Equipment
     UNDERPAN = :underpan # 底盘
   end
 
-  attr_reader :key, :type, :location_offset, :miss, :speed_up
+  attr_reader :key, :type, :location_offset, :miss, :speed_up, :height
 
   def initialize(type, key)
     @type = type
@@ -20,5 +20,6 @@ class Equipment
     @location_offset = props[:offset]
     @miss = props[:miss] # 闪避
     @speed_up = props[:speed_up] # 加速
+    @height = props[:height] # 高度
   end
 end

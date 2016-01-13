@@ -232,7 +232,7 @@ class RoleViewModel
   def draw_with_area_addition(additional_equipment_vm, auto_scale_info)
     update_scale auto_scale_info, @role.y
 
-    additional_equipment_vm.draw(*get_actual_role_location, @role.direction) unless additional_equipment_vm.nil?
+    additional_equipment_vm.draw(*get_pure_role_feets_location, @role.direction) unless additional_equipment_vm.nil?
 
     should_draw_vehicle_first = driving_dragon? && @role.direction == Direction::UP
     unless should_draw_vehicle_first
@@ -323,9 +323,14 @@ class RoleViewModel
   end
 
   def get_actual_role_location
-    x, y = @role.x, @role.y - 30 * scale_value
+    x, y = get_pure_role_feets_location
     y = y - @vehicle_vm.vehicle_body_height * scale_value if driving?
+    y = y - @underpan_vm.height * scale_value unless @underpan_vm.nil?
     [x, y]
+  end
+
+  def get_pure_role_feets_location
+    return @role.x, @role.y - 30 * scale_value
   end
 
   private
@@ -360,13 +365,13 @@ class RoleViewModel
 
   def draw_vehicle
     if driving?
-      @vehicle_vm.draw(@role.x, @role.y, @role.direction, scale_value)
+      @vehicle_vm.draw(@role.x, @role.y - underpan_height, @role.direction, scale_value)
     end
   end
 
   def draw_underpan
     x, y = @role.x, @role.y
-    @underpan_vm.draw(x, y, @role.direction, scale_value) unless @underpan_vm.nil?
+    @underpan_vm.draw(x, y - @underpan_vm.height, @role.direction, scale_value) unless @underpan_vm.nil?
   end
 
   def draw_eye_wear
@@ -400,5 +405,10 @@ class RoleViewModel
   def draw_chat_bubble
     x, y = get_actual_role_location
     @chat_bubble_vm.draw_with_target x, y - 30
+  end
+
+  def underpan_height
+    return 0 if @underpan_vm.nil?
+    @underpan_vm.height
   end
 end

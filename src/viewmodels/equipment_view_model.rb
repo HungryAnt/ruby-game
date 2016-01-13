@@ -15,6 +15,10 @@ class EquipmentViewModel
     @equipment.speed_up
   end
 
+  def height
+    @equipment.height
+  end
+
   def type
     @equipment.type
   end

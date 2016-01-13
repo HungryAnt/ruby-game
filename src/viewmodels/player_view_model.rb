@@ -100,6 +100,8 @@ class PlayerViewModel
         @role_vm.wing_vm = nil
       when Equipment::Type::HAT
         @role_vm.hat_vm = nil
+      when Equipment::Type::UNDERPAN
+        @role_vm.underpan_vm = nil
       else
         # type code here
     end
