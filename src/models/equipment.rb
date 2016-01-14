@@ -8,6 +8,7 @@ class Equipment
     WING = :wing # ЁА╟Р
     HAT = :hat # ц╠вс
     UNDERPAN = :underpan # ╣вел
+    HANDHELD = :handheld
   end
 
   attr_reader :key, :type, :location_offset, :miss, :speed_up, :height

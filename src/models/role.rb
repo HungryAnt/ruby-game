@@ -55,9 +55,9 @@ class Role
   attr_accessor :state, :durable_state, :direction, :role_type,
                 :hp, :vehicle, :driving, :battered, :battered_by_hit_type
   attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package, :eye_wear_package,
-              :wing_package, :hat_package, :underpan_package
+              :wing_package, :hat_package, :underpan_package, :handheld_package
 
-  attr_accessor :eye_wear, :wing, :hat, :underpan
+  attr_accessor :eye_wear, :wing, :hat, :underpan, :handheld
 
   def initialize(name, role_type, x, y)
     @name = name
@@ -74,6 +74,7 @@ class Role
     @wing_package = Package.new 100
     @hat_package = Package.new 100
     @underpan_package = Package.new 100
+    @handheld_package = Package.new 100
 
     @eating_food = nil
     @state = State::STANDING

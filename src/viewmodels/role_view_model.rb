@@ -33,24 +33,29 @@ class RoleViewModel
     @underpan_vm = nil
   end
 
-  def eye_wear_vm=(eye_wear_vm)
-    @eye_wear_vm = eye_wear_vm.nil? ? nil : eye_wear_vm
-    @role.eye_wear = eye_wear_vm.nil? ? nil : eye_wear_vm.equipment
+  def eye_wear_vm=(equipment_vm)
+    @eye_wear_vm = equipment_vm.nil? ? nil : equipment_vm
+    @role.eye_wear = equipment_vm.nil? ? nil : equipment_vm.equipment
   end
 
-  def wing_vm=(wing_vm)
-    @wing_vm = wing_vm.nil? ? nil : wing_vm
-    @role.wing = wing_vm.nil? ? nil : wing_vm.equipment
+  def wing_vm=(equipment_vm)
+    @wing_vm = equipment_vm.nil? ? nil : equipment_vm
+    @role.wing = equipment_vm.nil? ? nil : equipment_vm.equipment
   end
 
-  def hat_vm=(hat_vm)
-    @hat_vm = hat_vm.nil? ? nil : hat_vm
-    @role.hat = hat_vm.nil? ? nil : hat_vm.equipment
+  def hat_vm=(equipment_vm)
+    @hat_vm = equipment_vm.nil? ? nil : equipment_vm
+    @role.hat = equipment_vm.nil? ? nil : equipment_vm.equipment
   end
 
-  def underpan_vm=(underpan_vm)
-    @underpan_vm = underpan_vm.nil? ? nil : underpan_vm
-    @role.underpan = underpan_vm.nil? ? nil : underpan_vm.equipment
+  def underpan_vm=(equipment_vm)
+    @underpan_vm = equipment_vm.nil? ? nil : equipment_vm
+    @role.underpan = equipment_vm.nil? ? nil : equipment_vm.equipment
+  end
+
+  def handheld_vm=(equipment_vm)
+    @handheld_vm = equipment_vm.nil? ? nil : equipment_vm
+    @role.handheld = equipment_vm.nil? ? nil : equipment_vm.equipment
   end
 
   def init_hit_components
@@ -244,10 +249,13 @@ class RoleViewModel
     draw_wing if @role.direction == Direction::DOWN # ¡Ÿ ±∑Ω∞∏
     draw_vehicle if should_draw_vehicle_first
 
+    draw_handheld if @role.direction == Direction::UP
+
     draw_role_anim
 
     draw_eye_wear
     draw_hat
+    draw_handheld unless @role.direction == Direction::UP
 
     draw_wing if @role.direction == Direction::UP
     draw_vehicle unless should_draw_vehicle_first
@@ -384,6 +392,10 @@ class RoleViewModel
 
   def draw_hat
     draw_equipment @hat_vm
+  end
+
+  def draw_handheld
+    draw_equipment @handheld_vm
   end
 
   def draw_equipment(equipment_vm)

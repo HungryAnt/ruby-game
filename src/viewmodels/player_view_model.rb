@@ -62,7 +62,7 @@ class PlayerViewModel
     end
 
     [Equipment::Type::WING, Equipment::Type::HAT, Equipment::Type::EYE_WEAR,
-     Equipment::Type::UNDERPAN].each do |equipment_type|
+     Equipment::Type::UNDERPAN, Equipment::Type::HANDHELD].each do |equipment_type|
       equipment_key = wears[equipment_type.to_s]
       unless equipment_key.nil? || equipment_key == ''
         equip((EquipmentViewModelFactory.create_equipment_from_key equipment_type, equipment_key.to_sym), false)
@@ -84,6 +84,8 @@ class PlayerViewModel
         @role_vm.hat_vm = equipment_vm
       when Equipment::Type::UNDERPAN
         @role_vm.underpan_vm = equipment_vm
+      when Equipment::Type::HANDHELD
+        @role_vm.handheld_vm = equipment_vm
       else
         # type code here
     end
@@ -102,6 +104,8 @@ class PlayerViewModel
         @role_vm.hat_vm = nil
       when Equipment::Type::UNDERPAN
         @role_vm.underpan_vm = nil
+      when Equipment::Type::HANDHELD
+        @role_vm.handheld_vm = nil
       else
         # type code here
     end

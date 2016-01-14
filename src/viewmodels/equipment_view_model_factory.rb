@@ -1,10 +1,9 @@
 class EquipmentViewModelFactory
   def self.create_equipment(equipment)
-    case equipment.type
-      when Equipment::Type::VEHICLE
-        return create_vehicle(equipment.key)
-      when Equipment::Type::EYE_WEAR, Equipment::Type::WING, Equipment::Type::HAT, Equipment::Type::UNDERPAN
-        return create_common_equipment equipment
+    if equipment.type == Equipment::Type::VEHICLE
+      return create_vehicle(equipment.key)
+    else
+      return create_common_equipment equipment
     end
   end
 
