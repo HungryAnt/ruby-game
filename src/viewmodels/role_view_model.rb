@@ -97,7 +97,8 @@ class RoleViewModel
       return
     end
     return if driving? && @vehicle_vm.key == vehicle_key
-    @vehicle_vm = EquipmentViewModelFactory.create_vehicle vehicle_key
+    @vehicle_vm = EquipmentViewModelFactory.create_equipment_from_key(
+        Equipment::Type::VEHICLE, vehicle_key)
     set_driving true
   end
 
@@ -241,22 +242,27 @@ class RoleViewModel
 
     should_draw_vehicle_first = driving_dragon? && @role.direction == Direction::UP
 
+    up = @role.direction == Direction::UP
+    down = @role.direction == Direction::DOWN
+    hor = @role.direction == Direction::LEFT || @role.direction == Direction::RIGHT
+
     draw_underpan
 
-    draw_wing if @role.direction == Direction::DOWN # 临时方案
+    draw_wing if down # 临时方案
     draw_vehicle if should_draw_vehicle_first
 
-    draw_handheld if @role.direction == Direction::UP
+    draw_handheld if up
+    draw_eye_wear if up
 
     draw_role_anim
 
-    draw_eye_wear
+    draw_eye_wear unless up
     draw_hat
-    draw_handheld unless @role.direction == Direction::UP
+    draw_handheld unless up
 
-    draw_wing if @role.direction == Direction::UP
+    draw_wing if up
     draw_vehicle unless should_draw_vehicle_first
-    draw_wing if @role.direction == Direction::LEFT || @role.direction == Direction::RIGHT
+    draw_wing if hor
 
     draw_level_and_name
     @eating_food_vm.draw auto_scale_info unless @eating_food_vm.nil?

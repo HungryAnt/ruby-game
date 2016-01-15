@@ -152,7 +152,7 @@ class MainWindow < Gosu::Window
           @current_view = @map_editor_view
         when Gosu::KbF5
           file_path = File.join(File.dirname(__FILE__), '../config/equipment_eye_wear_config.rb')
-          load file_path
+          load 'config/equipment_eye_wear_config.rb'
           @player_service.refresh_all_equipments
       end
     end

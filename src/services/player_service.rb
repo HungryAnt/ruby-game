@@ -67,8 +67,14 @@ class PlayerService
     end
 
     @role.eye_wear_package.clear
-    [17, 20, 21, 97, 282].each do |num|
+    [1, 17, 20, 21, 97, 282].each do |num|
       key = "eye_wear_#{num}".to_sym
+      @role.eye_wear_package << Equipment.new(Equipment::Type::EYE_WEAR, key)
+    end
+
+    [1, 8, 9, 29, 32, 53, 62, 69, 226, 261, 281, 357, 375
+    ].each do |num|
+      key = "eye_wear2_#{num}".to_sym
       @role.eye_wear_package << Equipment.new(Equipment::Type::EYE_WEAR, key)
     end
 
