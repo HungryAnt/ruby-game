@@ -98,6 +98,11 @@ class Role
     @underpan = nil # ╣вел
   end
 
+  def equipment_packages
+    [@package, @eye_wear_package, @wing_package, @hat_package,
+     @underpan_package, @handheld_package]
+  end
+
   def get_speed
     if @battered
       return 0 if HitTypeDefinition.cannot_move? @battered_by_hit_type
@@ -223,7 +228,7 @@ class Role
         state: @state.to_s,
         durable_state: @durable_state.to_s,
         direction: @direction,
-        vehicle: (!@vehicle.nil? ? @vehicle.key: ''), # "vehicle_#{id}"
+        vehicle: (!@vehicle.nil? ? @vehicle.key.to_s: ''), # "vehicle_#{id}"
         wing: @wing.nil? ? '' : @wing.key.to_s,
         hat: @hat.nil? ? '' : @hat.key.to_s,
         eye_wear: @eye_wear.nil? ? '' : @eye_wear.key.to_s,

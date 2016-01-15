@@ -56,13 +56,9 @@ class PlayerViewModel
   # 初始化人物装备
   def init_wears
     wears = @player_service.wears
-    vehicle_key = wears[Equipment::Type::VEHICLE.to_s]
-    unless vehicle_key.nil? || vehicle_key == ''
-      equip(EquipmentViewModelFactory.create_vehicle(vehicle_key.to_sym), false)
-    end
-
-    [Equipment::Type::WING, Equipment::Type::HAT, Equipment::Type::EYE_WEAR,
-     Equipment::Type::UNDERPAN, Equipment::Type::HANDHELD].each do |equipment_type|
+    [Equipment::Type::VEHICLE, Equipment::Type::WING, Equipment::Type::HAT,
+     Equipment::Type::EYE_WEAR, Equipment::Type::UNDERPAN, Equipment::Type::HANDHELD
+    ].each do |equipment_type|
       equipment_key = wears[equipment_type.to_s]
       unless equipment_key.nil? || equipment_key == ''
         equip((EquipmentViewModelFactory.create_equipment_from_key equipment_type, equipment_key.to_sym), false)

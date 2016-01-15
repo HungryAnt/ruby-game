@@ -26,7 +26,7 @@ def set_vehicle_properties(id, body_height, speed_up, options, vehicle='vehicle'
   offset[:down] = options[:down]
   offset_left = offset[:left]
   offset[:right] = [-offset_left[0], offset_left[1]]
-  EquipmentDefinition.set_props key, offset:offset, body_height:body_height, speed_up:speed_up,
+  EquipmentDefinition.set_props key, offset: offset, height: body_height, speed_up: speed_up,
                                 is_behind_role: options[:is_behind_role], is_cloak: options[:is_cloak],
                                 miss: options[:miss]
   EquipmentDefinition.set_item_image key, "#{vehicle}/#{id}/#{id}_0.bmp"

@@ -150,7 +150,6 @@ require 'viewmodels/game_modules/game_monster'
 
 require 'viewmodels/game_map_view_model'
 require 'viewmodels/item_view_model_factory'
-require 'viewmodels/vehicle_view_model'
 require 'viewmodels/equipment_view_model'
 require 'viewmodels/equipment_view_model_factory'
 require 'viewmodels/package_items_view_model'

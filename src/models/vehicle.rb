@@ -4,4 +4,8 @@ class Vehicle
   def initialize(key, speed_up)
     @key, @speed_up = key, speed_up
   end
+
+  def refresh
+
+  end
 end

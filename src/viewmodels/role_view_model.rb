@@ -83,7 +83,7 @@ class RoleViewModel
 
   def set_driving(value)
     @role.driving = value
-    @role.vehicle = driving? ? @vehicle_vm.vehicle : nil
+    @role.vehicle = driving? ? @vehicle_vm.equipment : nil
     value
   end
 
@@ -240,9 +240,6 @@ class RoleViewModel
     additional_equipment_vm.draw(*get_pure_role_feets_location, @role.direction) unless additional_equipment_vm.nil?
 
     should_draw_vehicle_first = driving_dragon? && @role.direction == Direction::UP
-    unless should_draw_vehicle_first
-      should_draw_vehicle_first = driving? && @vehicle_vm.is_behind_role
-    end
 
     draw_underpan
 
@@ -332,7 +329,7 @@ class RoleViewModel
 
   def get_actual_role_location
     x, y = get_pure_role_feets_location
-    y = y - @vehicle_vm.vehicle_body_height * scale_value if driving?
+    y = y - @vehicle_vm.height * scale_value if driving?
     y = y - @underpan_vm.height * scale_value unless @underpan_vm.nil?
     [x, y]
   end

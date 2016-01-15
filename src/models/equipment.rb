@@ -11,16 +11,20 @@ class Equipment
     HANDHELD = :handheld
   end
 
-  attr_reader :key, :type, :location_offset, :miss, :speed_up, :height
+  attr_reader :key, :type, :location_offset, :miss, :speed_up, :height, :is_cloak
 
   def initialize(type, key)
     @type = type
     @key = key
+    refresh
+  end
 
+  def refresh
     props = EquipmentDefinition.get_props @key
     @location_offset = props[:offset]
     @miss = props[:miss] # 闪避
     @speed_up = props[:speed_up] # 加速
     @height = props[:height] # 高度
+    @is_cloak = props[:is_cloak] # 是否是披风
   end
 end
