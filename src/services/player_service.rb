@@ -92,16 +92,19 @@ class PlayerService
 
     @role.hat_package.clear
     [2, 18, 20, 21, 22, 24, 37, 38, 392, 395,
-     5, 10, 12, 14, 25, 26, 27
+     5, 10, 12, 14, 25, 26, 27, 34, 35, 36,
+     41, 43, 45, 46, 47, 49, 56, 61,
+     66, 68, 72, 73, 80, 85, 86, 88, 93, 95, 100, 101,
+     423
     ].each do |num|
       key = "hat_#{num}".to_sym
       @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
     end
 
-    [12, 23, 25, 42, 47, 49].each do |num|
-      key = "hat2_#{num}".to_sym
-      @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
-    end
+    # [12, 23, 25, 42, 47, 49].each do |num|
+    #   key = "hat2_#{num}".to_sym
+    #   @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
+    # end
 
     @role.underpan_package.clear
     [13, 17, 102, 234, 349, 418, 443, 454, 471].each do |num|
