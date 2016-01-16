@@ -151,8 +151,13 @@ class MainWindow < Gosu::Window
         when Gosu::KbF3
           @current_view = @map_editor_view
         when Gosu::KbF5
-          file_path = File.join(File.dirname(__FILE__), '../config/equipment_eye_wear_config.rb')
+          # file_path = File.join(File.dirname(__FILE__), '../config/equipment_eye_wear_config.rb')
           load 'config/equipment_eye_wear_config.rb'
+          load 'config/equipment_handheld_config.rb'
+          load 'config/equipment_hat_config.rb'
+          load 'config/equipment_underpan_config.rb'
+          load 'config/equipment_vehicle_config.rb'
+          load 'config/equipment_wing_config.rb'
           @player_service.refresh_all_equipments
       end
     end

@@ -91,7 +91,9 @@ class PlayerService
     end
 
     @role.hat_package.clear
-    [2, 18, 20, 21, 22, 24, 37, 38, 392, 395].each do |num|
+    [2, 18, 20, 21, 22, 24, 37, 38, 392, 395,
+     5, 10, 12, 14, 25, 26, 27
+    ].each do |num|
       key = "hat_#{num}".to_sym
       @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
     end
