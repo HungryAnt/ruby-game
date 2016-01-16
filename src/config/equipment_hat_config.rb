@@ -124,6 +124,87 @@ lambda {
   create_equipment_anims(hat, 101, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
   set_equipment_properties(hat, 101, left: [0, 0], up: [0, 0], down: [0, 0], miss:0.4)
 
+  create_equipment_anims(hat, 105, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 105, left: [-1, 0], up: [0, 0], down: [0, -1], miss:0.4)
+
+  create_equipment_anims(hat, 107, down_nums_pair:[0, 7], up_nums_pair:[8, 8], hor_nums_pair:[9, 14])
+  set_equipment_properties(hat, 107, left: [0, -1], up: [0, 0], down: [1, 0], miss:0.4)
+
+  create_equipment_anims(hat, 111, down_nums_pair:[0, 0], up_nums_pair:[1, 1], hor_nums_pair:[2, 2])
+  set_equipment_properties(hat, 111, left: [-2, -5], up: [-1, -5], down: [0, -6], miss:0.4)
+
+  create_equipment_anims(hat, 113, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 113, left: [0, 0], up: [0, 0], down: [0, 0], miss:0.4)
+
+  create_equipment_anims(hat, 118, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 118, left: [-2, 0], up: [0, 0], down: [-1, 0], miss:0.4)
+
+  create_equipment_anims(hat, 120, down_nums_pair:[0, 0], up_nums_pair:[1, 1], hor_nums_pair:[2, 2])
+  set_equipment_properties(hat, 120, left: [-1, -1], up: [0, 0], down: [0, 0], miss:0.4)
+
+  create_equipment_anims(hat, 122, down_nums_pair:[0, 5], up_nums_pair:[6, 8], hor_nums_pair:[9, 14])
+  set_equipment_properties(hat, 122, left: [-2, -5], up: [-1, -2], down: [-1, -2], miss:0.4)
+
+  create_equipment_anims(hat, 123, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 123, left: [-3, 0], up: [0, -10], down: [0, 0], miss:0.4)
+
+  create_equipment_anims(hat, 124, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 124, left: [-3, -1], up: [-2, -1], down: [0, 0], miss:0.4)
+
+  create_equipment_anims(hat, 129, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 129, left: [0, -6], up: [-1, -7], down: [-1, -4], miss:0.4)
+
+  create_equipment_anims(hat, 135, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 135, left: [-1, -2], up: [-2, -4], down: [-1, -5], miss:0.4)
+
+  create_equipment_anims(hat, 136, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 136, left: [1, -5], up: [-1, -4], down: [-1, -6], miss:0.4)
+
+  create_equipment_anims(hat, 141, down_nums_pair:[0, 3], up_nums_pair:[4, 5], hor_nums_pair:[6, 9])
+  set_equipment_properties(hat, 141, left: [3, -2], up: [-1, -4], down: [-1, -5], miss:0.4)
+
+  create_equipment_anims(hat, 142, down_nums_pair:[0, 2], up_nums_pair:[3, 5], hor_nums_pair:[6, 8])
+  set_equipment_properties(hat, 142, left: [2, -1], up: [0, -1], down: [-1, -1], miss:0.4)
+
+  create_equipment_anims(hat, 145, down_nums_pair:[0, 0], up_nums_pair:[1, 1], hor_nums_pair:[2, 2])
+  set_equipment_properties(hat, 145, left: [0, 0], up: [0, 0], down: [0, 0], miss:0.4)
+
+  create_equipment_anims(hat, 147, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
+  set_equipment_properties(hat, 147, left: [0, 0], up: [0-1, 0], down: [0, -3], miss:0.4)
+
+  create_equipment_anims(hat, 150, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 150, left: [-5, -4], up: [0, -3], down: [0, -3], miss:0.4)
+
+  create_equipment_anims(hat, 152, down_nums_pair:[0, 3], up_nums_pair:[4, 4], hor_nums_pair:[5, 8])
+  set_equipment_properties(hat, 152, left: [0, -5], up: [0, -2], down: [0, -5], miss:0.4)
+
+  create_equipment_anims(hat, 156, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 156, left: [-2, -5], up: [0, -5], down: [-1, -7], miss:0.4)
+
+  create_equipment_anims(hat, 157, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
+  set_equipment_properties(hat, 157, left: [-3, -4], up: [0, 0], down: [0, 0], miss:0.4)
+
+  create_equipment_anims(hat, 158, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 158, left: [-3, 0], up: [0, 0], down: [0, -4], miss:0.4)
+
+  create_equipment_anims(hat, 162, down_nums_pair:[0, 3], up_nums_pair:[4, 5], hor_nums_pair:[6, 9])
+  set_equipment_properties(hat, 162, left: [0, -3], up: [-1, -3], down: [-1, -4], miss:0.4)
+
+  create_equipment_anims(hat, 166, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
+  set_equipment_properties(hat, 166, left: [-1, -6], up: [1, -6], down: [0, -6], miss:0.4)
+
+  create_equipment_anims(hat, 170, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 170, left: [0, -5], up: [0, -5], down: [0, -6], miss:0.4)
+
+  create_equipment_anims(hat, 171, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  set_equipment_properties(hat, 171, left: [0, -3], up: [0, 0], down: [1, -5], miss:0.4)
+
+  # create_equipment_anims(hat, 100, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  # set_equipment_properties(hat, 100, left: [0, 0], up: [0, 0], down: [0, 0], miss:0.4)
+  #
+  # create_equipment_anims(hat, 100, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+  # set_equipment_properties(hat, 100, left: [0, 0], up: [0, 0], down: [0, 0], miss:0.4)
+
   create_equipment_anims(hat, 423, down_nums_pair:[0, 5], up_nums_pair:[6, 9], hor_nums_pair:[10, 15])
   set_equipment_properties(hat, 423, left: [0, 0], up: [0, 0], down: [0, 0], miss:0.4)
 

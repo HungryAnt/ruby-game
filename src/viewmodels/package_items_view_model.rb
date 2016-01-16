@@ -23,6 +23,10 @@ class PackageItemsViewModel
     @player_vm.role.eye_wear_package.items
   end
 
+  def get_ear_wears
+    @player_vm.role.ear_wear_package.items
+  end
+
   def get_wings
     @player_vm.role.wing_package.items
   end

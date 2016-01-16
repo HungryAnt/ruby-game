@@ -31,6 +31,7 @@ class RoleViewModel
     @wing_vm = nil
     @hat_vm = nil
     @underpan_vm = nil
+    @ear_wear_vm = nil
   end
 
   def eye_wear_vm=(equipment_vm)
@@ -56,6 +57,11 @@ class RoleViewModel
   def handheld_vm=(equipment_vm)
     @handheld_vm = equipment_vm.nil? ? nil : equipment_vm
     @role.handheld = equipment_vm.nil? ? nil : equipment_vm.equipment
+  end
+
+  def ear_wear_vm=(equipment_vm)
+    @ear_wear_vm = equipment_vm.nil? ? nil : equipment_vm
+    @role.ear_wear = equipment_vm.nil? ? nil : equipment_vm.equipment
   end
 
   def init_hit_components
@@ -253,10 +259,13 @@ class RoleViewModel
 
     draw_handheld if up
     draw_eye_wear if up
+    draw_ear_wear if up
 
     draw_role_anim
 
+    draw_ear_wear unless up
     draw_eye_wear unless up
+
     draw_hat
     draw_handheld unless up
 
@@ -387,6 +396,10 @@ class RoleViewModel
 
   def draw_eye_wear
     draw_equipment @eye_wear_vm
+  end
+
+  def draw_ear_wear
+    draw_equipment @ear_wear_vm
   end
 
   def draw_wing

@@ -57,7 +57,8 @@ class PlayerViewModel
   def init_wears
     wears = @player_service.wears
     [Equipment::Type::VEHICLE, Equipment::Type::WING, Equipment::Type::HAT,
-     Equipment::Type::EYE_WEAR, Equipment::Type::UNDERPAN, Equipment::Type::HANDHELD
+     Equipment::Type::EYE_WEAR, Equipment::Type::UNDERPAN, Equipment::Type::HANDHELD,
+     Equipment::Type::EAR_WEAR
     ].each do |equipment_type|
       equipment_key = wears[equipment_type.to_s]
       unless equipment_key.nil? || equipment_key == ''
@@ -82,6 +83,8 @@ class PlayerViewModel
         @role_vm.underpan_vm = equipment_vm
       when Equipment::Type::HANDHELD
         @role_vm.handheld_vm = equipment_vm
+      when Equipment::Type::EAR_WEAR
+        @role_vm.ear_wear_vm = equipment_vm
       else
         # type code here
     end
@@ -101,6 +104,8 @@ class PlayerViewModel
       when Equipment::Type::UNDERPAN
         @role_vm.underpan_vm = nil
       when Equipment::Type::HANDHELD
+        @role_vm.handheld_vm = nil
+      when Equipment::Type::EAR_WEAR
         @role_vm.handheld_vm = nil
       else
         # type code here

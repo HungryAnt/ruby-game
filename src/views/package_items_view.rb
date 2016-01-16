@@ -72,6 +72,7 @@ class PackageItemsView
     underpan_panel = init_equipment_underpan
     vehicle_panel = init_vehicle_panel
     eye_wear_panel = init_equipment_eye_wear
+    ear_wear_panel = init_equipment_ear_wear
     wing_panel = init_equipment_wing
     hat_panel = init_equipment_hat
     handheld_panel = init_equipment_handheld
@@ -85,13 +86,14 @@ class PackageItemsView
     underpan_tab = AntGui::TextBlock.new(@prompt_font, '  底盘')
     vehicle_tab = AntGui::TextBlock.new(@prompt_font, '  载具')
     eye_wear_tab = AntGui::TextBlock.new(@prompt_font, '  眼部饰品')
+    ear_wear_tab = AntGui::TextBlock.new(@prompt_font, '  耳部饰品')
     wing_tab = AntGui::TextBlock.new(@prompt_font, '  翅膀')
     hat_tab = AntGui::TextBlock.new(@prompt_font, '  帽子/头盔')
     handheld_tab = AntGui::TextBlock.new(@prompt_font, '  手持')
     pet_tab = AntGui::TextBlock.new(@prompt_font, '  萌宠!')
 
-    all_tabs = [rubbish_tab, nutrient_tab, underpan_tab, vehicle_tab, eye_wear_tab, wing_tab, hat_tab, handheld_tab,
-                pet_tab]
+    all_tabs = [rubbish_tab, nutrient_tab, underpan_tab, vehicle_tab, eye_wear_tab, ear_wear_tab,
+                wing_tab, hat_tab, handheld_tab, pet_tab]
 
     rubbish_tab.background_color = 0x88_FFFFFF
 
@@ -111,6 +113,7 @@ class PackageItemsView
     init_tab_event.call underpan_tab, underpan_panel
     init_tab_event.call vehicle_tab, vehicle_panel
     init_tab_event.call eye_wear_tab, eye_wear_panel
+    init_tab_event.call ear_wear_tab, ear_wear_panel
     init_tab_event.call wing_tab, wing_panel
     init_tab_event.call hat_tab, hat_panel
     init_tab_event.call handheld_tab, handheld_panel
@@ -192,6 +195,10 @@ class PackageItemsView
 
   def init_equipment_eye_wear
     init_common_equipment_panel '眼部饰品', Equipment::Type::EYE_WEAR, :get_eye_wears
+  end
+
+  def init_equipment_ear_wear
+    init_common_equipment_panel '耳部饰品', Equipment::Type::EAR_WEAR, :get_ear_wears
   end
 
   def init_equipment_wing

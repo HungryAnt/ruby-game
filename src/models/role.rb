@@ -55,9 +55,9 @@ class Role
   attr_accessor :state, :durable_state, :direction, :role_type,
                 :hp, :vehicle, :driving, :battered, :battered_by_hit_type
   attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package, :eye_wear_package,
-              :wing_package, :hat_package, :underpan_package, :handheld_package
+              :wing_package, :hat_package, :underpan_package, :handheld_package, :ear_wear_package
 
-  attr_accessor :eye_wear, :wing, :hat, :underpan, :handheld
+  attr_accessor :eye_wear, :wing, :hat, :underpan, :handheld, :ear_wear
 
   def initialize(name, role_type, x, y)
     @name = name
@@ -75,6 +75,7 @@ class Role
     @hat_package = Package.new 100
     @underpan_package = Package.new 100
     @handheld_package = Package.new 100
+    @ear_wear_package = Package.new 100
 
     @eating_food = nil
     @state = State::STANDING
@@ -96,11 +97,12 @@ class Role
     @wing = nil # ³á°ò
     @hat = nil # Ã±×ÓÍ·¿ø
     @underpan = nil # µ×ÅÌ
+    @ear_wear = nil # ¶ú²¿ÊÎÆ·
   end
 
   def equipment_packages
     [@package, @eye_wear_package, @wing_package, @hat_package,
-     @underpan_package, @handheld_package]
+     @underpan_package, @handheld_package, @ear_wear_package]
   end
 
   def get_speed

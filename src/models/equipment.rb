@@ -9,6 +9,7 @@ class Equipment
     HAT = :hat # Ã±×Ó
     UNDERPAN = :underpan # µ×ÅÌ
     HANDHELD = :handheld
+    EAR_WEAR = :ear_wear # ¶ú²¿ÊÎÆ·
   end
 
   attr_reader :key, :type, :location_offset, :miss, :speed_up, :height, :is_cloak

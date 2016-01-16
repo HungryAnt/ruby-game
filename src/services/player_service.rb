@@ -91,11 +91,14 @@ class PlayerService
     end
 
     @role.hat_package.clear
-    [2, 18, 20, 21, 22, 24, 37, 38, 392, 395,
-     5, 10, 12, 14, 25, 26, 27, 34, 35, 36,
-     41, 43, 45, 46, 47, 49, 56, 61,
-     66, 68, 72, 73, 80, 85, 86, 88, 93, 95, 100, 101,
-     423
+    [
+        # 2, 18, 20, 21, 22, 24, 37, 38, 392, 395,
+        # 5, 10, 12, 14, 25, 26, 27, 34, 35, 36, 41, 43, 45, 46, 47, 49, 56, 61,
+        # 66, 68, 72, 73, 80, 85, 86, 88, 93, 95, 100, 101,
+        105, 107, 111, 113, 118, 120, 122, 123, 124, 129, 135, 136, 141, 142,
+        145, 147, 150, 152, 156, 157,
+        158, 162, 166, 170, 171,
+        423
     ].each do |num|
       key = "hat_#{num}".to_sym
       @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
@@ -116,6 +119,12 @@ class PlayerService
     [3, 23, 42, 44, 54, 60, 65, 71, 76, 77, 87, 106, 684, 689].each do |num|
       key = "handheld_#{num}".to_sym
       @role.handheld_package << Equipment.new(Equipment::Type::HANDHELD, key)
+    end
+
+    @role.ear_wear_package.clear
+    [266, 292, 342, 352, 361, 379, 384, 403, 414, 427, 463,].each do |num|
+      key = "ear_wear_#{num}".to_sym
+      @role.ear_wear_package << Equipment.new(Equipment::Type::EAR_WEAR, key)
     end
   end
 
@@ -160,6 +169,8 @@ class PlayerService
           @role.hat_package << equipment
         when Equipment::Type::EYE_WEAR
           @role.eye_wear_package << equipment
+        when Equipment::Type::EAR_WEAR
+          @role.ear_wear_package << equipment
       end
     end
   end
