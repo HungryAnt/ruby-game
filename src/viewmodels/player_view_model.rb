@@ -106,7 +106,7 @@ class PlayerViewModel
       when Equipment::Type::HANDHELD
         @role_vm.handheld_vm = nil
       when Equipment::Type::EAR_WEAR
-        @role_vm.handheld_vm = nil
+        @role_vm.ear_wear_vm = nil
       else
         # type code here
     end

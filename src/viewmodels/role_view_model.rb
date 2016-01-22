@@ -267,11 +267,12 @@ class RoleViewModel
     draw_eye_wear unless up
 
     draw_hat
-    draw_handheld unless up
 
     draw_wing if up
     draw_vehicle unless should_draw_vehicle_first
     draw_wing if hor
+
+    draw_handheld unless up
 
     draw_level_and_name
     @eating_food_vm.draw auto_scale_info unless @eating_food_vm.nil?
