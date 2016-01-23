@@ -209,5 +209,10 @@ lambda {
   new_map_covering_anim(:amusement_park_2_wheel, pattern_amusement_park_2, 4, 9, 200, false)
   new_map_covering_anim(:amusement_park_2_train, pattern_amusement_park_2, 10, 17, 200, false)
 
-
+  pattern_amusement_park_3 = 'map/amusement_park/amusement_park_3/AmusementPark3_${num}.bmp'
+  new_map_covering_anim(:amusement_park_3_lion, pattern_amusement_park_3, 13, 20, 200, false)
+  new_map_covering_anim(:amusement_park_3_giraffe, pattern_amusement_park_3, 5, 12, 200, false) # ³¤¾±Â¹
+  new_map_covering_anim(:amusement_park_3_monkeys, pattern_amusement_park_3, 21, 28, 200, false)
+  new_map_covering_anim(:amusement_park_3_elephant, pattern_amusement_park_3, 29, 36, 200, false)
+  new_map_covering_anim(:amusement_park_3_waterfall, pattern_amusement_park_3, 38, 39, 200, false)
 }.call

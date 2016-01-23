@@ -10,6 +10,7 @@ class MapEditorView
     init_tile_grid
     @tile_selector = TileSelectorView.new
     @font = Gosu::Font.new(20)
+    @font_small_gateway_font = Gosu::Font.new(12)
   end
 
   def init_areas
@@ -61,7 +62,7 @@ class MapEditorView
     draw_tile_grid
 
     Gosu::translate(0, GameConfig::MAP_HEIGHT) do
-      @tile_selector.draw
+      @tile_selector.draw @font
     end
 
     @font.draw("Row:#{@window.mouse_y.to_i/Area::GRID_HEIGHT} Col:#{@window.mouse_x.to_i/Area::GRID_WIDTH}",
@@ -94,6 +95,12 @@ class MapEditorView
       end
     end
 
+    if id >= Gosu::KbA && id <= Gosu::KbZ && id != Gosu::KbX && id != Gosu::KbP
+      tile = ('A'.ord + id - Gosu::KbA).chr
+      @current_tile = tile
+      @tile_selector.geteway = tile
+    end
+
     if id == Gosu::KbP
       print_tiles
     end
@@ -115,9 +122,16 @@ class MapEditorView
     0.upto(@row_count-1) do |row|
       0.upto(@col_count-1) do |col|
         # puts "row #{row} col #{col}"
-        color = Tiles.color(@current_area.tiles[row][col])
-        Gosu::draw_rect Area::GRID_WIDTH * col, Area::GRID_HEIGHT * row,
-                        Area::GRID_WIDTH, Area::GRID_HEIGHT, color
+        tile = @current_area.tiles[row][col]
+        color = Tiles.color(tile)
+        left = Area::GRID_WIDTH * col
+        top = Area::GRID_HEIGHT * row
+        Gosu::draw_rect left, top, Area::GRID_WIDTH, Area::GRID_HEIGHT, color
+        if Tiles.gateway? tile
+          @font_small_gateway_font.draw_rel(
+              tile.to_s, left + Area::GRID_WIDTH / 2, top + Area::GRID_HEIGHT / 2,
+              ZOrder::UI, 0.5, 0.5, 1.0, 1.0, 0xFF_FFFFFF)
+        end
       end
     end
 
@@ -154,13 +168,7 @@ class MapEditorView
 
   def print_tiles
     @current_area.tiles.each do |row_tiles|
-      row_tiles.each do |tile|
-        if tile == Tiles::BLOCK
-          print '#'
-        else
-          print ' '
-        end
-      end
+      row_tiles.each { |tile| print tile }
       print "\n"
     end
   end
