@@ -199,4 +199,15 @@ lambda {
 
   pattern_xiujuan_house_3 = 'map/xiujuan_house/inner_room/InnerRoom_${num}.bmp'
   new_map_covering_anim(:xiujuan_house_3_old_man, pattern_xiujuan_house_3, 15, 19, 300)
+
+  # amusement_park
+  pattern_amusement_park_1 = 'map/amusement_park/amusement_park_1/AmusementPark1_${num}.bmp'
+  new_map_covering_anim(:amusement_park_1_flag, pattern_amusement_park_1, 3, 8, 200, false)
+  # new_map_covering_anim(:amusement_park_1_wheel, pattern_amusement_park_1, 10, 15, 200, false)
+
+  pattern_amusement_park_2 = 'map/amusement_park/amusement_park_2/AmusementPark2_${num}.bmp'
+  new_map_covering_anim(:amusement_park_2_wheel, pattern_amusement_park_2, 4, 9, 200, false)
+  new_map_covering_anim(:amusement_park_2_train, pattern_amusement_park_2, 10, 17, 200, false)
+
+
 }.call
