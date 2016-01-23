@@ -10,6 +10,28 @@ class ShoppingView < ViewBase
   GOODS_ROW_COUNT = 3
   GOODS_COL_COUNT = 3
 
+  COLOR_MAIN_BACK_1 = 0xFF_3878A0 # 0xFF_906838
+  COLOR_MAIN_BACK_2 = 0xFF_104977 # 0xFF_C0A068
+
+  COLOR_GOODS_BACK = 0xFF_142935 # 0xFF_382915
+  COLOR_GOODS_ITEM_BACK = 0x44_EADAC5
+
+  COLOR_BUTTON_FORE = 0xFF_182228 # 0xFF_662230
+  COLOR_BUTTON_NORMAL_BACK = 0xFF_6AB6E2 # 0xFF_E8B455
+  COLOR_BUTTON_HOVER_BACK = 0xFF_86C7EF #0xFF_FFE586
+
+  COLOR_BTN_BUY_EXIST_FORE = 0xFF_1F3349
+  COLOR_BTN_BUY_EXIST_BACK = 0xFF_3A5260
+
+  COLOR_BTN_BUY_NEW_FORE = 0xFF_1F3349
+  COLOR_BTN_BUY_NEW_BACK = 0xFF_4694C4
+
+  COLOR_BOTTOM_BAR_BACK_1 = 0xFF_FEFEFE
+  COLOR_BOTTOM_BAR_BACK_2 = 0xFF_DBDBDB
+  COLOR_MONEY_FORE = 0xFF_905810
+
+  COLOR_PAGE_NO = 0xFF_BCD6E5 # 0xFF_662230
+
   def initialize(window)
     super
     autowired(WindowResourceService, AccountService, UserService, ShoppingViewModel)
@@ -17,6 +39,12 @@ class ShoppingView < ViewBase
     @font = @window_resource_service.get_font 20
     @page_no = @total_page_count = 1
     @current_goods_category = :newVehicles
+    init_role_view
+  end
+
+  def init_role_view
+    role = Role.new @user_service.user_name, @user_service.role_type, 570, 260
+    @role_preview = RoleViewModel.new role
   end
 
   def on_exit(&exit_call_back)
@@ -34,8 +62,8 @@ class ShoppingView < ViewBase
     main_canvas = AntGui::Canvas.new
     @dialog.content = main_canvas
 
-    tab_panel_left = 65
-    tab_panel_top = 60
+    tab_panel_left = 30
+    tab_panel_top = 20
     tab_panel_width = GOODS_ITEM_WIDTH * GOODS_COL_COUNT + GOODS_MARGIN * (GOODS_COL_COUNT - 1) + GOODS_PADDING * 2
     tab_panel_height = 32
     goods_panel_left = tab_panel_left
@@ -46,7 +74,7 @@ class ShoppingView < ViewBase
     page_panel_top = goods_panel_top + goods_panel_height + 12
     page_panel_width = goods_panel_width
     page_panel_height = 32
-    right_panel_left = goods_panel_left + goods_panel_width + 45
+    right_panel_left = goods_panel_left + goods_panel_width + 80
     right_panel_top = goods_panel_top
     right_panel_width = 250
     right_panel_height = goods_panel_height + 12 + page_panel_height
@@ -100,7 +128,7 @@ class ShoppingView < ViewBase
     goods_panel = AntGui::Canvas.new
     AntGui::Canvas.set_canvas_props goods_panel, goods_panel_left, goods_panel_top,
                                     goods_panel_width, goods_panel_height
-    goods_panel.background_color = 0xFF_382915
+    goods_panel.background_color = COLOR_GOODS_BACK
     index = 0
     0.upto(GOODS_ROW_COUNT - 1).each do |row|
       0.upto(GOODS_COL_COUNT - 1).each do |col|
@@ -113,18 +141,21 @@ class ShoppingView < ViewBase
           goods_panel.add item_canvas
 
           item_image = ShoppingItemControl.new item[:image], item[:anim], item[:price]
-          item_image.background_color = 0x44_EADAC5
+          item_image.background_color = COLOR_GOODS_ITEM_BACK
           AntGui::Canvas.set_canvas_props item_image, 0, 0, GOODS_ITEM_WIDTH, GOODS_IMAGE_HEIGHT
 
+          item_image.on_mouse_left_button_down do
+            wear item[:equipment_type], item[:key]
+          end
 
           if item[:existing]
             buy_button = AntGui::TextBlock.new(@font, '购买', :center, :center)
-            buy_button.foreground_color = 0xFF_423F30
-            buy_button.background_color = 0xFF_847B60
+            buy_button.foreground_color = COLOR_BTN_BUY_EXIST_FORE
+            buy_button.background_color = COLOR_BTN_BUY_EXIST_BACK
           else
             buy_button = create_button '购买'
-            buy_button.foreground_color = 0xFF_662230
-            buy_button.background_color = 0xFF_E8B455
+            buy_button.foreground_color = COLOR_BTN_BUY_NEW_FORE
+            buy_button.background_color = COLOR_BTN_BUY_NEW_BACK
             buy_button.on_mouse_left_button_down do
               buy item[:key]
             end
@@ -142,6 +173,10 @@ class ShoppingView < ViewBase
     end
 
     goods_panel
+  end
+
+  def wear(equipment_type, key)
+    # @role_preview.ear_wear_vm =
   end
 
   def buy(key)
@@ -174,7 +209,7 @@ class ShoppingView < ViewBase
     end
 
     page_no_text_block = AntGui::TextBlock.new(@font, "#{@page_no}/#{@total_page_count}", :center, :center)
-    page_no_text_block.foreground_color = 0xFF_662230
+    page_no_text_block.foreground_color = COLOR_PAGE_NO
 
     AntGui::Canvas.set_canvas_props page_no_text_block, 0, 0, width, height
     AntGui::Canvas.set_canvas_props prev_page_button, 0, 0, button_width, button_height
@@ -192,7 +227,7 @@ class ShoppingView < ViewBase
     right_panel = AntGui::Canvas.new
     AntGui::Canvas.set_canvas_props right_panel, left, top, width, height
 
-    button_height = 40
+    button_height = 34
 
     recharge_button = create_button '【土豪充值入口】'
     recharge_button.on_mouse_left_button_down do
@@ -215,7 +250,7 @@ class ShoppingView < ViewBase
       @exit_call_back.call
     end
 
-    margin = 30
+    margin = 25
     y = height - button_height
     AntGui::Canvas.set_canvas_props quit_button, 0, y, width, button_height
     y -= button_height + margin
@@ -244,13 +279,13 @@ class ShoppingView < ViewBase
 
   def create_button(text)
     button = AntGui::TextBlock.new(@font, text, :center, :center)
-    button.foreground_color = 0xFF_662230
-    button.background_color = 0xFF_E8B455
+    button.foreground_color = COLOR_BUTTON_FORE
+    button.background_color = COLOR_BUTTON_NORMAL_BACK
     button.on_mouse_enter do
-      button.background_color = 0xFF_FFE586
+      button.background_color = COLOR_BUTTON_HOVER_BACK
     end
     button.on_mouse_leave do
-      button.background_color = 0xFF_E8B455
+      button.background_color = COLOR_BUTTON_NORMAL_BACK
     end
     button
   end
@@ -276,7 +311,9 @@ class ShoppingView < ViewBase
 
   def draw
     GraphicsUtil.draw_linear_rect(0, 0, GameConfig::WHOLE_WIDTH, GameConfig::MAP_HEIGHT,
-                                  ZOrder::Background, 0xFF_906838, 0xFF_C0A068)
+                                  ZOrder::Background, COLOR_MAIN_BACK_1, COLOR_MAIN_BACK_2)
+
+    @role_preview.draw nil
 
     draw_bottom_bar
 
@@ -285,7 +322,8 @@ class ShoppingView < ViewBase
 
   def draw_bottom_bar
     left, top, width, height = 0, GameConfig::MAP_HEIGHT, GameConfig::MAP_WIDTH, GameConfig::WHOLE_HEIGHT - GameConfig::MAP_HEIGHT
-    GraphicsUtil.draw_linear_rect(left, top, width, height, ZOrder::Background, 0xFF_FEFEFE, 0xFF_DBDBDB)
+    GraphicsUtil.draw_linear_rect(left, top, width, height, ZOrder::Background,
+                                  COLOR_BOTTOM_BAR_BACK_1, COLOR_BOTTOM_BAR_BACK_2)
 
     margin = 10
     money_image_width = 60
@@ -296,12 +334,12 @@ class ShoppingView < ViewBase
 
     @image_gold.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
     x += money_image_width + margin
-    @font_money.draw_rel(@gold, x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    @font_money.draw_rel(@gold, x, y, z, 0, 0.5, 1.0, 1.0, COLOR_MONEY_FORE)
     x += money_value_width + margin
 
     @image_silver.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
     x += money_image_width + margin
-    @font_money.draw_rel(@silver, x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
+    @font_money.draw_rel(@silver, x, y, z, 0, 0.5, 1.0, 1.0, COLOR_MONEY_FORE)
     # x += money_value_width + margin
     # @image_copper.draw_rot(x, y, z, 0, 0, 0.5, 1, 1)
     # x += money_image_width + margin

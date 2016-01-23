@@ -25,7 +25,8 @@ class ShoppingViewModel
           anim: anim,
           price: goods.price,
           existing: package_vehicle_keys_set.include?(key) || package_pet_keys_set.include?(key) ||
-              all_equipment_keys_set.include?(key)
+              all_equipment_keys_set.include?(key),
+          equipment_type: goods.equipment_type
       }
     end
     page_count = (page_result.page.total_count + PAGE_SIZE - 1) / PAGE_SIZE
