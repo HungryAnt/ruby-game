@@ -145,7 +145,7 @@ class ShoppingView < ViewBase
           AntGui::Canvas.set_canvas_props item_image, 0, 0, GOODS_ITEM_WIDTH, GOODS_IMAGE_HEIGHT
 
           item_image.on_mouse_left_button_down do
-            wear item[:equipment_type], item[:key]
+            wear item[:equipment_type].to_sym, item[:key]
           end
 
           if item[:existing]
@@ -176,7 +176,10 @@ class ShoppingView < ViewBase
   end
 
   def wear(equipment_type, key)
-    # @role_preview.ear_wear_vm =
+    if Equipment::role_equipment_types.include? equipment_type
+      equipment_vm = EquipmentViewModelFactory.create_equipment_from_key equipment_type, key.to_sym
+      @role_preview.equip_vm = equipment_vm
+    end
   end
 
   def buy(key)
