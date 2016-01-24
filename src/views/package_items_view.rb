@@ -69,13 +69,13 @@ class PackageItemsView
 
     rubbish_panel = init_rubbish_panel
     nutrient_panel = init_nutrient_panel
-    underpan_panel = init_equipment_underpan
-    vehicle_panel = init_vehicle_panel
-    eye_wear_panel = init_equipment_eye_wear
-    ear_wear_panel = init_equipment_ear_wear
-    wing_panel = init_equipment_wing
-    hat_panel = init_equipment_hat
-    handheld_panel = init_equipment_handheld
+    underpan_panel = init_equip_panel '底盘', Equipment::Type::UNDERPAN
+    vehicle_panel = init_equip_panel '点击切换载具，Q键上下车', Equipment::Type::VEHICLE
+    eye_wear_panel = init_equip_panel '眼部饰品', Equipment::Type::EYE_WEAR
+    ear_wear_panel = init_equip_panel '耳部饰品', Equipment::Type::EAR_WEAR
+    wing_panel = init_equip_panel '翅膀', Equipment::Type::WING
+    hat_panel = init_equip_panel '帽子/头盔', Equipment::Type::HAT
+    handheld_panel = init_equip_panel '手持', Equipment::Type::HANDHELD
     pet_panel = init_pet_panel
 
     right_panel.content = rubbish_panel
@@ -179,46 +179,8 @@ class PackageItemsView
     MultiItemsControl.new(image, count)
   end
 
-  def init_vehicle_panel
-    vehicles = @package_items_vm.get_vehicles
-    items = vehicles.map do |vehicle|
-      {
-          data: vehicle,
-          content: create_equipment_content(vehicle)
-      }
-    end
-    create_panel('点击切换载具，Q键上下车', items) do |item|
-      @package_items_vm.choose_equipment item[:data]
-      @visible = false
-    end
-  end
-
-  def init_equipment_eye_wear
-    init_common_equipment_panel '眼部饰品', Equipment::Type::EYE_WEAR, :get_eye_wears
-  end
-
-  def init_equipment_ear_wear
-    init_common_equipment_panel '耳部饰品', Equipment::Type::EAR_WEAR, :get_ear_wears
-  end
-
-  def init_equipment_wing
-    init_common_equipment_panel '翅膀', Equipment::Type::WING, :get_wings
-  end
-
-  def init_equipment_hat
-    init_common_equipment_panel '帽子', Equipment::Type::HAT, :get_hats
-  end
-
-  def init_equipment_underpan
-    init_common_equipment_panel '底盘', Equipment::Type::UNDERPAN, :get_underpans
-  end
-
-  def init_equipment_handheld
-    init_common_equipment_panel '手持', Equipment::Type::HANDHELD, :get_handhelds
-  end
-
-  def init_common_equipment_panel(prompt_text, equipment_type, query_method)
-    equipments = @package_items_vm.send query_method
+  def init_equip_panel(prompt_text, equipment_type)
+    equipments = @package_items_vm.get_equipments equipment_type
     items = equipments.map do |equipment|
       {
           type: :equipment,

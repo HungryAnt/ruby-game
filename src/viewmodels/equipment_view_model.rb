@@ -7,6 +7,10 @@ class EquipmentViewModel
     init_anims
   end
 
+  def type
+    @equipment.type
+  end
+
   def miss
     @equipment.miss
   end
@@ -17,10 +21,6 @@ class EquipmentViewModel
 
   def height
     @equipment.height
-  end
-
-  def type
-    @equipment.type
   end
 
   def is_cloak

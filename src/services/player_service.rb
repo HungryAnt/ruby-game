@@ -38,7 +38,6 @@ class PlayerService
   end
 
   def init_test_equipments
-    @role.package.clear
     #[39, 40, 50, 58, 59, 67, 74, 75, 81, 82, 83, 89, 90, 91, 604, 828,
     # 96, 97, 103, 104, 108, 109, 114, 115, 119, 121
     [
@@ -55,49 +54,45 @@ class PlayerService
         291, 295, 296, 300
     ].each do |num|
       vehicle_key = "vehicle_#{num}".to_sym
-      @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
+      @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
     end
 
     # [10, 24, 26, 35, 39, 41, 43, 69, 119
     # ].each do |num|
     #   vehicle_key = "vehicle2_#{num}".to_sym
-    #   @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
+    #   @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
     # end
     %w(DragonRed DragonBlack DragonBlue).each do |dragon|
       dragon_key = "dragon_#{dragon}".to_sym
-      @role.package << Equipment.new(Equipment::Type::VEHICLE, dragon_key)
+      @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, dragon_key)
     end
 
-    @role.pet_package.clear
     PetTypeInfo.all_pet_types.each do |pet_type|
       @role.pet_package << Pet.new(SecureRandom.uuid, pet_type, 200, 200)
     end
 
-    @role.eye_wear_package.clear
     [1, 17, 20, 21, 97, 282].each do |num|
       key = "eye_wear_#{num}".to_sym
-      @role.eye_wear_package << Equipment.new(Equipment::Type::EYE_WEAR, key)
+      @role.add_equipment Equipment.new(Equipment::Type::EYE_WEAR, key)
     end
 
     [1, 8, 9, 29, 32, 53, 62, 69, 226, 261, 281, 357, 375
     ].each do |num|
       key = "eye_wear2_#{num}".to_sym
-      @role.eye_wear_package << Equipment.new(Equipment::Type::EYE_WEAR, key)
+      @role.add_equipment Equipment.new(Equipment::Type::EYE_WEAR, key)
     end
 
-    @role.wing_package.clear
     [16, 48, 51, 52, 94, 130, 131, 253, 278, 316, 338, 355,
      394, 430, 467, 486, 559, 587, 617, 686, 715, 772, 795, 819].each do |num|
       key = "wing_#{num}".to_sym
-      @role.wing_package << Equipment.new(Equipment::Type::WING, key)
+      @role.add_equipment Equipment.new(Equipment::Type::WING, key)
     end
 
     [13, 15, 16].each do |num|
       key = "wing2_#{num}".to_sym
-      @role.wing_package << Equipment.new(Equipment::Type::WING, key)
+      @role.add_equipment Equipment.new(Equipment::Type::WING, key)
     end
 
-    @role.hat_package.clear
     [
         # 2, 18, 20, 21, 22, 24, 37, 38, 392, 395,
         # 5, 10, 12, 14, 25, 26, 27, 34, 35, 36, 41, 43, 45, 46, 47, 49, 56, 61,
@@ -108,30 +103,27 @@ class PlayerService
         423
     ].each do |num|
       key = "hat_#{num}".to_sym
-      @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
+      @role.add_equipment Equipment.new(Equipment::Type::HAT, key)
     end
 
     # [12, 23, 25, 42, 47, 49].each do |num|
     #   key = "hat2_#{num}".to_sym
-    #   @role.hat_package << Equipment.new(Equipment::Type::HAT, key)
+    #   @role.add_equipment Equipment.new(Equipment::Type::HAT, key)
     # end
 
-    @role.underpan_package.clear
     [13, 17, 102, 234, 349, 418, 443, 454, 471].each do |num|
       key = "underpan_#{num}".to_sym
-      @role.underpan_package << Equipment.new(Equipment::Type::UNDERPAN, key)
+      @role.add_equipment Equipment.new(Equipment::Type::UNDERPAN, key)
     end
 
-    @role.handheld_package.clear
     [3, 23, 42, 44, 54, 60, 65, 71, 76, 77, 87, 106, 684, 689].each do |num|
       key = "handheld_#{num}".to_sym
-      @role.handheld_package << Equipment.new(Equipment::Type::HANDHELD, key)
+      @role.add_equipment Equipment.new(Equipment::Type::HANDHELD, key)
     end
 
-    @role.ear_wear_package.clear
     [266, 292, 342, 352, 361, 379, 384, 403, 414, 427, 463,].each do |num|
       key = "ear_wear_#{num}".to_sym
-      @role.ear_wear_package << Equipment.new(Equipment::Type::EAR_WEAR, key)
+      @role.add_equipment Equipment.new(Equipment::Type::EAR_WEAR, key)
     end
   end
 
@@ -144,9 +136,9 @@ class PlayerService
   end
 
   def update_vehicles(vehicles)
-    @role.package.clear
+    @role.clear_equipment Equipment::Type::VEHICLE
     vehicles.each do |vehicle|
-      @role.package << Equipment.new(Equipment::Type::VEHICLE, vehicle.to_sym)
+      @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, vehicle.to_sym)
     end
   end
 
@@ -162,23 +154,11 @@ class PlayerService
   end
 
   def update_equipments
-    @role.wing_package.clear
-    @role.hat_package.clear
-    @role.eye_wear_package.clear
-
+    @role.clear_all_equipment
     equipments = YecaiWebClient.get_equipments_by_user_id(@user_id)
     return if equipments.nil? || equipments.length == 0
     equipments.each do |equipment|
-      case equipment.type
-        when Equipment::Type::WING
-          @role.wing_package << equipment
-        when Equipment::Type::HAT
-          @role.hat_package << equipment
-        when Equipment::Type::EYE_WEAR
-          @role.eye_wear_package << equipment
-        when Equipment::Type::EAR_WEAR
-          @role.ear_wear_package << equipment
-      end
+      @role.add_equipment equipment
     end
   end
 end

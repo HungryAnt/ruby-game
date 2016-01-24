@@ -53,11 +53,8 @@ class Role
   include Mana
 
   attr_accessor :state, :durable_state, :direction, :role_type,
-                :hp, :vehicle, :driving, :battered, :battered_by_hit_type
-  attr_reader :package, :name, :rubbish_bin, :nutrient_bin, :pet_package, :eye_wear_package,
-              :wing_package, :hat_package, :underpan_package, :handheld_package, :ear_wear_package
-
-  attr_accessor :eye_wear, :wing, :hat, :underpan, :handheld, :ear_wear
+                :hp, :vehicle, :battered, :battered_by_hit_type
+  attr_reader :name, :rubbish_bin, :nutrient_bin, :pet_package
 
   def initialize(name, role_type, x, y)
     @name = name
@@ -68,14 +65,7 @@ class Role
     init_exp
     init_mana
 
-    @package = Package.new 100
-    @pet_package = Package.new 100
-    @eye_wear_package = Package.new 100
-    @wing_package = Package.new 100
-    @hat_package = Package.new 100
-    @underpan_package = Package.new 100
-    @handheld_package = Package.new 100
-    @ear_wear_package = Package.new 100
+    init_packages
 
     @eating_food = nil
     @state = State::STANDING
@@ -84,25 +74,66 @@ class Role
     @intake = GameConfig::ROLE_INTAKE
     @temp_eating_food_exp = {}
 
-    @vehicle = nil
-    @driving = false
-
     @rubbish_bin = RubbishBin.new
     @nutrient_bin = NutrientBin.new
 
     @battered = false  # 被打扁的
     @battered_by_hit_type = Role::State::HIT
 
-    @eye_wear = nil # 眼部饰品
-    @wing = nil # 翅膀
-    @hat = nil # 帽子头盔
-    @underpan = nil # 底盘
-    @ear_wear = nil # 耳部饰品
+    @wearing_equipments = {}
+  end
+
+  def equip(equipment_type, equipment)
+    @wearing_equipments[equipment_type] = equipment
+  end
+
+  def un_equip(equipment_type)
+    equip equipment_type, nil
+  end
+
+  def init_wearing_equipments
+    Equipment.role_equipment_types.each do |equipment_type|
+      @wearing_equipments[equipment_type] = nil
+    end
+  end
+
+  def init_packages
+    @pet_package = Package.new 100
+
+    @equipment_packages = {}
+    Equipment.role_equipment_types.each do |equipment_type|
+      @equipment_packages[equipment_type] = Package.new 200
+    end
+  end
+
+  def clear_equipment(equipment_type)
+    @equipment_packages[equipment_type].clear
+  end
+
+  def clear_all_equipment
+    @equipment_packages.values.each { |package| package.clear }
+  end
+
+  def add_equipment(equipment)
+    @equipment_packages[equipment.type] << equipment
+  end
+
+  def get_equipments(equipment_type)
+    @equipment_packages[equipment_type].items
+  end
+
+  def get_all_equipment_keys
+    keys_set = Set.new
+    @equipment_packages.values.each do |package|
+      package.items.each do |equipment|
+        keys_set.add equipment.key
+      end
+    end
+    keys_set
   end
 
   def equipment_packages
-    [@package, @eye_wear_package, @wing_package, @hat_package,
-     @underpan_package, @handheld_package, @ear_wear_package]
+    @equipment_packages.values
   end
 
   def get_speed
@@ -116,16 +147,23 @@ class Role
     speed_rate = 1.0
     speed_rate -= 0.5 unless running
     speed_rate -= 0.25 if @battered || eating?
-    speed_rate += @vehicle.speed_up if driving && !@vehicle.nil?
-    speed_rate += @wing.speed_up unless @wing.nil?
-    speed_rate += @underpan.speed_up unless @underpan.nil?
+    @wearing_equipments.values.each do |equipment|
+      next if equipment.nil? || equipment.speed_up.nil?
+      speed_rate += equipment.speed_up
+    end
     @speed * speed_rate
   end
 
+  def get_miss
+    miss = 0
+    @wearing_equipments.values.each do |equipment|
+      next if equipment.nil? || equipment.miss.nil?
+      miss = equipment.miss if equipment.miss > miss
+    end
+    miss
+  end
+
   def move_to_location(x, y)
-    # @role.standing = false
-    # @role.x = x
-    # @role.y = y
     super
     dec_hp(GameConfig::RUNNING_HP_DEC) if @running
   end
@@ -220,7 +258,7 @@ class Role
   end
 
   def to_map
-    {
+    map = {
         role_type: @role_type.to_s,
         name: @name,
         x: @x,
@@ -229,13 +267,13 @@ class Role
         lv: @lv,
         state: @state.to_s,
         durable_state: @durable_state.to_s,
-        direction: @direction,
-        vehicle: (!@vehicle.nil? ? @vehicle.key.to_s: ''), # "vehicle_#{id}"
-        wing: @wing.nil? ? '' : @wing.key.to_s,
-        hat: @hat.nil? ? '' : @hat.key.to_s,
-        eye_wear: @eye_wear.nil? ? '' : @eye_wear.key.to_s,
-        underpan: @underpan.nil? ? '' : @underpan.key.to_s
+        direction: @direction
     }
+    Equipment.role_equipment_types.each do |equipment_type|
+      equipment = @wearing_equipments[equipment_type]
+      map[equipment_type] = equipment.nil? ? '' : equipment.key.to_s
+    end
+    map
   end
 
   def from_map(map)

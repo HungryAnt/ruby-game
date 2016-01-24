@@ -26,42 +26,20 @@ class RoleViewModel
   end
 
   def init_equipments
-    @vehicle_vm = nil
-    @eye_wear_vm = nil
-    @wing_vm = nil
-    @hat_vm = nil
-    @underpan_vm = nil
-    @ear_wear_vm = nil
+    @equipment_vms = {}
+    Equipment::role_equipment_types.each do |equipment_type|
+      @equipment_vms[equipment_type] = nil
+    end
   end
 
-  def eye_wear_vm=(equipment_vm)
-    @eye_wear_vm = equipment_vm.nil? ? nil : equipment_vm
-    @role.eye_wear = equipment_vm.nil? ? nil : equipment_vm.equipment
+  def equip_vm=(equipment_vm)
+    @equipment_vms[equipment_vm.type] = equipment_vm
+    @role.equip(equipment_vm.type, equipment_vm.equipment) unless equipment_vm.nil?
   end
 
-  def wing_vm=(equipment_vm)
-    @wing_vm = equipment_vm.nil? ? nil : equipment_vm
-    @role.wing = equipment_vm.nil? ? nil : equipment_vm.equipment
-  end
-
-  def hat_vm=(equipment_vm)
-    @hat_vm = equipment_vm.nil? ? nil : equipment_vm
-    @role.hat = equipment_vm.nil? ? nil : equipment_vm.equipment
-  end
-
-  def underpan_vm=(equipment_vm)
-    @underpan_vm = equipment_vm.nil? ? nil : equipment_vm
-    @role.underpan = equipment_vm.nil? ? nil : equipment_vm.equipment
-  end
-
-  def handheld_vm=(equipment_vm)
-    @handheld_vm = equipment_vm.nil? ? nil : equipment_vm
-    @role.handheld = equipment_vm.nil? ? nil : equipment_vm.equipment
-  end
-
-  def ear_wear_vm=(equipment_vm)
-    @ear_wear_vm = equipment_vm.nil? ? nil : equipment_vm
-    @role.ear_wear = equipment_vm.nil? ? nil : equipment_vm.equipment
+  def un_equip(equipment_type)
+    role_equipment_types[equipment_type] = nil
+    @role.un_equip equipment_type
   end
 
   def init_hit_components
@@ -80,32 +58,11 @@ class RoleViewModel
   end
 
   def driving?
-    @role.driving && !@vehicle_vm.nil?
+    !@equipment_vms[Equipment::Type::VEHICLE].nil?
   end
 
   def wear_cloak?
-    driving? && @vehicle_vm.is_cloak
-  end
-
-  def set_driving(value)
-    @role.driving = value
-    @role.vehicle = driving? ? @vehicle_vm.equipment : nil
-    value
-  end
-
-  def driving
-    @role.driving
-  end
-
-  def drive(vehicle_key)
-    if vehicle_key.nil?
-      set_driving false
-      return
-    end
-    return if driving? && @vehicle_vm.key == vehicle_key
-    @vehicle_vm = EquipmentViewModelFactory.create_equipment_from_key(
-        Equipment::Type::VEHICLE, vehicle_key)
-    set_driving true
+    driving? && @equipment_vms[Equipment::Type::VEHICLE].is_cloak
   end
 
   def init_animations
@@ -280,7 +237,7 @@ class RoleViewModel
   end
 
   def driving_dragon?
-    driving? && @vehicle_vm.key.to_s.start_with?('dragon')
+    driving? && @equipment_vms[Equipment::Type::VEHICLE].key.to_s.start_with?('dragon')
   end
 
   def add_chat_content(content)
@@ -336,17 +293,17 @@ class RoleViewModel
   end
 
   def try_miss
-    miss = 0
-    miss = @hat_vm.miss if !@hat_vm.nil? && !@hat_vm.miss.nil?
-    miss = [miss, @vehicle_vm.miss].max if driving? && !@vehicle_vm.miss.nil?
+    miss = @role.get_miss
     return false if miss == 0
     rand < miss
   end
 
   def get_actual_role_location
     x, y = get_pure_role_feets_location
-    y = y - @vehicle_vm.height * scale_value if driving?
-    y = y - @underpan_vm.height * scale_value unless @underpan_vm.nil?
+    vehicle_vm = @equipment_vms[Equipment::Type::VEHICLE]
+    underpan_vm = @equipment_vms[Equipment::Type::UNDERPAN]
+    y = y - vehicle_vm.height * scale_value unless vehicle_vm.nil?
+    y = y - underpan_vm.height * scale_value unless underpan_vm.nil?
     [x, y]
   end
 
@@ -385,34 +342,34 @@ class RoleViewModel
   end
 
   def draw_vehicle
-    if driving?
-      @vehicle_vm.draw(@role.x, @role.y - underpan_height, @role.direction, scale_value)
-    end
+    vehicle_vm = @equipment_vms[Equipment::Type::VEHICLE]
+    vehicle_vm.draw(@role.x, @role.y - underpan_height, @role.direction, scale_value) unless vehicle_vm.nil?
   end
 
   def draw_underpan
+    underpan_vm = @equipment_vms[Equipment::Type::UNDERPAN]
     x, y = @role.x, @role.y
-    @underpan_vm.draw(x, y - @underpan_vm.height, @role.direction, scale_value) unless @underpan_vm.nil?
+    underpan_vm.draw(x, y - underpan_vm.height, @role.direction, scale_value) unless underpan_vm.nil?
   end
 
   def draw_eye_wear
-    draw_equipment @eye_wear_vm
+    draw_equipment @equipment_vms[Equipment::Type::EYE_WEAR]
   end
 
   def draw_ear_wear
-    draw_equipment @ear_wear_vm
+    draw_equipment @equipment_vms[Equipment::Type::EAR_WEAR]
   end
 
   def draw_wing
-    draw_equipment @wing_vm
+    draw_equipment @equipment_vms[Equipment::Type::WING]
   end
 
   def draw_hat
-    draw_equipment @hat_vm
+    draw_equipment @equipment_vms[Equipment::Type::HAT]
   end
 
   def draw_handheld
-    draw_equipment @handheld_vm
+    draw_equipment @equipment_vms[Equipment::Type::HANDHELD]
   end
 
   def draw_equipment(equipment_vm)
@@ -437,7 +394,8 @@ class RoleViewModel
   end
 
   def underpan_height
-    return 0 if @underpan_vm.nil?
-    @underpan_vm.height
+    underpan_vm = @equipment_vms[Equipment::Type::UNDERPAN]
+    return 0 if underpan_vm.nil?
+    underpan_vm.height
   end
 end

@@ -108,8 +108,8 @@ class GameMapView < ViewBase
         @game_map_view_model.set_destination(@window.mouse_x, @window.mouse_y)
       when Gosu::KbF
         @game_map_view_model.discard
-      when Gosu::KbQ
-        @game_map_view_model.change_driving
+      # when Gosu::KbQ
+      #   @game_map_view_model.change_driving
       when Gosu::KbE
         @package_items_view.visible = !@package_items_view.visible
         @package_items_view.init_controls if @package_items_view.visible

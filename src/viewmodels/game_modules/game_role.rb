@@ -74,10 +74,6 @@ module GameRole
     @player_view_model.update_animations
   end
 
-  def change_driving
-    @player_view_model.set_driving(!@player_view_model.driving)
-  end
-
   def hit
     @player_view_model.hit
   end
@@ -164,19 +160,9 @@ module GameRole
           role_vm.set_durable_state role_map['durable_state'].to_sym
           role_vm.set_direction role_map['direction'].to_i
 
-          if role_map['vehicle'].nil? || role_map['vehicle'].length == 0
-            vehicle_key = nil
-          else
-            vehicle_key = role_map['vehicle'].to_sym
+          Equipment.role_equipment_types.each do |equipment_type|
+            role_vm.equip_vm = check_and_generate_equipment_vm role_map, equipment_type
           end
-          role_vm.drive(vehicle_key)
-
-          role_vm.wing_vm = check_and_generate_equipment_vm role_map, Equipment::Type::WING
-          role_vm.eye_wear_vm = check_and_generate_equipment_vm role_map, Equipment::Type::EYE_WEAR
-          role_vm.hat_vm = check_and_generate_equipment_vm role_map, Equipment::Type::HAT
-          role_vm.underpan_vm = check_and_generate_equipment_vm role_map, Equipment::Type::UNDERPAN
-          role_vm.handheld_vm = check_and_generate_equipment_vm role_map, Equipment::Type::HANDHELD
-          role_vm.ear_wear_vm = check_and_generate_equipment_vm role_map, Equipment::Type::EAR_WEAR
 
           action = role_map['action'].to_sym
           detail = role_map['detail']

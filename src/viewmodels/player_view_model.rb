@@ -44,22 +44,11 @@ class PlayerViewModel
     @role_vm.draw
   end
 
-  def driving
-    @role_vm.driving
-  end
-
-  def set_driving(value)
-    @role_vm.set_driving value
-    sync_role_appear
-  end
-
   # 初始化人物装备
   def init_wears
     wears = @player_service.wears
-    [Equipment::Type::VEHICLE, Equipment::Type::WING, Equipment::Type::HAT,
-     Equipment::Type::EYE_WEAR, Equipment::Type::UNDERPAN, Equipment::Type::HANDHELD,
-     Equipment::Type::EAR_WEAR
-    ].each do |equipment_type|
+
+    Equipment::role_equipment_types.each do |equipment_type|
       equipment_key = wears[equipment_type.to_s]
       unless equipment_key.nil? || equipment_key == ''
         equip((EquipmentViewModelFactory.create_equipment_from_key equipment_type, equipment_key.to_sym), false)
@@ -69,47 +58,12 @@ class PlayerViewModel
 
   def equip(equipment_vm, remote_sync=true)
     return if equipment_vm.nil?
-    case equipment_vm.type
-      when Equipment::Type::VEHICLE
-        @role_vm.vehicle_vm = equipment_vm
-        @role_vm.set_driving true
-      when Equipment::Type::EYE_WEAR
-        @role_vm.eye_wear_vm = equipment_vm
-      when Equipment::Type::WING
-        @role_vm.wing_vm = equipment_vm
-      when Equipment::Type::HAT
-        @role_vm.hat_vm = equipment_vm
-      when Equipment::Type::UNDERPAN
-        @role_vm.underpan_vm = equipment_vm
-      when Equipment::Type::HANDHELD
-        @role_vm.handheld_vm = equipment_vm
-      when Equipment::Type::EAR_WEAR
-        @role_vm.ear_wear_vm = equipment_vm
-      else
-        # type code here
-    end
+    @role_vm.equip_vm = equipment_vm
     sync_role_appear if remote_sync
   end
 
   def un_equip(equipment_type)
-    case equipment_type
-      when Equipment::Type::VEHICLE
-        @role_vm.set_driving false
-      when Equipment::Type::EYE_WEAR
-        @role_vm.eye_wear_vm = nil
-      when Equipment::Type::WING
-        @role_vm.wing_vm = nil
-      when Equipment::Type::HAT
-        @role_vm.hat_vm = nil
-      when Equipment::Type::UNDERPAN
-        @role_vm.underpan_vm = nil
-      when Equipment::Type::HANDHELD
-        @role_vm.handheld_vm = nil
-      when Equipment::Type::EAR_WEAR
-        @role_vm.ear_wear_vm = nil
-      else
-        # type code here
-    end
+    @role_vm.un_equip equipment_type
     sync_role_appear
   end
 
