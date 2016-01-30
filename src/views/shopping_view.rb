@@ -103,23 +103,30 @@ class ShoppingView < ViewBase
     create_button_proc = Proc.new do |text, category|
       button = create_button text
       AntGui::Canvas.set_canvas_props button, x, y, tab_item_width, tab_item_height
-      x += tab_item_width + tab_item_margin
-
       button.on_mouse_left_button_down do
         @page_no = 1
         @current_goods_category = category
         update_ui
       end
       tab_panel.add button
+
+      x += tab_item_width + tab_item_margin
+      if x >= GameConfig::WHOLE_WIDTH - left * 2
+        x = 0
+        y += tab_item_height + tab_item_margin
+      end
     end
 
     create_button_proc.call '新品载具', :newVehicles
     create_button_proc.call '载具', :vehicles
     create_button_proc.call '怀旧载具', :nostalgicVehicles
     create_button_proc.call '宠物', :pets
+    create_button_proc.call '底盘', :underpan
     create_button_proc.call '翅膀', :wings
     create_button_proc.call '帽子/头盔', :hats
-    create_button_proc.call '眼镜', :eyeWears
+    create_button_proc.call '眼部饰品', :eyeWears
+    create_button_proc.call '耳部饰品', :ear_wear
+    create_button_proc.call '手持物', :handheld
 
     tab_panel
   end

@@ -160,6 +160,9 @@ class MainWindow < Gosu::Window
           load 'config/equipment_wing_config.rb'
           load 'config/equipment_ear_wear_config.rb'
           @player_service.refresh_all_equipments
+        when Gosu::KbF6
+          EquipmentDefinition.print_all_keys
+          PetTypeInfo.print_all_pets
       end
     end
   end

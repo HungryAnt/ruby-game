@@ -38,7 +38,7 @@ class RoleViewModel
   end
 
   def un_equip(equipment_type)
-    role_equipment_types[equipment_type] = nil
+    @equipment_vms[equipment_type] = nil
     @role.un_equip equipment_type
   end
 
