@@ -25,14 +25,12 @@ class EquipmentDefinition
   end
 
   def self.get_item_animation(goods_category, key)
-    case goods_category
-      when :newVehicles, :vehicles, :nostalgicVehicles,
-          :wings, :hats, :eyeWears
-        anim_key = "#{key}_down"
-      when :pets
-        anim_key = "#{key}_stand_down"
-      else
-        raise ArgumentError 'unexpected goods_category:' + goods_category
+    if Equipment.role_equipment_types.include? goods_category
+      anim_key = "#{key}_down"
+    elsif goods_category == :pet
+      anim_key = "#{key}_stand_down"
+    else
+      raise ArgumentError 'unexpected goods_category:' + goods_category
     end
     AnimationManager.get_anim anim_key.to_sym
   end

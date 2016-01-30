@@ -25,4 +25,18 @@ class StringUtilTest < Test::Unit::TestCase
     assert_equal('Ant版野菜部', lines[0])
     assert_equal('落', lines[1])
   end
+
+  def test_camel_to_underline
+    assert_equal 'abc123', StringUtil.camel_to_underline('Abc123')
+    assert_equal 'abc_a123', StringUtil.camel_to_underline('AbcA123')
+    assert_equal 'aa_bb_cc_dd_ee', StringUtil.camel_to_underline('AaBbCcDdEe')
+    assert_equal 'eye_wear', StringUtil.camel_to_underline('EyeWear')
+  end
+
+  def test_underline_to_camel
+    assert_equal 'Abc123', StringUtil.underline_to_camel('abc123')
+    assert_equal 'AbcA123', StringUtil.underline_to_camel('abc_a123')
+    assert_equal 'AaBbCcDdEe', StringUtil.underline_to_camel('aa_bb_cc_dd_ee')
+    assert_equal 'EyeWear', StringUtil.underline_to_camel('eye_wear')
+  end
 end

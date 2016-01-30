@@ -30,7 +30,7 @@ class YecaiWebClient
 
     raw_equipments = JSON.parse(res.body)
     raw_equipments.map do |raw_equipment|
-      equipment_type = raw_equipment['equipmentType'].gsub(/(.)([A-Z])/, '\1_\2').downcase
+      equipment_type = StringUtil.camel_to_underline raw_equipment['equipmentType']
       equipment_key = raw_equipment['equipmentKey']
       Equipment.new(equipment_type.to_sym, equipment_key.to_sym)
     end

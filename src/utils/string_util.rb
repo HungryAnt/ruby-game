@@ -22,4 +22,12 @@ class StringUtil
     lines << line if line.length > 0
     return lines
   end
+
+  def self.camel_to_underline(str)
+    str.gsub(/(.)([A-Z])/, '\1_\2').downcase
+  end
+
+  def self.underline_to_camel(str)
+    str.tr('_', ' ').gsub(/\b\w/) { |first| first.upcase }.tr(' ', '')
+  end
 end

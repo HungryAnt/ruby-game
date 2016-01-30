@@ -1,12 +1,9 @@
 class ShoppingService
-  def get_vehicles(page_no, page_size)
-    get_goods :vehicles, page_no, page_size
-  end
-
-  def get_goods(category, page_no, page_size)
+  def get_goods(goods_type, page_no, page_size)
+    camel_cash_equip_type = StringUtil.underline_to_camel goods_type.to_s
     http_client = HttpClientFactory.create
-    http_client.path "shopping/#{category}"
-    http_client.params pageNo: page_no, pageSize: page_size
+    http_client.path 'shopping/goods'
+    http_client.params equipmentType: camel_cash_equip_type, pageNo: page_no, pageSize: page_size
     res = http_client.get
 
     if res.code == '200'

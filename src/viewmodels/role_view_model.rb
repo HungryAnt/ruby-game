@@ -42,6 +42,13 @@ class RoleViewModel
     @role.un_equip equipment_type
   end
 
+  def un_equip_all
+    Equipment::role_equipment_types.each do |equipment_type|
+      @equipment_vms[equipment_type] = nil
+      @role.un_equip equipment_type
+    end
+  end
+
   def init_hit_components
     @hitting = false
   end
@@ -311,7 +318,25 @@ class RoleViewModel
     return @role.x, @role.y - 30 * scale_value
   end
 
+  def turn_left
+    change_direction -1
+  end
+
+  def turn_right
+    change_direction 1
+  end
+
   private
+
+  def change_direction(step)
+    current_direction = @role.direction
+    current_index = Direction::ROLE_NORMAL_DIRECTIONS.index(current_direction)
+    directions_size = Direction::ROLE_NORMAL_DIRECTIONS.size
+    new_index = (current_index + step + directions_size) % directions_size
+    new_direction = Direction::ROLE_NORMAL_DIRECTIONS[new_index]
+    @role.direction = new_direction
+    change_anim
+  end
 
   def anim_goto_begin
     @anim_init_timestamp = Gosu::milliseconds

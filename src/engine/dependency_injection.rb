@@ -12,7 +12,7 @@ lambda {
 
   Kernel.send :define_method, :autowired do |*classes|
     classes.each do |clazz|
-      underscore_class_name = clazz.name.to_s.gsub(/(.)([A-Z])/, '\1_\2').downcase
+      underscore_class_name = StringUtil.camel_to_underline clazz.name.to_s
       instance_variable_set("@#{underscore_class_name}", get_instance(clazz))
     end
   end

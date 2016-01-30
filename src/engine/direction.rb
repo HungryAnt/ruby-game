@@ -9,6 +9,8 @@ class Direction
   WEST = LEFT = 8
   NORTH_WEST = 1 | 8
 
+  ROLE_NORMAL_DIRECTIONS = [Direction::DOWN, Direction::LEFT, Direction::UP, Direction::RIGHT]
+
   def self.to_angle(direction)
     case direction
       when NORTH

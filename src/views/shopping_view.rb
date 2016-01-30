@@ -5,6 +5,14 @@ class ShoppingView < ViewBase
   GOODS_IMAGE_HEIGHT = 95
   GOODS_PAY_BUTTON_HEIGHT = 25
 
+  PREVIEW_X = 590
+  PREVIEW_Y = 260
+  PREVIEW_BUTTON_HEIGHT = 25
+  PREVIEW_BUTTON_WIDTH = 50
+  PREVIEW_DIRECTION_MARGIN = 60
+  PREVIEW_BUTTON_NORMAL_BACK = 0x88_86C7EF
+  PREVIEW_BUTTON_HOVER_BACK = 0xA8_A6E7FF
+
   GOODS_PADDING = 10
   GOODS_MARGIN = 10
   GOODS_ROW_COUNT = 3
@@ -38,12 +46,12 @@ class ShoppingView < ViewBase
     init_money
     @font = @window_resource_service.get_font 20
     @page_no = @total_page_count = 1
-    @current_goods_category = :newVehicles
+    @current_goods_type = Equipment::Type::VEHICLE
     init_role_view
   end
 
   def init_role_view
-    role = Role.new @user_service.user_name, @user_service.role_type, 570, 260
+    role = Role.new @user_service.user_name, @user_service.role_type, PREVIEW_X, PREVIEW_Y
     @role_preview = RoleViewModel.new role
   end
 
@@ -52,7 +60,7 @@ class ShoppingView < ViewBase
   end
 
   def update_ui
-    items, page_count = @shopping_view_model.get_goods @current_goods_category, @page_no
+    items, page_count = @shopping_view_model.get_goods @current_goods_type, @page_no
     @total_page_count = page_count
     create_ui items
   end
@@ -89,6 +97,34 @@ class ShoppingView < ViewBase
     main_canvas.add page_panel
     main_canvas.add right_panel
 
+    # 预览按钮
+    clear_button = create_button '裸体', PREVIEW_BUTTON_NORMAL_BACK, PREVIEW_BUTTON_HOVER_BACK
+    AntGui::Canvas.set_canvas_props clear_button, PREVIEW_X - PREVIEW_BUTTON_WIDTH / 2,
+                                    PREVIEW_Y + 40, PREVIEW_BUTTON_WIDTH, PREVIEW_BUTTON_HEIGHT
+    clear_button.on_mouse_left_button_down do
+      @role_preview.un_equip_all
+    end
+
+    # 左侧按钮 角色向右转
+    left_button = create_button '旋转', PREVIEW_BUTTON_NORMAL_BACK, PREVIEW_BUTTON_HOVER_BACK
+    AntGui::Canvas.set_canvas_props left_button, PREVIEW_X - 110 - PREVIEW_BUTTON_WIDTH / 2 ,
+                                    PREVIEW_Y - PREVIEW_BUTTON_HEIGHT / 2, PREVIEW_BUTTON_WIDTH, PREVIEW_BUTTON_HEIGHT
+    left_button.on_mouse_left_button_down do
+      @role_preview.turn_right
+    end
+
+    # 右侧按钮 角色向左转
+    right_button = create_button '旋转', PREVIEW_BUTTON_NORMAL_BACK, PREVIEW_BUTTON_HOVER_BACK
+    AntGui::Canvas.set_canvas_props right_button, PREVIEW_X + 110 - PREVIEW_BUTTON_WIDTH / 2,
+                                    PREVIEW_Y - PREVIEW_BUTTON_HEIGHT / 2, PREVIEW_BUTTON_WIDTH, PREVIEW_BUTTON_HEIGHT
+    right_button.on_mouse_left_button_down do
+      @role_preview.turn_left
+    end
+
+    main_canvas.add clear_button
+    main_canvas.add left_button
+    main_canvas.add right_button
+
     @dialog.update_arrange
   end
 
@@ -100,12 +136,14 @@ class ShoppingView < ViewBase
     tab_item_height = height
     tab_item_margin = 5
 
-    create_button_proc = Proc.new do |text, category|
+    create_button_proc = Proc.new do |text, equipment_type|
+      # category = StringUtil.underline_to_camel equipment_type.to_s
+
       button = create_button text
       AntGui::Canvas.set_canvas_props button, x, y, tab_item_width, tab_item_height
       button.on_mouse_left_button_down do
         @page_no = 1
-        @current_goods_category = category
+        @current_goods_type = equipment_type
         update_ui
       end
       tab_panel.add button
@@ -117,16 +155,14 @@ class ShoppingView < ViewBase
       end
     end
 
-    create_button_proc.call '新品载具', :newVehicles
-    create_button_proc.call '载具', :vehicles
-    create_button_proc.call '怀旧载具', :nostalgicVehicles
-    create_button_proc.call '宠物', :pets
-    create_button_proc.call '底盘', :underpan
-    create_button_proc.call '翅膀', :wings
-    create_button_proc.call '帽子/头盔', :hats
-    create_button_proc.call '眼部饰品', :eyeWears
-    create_button_proc.call '耳部饰品', :ear_wear
-    create_button_proc.call '手持物', :handheld
+    create_button_proc.call '载具', Equipment::Type::VEHICLE
+    create_button_proc.call '宠物', :pet
+    create_button_proc.call '底盘', Equipment::Type::UNDERPAN
+    create_button_proc.call '翅膀', Equipment::Type::WING
+    create_button_proc.call '帽子/头盔', Equipment::Type::HAT
+    create_button_proc.call '眼部饰品', Equipment::Type::EYE_WEAR
+    create_button_proc.call '耳部饰品', Equipment::Type::EAR_WEAR
+    create_button_proc.call '手持物', Equipment::Type::HANDHELD
 
     tab_panel
   end
@@ -287,15 +323,15 @@ class ShoppingView < ViewBase
     active
   end
 
-  def create_button(text)
+  def create_button(text, color_normal_back=COLOR_BUTTON_NORMAL_BACK, color_hover_back=COLOR_BUTTON_HOVER_BACK)
     button = AntGui::TextBlock.new(@font, text, :center, :center)
     button.foreground_color = COLOR_BUTTON_FORE
-    button.background_color = COLOR_BUTTON_NORMAL_BACK
+    button.background_color = color_normal_back
     button.on_mouse_enter do
-      button.background_color = COLOR_BUTTON_HOVER_BACK
+      button.background_color = color_hover_back
     end
     button.on_mouse_leave do
-      button.background_color = COLOR_BUTTON_NORMAL_BACK
+      button.background_color = color_normal_back
     end
     button
   end

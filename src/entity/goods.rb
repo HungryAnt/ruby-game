@@ -6,7 +6,7 @@ class Goods
   end
 
   def self.from_map(map)
-    new(map['key'].to_s, map['price'].to_i, to_equipment_type(map['goodsType'].to_s))
+    new(map['key'].to_s, map['price'].to_i, to_equipment_type(map['equipmentType'].to_s))
   end
 
   def self.to_equipment_type(goods_type)
