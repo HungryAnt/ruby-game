@@ -215,4 +215,14 @@ lambda {
   new_map_covering_anim(:amusement_park_3_monkeys, pattern_amusement_park_3, 21, 28, 200, false)
   new_map_covering_anim(:amusement_park_3_elephant, pattern_amusement_park_3, 29, 36, 200, false)
   new_map_covering_anim(:amusement_park_3_waterfall, pattern_amusement_park_3, 38, 39, 200, false)
+
+  # chess
+  pattern_chess = 'map/chess/Back_${num}.bmp'
+  new_map_covering_anim(:chess_ship_men, pattern_chess, 20, 24, 200, false)
+  new_map_covering_anim(:chess_ice_1, pattern_chess, 25, 28, 200, false)
+  new_map_covering_anim(:chess_ice_2, pattern_chess, 29, 32, 200, false)
+  new_map_covering_anim(:chess_ice_3, pattern_chess, 33, 36, 200, false)
+  new_map_covering_anim(:chess_ice_4, pattern_chess, 37, 40, 200, false)
+  new_map_covering_anim(:chess_ice_5, pattern_chess, 41, 44, 200, false)
+
 }.call

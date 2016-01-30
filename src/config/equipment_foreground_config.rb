@@ -20,7 +20,7 @@ lambda {
   create_equipment_anims(equipment, 92, down_nums_pair: [0, 3], up_nums_pair: [4, 7], hor_nums_pair: [8, 11])
   set_equipment_properties(equipment, 92, left: [0, 0], up: [0, 0], down: [0, 0])
 
-  create_equipment_anims(equipment, 98, same_nums_pair: [0, 7])
+  create_equipment_anims(equipment, 98, down_nums_pair: [0, 3], up_nums_pair: [4, 7], hor_nums_pair: [0, 3])
   set_equipment_properties(equipment, 98, left: [0, 0], up: [0, 0], down: [0, 0])
 
   create_equipment_anims(equipment, 99, down_nums_pair: [0, 7], up_nums_pair: [8, 15], hor_nums_pair: [0, 7])

@@ -328,6 +328,28 @@ background_64
 background_79
 background_213
 background_225
+foreground_57
+foreground_63
+foreground_70
+foreground_78
+foreground_84
+foreground_92
+foreground_98
+foreground_99
+foreground_116
+foreground_134
+foreground_140
+foreground_161
+foreground_164
+foreground_179
+foreground_186
+foreground_196
+foreground_208
+foreground_215
+foreground_224
+foreground_230
+foreground_237
+foreground_241
 PRICE
 
 def read_equipments

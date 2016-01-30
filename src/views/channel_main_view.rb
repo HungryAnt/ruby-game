@@ -88,7 +88,7 @@ class ChannelMainView
     control_playground = create_channel_control(canvas, 3, 4, 430, 100, 370, 229,
                                                 86, 50, 0, 44, :playground)
     control_playground.on_mouse_left_button_down do
-      goto_map :amusement_park
+      show_map_selection_view(:amusement_park, :chess)
     end
 
     control_shop = create_channel_control(canvas, 5, 6, 334, 260, 372, 180,

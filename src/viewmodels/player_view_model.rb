@@ -125,6 +125,7 @@ class PlayerViewModel
 
   def switch_to_new_map
     map_vm = @map_service.current_map
+    @role_vm.area_id = map_vm.current_area.id
     @role.x, @role.y = map_vm.current_area.area.initial_position
     refresh_new_map_elements map_vm.id
     appear_in_new_area

@@ -103,8 +103,8 @@ class AreaViewModel
       @image.draw(0, 0, ZOrder::Background, @scale_x, @scale_y)
     end
 
-    @anim_container.draw
     draw_covering
+    @anim_container.draw
   end
 
   def activate

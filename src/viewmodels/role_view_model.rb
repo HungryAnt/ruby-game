@@ -10,6 +10,7 @@ class RoleViewModel
     @player = @role = role
     @font = Gosu::Font.new(15)
     init_animations
+    init_chess_piece
     @eating_food_vm = nil
     @auto_move_enabled = false
     @speed = 5.3
@@ -86,6 +87,10 @@ class RoleViewModel
     end
 
     @current_anim = @anim_stand_down
+  end
+
+  def init_chess_piece
+    @chess_piece_image = RoleTypeDefinition.get_role_chess_piece_image_path @role.role_type
   end
 
   def appear_in_new_area
@@ -208,39 +213,43 @@ class RoleViewModel
   def draw_with_area_addition(additional_equipment_vm, auto_scale_info)
     update_scale auto_scale_info, @role.y
 
-    additional_equipment_vm.draw(*get_pure_role_feets_location, @role.direction) unless additional_equipment_vm.nil?
+    if area_id == :chess
+      draw_chess_piece
+    else
+      additional_equipment_vm.draw(*get_pure_role_feets_location, @role.direction) unless additional_equipment_vm.nil?
 
-    should_draw_vehicle_first = driving_dragon? && @role.direction == Direction::UP
+      should_draw_vehicle_first = driving_dragon? && @role.direction == Direction::UP
 
-    up = @role.direction == Direction::UP
-    down = @role.direction == Direction::DOWN
-    hor = @role.direction == Direction::LEFT || @role.direction == Direction::RIGHT
+      up = @role.direction == Direction::UP
+      down = @role.direction == Direction::DOWN
+      hor = @role.direction == Direction::LEFT || @role.direction == Direction::RIGHT
 
-    draw_background
+      draw_background
 
-    draw_underpan
+      draw_underpan
 
-    draw_wing if down # 临时方案
-    draw_vehicle if should_draw_vehicle_first
+      draw_wing if down # 临时方案
+      draw_vehicle if should_draw_vehicle_first
 
-    draw_handheld if up
-    draw_eye_wear if up
-    draw_ear_wear if up
+      draw_handheld if up
+      draw_eye_wear if up
+      draw_ear_wear if up
 
-    draw_role_anim
+      draw_role_anim
 
-    draw_ear_wear unless up
-    draw_eye_wear unless up
+      draw_ear_wear unless up
+      draw_eye_wear unless up
 
-    draw_hat
+      draw_hat
 
-    draw_wing if up
-    draw_vehicle unless should_draw_vehicle_first
-    draw_wing if hor
+      draw_wing if up
+      draw_vehicle unless should_draw_vehicle_first
+      draw_wing if hor
 
-    draw_handheld unless up
+      draw_handheld unless up
 
-    draw_foreground
+      draw_foreground
+    end
 
     draw_level_and_name
     @eating_food_vm.draw auto_scale_info unless @eating_food_vm.nil?
@@ -363,6 +372,10 @@ class RoleViewModel
   def get_anim(key)
     AnimationManager.get_anim key
     AnimationManager.get_anim key
+  end
+
+  def draw_chess_piece
+    @chess_piece_image.draw(@role.x - 23, @role.y - 40, ZOrder::Player)
   end
 
   def draw_role_anim
