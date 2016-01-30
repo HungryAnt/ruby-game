@@ -163,6 +163,8 @@ class ShoppingView < ViewBase
     create_button_proc.call '眼部饰品', Equipment::Type::EYE_WEAR
     create_button_proc.call '耳部饰品', Equipment::Type::EAR_WEAR
     create_button_proc.call '手持物', Equipment::Type::HANDHELD
+    create_button_proc.call '背景装饰', Equipment::Type::BACKGROUND
+    create_button_proc.call '前景装饰', Equipment::Type::FOREGROUND
 
     tab_panel
   end

@@ -1,5 +1,6 @@
 class Equipment
   module Type
+    BACKGROUND = :background # 背景
     VEHICLE = :vehicle
     EYE_WEAR = :eye_wear # 眼部饰品
     AREA_ADDITION = :area_addition # 场景附加
@@ -8,10 +9,12 @@ class Equipment
     UNDERPAN = :underpan # 底盘
     HANDHELD = :handheld
     EAR_WEAR = :ear_wear # 耳部饰品
+    FOREGROUND = :foreground # 前景装饰
   end
 
   def self.role_equipment_types
-    [Type::VEHICLE, Type::EYE_WEAR, Type::WING, Type::HAT, Type::UNDERPAN, Type::HANDHELD, Type::EAR_WEAR]
+    [Type::BACKGROUND, Type::VEHICLE, Type::EYE_WEAR, Type::WING, Type::HAT,
+     Type::UNDERPAN, Type::HANDHELD, Type::EAR_WEAR, Type::FOREGROUND]
   end
 
   attr_reader :key, :type, :location_offset, :miss, :speed_up, :height, :is_cloak

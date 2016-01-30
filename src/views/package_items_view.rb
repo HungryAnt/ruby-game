@@ -69,6 +69,7 @@ class PackageItemsView
 
     rubbish_panel = init_rubbish_panel
     nutrient_panel = init_nutrient_panel
+    background_panel = init_equip_panel '背景', Equipment::Type::BACKGROUND
     underpan_panel = init_equip_panel '底盘', Equipment::Type::UNDERPAN
     vehicle_panel = init_equip_panel '点击切换载具，Q键上下车', Equipment::Type::VEHICLE
     eye_wear_panel = init_equip_panel '眼部饰品', Equipment::Type::EYE_WEAR
@@ -76,6 +77,7 @@ class PackageItemsView
     wing_panel = init_equip_panel '翅膀', Equipment::Type::WING
     hat_panel = init_equip_panel '帽子/头盔', Equipment::Type::HAT
     handheld_panel = init_equip_panel '手持', Equipment::Type::HANDHELD
+    foreground_panel = init_equip_panel '前景挂件', Equipment::Type::FOREGROUND
     pet_panel = init_pet_panel
 
     right_panel.content = rubbish_panel
@@ -83,6 +85,7 @@ class PackageItemsView
     # 左侧tab
     rubbish_tab = AntGui::TextBlock.new(@prompt_font, '  垃圾')
     nutrient_tab = AntGui::TextBlock.new(@prompt_font, '  物资')
+    background_tab = AntGui::TextBlock.new(@prompt_font, '  背景装饰')
     underpan_tab = AntGui::TextBlock.new(@prompt_font, '  底盘')
     vehicle_tab = AntGui::TextBlock.new(@prompt_font, '  载具')
     eye_wear_tab = AntGui::TextBlock.new(@prompt_font, '  眼部饰品')
@@ -90,10 +93,11 @@ class PackageItemsView
     wing_tab = AntGui::TextBlock.new(@prompt_font, '  翅膀')
     hat_tab = AntGui::TextBlock.new(@prompt_font, '  帽子/头盔')
     handheld_tab = AntGui::TextBlock.new(@prompt_font, '  手持')
+    foreground_tab = AntGui::TextBlock.new(@prompt_font, '  前景挂件')
     pet_tab = AntGui::TextBlock.new(@prompt_font, '  萌宠!')
 
-    all_tabs = [rubbish_tab, nutrient_tab, underpan_tab, vehicle_tab, eye_wear_tab, ear_wear_tab,
-                wing_tab, hat_tab, handheld_tab, pet_tab]
+    all_tabs = [rubbish_tab, nutrient_tab, background_tab, underpan_tab, vehicle_tab, eye_wear_tab, ear_wear_tab,
+                wing_tab, hat_tab, handheld_tab, foreground_tab, pet_tab]
 
     rubbish_tab.background_color = 0x88_FFFFFF
 
@@ -110,6 +114,7 @@ class PackageItemsView
 
     init_tab_event.call rubbish_tab, rubbish_panel
     init_tab_event.call nutrient_tab, nutrient_panel
+    init_tab_event.call background_tab, background_panel
     init_tab_event.call underpan_tab, underpan_panel
     init_tab_event.call vehicle_tab, vehicle_panel
     init_tab_event.call eye_wear_tab, eye_wear_panel
@@ -117,6 +122,7 @@ class PackageItemsView
     init_tab_event.call wing_tab, wing_panel
     init_tab_event.call hat_tab, hat_panel
     init_tab_event.call handheld_tab, handheld_panel
+    init_tab_event.call foreground_tab, foreground_panel
     init_tab_event.call pet_tab, pet_panel
 
     all_tabs.each { |tab| left_panel.add tab }

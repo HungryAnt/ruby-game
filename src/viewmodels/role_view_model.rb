@@ -216,6 +216,8 @@ class RoleViewModel
     down = @role.direction == Direction::DOWN
     hor = @role.direction == Direction::LEFT || @role.direction == Direction::RIGHT
 
+    draw_background
+
     draw_underpan
 
     draw_wing if down # ¡Ÿ ±∑Ω∞∏
@@ -237,6 +239,8 @@ class RoleViewModel
     draw_wing if hor
 
     draw_handheld unless up
+
+    draw_foreground
 
     draw_level_and_name
     @eating_food_vm.draw auto_scale_info unless @eating_food_vm.nil?
@@ -371,6 +375,14 @@ class RoleViewModel
     vehicle_vm.draw(@role.x, @role.y - underpan_height, @role.direction, scale_value) unless vehicle_vm.nil?
   end
 
+  def draw_background
+    draw_equipment Equipment::Type::BACKGROUND
+  end
+
+  def draw_foreground
+    draw_equipment Equipment::Type::FOREGROUND
+  end
+
   def draw_underpan
     underpan_vm = @equipment_vms[Equipment::Type::UNDERPAN]
     x, y = @role.x, @role.y
@@ -378,28 +390,31 @@ class RoleViewModel
   end
 
   def draw_eye_wear
-    draw_equipment @equipment_vms[Equipment::Type::EYE_WEAR]
+    draw_equipment Equipment::Type::EYE_WEAR
   end
 
   def draw_ear_wear
-    draw_equipment @equipment_vms[Equipment::Type::EAR_WEAR]
+    draw_equipment Equipment::Type::EAR_WEAR
   end
 
   def draw_wing
-    draw_equipment @equipment_vms[Equipment::Type::WING]
+    draw_equipment Equipment::Type::WING
   end
 
   def draw_hat
-    draw_equipment @equipment_vms[Equipment::Type::HAT]
+    draw_equipment Equipment::Type::HAT
   end
 
   def draw_handheld
-    draw_equipment @equipment_vms[Equipment::Type::HANDHELD]
+    draw_equipment Equipment::Type::HANDHELD
   end
 
-  def draw_equipment(equipment_vm)
-    x, y = get_actual_role_location
-    equipment_vm.draw(x, y, @role.direction, scale_value) unless equipment_vm.nil?
+  def draw_equipment(equipment_type)
+    equipment_vm = @equipment_vms[equipment_type]
+    unless equipment_vm.nil?
+      x, y = get_actual_role_location
+      equipment_vm.draw(x, y, @role.direction, scale_value)
+    end
   end
 
   def draw_level_and_name

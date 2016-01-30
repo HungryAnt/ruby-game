@@ -125,6 +125,17 @@ class PlayerService
       key = "ear_wear_#{num}".to_sym
       @role.add_equipment Equipment.new(Equipment::Type::EAR_WEAR, key)
     end
+
+    [7, 19, 55, 64, 79, 213, 225].each do |num|
+      key = "background_#{num}".to_sym
+      @role.add_equipment Equipment.new(Equipment::Type::BACKGROUND, key)
+    end
+
+    [57, 63, 70, 78, 84,
+     92, 98, 99, 116, 134, 140, 161, 164, 179, 186, 196, 208, 215, 224, 230, 237, 241].each do |num|
+      key = "foreground_#{num}".to_sym
+      @role.add_equipment Equipment.new(Equipment::Type::FOREGROUND, key)
+    end
   end
 
   def refresh_all_equipments

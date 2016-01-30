@@ -202,6 +202,8 @@ else
     require 'config/equipment_underpan_config'
     require 'config/equipment_handheld_config'
     require 'config/equipment_ear_wear_config'
+    require 'config/equipment_background_config'
+    require 'config/equipment_foreground_config'
     require 'config/food_config'
     require 'config/rubbish_config'
     require 'config/nutrient_config'

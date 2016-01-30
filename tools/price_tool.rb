@@ -321,6 +321,13 @@ pet_g20, 1200
 pet_g21, 1200
 pet_g22, 1200
 pet_g23, 1200
+background_7
+background_19
+background_55
+background_64
+background_79
+background_213
+background_225
 PRICE
 
 def read_equipments
