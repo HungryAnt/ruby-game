@@ -225,4 +225,10 @@ lambda {
   new_map_covering_anim(:chess_ice_4, pattern_chess, 37, 40, 200, false)
   new_map_covering_anim(:chess_ice_5, pattern_chess, 41, 44, 200, false)
 
+  # picnic
+  pattern_picnic_1 = 'map/picnic/picnic1/Picnic1_${num}.bmp'
+  new_map_covering_anim(:picnic_1_bridge, pattern_picnic_1, 3, 5, 200, false)
+
+  pattern_picnic_2 = 'map/picnic/picnic2/Picnic2_${num}.bmp'
+  new_map_covering_anim(:picnic_2_tortoise, pattern_picnic_2, 4, 7, 200, false)
 }.call

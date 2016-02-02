@@ -142,5 +142,5 @@ custom1_tree_area.gateway = {
     :B => {:area => custom1_roof_area, :direction => Direction::RIGHT},
 }
 
-create_map(:custom1, '萌萌的地图 by 子轩', MapType::VILLAGE, [custom1_roof_area, custom1_tree_area])
+create_map(:custom1, '秀娟的梦 by 子轩', MapType::VILLAGE, [custom1_roof_area, custom1_tree_area])
 
