@@ -15,7 +15,7 @@ class GameMapViewModel
               GameRolesCommunicationHandler, PetCommunicationHandler,
               AreaItemsService, NetworkService,
               LargeRubbishesService, MonstersService, UserService,
-              WindowResourceService)
+              WindowResourceService, ShitMineMessageHandler)
   end
 
   def init
@@ -26,6 +26,7 @@ class GameMapViewModel
     init_area_items
     init_large_rubbishes
     init_monsters
+    init_shit_mines
     @package_items_view_model = PackageItemsViewModel.new(@player_view_model)
     @update_times = 0
     @visual_items = []

@@ -94,6 +94,7 @@ require 'messages/monster_message'
 require 'messages/area_enemies_query_message'
 require 'messages/smash_monster_message'
 require 'messages/pet_attack_enemy_message'
+require 'messages/shit_mine_message'
 
 require 'clients/yecai_web_client'
 
@@ -121,6 +122,7 @@ require 'services/user_equipment_service'
 require 'services/large_rubbishes_service'
 require 'services/hit_service'
 require 'services/monsters_service'
+require 'services/message_handler/shit_mine_message_handler'
 
 require 'viewmodels/common_modules/mouse_tips'
 require 'viewmodels/common_modules/player_common_module'

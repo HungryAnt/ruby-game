@@ -11,6 +11,10 @@ class ShitMineViewModel
     @sound_bomb = MediaUtil.get_sample 'skill/SkillBomb_2_5.wav'
   end
 
+  def id
+    @shit_mine.id
+  end
+
   def x
     @shit_mine.x
   end

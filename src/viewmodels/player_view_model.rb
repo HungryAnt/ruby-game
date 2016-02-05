@@ -309,6 +309,10 @@ class PlayerViewModel
     @role.dec_mana GameConfig::CAST_MANA_DEC
   end
 
+  def setup_mine
+    remote_setup_mine
+  end
+
   private
 
   def eat
@@ -402,6 +406,10 @@ class PlayerViewModel
       when Monster::ENEMY_TYPE
         @communication_service.send_smash_monster_message(user_id, area_id, enemy_id)
     end
+  end
+
+  def remote_setup_mine
+    @communication_service.send_shit_mine_message '', get_user_id, get_current_area_id, @role.x, @role.y
   end
 
   def get_current_area_id

@@ -5,7 +5,7 @@ class CommunicationService
     autowired(NetworkService, UserService,
               GameRolesCommunicationHandler, PetCommunicationHandler,
               AreaItemsService, MapUserCountService, LargeRubbishesService,
-              MonstersService)
+              MonstersService, ShitMineMessageHandler)
     @mutex = Mutex.new
     @chat_msgs = []
     @revision = 0
@@ -157,6 +157,11 @@ class CommunicationService
     send pet_msg
   end
 
+  def send_shit_mine_message(shit_mine_id, user_id, area_id, x, y)
+    puts 'send_shit_mine_message'
+    send ShitMineMessage.new(shit_mine_id, user_id, area_id, x, y, ShitMineMessage::SETUP)
+  end
+
   private
   def init_message_handler
     @network_service.register('res_sync_user_message') do |msg_map, params|
@@ -262,6 +267,11 @@ class CommunicationService
     @network_service.register('monster_message') do |msg_map, params|
       msg = MonsterMessage.from_map msg_map
       @monsters_service.add_monster_msg msg
+    end
+
+    @network_service.register('shit_mine_message') do |msg_map, params|
+      msg = ShitMineMessage.from_map msg_map
+      @shit_mine_message_handler.bomb msg
     end
   end
 
