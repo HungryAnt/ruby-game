@@ -225,9 +225,6 @@ class AreaViewModel
   end
 
   def destroy_monster_vm(id, quiet)
-    # @mutex.synchronize {
-    #   @monster_vms = @monster_vms.reject {|item| item.id == id}
-    # }
     find_monster_and(id) { |target_vm| target_vm.capitulate quiet }
   end
 
@@ -265,8 +262,15 @@ class AreaViewModel
     }
   end
 
-  def delete_shit_mine(shit_mine_id)
+  def bomb_shit_mine_vms(shit_mine_id)
+    fine_shit_mine_and(shit_mine_id) { |shit_mine_vm| shit_mine_vm.bomb }
+  end
 
+  def refresh_shit_mine_vms
+    @mutex.synchronize {
+      @shit_mine_vms = @shit_mine_vms.reject {|item| item.should_destroy? }
+      return @shit_mine_vms
+    }
   end
 
   private
@@ -282,5 +286,12 @@ class AreaViewModel
     @covering_views.each do |covering_view|
       covering_view[:visual].draw(covering_view[:x], covering_view[:y], covering_view[:zorder])
     end
+  end
+
+  def fine_shit_mine_and(id)
+    @mutex.synchronize {
+      target_vm = @shit_mine_vms.find {|item| item.id == id}
+      yield target_vm unless target_vm.nil?
+    }
   end
 end

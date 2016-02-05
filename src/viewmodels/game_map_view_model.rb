@@ -54,6 +54,10 @@ class GameMapViewModel
       monster_vm.update area, @player_view_model
     end
 
+    travel_shit_mines do |shit_mine_vm|
+      shit_mine_vm.update area, @player_view_model
+    end
+
     sort_visual_items
 
     goto_area
