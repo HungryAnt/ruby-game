@@ -231,4 +231,17 @@ lambda {
 
   pattern_picnic_2 = 'map/picnic/picnic2/Picnic2_${num}.bmp'
   new_map_covering_anim(:picnic_2_tortoise, pattern_picnic_2, 4, 7, 200, false)
+
+  # colliery
+  pattern_colliery_1 = 'map/colliery/colliery1/Colliery1_${num}.bmp'
+  new_map_covering_anim(:colliery_1_lamp, pattern_colliery_1, 4, 7, 200, false)
+
+  pattern_colliery_2 = 'map/colliery/colliery2/Colliery2_${num}.bmp'
+  new_map_covering_anim(:colliery_2_miner, pattern_colliery_2, 5, 9, 200, false)
+
+  pattern_colliery_3 = 'map/colliery/colliery3/Colliery3_${num}.bmp'
+  new_map_covering_anim(:colliery_3_traffic_light, pattern_colliery_3, 6, 7, 500, false)
+
+  pattern_colliery_5 = 'map/colliery/colliery5/Colliery5_${num}.bmp'
+  new_map_covering_anim(:colliery_5_traffic_light, pattern_colliery_5, 5, 6, 400, false)
 }.call
