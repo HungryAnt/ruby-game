@@ -11,6 +11,7 @@ class AreaViewModel
     @item_vms = []
     @large_rubbish_vms = []
     @monster_vms = []
+    @shit_mine_vms = []
     init_covering
     init_visual_elements
     init_additional_equipment
@@ -151,6 +152,8 @@ class AreaViewModel
     }
   end
 
+  # ---------------------large rubbish & monster
+
   def get_large_rubbish_vms
     @mutex.synchronize {
       return @large_rubbish_vms
@@ -240,6 +243,30 @@ class AreaViewModel
     @mutex.synchronize {
       @monster_vms = []
     }
+  end
+
+  # --------------------- shit mine
+
+  def clear_shit_mine_vms
+    @mutex.synchronize {
+      @shit_mine_vms = []
+    }
+  end
+
+  def add_shit_mine_vm(shit_mine_vm)
+    @mutex.synchronize {
+      @shit_mine_vms << shit_mine_vm
+    }
+  end
+
+  def get_shit_mine_vms
+    @mutex.synchronize {
+      return @shit_mine_vms
+    }
+  end
+
+  def delete_shit_mine(shit_mine_id)
+
   end
 
   private

@@ -371,7 +371,6 @@ class RoleViewModel
 
   def get_anim(key)
     AnimationManager.get_anim key
-    AnimationManager.get_anim key
   end
 
   def draw_chess_piece

@@ -8,6 +8,7 @@ class GameMapViewModel
   include GameAreaItems
   include GameLargeRubbish
   include GameMonster
+  include GameShitMine
 
   def initialize
     autowired(PlayerService, CommunicationService, MapService,
@@ -68,6 +69,7 @@ class GameMapViewModel
     @player_view_model.pets_vms.each { |pet_vm| @visual_items << pet_vm }
     travel_other_pet_vms { |pet_vm| @visual_items << pet_vm }
     get_item_vms.each { |item_vm| @visual_items << item_vm }
+    get_current_area.get_shit_mine_vms.each { |shit_mine_vm| @visual_items << shit_mine_vm }
 
     @visual_items.sort_by! { |item| item.y }
   end

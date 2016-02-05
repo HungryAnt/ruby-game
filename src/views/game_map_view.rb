@@ -133,9 +133,11 @@ class GameMapView < ViewBase
       # when Gosu::KbP
       #   @game_map_view_model.pet_action Pet::State::CUTE
       when Gosu::KbRight
-        @game_map_view_model.switch_to_next_role_type
+        @game_map_view_model.switch_to_next_role_type if GameConfig::DEBUG
       when Gosu::KbLeft
-        @game_map_view_model.switch_to_prev_role_type
+        @game_map_view_model.switch_to_prev_role_type if GameConfig::DEBUG
+      when Gosu::KbB
+        @game_map_view_model.setup_mine
     end
 
     if GameConfig::TEST_MONSTER
