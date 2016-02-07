@@ -4,12 +4,13 @@ module GamePet
     register_update_pet_callback
   end
 
-  def pet_move_to(x, y)
+  def pet_move_to(mouse_x, mouse_y)
     return if @player_view_model.pets_vms.count == 0
+    actual_x, actual_y = to_area_actual_location mouse_x, mouse_y
     map_vm = get_current_map
-    unless map_vm.tile_block? x, y
-      map_vm.mark_target(x, y) unless map_vm.nil?
-      @player_view_model.pet_move_to x, y
+    unless map_vm.tile_block? actual_x, actual_y
+      map_vm.mark_target(actual_x, actual_y) unless map_vm.nil?
+      @player_view_model.pet_move_to actual_x, actual_y
     end
   end
 

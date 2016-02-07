@@ -213,7 +213,7 @@ class RoleViewModel
   def draw_with_area_addition(additional_equipment_vm, auto_scale_info)
     update_scale auto_scale_info, @role.y
 
-    if area_id == :chess
+    if @area_id == :chess
       draw_chess_piece
     else
       additional_equipment_vm.draw(*get_pure_role_feets_location, @role.direction) unless additional_equipment_vm.nil?
@@ -320,6 +320,7 @@ class RoleViewModel
 
   def get_actual_role_location
     x, y = get_pure_role_feets_location
+    return x, y if @area_id == :chess
     vehicle_vm = @equipment_vms[Equipment::Type::VEHICLE]
     underpan_vm = @equipment_vms[Equipment::Type::UNDERPAN]
     y = y - vehicle_vm.height * scale_value unless vehicle_vm.nil?
