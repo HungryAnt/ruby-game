@@ -116,7 +116,7 @@ class PlayerService
       @role.add_equipment Equipment.new(Equipment::Type::UNDERPAN, key)
     end
 
-    [3, 23, 42, 44, 54, 60, 65, 71, 76, 77, 87, 106, 684, 689].each do |num|
+    [3, 23, 42, 44, 54, 60, 65, 71, 76, 77, 87, 106, 232, 684, 689].each do |num|
       key = "handheld_#{num}".to_sym
       @role.add_equipment Equipment.new(Equipment::Type::HANDHELD, key)
     end

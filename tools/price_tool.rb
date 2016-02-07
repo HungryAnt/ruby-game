@@ -282,6 +282,7 @@ handheld_76
 handheld_77
 handheld_87
 handheld_106
+handheld_232
 handheld_684
 handheld_689
 ear_wear_266

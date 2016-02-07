@@ -86,7 +86,7 @@ class HitService
       when Monster::State::ATTACK
         return 35
       when ShitMine::BOMB
-        return 35
+        return 50
     end
   end
 
@@ -132,7 +132,7 @@ class HitService
       when Monster::State::ATTACK
         return GraphicsUtil.pt_in_ellipse? x0, y0, x1, y1, 175, 100
       when ShitMine::BOMB
-        return Gosu::distance(x0, y0, x1, y1) < 60
+        return Gosu::distance(x0, y0, x1, y1) < 70
       else
         return Gosu::distance(x0, y0, x1, y1) < 28
     end

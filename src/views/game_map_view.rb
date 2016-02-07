@@ -136,10 +136,10 @@ class GameMapView < ViewBase
         @game_map_view_model.switch_to_next_role_type if GameConfig::DEBUG
       when Gosu::KbLeft
         @game_map_view_model.switch_to_prev_role_type if GameConfig::DEBUG
-      when Gosu::KbM
-        @game_map_view_model.setup_mine
       when Gosu::KbB
-        @game_map_view_model.bomb_mine
+        @game_map_view_model.setup_mine
+      # when Gosu::KbB
+      #   @game_map_view_model.bomb_mine
     end
 
     if GameConfig::TEST_MONSTER
