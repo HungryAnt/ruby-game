@@ -1,5 +1,6 @@
 require_relative 'visual'
 require_relative 'image'
+require_relative 'animation'
 require_relative 'control'
 require_relative 'container'
 require_relative 'items_container'

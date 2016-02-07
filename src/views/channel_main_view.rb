@@ -57,6 +57,11 @@ class ChannelMainView
     @main_dialog.content = canvas
     @sample_instances = []
 
+    control_hunting_ground = create_anim_channel_control(canvas, 0, 28, 158, 135)
+    control_hunting_ground.on_mouse_left_button_down do
+      show_map_selection_view :vegetable_field, :colliery
+    end
+
     control_rubbish_station = create_channel_control(canvas, 7, 8, 276, 160, 138, 125,
                                                      28, 5, 5, 5, :rubbish_station)
     control_rubbish_station.on_mouse_left_button_down do
@@ -76,7 +81,7 @@ class ChannelMainView
       show_map_selection_view(:my_room, :grass_wood_back, :school, :church, :house, :cart,
                               :ghost_house, :henhouse, :rainy_day, :sled, :market,
                               :snow_village, :river_side, :port, :pool, :xiujuan_house,
-                              :universe1, :universe2, :custom1, :vegetable_field, :picnic, :colliery)
+                              :universe1, :universe2, :custom1, :picnic)
     end
 
     control_police_station = create_channel_control(canvas, 13, 14, 430, 160, 103, 79,
@@ -148,6 +153,29 @@ class ChannelMainView
     @map_selection_view.hide
     pause_all_sample_instances
     @select_map_call_back.call map_id
+  end
+
+  def create_anim_channel_control(canvas, left, top, width, height,
+                                  margin_left=0, margin_top=0, margin_right=0, margin_bottom=0)
+    anim_back = AntGui::Animation.new(AnimationManager.get_anim :channel_hunting_ground_normal)
+    anim_active = AntGui::Animation.new(AnimationManager.get_anim :channel_hunting_ground_active)
+    control = AntGui::Control.new
+    canvas.add anim_back
+    canvas.add anim_active
+    canvas.add control
+    AntGui::Canvas.set_canvas_props(anim_back, left, top, width, height)
+    AntGui::Canvas.set_canvas_props(anim_active, left, top, width, height)
+    AntGui::Canvas.set_canvas_props(control, left + margin_left, top + margin_top,
+                                    width - margin_left - margin_right, height - margin_top - margin_bottom)
+    anim_back.visible = true
+    anim_active.visible = false
+    control.on_mouse_enter do
+      anim_active.visible = true
+    end
+    control.on_mouse_leave do
+      anim_active.visible = false
+    end
+    control
   end
 
   def create_channel_control(canvas, normal_image_num, hover_image_num, left, top, width, height,

@@ -199,6 +199,7 @@ else
     require 'config/anim/mana_anim_config'
     require 'config/anim/shit_anim_config'
     require 'config/anim/skill_anim_config'
+    require 'config/anim/channel_anim_config'
     require 'config/equipment_config'
     require 'config/equipment_vehicle_config'
     require 'config/equipment_eye_wear_config'

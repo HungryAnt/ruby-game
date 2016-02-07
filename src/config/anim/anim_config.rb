@@ -63,3 +63,11 @@ def new_centered_anim(key, pattern, num_pair, interval)
     [pattern, nums, interval]
   }
 end
+
+def new_anim(key, pattern, num_pair, interval)
+  nums = to_simple_anim_nums *num_pair
+  AnimationManager.new_anim(key) {
+    images = AnimationUtil.get_images(pattern, nums)
+    AnimationUtil.get_animation images, interval
+  }
+end
