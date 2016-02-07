@@ -91,9 +91,12 @@ class VillageMapSelectionView
 
   def init_map_selector(map_vms)
     count = map_vms.length
-    row_count = (count + 1) / 2
+    use_tow_column = count > 5
+    row_count = use_tow_column ? (count + 1) / 2 : count
 
-    dialog_width = (ITEM_WIDTH + PADDING) * 2 + HOR_MARGIN
+    dialog_width = ITEM_WIDTH + PADDING * 2
+    dialog_width += HOR_MARGIN + ITEM_WIDTH if use_tow_column
+
     dialog_height = ITEM_HEIGHT * row_count + PADDING * 2 + MARGIN * (row_count - 1)
     dialog_left = (GameConfig::MAP_WIDTH - dialog_width) / 2
     dialog_top = (GameConfig::MAP_HEIGHT - dialog_height) / 2
