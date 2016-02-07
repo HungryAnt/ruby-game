@@ -4,7 +4,7 @@ class ShoppingViewModel
   PAGE_SIZE = 9
 
   def initialize
-    autowired(ShoppingService, PlayerService, UserEquipmentService)
+    autowired(ShoppingService, PlayerService)
   end
 
   def get_goods(category, page_no)
@@ -43,7 +43,6 @@ class ShoppingViewModel
 
   def buy(key)
     @shopping_service.buy(@player_service.user_id, key)
-    @user_equipment_service.update
     @player_service.update_pets
     @player_service.update_equipments
   end

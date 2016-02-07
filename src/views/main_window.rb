@@ -22,6 +22,8 @@ class MainWindow < Gosu::Window
     @font = Gosu::Font.new(20)
 
     init_all_views
+
+    MessageBox.register self
   end
 
   def init_all_views
@@ -88,6 +90,7 @@ class MainWindow < Gosu::Window
   end
 
   def update
+    MessageBox.update
     @current_view.update
     @update_times += 1
     if @update_times == 60
@@ -123,6 +126,8 @@ class MainWindow < Gosu::Window
 
     # img = MediaUtil.get_img 'action_effect/RunEffect_108.bmp'
     # img.draw(0, 0, ZOrder::DIALOG_UI, 1.0, 1.0, 0xff_ffffff, mode = :additive)
+
+    MessageBox.show
   end
 
   def draw_fps
@@ -142,6 +147,7 @@ class MainWindow < Gosu::Window
   end
 
   def button_down(id)
+    return if MessageBox.button_down id
     @current_view.button_down id
 
     if @ready_for_game && GameConfig::DEBUG
@@ -165,6 +171,10 @@ class MainWindow < Gosu::Window
         when Gosu::KbF6
           EquipmentDefinition.print_all_keys
           PetTypeInfo.print_all_pets
+        when Gosu::KbI
+          MessageBox.info 'test1111111111111111', MessageBox::BoxType::BOX_OK
+        when Gosu::KbO
+          MessageBox.info 'test1111111111111111', MessageBox::BoxType::BOX_OK_CANCEL
       end
     end
   end

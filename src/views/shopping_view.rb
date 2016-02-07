@@ -228,8 +228,12 @@ class ShoppingView < ViewBase
   end
 
   def buy(key)
-    @shopping_view_model.buy key
-    active
+    buy_action = proc {
+      @shopping_view_model.buy key
+      active
+    }
+
+    MessageBox.info '是否确定购买?', MessageBox::BoxType::BOX_OK_CANCEL, ok: buy_action
   end
 
   def create_page_panel(left, top, width, height)

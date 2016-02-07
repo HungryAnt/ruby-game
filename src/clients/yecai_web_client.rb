@@ -18,6 +18,21 @@ class YecaiWebClient
     pets
   end
 
+  def self.get_vehicles_by_user_id(user_id)
+    http_client = HttpClientFactory.create
+    http_client.path 'vehicle/getVehicles'
+    http_client.params(userId: user_id)
+    res = http_client.get
+    if res.code != '200'
+      puts "res.code: #{res.code} res.body: #{res.body}"
+      raise RuntimeError.new("res.code: #{res.code}")
+    end
+    vehicles = JSON.parse(res.body)
+    vehicles.map do |vehicle_keys|
+      Equipment.new(Equipment::Type::VEHICLE, vehicle_keys.to_sym)
+    end
+  end
+
   def self.get_equipments_by_user_id(user_id)
     http_client = HttpClientFactory.create
     http_client.path 'userEquipment/'

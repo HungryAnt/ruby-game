@@ -28,8 +28,6 @@ class PlayerService
     if GameConfig::DEBUG
       init_test_equipments
     else
-      vehicles = @user_service.vehicles
-      update_vehicles vehicles
       @wears = @user_service.wears
     end
 
@@ -147,10 +145,7 @@ class PlayerService
   end
 
   def update_vehicles(vehicles)
-    @role.clear_equipment Equipment::Type::VEHICLE
-    vehicles.each do |vehicle|
-      @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, vehicle.to_sym)
-    end
+
   end
 
   def clear_rubbishes
@@ -166,10 +161,14 @@ class PlayerService
 
   def update_equipments
     @role.clear_all_equipment
+    vehicle_equipments = YecaiWebClient.get_vehicles_by_user_id(@user_id)
+    if !vehicle_equipments.nil? && vehicle_equipments.length != 0
+      vehicle_equipments.each { |equipment| @role.add_equipment equipment }
+    end
+
     equipments = YecaiWebClient.get_equipments_by_user_id(@user_id)
-    return if equipments.nil? || equipments.length == 0
-    equipments.each do |equipment|
-      @role.add_equipment equipment
+    if !equipments.nil? && equipments.length != 0
+      equipments.each { |equipment| @role.add_equipment equipment }
     end
   end
 end
