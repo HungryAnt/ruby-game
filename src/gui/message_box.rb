@@ -95,6 +95,6 @@ class MessageBox
 
   def self.get_font
     window_resource_service = get_instance WindowResourceService
-    window_resource_service.get_font 16
+    window_resource_service.get_font 18
   end
 end

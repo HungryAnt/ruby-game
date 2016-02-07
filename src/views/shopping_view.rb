@@ -233,7 +233,7 @@ class ShoppingView < ViewBase
       active
     }
 
-    MessageBox.info '是否确定购买?', MessageBox::BoxType::BOX_OK_CANCEL, ok: buy_action
+    MessageBox.info '您确定购买吗？', MessageBox::BoxType::BOX_OK_CANCEL, ok: buy_action
   end
 
   def create_page_panel(left, top, width, height)
