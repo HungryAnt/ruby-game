@@ -51,6 +51,14 @@ class ShoppingViewModel
     @shopping_service.apply_gift_vehicle @player_service.user_id
   end
 
+  def exchange_shit_mines
+    if @shopping_service.exchange_shit_mines @player_service.user_id
+      @player_service.update_shit_mines
+      return true
+    end
+    false
+  end
+
   def convert_to_money
     @shopping_service.convert_to_money @player_service.user_id
     @player_service.clear_rubbishes

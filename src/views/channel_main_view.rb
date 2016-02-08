@@ -3,7 +3,7 @@ require_relative 'channel_main/map_selection_view'
 
 class ChannelMainView
   def initialize(window)
-    autowired(WindowResourceService, SongService, MapService, MapUserCountService)
+    autowired(WindowResourceService, SongService, MapService, MapUserCountService, PlayerService)
     @window = window
     @font_normal = @window_resource_service.get_normal_font
     init_channel_anims
@@ -249,6 +249,10 @@ class ChannelMainView
     user_count = @map_user_count_service.get_all_user_count
     @font_normal.draw_rel("总在线空雅数:#{user_count}", left + 5, top + height / 2, ZOrder::DIALOG_UI,
                           0, 0.5, 1.0, 1.0, 0xBB_000000)
+
+    @font_normal.draw_rel("炸弹持有数量:#{@player_service.shit_mine_count}",
+                          left + width - 5, top + height / 2, ZOrder::DIALOG_UI,
+                          1.0, 0.5, 1.0, 1.0, 0xBB_000000)
   end
 
   def button_down(id)

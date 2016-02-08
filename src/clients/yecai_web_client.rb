@@ -50,4 +50,16 @@ class YecaiWebClient
       Equipment.new(equipment_type.to_sym, equipment_key.to_sym)
     end
   end
+
+  def self.get_user_shit_mine_count(user_id)
+    http_client = HttpClientFactory.create
+    http_client.path 'shitMine/count'
+    http_client.params(userId: user_id)
+    res = http_client.get
+    if res.code != '200'
+      puts "res.code: #{res.code} res.body: #{res.body}"
+      return 0
+    end
+    res.body.to_i
+  end
 end

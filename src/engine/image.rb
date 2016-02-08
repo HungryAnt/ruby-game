@@ -19,6 +19,9 @@ class CenteredImage
     color = options.include?(:color) ? options[:color] : 0xFF_FFFFFF
     scale_x = options.include?(:scale_x) ? @scale_x * options[:scale_x] : @scale_x
     scale_y = options.include?(:scale_y) ? @scale_y * options[:scale_y] : @scale_y
-    @image.draw_rot(x, y, z, 0, 0.5, 0.5, scale_x, scale_y, color, mode)
+
+    @image.draw(x - (@image.width * scale_x / 2).to_i, y - @image.height * scale_y / 2, z,
+                scale_x, scale_y, color, mode) # 可能清晰些，不确定
+    # @image.draw_rot(x, y, z, 0, 0.5, 0.5, scale_x, scale_y, color, mode)
   end
 end

@@ -310,7 +310,10 @@ class PlayerViewModel
   end
 
   def setup_mine
-    remote_setup_mine
+    if @player_service.shit_mine_count > 0
+      remote_setup_mine
+      @player_service.shit_mine_count -= 1
+    end
   end
 
   private

@@ -4,6 +4,7 @@ require 'securerandom'
 
 class PlayerService
   attr_reader :role, :user_id, :wears
+  attr_accessor :shit_mine_count
 
   def initialize
     autowired(UserService, CommunicationService)
@@ -20,6 +21,7 @@ class PlayerService
     @communication_service.init_sync_user @user_id, user_name
     update_pets unless GameConfig::DEBUG
     update_equipments unless GameConfig::DEBUG
+    update_shit_mines
   end
 
   def update_sync_data
@@ -169,6 +171,14 @@ class PlayerService
     equipments = YecaiWebClient.get_equipments_by_user_id(@user_id)
     if !equipments.nil? && equipments.length != 0
       equipments.each { |equipment| @role.add_equipment equipment }
+    end
+  end
+
+  def update_shit_mines
+    if false #GameConfig::DEBUG
+      @shit_mine_count = 100
+    else
+      @shit_mine_count = YecaiWebClient.get_user_shit_mine_count(@user_id)
     end
   end
 end

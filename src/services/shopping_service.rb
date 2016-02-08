@@ -36,6 +36,14 @@ class ShoppingService
     check_res res
   end
 
+  def exchange_shit_mines(user_id)
+    http_client = HttpClientFactory.create
+    http_client.path 'shitMine/exchange'
+    http_client.params(userId: user_id)
+    res = http_client.post
+    res.code == '200'
+  end
+
   private
 
   def get_goods_actually(goods_type, page_no, page_size)

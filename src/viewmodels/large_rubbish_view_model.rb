@@ -33,7 +33,7 @@ class LargeRubbishViewModel < EnemyViewModel
     #   puts 'OK!!!! image_index == 3'
     # end
     image.draw_rot(@large_rubbish.x, @large_rubbish.y, ZOrder::Player, 0,
-                   0.5, 0.67, scale_value, scale_value)
+                   0.5, 0.83, scale_value, scale_value)
     draw_info_board
     draw_name
     draw_hp

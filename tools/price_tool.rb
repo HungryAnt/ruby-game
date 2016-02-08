@@ -72,67 +72,67 @@ vehicle_456, 1000
 vehicle_439, 4500
 vehicle_192, 2000
 vehicle_461, 2000
-vehicle_125
-vehicle_126
-vehicle_127
-vehicle_132
-vehicle_133
-vehicle_139
-vehicle_143
-vehicle_148
-vehicle_149
-vehicle_153
-vehicle_154
-vehicle_159
-vehicle_160
-vehicle_167
-vehicle_173
-vehicle_177
-vehicle_181
-vehicle_185
-vehicle_191
-vehicle_194
-vehicle_195
-vehicle_198
-vehicle_199
-vehicle_203
-vehicle_204
-vehicle_206
-vehicle_207
-vehicle_211
-vehicle_212
-vehicle_216
-vehicle_217
-vehicle_221
-vehicle_229
-vehicle_235
-vehicle_239
-vehicle_240
-vehicle_244
-vehicle_245
-vehicle_249
-vehicle_250
-vehicle_254
-vehicle_255
-vehicle_259
-vehicle_260
-vehicle_264
-vehicle_265
-vehicle_269
-vehicle_270
-vehicle_274
-vehicle_275
-vehicle_279
-vehicle_280
-vehicle_285
-vehicle_286
-vehicle_290
-vehicle_291
-vehicle_295
-vehicle_296
-vehicle_300
-vehicle2_10
-vehicle2_24
+vehicle_125, 1800
+vehicle_126, 1800
+vehicle_127, 1800
+vehicle_132, 1800
+vehicle_133, 1800
+vehicle_139, 1800
+vehicle_143, 1800
+vehicle_148, 1800
+vehicle_149, 1800
+vehicle_153, 1800
+vehicle_154, 1800
+vehicle_159, 1800
+vehicle_160, 1800
+vehicle_167, 1800
+vehicle_173, 1800
+vehicle_177, 1800
+vehicle_181, 1800
+vehicle_185, 1800
+vehicle_191, 1800
+vehicle_194, 1800
+vehicle_195, 1800
+vehicle_198, 1800
+vehicle_199, 1800
+vehicle_203, 1800
+vehicle_204, 1800
+vehicle_206, 1800
+vehicle_207, 1800
+vehicle_211, 1800
+vehicle_212, 1800
+vehicle_216, 1800
+vehicle_217, 1800
+vehicle_221, 1800
+vehicle_229, 1800
+vehicle_235, 1800
+vehicle_239, 1800
+vehicle_240, 1800
+vehicle_244, 1800
+vehicle_245, 1800
+vehicle_249, 1800
+vehicle_250, 1800
+vehicle_254, 1800
+vehicle_255, 1800
+vehicle_259, 1800
+vehicle_260, 1800
+vehicle_264, 1800
+vehicle_265, 1800
+vehicle_269, 1800
+vehicle_270, 1800
+vehicle_274, 1800
+vehicle_275, 1800
+vehicle_279, 1800
+vehicle_280, 1800
+vehicle_285, 1800
+vehicle_286, 1800
+vehicle_290, 1800
+vehicle_291, 1800
+vehicle_295, 1800
+vehicle_296, 1800
+vehicle_300, 1800
+vehicle2_10, 1800
+vehicle2_24, 1800
 vehicle2_26, 400
 vehicle2_35, 550
 vehicle2_39, 550
@@ -261,30 +261,30 @@ hat2_25, 1000
 hat2_42, 1000
 hat2_47, 1000
 hat2_49, 1000
-underpan_13
-underpan_17
-underpan_102
-underpan_234
-underpan_349
-underpan_418
-underpan_443
-underpan_454
-underpan_471
-handheld_3
-handheld_23
-handheld_42
-handheld_44
-handheld_54
-handheld_60
-handheld_65
-handheld_71
-handheld_76
-handheld_77
-handheld_87
-handheld_106
-handheld_232
-handheld_684
-handheld_689
+underpan_13, 2500
+underpan_17, 2500
+underpan_102, 2500
+underpan_234, 2500
+underpan_349, 2500
+underpan_418, 2500
+underpan_443, 2500
+underpan_454, 2500
+underpan_471, 2500
+handheld_3, 10
+handheld_23, 10
+handheld_42, 10
+handheld_44, 10
+handheld_54, 10
+handheld_60, 10
+handheld_65, 10
+handheld_71, 10
+handheld_76, 10
+handheld_77, 10
+handheld_87, 10
+handheld_106, 10
+handheld_232, 20
+handheld_684, 20
+handheld_689, 20
 ear_wear_266
 ear_wear_292
 ear_wear_342

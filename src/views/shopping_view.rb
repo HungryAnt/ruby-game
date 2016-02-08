@@ -6,7 +6,7 @@ class ShoppingView < ViewBase
   GOODS_PAY_BUTTON_HEIGHT = 25
 
   PREVIEW_X = 590
-  PREVIEW_Y = 260
+  PREVIEW_Y = 230
   PREVIEW_BUTTON_HEIGHT = 25
   PREVIEW_BUTTON_WIDTH = 50
   PREVIEW_DIRECTION_MARGIN = 60
@@ -42,12 +42,13 @@ class ShoppingView < ViewBase
 
   def initialize(window)
     super
-    autowired(WindowResourceService, AccountService, UserService, ShoppingViewModel)
+    autowired(WindowResourceService, AccountService, UserService, ShoppingViewModel, PlayerService)
     init_money
     @font = @window_resource_service.get_font 20
     @page_no = @total_page_count = 1
     @current_goods_type = Equipment::Type::VEHICLE
     init_role_view
+    @font_normal = @window_resource_service.get_normal_font
   end
 
   def init_role_view
@@ -198,9 +199,8 @@ class ShoppingView < ViewBase
             buy_button.foreground_color = COLOR_BTN_BUY_EXIST_FORE
             buy_button.background_color = COLOR_BTN_BUY_EXIST_BACK
           else
-            buy_button = create_button '购买'
+            buy_button = create_button '购买', COLOR_BTN_BUY_NEW_BACK
             buy_button.foreground_color = COLOR_BTN_BUY_NEW_FORE
-            buy_button.background_color = COLOR_BTN_BUY_NEW_BACK
             buy_button.on_mouse_left_button_down do
               buy item[:key]
             end
@@ -279,12 +279,17 @@ class ShoppingView < ViewBase
     right_panel = AntGui::Canvas.new
     AntGui::Canvas.set_canvas_props right_panel, left, top, width, height
 
-    button_height = 34
+    button_height = 36
 
     recharge_button = create_button '【土豪充值入口】'
     recharge_button.on_mouse_left_button_down do
       recharge_url = NetworkConfig::RECHARGE_URL
       system "start explorer #{recharge_url}"
+    end
+
+    shit_mine_button = create_button '兑换50枚炸弹'
+    shit_mine_button.on_mouse_left_button_down do
+      exchange_shit_mines
     end
 
     exchange_button = create_button '所有垃圾兑换成货币'
@@ -302,7 +307,7 @@ class ShoppingView < ViewBase
       @exit_call_back.call
     end
 
-    margin = 25
+    margin = 15
     y = height - button_height
     AntGui::Canvas.set_canvas_props quit_button, 0, y, width, button_height
     y -= button_height + margin
@@ -310,11 +315,14 @@ class ShoppingView < ViewBase
     y -= button_height + margin
     AntGui::Canvas.set_canvas_props exchange_button, 0, y, width, button_height
     y -= button_height + margin
+    AntGui::Canvas.set_canvas_props shit_mine_button, 0, y, width, button_height
+    y -= button_height + margin
     AntGui::Canvas.set_canvas_props recharge_button, 0, y, width, button_height
 
     right_panel.add quit_button
     right_panel.add gift_button
     right_panel.add exchange_button
+    right_panel.add shit_mine_button
     right_panel.add recharge_button
     right_panel
   end
@@ -322,6 +330,19 @@ class ShoppingView < ViewBase
   def apply_gift_vehicle
     @shopping_view_model.apply_gift_vehicle
     active
+  end
+
+  def exchange_shit_mines
+    action = lambda {
+      if @shopping_view_model.exchange_shit_mines
+        message = '兑换成功'
+      else
+        message = '兑换失败'
+      end
+      MessageBox::info message, MessageBox::BoxType::BOX_OK
+    }
+
+    MessageBox::info '确定使用30个物资兑换50枚便便炸弹吗？', MessageBox::BoxType::BOX_OK_CANCEL, ok: action
   end
 
   def convert_to_money
@@ -397,6 +418,10 @@ class ShoppingView < ViewBase
     # x += money_image_width + margin
     # @font_money.draw_rel('99', x, y, z, 0, 0.5, 1.0, 1.0, 0xFF_905810)
     # x += money_value_width + margin
+
+    @font_normal.draw_rel("炸弹持有数量:#{@player_service.shit_mine_count}",
+                          left + width - 5, top + height / 2, ZOrder::DIALOG_UI,
+                          1.0, 0.5, 1.0, 1.0, 0xBB_000000)
   end
 
   def update
