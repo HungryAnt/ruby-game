@@ -67,7 +67,7 @@ class PlayerPetViewModel < PetViewModel
     remote_move_to target_x, target_y
   end
 
-  def attack
+  def attack(quiet=false)
     super
     remote_sync_data PetMessage::ATTACK
   end
@@ -143,13 +143,11 @@ class PlayerPetViewModel < PetViewModel
 
   def remote_sync_data(action = PetMessage::APPEAR, destination={})
     pet_msg = PetMessage.new @pet.pet_id, @pet.pet_type, action, @pet.to_map,
-                             get_current_map_id, get_current_area_id,
-                             destination
+                             get_current_map_id, get_current_area_id, destination
     @communication_service.send_pet_message pet_msg
   end
 
   def remote_attack_enemy(enemy_type, enemy_id)
-    remote_sync_data PetMessage::ATTACK
     user_id = get_user_id
     area_id = get_current_area_id
     @communication_service.send_pet_attack_enemy_message pet_id, user_id, area_id, enemy_type, enemy_id

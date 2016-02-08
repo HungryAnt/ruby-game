@@ -161,7 +161,12 @@ module GameRole
           role_vm.set_direction role_map['direction'].to_i
 
           Equipment.role_equipment_types.each do |equipment_type|
-            role_vm.equip_vm = check_and_generate_equipment_vm role_map, equipment_type
+            equip_vm = check_and_generate_equipment_vm role_map, equipment_type
+            if equip_vm.nil?
+              role_vm.un_equip equipment_type
+            else
+              role_vm.equip_vm = equip_vm
+            end
           end
 
           action = role_map['action'].to_sym

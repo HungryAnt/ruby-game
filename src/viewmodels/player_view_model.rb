@@ -282,6 +282,7 @@ class PlayerViewModel
   end
 
   def take_pets
+    @pets_vms.each { |pet_vm| pet_vm.disappear }
     @pets_vms = []
   end
 

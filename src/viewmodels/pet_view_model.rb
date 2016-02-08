@@ -44,8 +44,8 @@ class PetViewModel
     draw_anim
   end
 
-  def attack
-    @sound_smash.play
+  def attack(quiet=false)
+    @sound_smash.play unless quiet
     @attack_begin_time = Gosu::milliseconds
     anim_goto_begin
   end

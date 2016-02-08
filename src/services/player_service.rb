@@ -175,7 +175,7 @@ class PlayerService
   end
 
   def update_shit_mines
-    if false #GameConfig::DEBUG
+    if GameConfig::DEBUG
       @shit_mine_count = 100
     else
       @shit_mine_count = YecaiWebClient.get_user_shit_mine_count(@user_id)
