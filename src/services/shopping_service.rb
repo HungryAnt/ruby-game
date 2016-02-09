@@ -36,6 +36,14 @@ class ShoppingService
     check_res res
   end
 
+  def obtain_daily_red_packet(user_id)
+    http_client = HttpClientFactory.create
+    http_client.path 'redPacket/obtainDailyRedPacket'
+    http_client.params(userId: user_id)
+    res = http_client.post
+    res.code == '200'
+  end
+
   def exchange_shit_mines(user_id)
     http_client = HttpClientFactory.create
     http_client.path 'shitMine/exchange'

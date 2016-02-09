@@ -51,6 +51,10 @@ class ShoppingViewModel
     @shopping_service.apply_gift_vehicle @player_service.user_id
   end
 
+  def obtain_daily_red_packet
+    @shopping_service.obtain_daily_red_packet @player_service.user_id
+  end
+
   def exchange_shit_mines
     if @shopping_service.exchange_shit_mines @player_service.user_id
       @player_service.update_shit_mines

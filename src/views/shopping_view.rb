@@ -76,7 +76,7 @@ class ShoppingView < ViewBase
     tab_panel_width = GOODS_ITEM_WIDTH * GOODS_COL_COUNT + GOODS_MARGIN * (GOODS_COL_COUNT - 1) + GOODS_PADDING * 2
     tab_panel_height = 32
     goods_panel_left = tab_panel_left
-    goods_panel_top = 100
+    goods_panel_top = 120
     goods_panel_width = tab_panel_width
     goods_panel_height = GOODS_ITEM_HEIGHT * GOODS_ROW_COUNT + GOODS_MARGIN * (GOODS_ROW_COUNT - 1) + GOODS_PADDING * 2
     page_panel_left = goods_panel_left
@@ -279,12 +279,17 @@ class ShoppingView < ViewBase
     right_panel = AntGui::Canvas.new
     AntGui::Canvas.set_canvas_props right_panel, left, top, width, height
 
-    button_height = 36
+    button_height = 30
 
     recharge_button = create_button '【土豪充值入口】'
     recharge_button.on_mouse_left_button_down do
       recharge_url = NetworkConfig::RECHARGE_URL
       system "start explorer #{recharge_url}"
+    end
+
+    red_packet_button = create_button '领取每日喜庆红包'
+    red_packet_button.on_mouse_left_button_down do
+      obtain_daily_red_packet
     end
 
     shit_mine_button = create_button '兑换50枚炸弹'
@@ -307,29 +312,33 @@ class ShoppingView < ViewBase
       @exit_call_back.call
     end
 
+    buttons = [recharge_button, red_packet_button, shit_mine_button, exchange_button,
+               gift_button, quit_button]
+
     margin = 15
     y = height - button_height
-    AntGui::Canvas.set_canvas_props quit_button, 0, y, width, button_height
-    y -= button_height + margin
-    AntGui::Canvas.set_canvas_props gift_button, 0, y, width, button_height
-    y -= button_height + margin
-    AntGui::Canvas.set_canvas_props exchange_button, 0, y, width, button_height
-    y -= button_height + margin
-    AntGui::Canvas.set_canvas_props shit_mine_button, 0, y, width, button_height
-    y -= button_height + margin
-    AntGui::Canvas.set_canvas_props recharge_button, 0, y, width, button_height
+    buttons.reverse.each do |button|
+      AntGui::Canvas.set_canvas_props button, 0, y, width, button_height
+      y -= button_height + margin
+    end
 
-    right_panel.add quit_button
-    right_panel.add gift_button
-    right_panel.add exchange_button
-    right_panel.add shit_mine_button
-    right_panel.add recharge_button
+    buttons.each { |button| right_panel.add button }
     right_panel
   end
 
   def apply_gift_vehicle
     @shopping_view_model.apply_gift_vehicle
     active
+  end
+
+  def obtain_daily_red_packet
+    if @shopping_view_model.obtain_daily_red_packet
+      message = '领取成功'
+      active
+    else
+      message = '领取失败，仅节假日发放，每日限领一次'
+    end
+    MessageBox::info message, MessageBox::BoxType::BOX_OK
   end
 
   def exchange_shit_mines

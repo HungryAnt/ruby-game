@@ -55,6 +55,7 @@ class MapViewModel
     @areas.each do |area_vm|
       area_vm.clear_item_vms
       area_vm.clear_enemy_vms
+      area_vm.clear_shit_mine_vms
     end
   end
 end
