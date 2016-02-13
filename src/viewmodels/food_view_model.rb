@@ -14,7 +14,7 @@ class FoodViewModel < ItemViewModel
     update_scale auto_scale_info, y
 
     if @food.visible
-      z_order = ZOrder::Player # @food.eating && !@food.covered ? ZOrder::Player : ZOrder::Food
+      z_order = @food.covered ? ZOrder::Food : ZOrder::Player
       @image.draw_rot(@food.x, @food.y, z_order, 0, 0.5, 0.5, scale_value, scale_value)
 
       if @food.energy < @food.max_energy

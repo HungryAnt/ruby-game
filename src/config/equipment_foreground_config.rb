@@ -67,4 +67,105 @@ lambda {
 
   create_equipment_anims(equipment, 241, down_nums_pair: [0, 3], up_nums_pair: [4, 7], hor_nums_pair: [8, 11])
   set_equipment_properties(equipment, 241, left: [0, -1], up: [8, 0], down: [8, 0])
+
+  # 1.1.1
+  create_equipment_anims(equipment, 246, same_nums_pair: [0, 15])
+  set_equipment_properties(equipment, 246, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 252, down_nums_pair: [0, 30], up_nums_pair: [31, 61], hor_nums_pair: [62, 84])
+  set_equipment_properties(equipment, 252, left: [14, -14], up: [0, -14], down: [0, -14])
+
+  create_equipment_anims(equipment, 256, down_nums_pair: [0, 7], up_nums_pair: [8, 15], hor_nums_pair: [16, 23])
+  set_equipment_properties(equipment, 256, left: [11, -3], up: [17, -3], down: [17, -3])
+
+  create_equipment_anims(equipment, 271, same_nums_pair: [0, 47])
+  set_equipment_properties(equipment, 271, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 287, same_nums_pair: [0, 17])
+  set_equipment_properties(equipment, 287, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 302, down_nums_pair: [0, 3], up_nums_pair: [4, 5], hor_nums_pair: [6, 9])
+  set_equipment_properties(equipment, 302, left: [-2, -3], up: [0, -10], down: [0, -7])
+
+  create_equipment_anims(equipment, 307, same_nums_pair: [0, 9])
+  set_equipment_properties(equipment, 307, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 317, same_nums_pair: [0, 11])
+  set_equipment_properties(equipment, 317, left: [-1, 0], up: [-1, 0], down: [-1, 0])
+
+  create_equipment_anims(equipment, 383, same_nums_pair: [0, 5])
+  set_equipment_properties(equipment, 383, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 389, same_nums_pair: [0, 4])
+  set_equipment_properties(equipment, 389, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 398, down_nums_pair: [0, 7], up_nums_pair: [8, 15], hor_nums_pair: [16, 23])
+  set_equipment_properties(equipment, 398, left: [0, -30], up: [0, -30], down: [0, -30])
+
+  create_equipment_anims(equipment, 426, same_nums_pair: [0, 12])
+  set_equipment_properties(equipment, 426, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 447, same_nums_pair: [0, 9])
+  set_equipment_properties(equipment, 447, left: [-2, 0], up: [-2, 0], down: [-2, 0])
+
+  create_equipment_anims(equipment, 451, same_nums_pair: [0, 5])
+  set_equipment_properties(equipment, 451, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 457, same_nums_pair: [0, 2])
+  set_equipment_properties(equipment, 457, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 464, same_nums_pair: [0, 5])
+  set_equipment_properties(equipment, 464, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 482, same_nums_pair: [0, 7])
+  set_equipment_properties(equipment, 482, left: [1, 0], up: [1, 0], down: [1, 0])
+
+  create_equipment_anims(equipment, 488, same_nums_pair: [0, 7])
+  set_equipment_properties(equipment, 488, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 493, same_nums_pair: [0, 5])
+  set_equipment_properties(equipment, 493, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 494, same_nums_pair: [0, 14])
+  set_equipment_properties(equipment, 494, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 499, same_nums_pair: [0, 5])
+  set_equipment_properties(equipment, 499, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 505, same_nums_pair: [0, 23])
+  set_equipment_properties(equipment, 505, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 522, same_nums_pair: [0, 9])
+  set_equipment_properties(equipment, 522, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 546, same_nums_pair: [0, 9])
+  set_equipment_properties(equipment, 546, left: [0, -2], up: [0, -2], down: [0, -2])
+
+  create_equipment_anims(equipment, 561, same_nums_pair: [0, 8])
+  set_equipment_properties(equipment, 561, left: [0, -3], up: [0, -3], down: [0, -3])
+
+  create_equipment_anims(equipment, 576, same_nums_pair: [0, 6])
+  set_equipment_properties(equipment, 576, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 590, same_nums_pair: [0, 12])
+  set_equipment_properties(equipment, 590, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 595, same_nums_pair: [0, 3])
+  set_equipment_properties(equipment, 595, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 619, same_nums_pair: [0, 6])
+  set_equipment_properties(equipment, 619, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 624, same_nums_pair: [0, 20])
+  set_equipment_properties(equipment, 624, left: [0, -2], up: [0, -2], down: [0, -2])
+
+  create_equipment_anims(equipment, 629, same_nums_pair: [0, 7])
+  set_equipment_properties(equipment, 629, left: [0, -10], up: [0, -10], down: [0, -10])
+
+  create_equipment_anims(equipment, 633, same_nums_pair: [0, 9])
+  set_equipment_properties(equipment, 633, left: [0, 0], up: [0, 0], down: [0, 0])
+
+  create_equipment_anims(equipment, 639, same_nums_pair: [0, 24])
+  set_equipment_properties(equipment, 639, left: [1, 0], up: [1, 0], down: [1, 0])
+
 }.call

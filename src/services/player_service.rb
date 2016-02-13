@@ -111,12 +111,16 @@ class PlayerService
     #   @role.add_equipment Equipment.new(Equipment::Type::HAT, key)
     # end
 
-    [13, 17, 102, 234, 349, 418, 443, 454, 471].each do |num|
+    [#13, 17, 102, 234, 349, 418, 443, 454, 471,
+        485, 492, 508, 526, 532, 550].each do |num|
       key = "underpan_#{num}".to_sym
       @role.add_equipment Equipment.new(Equipment::Type::UNDERPAN, key)
     end
 
-    [3, 23, 42, 44, 54, 60, 65, 71, 76, 77, 87, 106, 232, 684, 689].each do |num|
+    [#3, 23, 42, 44, 54, 60, 65, 71, 76, 77, 87, 106, 232, 684, 689
+        110, 112, 117, 128, 137, 146, 151, 218, 323, 328, 333, 356, 366, 428, 483,
+        530, 535, 541, 565, 567, 571, 591
+    ].each do |num|
       key = "handheld_#{num}".to_sym
       @role.add_equipment Equipment.new(Equipment::Type::HANDHELD, key)
     end
@@ -126,13 +130,17 @@ class PlayerService
       @role.add_equipment Equipment.new(Equipment::Type::EAR_WEAR, key)
     end
 
-    [7, 19, 55, 64, 79, 213, 225].each do |num|
+    [#7, 19, 55, 64, 79, 213, 225
+        251, 297, 347, 415, 420, 435, 445, 536].each do |num|
       key = "background_#{num}".to_sym
       @role.add_equipment Equipment.new(Equipment::Type::BACKGROUND, key)
     end
 
-    [57, 63, 70, 78, 84,
-     92, 98, 99, 116, 134, 140, 161, 164, 179, 186, 196, 208, 215, 224, 230, 237, 241].each do |num|
+    [#57, 63, 70, 78, 84,
+     #92, 98, 99, 116, 134, 140, 161, 164, 179, 186, 196, 208, 215, 224, 230, 237, 241
+     246, 252, 256, 271, 287, 302, 307, 317, 383, 389, 398, 426, 447, 451, 457, 464, 482,
+     488, 493, 494, 499, 505, 522, 546, 561, 576, 590, 595, 619, 624, 629, 633, 639
+    ].each do |num|
       key = "foreground_#{num}".to_sym
       @role.add_equipment Equipment.new(Equipment::Type::FOREGROUND, key)
     end

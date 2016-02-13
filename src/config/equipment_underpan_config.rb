@@ -28,4 +28,23 @@ lambda {
   create_equipment_anims(underpan, 471, same_nums_pair:[0, 15])
   set_equipment_properties(underpan, 471, height: 22, left: [0, -30], up: [0, -30], down: [0, -30], speed_up:0.5)
 
+  # 1.1.1
+  create_equipment_anims(underpan, 485, down_nums_pair:[0, 11], up_nums_pair:[0, 11], hor_nums_pair:[12, 23])
+  set_equipment_properties(underpan, 485, height: 15, left: [5, -31], up: [-5, -31], down: [-5, -31], speed_up:0.5)
+
+  create_equipment_anims(underpan, 492, same_nums_pair:[0, 7])
+  set_equipment_properties(underpan, 492, height: 22, left: [0, -22], up: [0, -22], down: [0, -22], speed_up:0.5)
+
+  create_equipment_anims(underpan, 508, same_nums_pair:[0, 23])
+  set_equipment_properties(underpan, 508, height: 33, left: [4, -2], up: [4, -2], down: [4, -2], speed_up:0.5)
+
+  create_equipment_anims(underpan, 526, same_nums_pair:[0, 7])
+  set_equipment_properties(underpan, 526, height: 22, left: [0, -23], up: [0, -23], down: [0, -23], speed_up:0.5)
+
+  create_equipment_anims(underpan, 532, down_nums_pair:[0, 15], up_nums_pair:[0, 15], hor_nums_pair:[16, 23])
+  set_equipment_properties(underpan, 532, height: 26, left: [0, -16], up: [0, -16], down: [0, -16], speed_up:0.5)
+
+  create_equipment_anims(underpan, 550, same_nums_pair:[0, 7])
+  set_equipment_properties(underpan, 550, height: 22, left: [0, -45], up: [0, -45], down: [0, -45], speed_up:0.5)
+
 }.call
