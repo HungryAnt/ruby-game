@@ -270,21 +270,49 @@ underpan_418, 2500
 underpan_443, 2500
 underpan_454, 2500
 underpan_471, 2500
-handheld_3, 10
-handheld_23, 10
-handheld_42, 10
-handheld_44, 10
-handheld_54, 10
-handheld_60, 10
-handheld_65, 10
-handheld_71, 10
-handheld_76, 10
-handheld_77, 10
-handheld_87, 10
-handheld_106, 10
-handheld_232, 20
-handheld_684, 20
-handheld_689, 20
+underpan_485, 2500
+underpan_492, 2500
+underpan_508, 2500
+underpan_526, 2500
+underpan_532, 2500
+underpan_550, 2500
+handheld_3, 1000
+handheld_23, 1000
+handheld_42, 1000
+handheld_44, 1000
+handheld_54, 1000
+handheld_60, 1000
+handheld_65, 1000
+handheld_71, 1000
+handheld_76, 1000
+handheld_77, 1000
+handheld_87, 1000
+handheld_106, 1000
+handheld_232, 2000
+handheld_684, 2000
+handheld_689, 2000
+handheld_110, 1000
+handheld_112, 1000
+handheld_117, 1000
+handheld_128, 1000
+handheld_137, 1000
+handheld_146, 1000
+handheld_151, 1000
+handheld_218, 2000
+handheld_323, 2000
+handheld_328, 1000
+handheld_333, 2000
+handheld_356, 1000
+handheld_366, 1000
+handheld_428, 1000
+handheld_483, 1000
+handheld_530, 1000
+handheld_535, 1000
+handheld_541, 1000
+handheld_565, 1000
+handheld_567, 1000
+handheld_571, 1000
+handheld_591, 1000
 ear_wear_266
 ear_wear_292
 ear_wear_342
@@ -329,6 +357,14 @@ background_64
 background_79
 background_213
 background_225
+background_251
+background_297
+background_347
+background_415
+background_420
+background_435
+background_445
+background_536
 foreground_57
 foreground_63
 foreground_70
@@ -351,6 +387,39 @@ foreground_224
 foreground_230
 foreground_237
 foreground_241
+foreground_246
+foreground_252
+foreground_256
+foreground_271
+foreground_287
+foreground_302
+foreground_307
+foreground_317
+foreground_383
+foreground_389
+foreground_398
+foreground_426
+foreground_447
+foreground_451
+foreground_457
+foreground_464
+foreground_482
+foreground_488
+foreground_493
+foreground_494
+foreground_499
+foreground_505
+foreground_522
+foreground_546
+foreground_561
+foreground_576
+foreground_590
+foreground_595
+foreground_619
+foreground_624
+foreground_629
+foreground_633
+foreground_639
 PRICE
 
 def read_equipments
