@@ -17,8 +17,7 @@ class SmashMonsterMessage
   end
 
   def self.from_map(map)
-    new(map['data']['id'],
-        map['data']['user_id'],
+    new(map['data']['user_id'],
         map['data']['area_id'],
         map['data']['monster_id'])
   end
