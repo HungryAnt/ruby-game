@@ -5,7 +5,8 @@ module GameShitMine
         mine = ShitMine.new shit_mine_message.id, shit_mine_message.user_id,
                             shit_mine_message.x, shit_mine_message.y
         mine_vm = ShitMineViewModel.new mine
-        get_current_area.add_shit_mine_vm mine_vm
+        area_vm = @map_service.get_area shit_mine_message.area_id
+        area_vm.add_shit_mine_vm mine_vm unless area_vm.nil?
       elsif shit_mine_message.action == ShitMineMessage::BOMB
         map_area_shit_mine_bomb shit_mine_message.id
       end

@@ -43,6 +43,10 @@ class RoleViewModel
     @role.un_equip equipment_type
   end
 
+  def get_equip_vm(equipment_type)
+    @equipment_vms[equipment_type]
+  end
+
   def un_equip_all
     Equipment::role_equipment_types.each do |equipment_type|
       @equipment_vms[equipment_type] = nil

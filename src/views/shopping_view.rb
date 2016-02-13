@@ -222,8 +222,13 @@ class ShoppingView < ViewBase
 
   def wear(equipment_type, key)
     if Equipment::role_equipment_types.include? equipment_type
-      equipment_vm = EquipmentViewModelFactory.create_equipment_from_key equipment_type, key.to_sym
-      @role_preview.equip_vm = equipment_vm
+      current_equip_vm = @role_preview.get_equip_vm equipment_type
+      if current_equip_vm.nil? || current_equip_vm.key != key
+        equipment_vm = EquipmentViewModelFactory.create_equipment_from_key equipment_type, key.to_sym
+        @role_preview.equip_vm = equipment_vm
+      else
+        @role_preview.un_equip equipment_type
+      end
     end
   end
 

@@ -1,4 +1,16 @@
 PRICE_CONFIG = <<PRICE
+vehicle2_10, 1800
+vehicle2_24, 1800
+vehicle2_26, 400
+vehicle2_35, 550
+vehicle2_39, 550
+vehicle2_41, 550
+vehicle2_43, 550
+vehicle2_69, 2000
+vehicle2_119, 2000
+dragon_DragonRed, 99999
+dragon_DragonBlack, 99999
+dragon_DragonBlue, 99999
 vehicle_39, 350
 vehicle_40, 350
 vehicle_50, 500
@@ -131,18 +143,6 @@ vehicle_291, 1800
 vehicle_295, 1800
 vehicle_296, 1800
 vehicle_300, 1800
-vehicle2_10, 1800
-vehicle2_24, 1800
-vehicle2_26, 400
-vehicle2_35, 550
-vehicle2_39, 550
-vehicle2_41, 550
-vehicle2_43, 550
-vehicle2_69, 2000
-vehicle2_119, 2000
-dragon_DragonRed, 99999
-dragon_DragonBlack, 99999
-dragon_DragonBlue, 99999
 eye_wear_1
 eye_wear_17, 500
 eye_wear_20, 500
