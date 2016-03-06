@@ -50,8 +50,11 @@ class PlayerService
 
         # 167, 173, 177, 181, 185, 191, 194, 195, 198, 199, 203, 204, 206, 207,
         # 211, 212, 216, 217, 221, 229, 235, 239, 240, 244, 245, 249, 250, 254,
-        255, 259, 260, 264, 265, 269, 270, 274, 275, 279, 280, 285, 286, 290,
-        291, 295, 296, 300
+        # 255, 259, 260, 264, 265, 269, 270, 274, 275, 279, 280, 285, 286, 290,
+        # 291, 295, 296, 300
+        305, 306, 310, 311, 314, 315, 320, 337, 341, 350,
+        351, 353, 360, 364, 365, 367, 368, 372, 373, 377,
+        382, 387, 388
     ].each do |num|
       vehicle_key = "vehicle_#{num}".to_sym
       @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
@@ -62,10 +65,11 @@ class PlayerService
     #   vehicle_key = "vehicle2_#{num}".to_sym
     #   @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
     # end
-    %w(DragonRed DragonBlack DragonBlue).each do |dragon|
-      dragon_key = "dragon_#{dragon}".to_sym
-      @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, dragon_key)
-    end
+
+    # %w(DragonRed DragonBlack DragonBlue).each do |dragon|
+    #   dragon_key = "dragon_#{dragon}".to_sym
+    #   @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, dragon_key)
+    # end
 
     PetTypeInfo.all_pet_types.each do |pet_type|
       @role.pet_package << Pet.new(SecureRandom.uuid, pet_type, 200, 200)
@@ -76,7 +80,9 @@ class PlayerService
       @role.add_equipment Equipment.new(Equipment::Type::EYE_WEAR, key)
     end
 
-    [1, 8, 9, 29, 32, 53, 62, 69, 226, 261, 281, 357, 375
+    [#1, 8, 9, 29, 32, 53, 62, 69, 226, 261, 281, 357, 375
+        369, 378, 411, 421, 431, 448, 487, 501, 511, 523, 528, 542, 553, 566,
+        596, 605, 614, 799, 812, 829
     ].each do |num|
       key = "eye_wear2_#{num}".to_sym
       @role.add_equipment Equipment.new(Equipment::Type::EYE_WEAR, key)
@@ -97,19 +103,25 @@ class PlayerService
         # 2, 18, 20, 21, 22, 24, 37, 38, 392, 395,
         # 5, 10, 12, 14, 25, 26, 27, 34, 35, 36, 41, 43, 45, 46, 47, 49, 56, 61,
         # 66, 68, 72, 73, 80, 85, 86, 88, 93, 95, 100, 101,
-        105, 107, 111, 113, 118, 120, 122, 123, 124, 129, 135, 136, 141, 142,
-        145, 147, 150, 152, 156, 157,
-        158, 162, 166, 170, 171,
-        423
+        # 105, 107, 111, 113, 118, 120, 122, 123, 124, 129, 135, 136, 141, 142,
+        # 145, 147, 150, 152, 156, 157,
+        # 158, 162, 166, 170, 171,
+        # 423
+        175, 176, 180, 183, 184, 187, 189, 190, 193, 197,
+        201, 202, 205, 209, 210, 214, 219, 223, 227, 231,
+        233, 236, 238, 242, 243, 247, 248, 257, 258, 262,
+        263, 267, 268
     ].each do |num|
       key = "hat_#{num}".to_sym
       @role.add_equipment Equipment.new(Equipment::Type::HAT, key)
     end
 
-    # [12, 23, 25, 42, 47, 49].each do |num|
-    #   key = "hat2_#{num}".to_sym
-    #   @role.add_equipment Equipment.new(Equipment::Type::HAT, key)
-    # end
+    [#12, 23, 25, 42, 47, 49
+        2, 5, 9, 14, 28, 30, 37, 38, 40, 45, 48, 51, 54, 59, 68, 72, 130
+    ].each do |num|
+      key = "hat2_#{num}".to_sym
+      @role.add_equipment Equipment.new(Equipment::Type::HAT, key)
+    end
 
     [#13, 17, 102, 234, 349, 418, 443, 454, 471,
         485, 492, 508, 526, 532, 550].each do |num|

@@ -162,6 +162,26 @@ eye_wear2_261
 eye_wear2_281
 eye_wear2_357
 eye_wear2_375
+eye_wear2_369
+eye_wear2_378
+eye_wear2_411
+eye_wear2_421
+eye_wear2_431
+eye_wear2_448
+eye_wear2_487
+eye_wear2_501
+eye_wear2_511
+eye_wear2_523
+eye_wear2_528
+eye_wear2_542
+eye_wear2_553
+eye_wear2_566
+eye_wear2_596
+eye_wear2_605
+eye_wear2_614
+eye_wear2_799
+eye_wear2_812
+eye_wear2_829
 wing_16, 1000
 wing_48, 1000
 wing_51, 500
@@ -255,12 +275,62 @@ hat_166
 hat_170
 hat_171
 hat_423
+hat_175
+hat_176
+hat_180
+hat_183
+hat_184
+hat_187
+hat_189
+hat_190
+hat_193
+hat_197
+hat_201
+hat_202
+hat_205
+hat_209
+hat_210
+hat_214
+hat_219
+hat_223
+hat_227
+hat_231
+hat_233
+hat_236
+hat_238
+hat_242
+hat_243
+hat_247
+hat_248
+hat_257
+hat_258
+hat_262
+hat_263
+hat_267
+hat_268
 hat2_12, 1000
 hat2_23, 1000
 hat2_25, 1000
 hat2_42, 1000
 hat2_47, 1000
 hat2_49, 1000
+hat2_2
+hat2_5
+hat2_9
+hat2_14
+hat2_28
+hat2_30
+hat2_37
+hat2_38
+hat2_40
+hat2_45
+hat2_48
+hat2_51
+hat2_54
+hat2_59
+hat2_68
+hat2_72
+hat2_130
 underpan_13, 2500
 underpan_17, 2500
 underpan_102, 2500
