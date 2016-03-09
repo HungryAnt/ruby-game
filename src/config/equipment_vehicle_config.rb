@@ -543,13 +543,60 @@ create_vehicle_anims(377, down_nums_pair:[0, 5], up_nums_pair:[6, 9], hor_nums_p
 set_vehicle_properties(377, 33, 0.7, down: [-1, 14], up: [-1, 14], left: [-21, 0])
 
 create_vehicle_anims(382, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
-set_vehicle_properties(382, 9, 0.7, down: [0, 0], up: [0, 0], left: [0, 0])
+set_vehicle_properties(382, 12, 0.7, down: [0, 0], up: [0, 0], left: [-9, -4])
 
 create_vehicle_anims(387, down_nums_pair:[0, 5], up_nums_pair:[6, 11], hor_nums_pair:[12, 17])
-set_vehicle_properties(387, 9, 0.7, down: [0, 0], up: [0, 0], left: [0, 0])
+set_vehicle_properties(387, 13, 0.7, down: [0, -6], up: [0, -6], left: [-3, -6])
 
 create_vehicle_anims(388, down_nums_pair:[0, 7], up_nums_pair:[8, 11], hor_nums_pair:[12, 15])
-set_vehicle_properties(388, 9, 0.7, down: [0, 0], up: [0, 0], left: [0, 0])
+set_vehicle_properties(388, 25, 0.7, down: [0, -6], up: [0, -6], left: [0, -22])
+
+# ----------
+
+create_vehicle_anims(393, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
+set_vehicle_properties(393, 27, 0.7, down: [0, -5], up: [0, -5], left: [-5, -12])
+
+create_vehicle_anims(396, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+set_vehicle_properties(396, 25, 0.7, down: [0, -9], up: [0, -9], left: [-8, -10])
+
+create_vehicle_anims(397, down_nums_pair:[0, 5], up_nums_pair:[6, 9], hor_nums_pair:[10, 15])
+set_vehicle_properties(397, 40, 0.7, down: [0, 0], up: [0, 0], left: [-8, 0])
+
+create_vehicle_anims(401, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
+set_vehicle_properties(401, 9, 0.7, down: [0, -3], up: [0, -3], left: [0, -3])
+
+create_vehicle_anims(406, down_nums_pair:[0, 3], up_nums_pair:[4, 7], hor_nums_pair:[8, 11])
+set_vehicle_properties(406, 23, 0.7, down: [0, 0], up: [0, 0], left: [0, -3])
+
+create_vehicle_anims(407, down_nums_pair:[0, 7], up_nums_pair:[8, 11], hor_nums_pair:[12, 15])
+set_vehicle_properties(407, 13, 0.7, down: [0, 6], up: [0, -3], left: [-3, -4])
+
+create_vehicle_anims(410, down_nums_pair:[0, 7], up_nums_pair:[8, 15], hor_nums_pair:[16, 23])
+set_vehicle_properties(410, 6, 0.7, down: [0, -3], up: [0, 0], left: [22, 0])
+
+# ¶·Åñ
+# create_vehicle_anims(412, down_nums_pair:[0, 7], up_nums_pair:[8, 11], hor_nums_pair:[12, 15])
+# set_vehicle_properties(412, 9, 0.7, down: [0, -6], up: [0, -6], left: [0, -22])
+
+create_vehicle_anims(748, down_nums_pair:[0, 15], up_nums_pair:[16, 31], hor_nums_pair:[32, 47])
+set_vehicle_properties(748, 26, 0.7, down: [-2, -3], up: [-2, -5], left: [0, -3])
+
+create_vehicle_anims(749, down_nums_pair:[0, 11], up_nums_pair:[12, 23], hor_nums_pair:[24, 35])
+set_vehicle_properties(749, 9, 0.7, down: [0, -6], up: [0, 0], left: [0, -4])
+
+create_vehicle_anims(753, down_nums_pair:[0, 15], up_nums_pair:[16, 27], hor_nums_pair:[28, 43])
+set_vehicle_properties(753, 20, 0.7, down: [0, -15], up: [0, -17], left: [35, -17])
+
+create_vehicle_anims(754, down_nums_pair:[0, 15], up_nums_pair:[16, 31], hor_nums_pair:[32, 47])
+set_vehicle_properties(754, 14, 0.7, down: [0, -1], up: [0, -4], left: [-4, -8])
+
+#
+# create_vehicle_anims(, down_nums_pair:[0, 7], up_nums_pair:[8, 11], hor_nums_pair:[12, 15])
+# set_vehicle_properties(, 9, 0.7, down: [0, 0], up: [0, 0], left: [0, 0])
+#
+#
+# create_vehicle_anims(, down_nums_pair:[0, 7], up_nums_pair:[8, 11], hor_nums_pair:[12, 15])
+# set_vehicle_properties(, 9, 0.7, down: [0, 0], up: [0, 0], left: [0, 0])
 
 
 # ================== »³¾É³µÁ¾
