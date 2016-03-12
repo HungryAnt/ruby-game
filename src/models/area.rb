@@ -3,7 +3,8 @@ class Area
   GRID_HEIGHT = 10
 
   attr_accessor :gateway, :additional_equipment, :auto_scale, :dynamic_background, :scroll_background
-  attr_reader :id, :image_path, :song_path, :tiles, :coverings, :initial_position, :visual_elements
+  attr_reader :id, :image_path, :song_path, :tiles, :coverings, :initial_position, :visual_elements,
+              :row_count, :col_count
 
   def initialize(id, image_path, song_path, tiles_text)
     @id = id

@@ -19,6 +19,14 @@ class AreaViewModel
     @offset_x = @offset_y = 0
   end
 
+  def row_count
+    @area.row_count
+  end
+
+  def col_count
+    @area.col_count
+  end
+
   def init_covering
     @covering_views = []
     @area.coverings.each do |covering|

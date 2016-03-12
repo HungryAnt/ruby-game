@@ -3,6 +3,9 @@ require_relative "editor/tile_selector_view"
 class MapEditorView
   DEFAULT_BORDER_WIDTH = 3
 
+  PAGE_ROW_COUNT = GameConfig::MAP_HEIGHT / Area::GRID_HEIGHT
+  PAGE_COL_COUNT = GameConfig::MAP_WIDTH / Area::GRID_WIDTH
+
   def initialize(window)
     autowired(MapService)
     @window = window
@@ -14,7 +17,11 @@ class MapEditorView
   end
 
   def init_areas
-    maps = @map_service::all_maps
+    if @map_service.current_map.nil?
+      maps = @map_service::all_maps
+    else
+      maps = [@map_service.current_map]
+    end
     @areas = []
     maps.each do |map|
       map.areas.each do |area_vm|
@@ -22,29 +29,10 @@ class MapEditorView
       end
     end
 
-    @area_index = 0
-    @current_area = @areas[@area_index]
+    switch_to_area 0, 0, 0
   end
 
   def init_tile_grid
-    @row_count = GameConfig::MAP_HEIGHT / Area::GRID_HEIGHT
-    @col_count = GameConfig::MAP_WIDTH / Area::GRID_WIDTH
-
-    # @tiles = Array.new(@row_count)
-    # 0.upto(@row_count-1) do |row|
-    #   @tiles[row] = Array.new(@col_count)
-    #   0.upto(@col_count-1) do |col|
-    #     tile = Tiles::NONE
-    #     if row < DEFAULT_BORDER_WIDTH ||
-    #         row >= @row_count-DEFAULT_BORDER_WIDTH ||
-    #         col < DEFAULT_BORDER_WIDTH ||
-    #         col >= @col_count - DEFAULT_BORDER_WIDTH
-    #       tile = Tiles::BLOCK
-    #     end
-    #     @tiles[row][col] = tile
-    #   end
-    # end
-
     @current_tile = Tiles::BLOCK
 
     @editing = false
@@ -57,8 +45,9 @@ class MapEditorView
   end
 
   def draw
-    @current_area.image.draw(0, 0, ZOrder::Background, 1, 1)
-
+    @current_area.image.draw(-@col_offset * Area::GRID_WIDTH,
+                             -@row_offset * Area::GRID_HEIGHT,
+                             ZOrder::Background, 1, 1)
     draw_tile_grid
 
     Gosu::translate(0, GameConfig::MAP_HEIGHT) do
@@ -70,16 +59,26 @@ class MapEditorView
   end
 
   def button_down(id)
-    if id >= Gosu::Kb1 && id <= Gosu::Kb9
-      @area_index = id - Gosu::Kb1
-    elsif id == Gosu::KbLeft || id == Gosu::KbUp
-      @area_index -= 1
-    elsif id == Gosu::KbRight || id == Gosu::KbDown
-      @area_index += 1
+    # if id >= Gosu::Kb1 && id <= Gosu::Kb9
+    #   @area_index = id - Gosu::Kb1
+
+    area_index_diff = row_offset_diff = col_offset_diff = 0
+
+    if id == Gosu::Kb1
+      area_index_diff = -1
+    elsif id == Gosu::Kb2
+      area_index_diff = 1
+    elsif id == Gosu::KbUp
+      row_offset_diff = -PAGE_ROW_COUNT / 2
+    elsif id == Gosu::KbDown
+      row_offset_diff = PAGE_ROW_COUNT / 2
+    elsif id == Gosu::KbLeft
+      col_offset_diff = -PAGE_COL_COUNT / 2
+    elsif id == Gosu::KbRight
+      col_offset_diff = PAGE_COL_COUNT / 2
     end
-    @area_index = [@areas.size - 1, @area_index].min
-    @area_index = [0, @area_index].max
-    @current_area = @areas[@area_index]
+
+    switch_area area_index_diff, row_offset_diff, col_offset_diff
 
     if id == Gosu::MsLeft
       if @window.mouse_y > GameConfig::MAP_HEIGHT
@@ -89,8 +88,8 @@ class MapEditorView
         # ¿ªÊ¼±à¼­µØÍ¼
         unless @current_tile.nil?
           @editing = true
-          @origin_row = @window.mouse_y / Area::GRID_HEIGHT
-          @origin_col = @window.mouse_x / Area::GRID_WIDTH
+          @origin_row = get_row_index(@window.mouse_y)
+          @origin_col = get_col_index(@window.mouse_x)
         end
       end
     end
@@ -118,11 +117,36 @@ class MapEditorView
 
   private
 
+  def switch_area(area_index_diff, row_offset_diff, col_offset_diff)
+    switch_to_area @area_index + area_index_diff,
+                   @row_offset + row_offset_diff,
+                   @col_offset + col_offset_diff
+  end
+
+  def switch_to_area(area_index, row_offset, col_offset)
+    area_index = [@areas.size - 1, area_index].min
+    area_index = [0, area_index].max
+
+    @area_index = area_index
+    @current_area = @areas[area_index]
+    @row_count = @current_area.row_count
+    @col_count = @current_area.col_count
+
+    row_offset = [@row_count - PAGE_ROW_COUNT, row_offset].min
+    row_offset = [0, row_offset].max
+
+    col_offset = [@col_count - PAGE_COL_COUNT, col_offset].min
+    col_offset = [0, col_offset].max
+
+    @row_offset = row_offset
+    @col_offset = col_offset
+  end
+
   def draw_tile_grid
-    0.upto(@row_count-1) do |row|
-      0.upto(@col_count-1) do |col|
+    0.upto(PAGE_ROW_COUNT - 1) do |row|
+      0.upto(PAGE_COL_COUNT - 1) do |col|
         # puts "row #{row} col #{col}"
-        tile = @current_area.tiles[row][col]
+        tile = @current_area.tiles[@row_offset + row][@col_offset + col]
         color = Tiles.color(tile)
         left = Area::GRID_WIDTH * col
         top = Area::GRID_HEIGHT * row
@@ -135,12 +159,12 @@ class MapEditorView
       end
     end
 
-    0.upto(@row_count-1) do |row|
+    0.upto(PAGE_ROW_COUNT - 1) do |row|
       Gosu::draw_line 0, Area::GRID_HEIGHT * row, 0x88_000000,
                       GameConfig::MAP_WIDTH, Area::GRID_HEIGHT * row, 0x88_000000
     end
 
-    0.upto(@col_count-1) do |col|
+    0.upto(PAGE_COL_COUNT - 1) do |col|
       Gosu::draw_line Area::GRID_WIDTH * col, 0, 0x88_000000,
                       Area::GRID_WIDTH * col, GameConfig::MAP_HEIGHT, 0x88_000000
     end
@@ -150,8 +174,8 @@ class MapEditorView
     x = @window.mouse_x.to_i
     y = @window.mouse_y.to_i
     if @editing && @current_tile
-      rows = [@origin_row, y / Area::GRID_HEIGHT]
-      cols = [@origin_col, x / Area::GRID_WIDTH]
+      rows = [@origin_row, get_row_index(y)]
+      cols = [@origin_col, get_col_index(x)]
       r_min, r_max = rows.min().to_i, rows.max().to_i
       c_min, c_max = cols.min().to_i, cols.max().to_i
       return if r_min > @row_count-1 || r_max < 0
@@ -173,5 +197,11 @@ class MapEditorView
     end
   end
 
+  def get_row_index(y)
+    @row_offset + y / Area::GRID_HEIGHT
+  end
 
+  def get_col_index(x)
+    @col_offset + x / Area::GRID_WIDTH
+  end
 end
