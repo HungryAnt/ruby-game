@@ -107,7 +107,9 @@ class MonsterViewModel < EnemyViewModel
 
   def play_sound(action)
     sound_path = @monster.monster_type_info.send "sound_#{action}"
-    MediaUtil.get_sample(sound_path).play
+    unless sound_path.nil?
+      MediaUtil.get_sample(sound_path).play
+    end
   end
 
   def init_animations

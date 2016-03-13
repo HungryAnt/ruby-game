@@ -59,7 +59,7 @@ class ChannelMainView
 
     control_hunting_ground = create_anim_channel_control(canvas, 0, 28, 158, 135)
     control_hunting_ground.on_mouse_left_button_down do
-      show_map_selection_view :vegetable_field, :colliery, :hunting
+      show_map_selection_view :vegetable_field, :colliery, :hunting, :circus
     end
 
     control_rubbish_station = create_channel_control(canvas, 7, 8, 276, 160, 138, 125,

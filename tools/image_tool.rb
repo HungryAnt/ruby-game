@@ -1,5 +1,5 @@
-1.upto(15) do |num|
-  id = "#{'%04d' % num}"
-  puts id
-  system "RubyGameImageTool.exe  D:\\dev\\ruby\\ruby-game\\media\\img\\wild_monster\\#{id}"
+[
+    'circus_0', 'circus_1'
+].each do |id|
+  system "RubyGameImageTool.exe  D:\\dev\\ruby\\ruby-game\\media\\img\\map\\circus\\#{id}"
 end

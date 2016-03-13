@@ -23,7 +23,7 @@ class Monster
 
   def initialize(id, monster_type_id, max_hp, hp, x, y)
     init_location x, y
-    init_movable 5, false
+    init_movable 3, false
     @id = id
     @monster_type_id = monster_type_id
     monster_type_info = MonsterTypeInfo.get monster_type_id
