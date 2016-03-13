@@ -1,6 +1,4 @@
 class MonsterTypeInfo
-  COUNT = 2
-
   @@type_info = {}
 
   def self.put(id, type_info)
