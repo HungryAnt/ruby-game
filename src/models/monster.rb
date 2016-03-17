@@ -2,7 +2,6 @@ require_relative 'location'
 require_relative 'movable'
 require_relative 'monster_type_info'
 
-# ´å×¯Ò°¹Ö
 class Monster
   ENEMY_TYPE = :monster
 
@@ -26,16 +25,20 @@ class Monster
     init_movable 3, false
     @id = id
     @monster_type_id = monster_type_id
-    monster_type_info = MonsterTypeInfo.get monster_type_id
-    @monster_type_info = monster_type_info
-    @name = monster_type_info.name
     @state = State::STAND
     @durable_state = State::STAND
     @max_hp, @hp = max_hp, hp
-    @height = monster_type_info.height
+    refresh
   end
 
   def update_hp(hp)
     @hp = hp
+  end
+
+  def refresh
+    monster_type_info = MonsterTypeInfo.get monster_type_id
+    @monster_type_info = monster_type_info
+    @name = monster_type_info.name
+    @height = monster_type_info.height
   end
 end

@@ -5,7 +5,7 @@ class MainWindow < Gosu::Window
     fullscreen = screen_mode == 'fullscreen'
     super GameConfig::MAP_WIDTH,
           GameConfig::MAP_HEIGHT + GameConfig::BOTTOM_HEIGHT, fullscreen:fullscreen, update_interval:1000/40
-    autowired(WindowResourceService, PlayerService)
+    autowired(WindowResourceService, PlayerService, MapService)
 
     @version = version
 
@@ -169,13 +169,22 @@ class MainWindow < Gosu::Window
           load 'config/equipment_background_config.rb'
           load 'config/equipment_foreground_config.rb'
           @player_service.refresh_all_equipments
+
+          load 'config/monster_config.rb'
+          @map_service.all_maps.each do |map_vm|
+            map_vm.areas.each do |area_vm|
+              area_vm.get_monster_vms.each do |monster_vm|
+                monster_vm.monster.refresh
+              end
+            end
+          end
         when Gosu::KbF6
           EquipmentDefinition.print_all_keys
           PetTypeInfo.print_all_pets
         when Gosu::KbI
-          MessageBox.info 'test1111111111111111', MessageBox::BoxType::BOX_OK
+          # MessageBox.info 'test1111111111111111', MessageBox::BoxType::BOX_OK
         when Gosu::KbO
-          MessageBox.info 'test1111111111111111', MessageBox::BoxType::BOX_OK_CANCEL
+          # MessageBox.info 'test1111111111111111', MessageBox::BoxType::BOX_OK_CANCEL
       end
     end
   end

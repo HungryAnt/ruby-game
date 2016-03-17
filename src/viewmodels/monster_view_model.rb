@@ -208,6 +208,6 @@ class MonsterViewModel < EnemyViewModel
   end
 
   def draw_effect
-    @anim_container.draw mode: :additive, scale_x:scale_value, scale_y:scale_value
+    @anim_container.draw mode: :additive, scale_x: scale_value, scale_y: scale_value
   end
 end

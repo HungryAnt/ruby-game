@@ -29,19 +29,19 @@ lambda {
     MonsterTypeInfo.put monster_type_id, monster_type_info
   end
 
-  add_wild_monster.call '0001', '幼年期精灵', 50
-  add_wild_monster.call '0002', '成年期精灵', 50
-  add_wild_monster.call '0003', '神秘精灵', 50
-  add_wild_monster.call '0004', '石碑守卫', 50
-  add_wild_monster.call '0005', '肥龙', 50
-  add_wild_monster.call '0006', '大嘴怪', 50
-  add_wild_monster.call '0007', '死神', 50
-  add_wild_monster.call '0008', '大恶魔', 50
-  add_wild_monster.call '0009', '稻草人', 50
+  add_wild_monster.call '0001', '幼年期精灵', 60
+  add_wild_monster.call '0002', '成年期精灵', 110
+  add_wild_monster.call '0003', '神秘精灵', 80
+  add_wild_monster.call '0004', '石碑守卫', 180
+  add_wild_monster.call '0005', '肥龙', 220
+  add_wild_monster.call '0006', '大嘴怪', 180
+  add_wild_monster.call '0007', '死神', 220
+  add_wild_monster.call '0008', '小调皮', 240
+  add_wild_monster.call '0009', '稻草人', 120
   add_wild_monster.call '0010', '菜青虫', 50
-  add_wild_monster.call '0011', '大型螳螂', 50
-  add_wild_monster.call '0012', '骷髅头', 50
-  add_wild_monster.call '0013', '邪恶的发明家酒桶', 50
-  add_wild_monster.call '0014', '马戏团小丑', 50
-  add_wild_monster.call '0015', '金字塔守卫', 50
+  add_wild_monster.call '0011', '大型螳螂', 130
+  add_wild_monster.call '0012', '骷髅头', 120
+  add_wild_monster.call '0013', '邪恶的发明家酒桶', 170
+  add_wild_monster.call '0014', '马戏团小丑', 200
+  add_wild_monster.call '0015', '金字塔守卫', 250
 }.call
