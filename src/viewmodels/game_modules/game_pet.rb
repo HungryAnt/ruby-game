@@ -9,7 +9,7 @@ module GamePet
     actual_x, actual_y = to_area_actual_location mouse_x, mouse_y
     map_vm = get_current_map
     unless map_vm.tile_block? actual_x, actual_y
-      map_vm.mark_target(actual_x, actual_y) unless map_vm.nil?
+      map_vm.mark_target(mouse_x, mouse_y) unless map_vm.nil?
       @player_view_model.pet_move_to actual_x, actual_y
     end
   end

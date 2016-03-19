@@ -24,7 +24,7 @@ class PlayerPetViewModel < PetViewModel
   def update(area, role)
     @update_times += 1
     if Gosu::milliseconds - @order_time_stamp > 8000
-      enemy_vm = get_monster_vm area
+      enemy_vm = get_nearest_monster_vm area, role
       if enemy_vm.nil?
         # 无怪物，自由行动
         set_target_enemy nil
@@ -153,10 +153,12 @@ class PlayerPetViewModel < PetViewModel
     @communication_service.send_pet_attack_enemy_message pet_id, user_id, area_id, enemy_type, enemy_id
   end
 
-  def get_monster_vm(area)
-    area_vm = @map_service.get_area(area.id)
-    area_vm.get_monster_vms.find { |monster_vm| !monster_vm.is_capitulate }
-    # return nil if monster_vms.nil? || monster_vms.size == 0
-    # monster_vms[0]
+  def get_nearest_monster_vm(area, role)
+    map_service_get_area = @map_service.get_area(area.id)
+    area_vm = map_service_get_area
+    monster_vms = area_vm.get_monster_vms.find_all { |monster_vm| !monster_vm.is_capitulate }
+    return nil if monster_vms.nil? || monster_vms.size == 0
+    return monster_vms[0] if monster_vms.size == 1
+    monster_vms.sort_by { |monster_vm| Gosu::distance(monster_vm.monster.x, monster_vm.monster.y, role.x, role.y) }[0]
   end
 end
