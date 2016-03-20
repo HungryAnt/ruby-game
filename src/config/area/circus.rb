@@ -65,7 +65,7 @@ circus_0_tiles_text = <<TILES
 ################################################################################################################################################################
 TILES
 
-circus_0_area = create_area(:circus_0, 'map/circus/circus_0/Circus_0_0.png', nil, circus_0_tiles_text)
+circus_0_area = create_area(:circus_0, 'map/circus/circus_0/Circus_0_0.png', 'map/circus_0.ogg', circus_0_tiles_text)
 circus_0_area.scroll_background = true
 
 circus_0_area.add_visual_element(image_path: 'map/circus/circus_0/Circus_0_2.bmp', left: 0, top: 100, y: 545)
@@ -136,7 +136,7 @@ circus_1_tiles_text = <<TILES
 ################################################################################################################################################################
 TILES
 
-circus_1_area = create_area(:circus_1, 'map/circus/circus_1/Circus_1_0.png', nil, circus_1_tiles_text)
+circus_1_area = create_area(:circus_1, 'map/circus/circus_1/Circus_1_0.png', 'map/circus_1.ogg', circus_1_tiles_text)
 circus_1_area.scroll_background = true
 
 circus_1_area.add_visual_element(image_path: 'map/circus/circus_1/Circus_1_2.bmp', left: 0, top: 0, y: 283)

@@ -65,7 +65,7 @@ tiles_text = <<TILES
 ################################################################################################################################################################
 TILES
 
-area = create_area(:vegetable_field, 'map/vegetable_filed/VegetableField_0.jpg', nil, tiles_text)
+area = create_area(:vegetable_field, 'map/vegetable_filed/VegetableField_0.jpg', 'map/vegetable_field.ogg', tiles_text)
 area.scroll_background = true
 
 area.add_visual_element(image_path: 'map/vegetable_filed/VegetableField_1.bmp', left: 0, top: 0, y: 170)

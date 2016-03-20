@@ -65,7 +65,7 @@ hunting_0_tiles_text = <<TILES
 ################################################################################################################################################################################################################################################
 TILES
 
-hunting_0_area = create_area(:hunting_0, 'map/hunting/hunting_0/Hunting_0_0.png', nil, hunting_0_tiles_text)
+hunting_0_area = create_area(:hunting_0, 'map/hunting/hunting_0/Hunting_0_0.png', 'map/hunting_0.ogg', hunting_0_tiles_text)
 hunting_0_area.scroll_background = true
 
 hunting_0_area.add_visual_element(anim: :hunting_0_water_1, left: 698, top: 0, y:20)
@@ -151,7 +151,7 @@ hunting_1_tiles_text = <<TILES
 ################################################################################################################################################################################################################################################
 TILES
 
-hunting_1_area = create_area(:hunting_1, 'map/hunting/hunting_1/Hunting_1_0.png', nil, hunting_1_tiles_text)
+hunting_1_area = create_area(:hunting_1, 'map/hunting/hunting_1/Hunting_1_0.png', 'map/hunting_1.ogg', hunting_1_tiles_text)
 hunting_1_area.scroll_background = true
 
 hunting_1_area.add_visual_element(image_path: 'map/hunting/hunting_1/Hunting_1_2.bmp',
@@ -226,7 +226,7 @@ hunting_2_tiles_text = <<TILES
 ################################################################################
 TILES
 
-hunting_2_area = create_area(:hunting_2, 'map/hunting/hunting_2/Hunting_2_0.png', nil, hunting_2_tiles_text)
+hunting_2_area = create_area(:hunting_2, 'map/hunting/hunting_2/Hunting_2_0.png', 'map/hunting_2.ogg', hunting_2_tiles_text)
 hunting_2_area.scroll_background = true
 
 hunting_2_area.add_visual_element(anim: :hunting_2_fire, left: 330, top: 0, y: 0)
