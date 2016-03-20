@@ -122,6 +122,7 @@ require 'services/large_rubbishes_service'
 require 'services/hit_service'
 require 'services/monsters_service'
 require 'services/message_handler/shit_mine_message_handler'
+require 'services/dota_service'
 
 require 'viewmodels/common_modules/mouse_tips'
 require 'viewmodels/common_modules/player_common_module'

@@ -90,8 +90,8 @@ class GameRolesCommunicationHandler
     @hit_call_back.call user_id, area_id, hit_type, target_x, target_y
   end
 
-  def being_battered(user_id, hit_type)
-    @being_battered_call_back.call user_id, hit_type
+  def being_battered(user_id, hit_type, from_user_id)
+    @being_battered_call_back.call user_id, hit_type, from_user_id
   end
 
   def collecting_rubbish(user_id)

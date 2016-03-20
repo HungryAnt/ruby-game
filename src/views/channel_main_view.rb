@@ -12,14 +12,14 @@ class ChannelMainView
     @select_map_call_back = nil
     @map_selection_view = MapSelectionView.new(window)
     @map_selection_view.on_select_map do |map_id|
-      if map_id == :circus && @player_service.role.lv < 0
-        MessageBox.info '先达到100级，再来这个地图吧', MessageBox::BoxType::BOX_OK
-      elsif map_id == :dota
-        MessageBox.info '开发ing，下个版本见', MessageBox::BoxType::BOX_OK
-      else
+      # if map_id == :circus && @player_service.role.lv < 0
+      #   MessageBox.info '先达到100级，再来这个地图吧', MessageBox::BoxType::BOX_OK
+      # elsif map_id == :dota
+      #   MessageBox.info '开发ing，下个版本见', MessageBox::BoxType::BOX_OK
+      # else
         hide_map_selection_view
         goto_map map_id
-      end
+      # end
     end
   end
 

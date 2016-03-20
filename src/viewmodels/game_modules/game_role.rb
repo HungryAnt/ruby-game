@@ -247,7 +247,8 @@ module GameRole
           role_vm = @role_vm_dict[user_id]
           if !role_vm.nil? && is_current_area(role_vm.area_id)
             role_vm.common_hit hit_type
-            @player_view_model.check_hit_battered(hit_type, target_x, target_y)
+            be_battered = @player_view_model.check_hit_battered(hit_type, target_x, target_y, user_id)
+            get_current_map.on_player_be_battered
           end
         end
       end
@@ -255,12 +256,14 @@ module GameRole
   end
 
   def register_being_battered_call_back
-    @game_roles_communication_handler.register_being_battered_call_back do |user_id, hit_type|
+    @game_roles_communication_handler.register_being_battered_call_back do |user_id, hit_type, from_user_id|
       if is_in_chat_map
-        if @player_service.user_id != user_id
+        current_user_id = @player_service.user_id
+        if current_user_id != user_id
           role_vm = @role_vm_dict[user_id]
           if !role_vm.nil? && is_current_area(role_vm.area_id)
             role_vm.being_battered hit_type
+            get_current_map.on_player_hit_success if current_user_id == from_user_id
           end
         end
       end

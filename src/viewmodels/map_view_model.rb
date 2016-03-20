@@ -1,11 +1,13 @@
 class MapViewModel
   attr_reader :areas, :current_area, :id, :name, :map_type
+  attr_accessor :player_hit_success_proc, :player_be_battered_proc
 
   def initialize(id, name, map_type, areas)
     ArgumentError "wrong areas #{areas}" if areas.nil? || areas.size == 0
     @id = id
     @name, @map_type = name, map_type
     @areas = areas
+    @player_hit_success_proc = @player_be_battered_proc = nil
     switch_to_first_area
   end
 
@@ -57,5 +59,13 @@ class MapViewModel
       area_vm.clear_enemy_vms
       area_vm.clear_shit_mine_vms
     end
+  end
+
+  def on_player_hit_success
+    @player_hit_success_proc.call unless @player_hit_success_proc.nil?
+  end
+
+  def on_player_be_battered
+    @player_be_battered_proc.call unless @player_be_battered_proc.nil?
   end
 end

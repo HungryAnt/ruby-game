@@ -153,4 +153,4 @@ circus_1_area.gateway = {
     :B => {:area => circus_0_area, :direction => Direction::LEFT}
 }
 
-create_map(:circus, '马戏团 lv.100', MapType::VILLAGE, [circus_0_area, circus_1_area])
+create_map(:circus, '马戏团', MapType::VILLAGE, [circus_0_area, circus_1_area])

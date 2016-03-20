@@ -14,6 +14,7 @@ lambda {
     area_vms.each do |area_vm|
       map_service.add_area(area_vm.id.to_s, area_vm)
     end
+    map
   end
 
   search_pattern = File.join(File.dirname(__FILE__), 'area/*.rb')

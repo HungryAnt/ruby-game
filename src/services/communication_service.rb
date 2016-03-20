@@ -99,9 +99,9 @@ class CommunicationService
     send HitMessage.new(user_id, area_id, hit_type, target_x, target_y)
   end
 
-  def send_being_battered_message(user_id, hit_type)
+  def send_being_battered_message(user_id, hit_type, from_user_id)
     puts 'send_being_battered_message'
-    send BeingBatteredMessage.new(user_id, hit_type)
+    send BeingBatteredMessage.new(user_id, hit_type, from_user_id)
   end
 
   def send_collect_rubbish_message(user_id, rubbish_map)
@@ -222,8 +222,8 @@ class CommunicationService
     end
 
     @network_service.register('being_battered_message') do |msg_map, params|
-      being_battered_msg = BeingBatteredMessage.from_map(msg_map)
-      @game_roles_communication_handler.being_battered being_battered_msg.user_id, being_battered_msg.hit_type
+      msg = BeingBatteredMessage.from_map(msg_map)
+      @game_roles_communication_handler.being_battered msg.user_id, msg.hit_type, msg.from_user_id
     end
 
     @network_service.register('collecting_rubbish_message') do |msg_map, params|

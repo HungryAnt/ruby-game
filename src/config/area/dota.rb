@@ -75,5 +75,15 @@ dota_area = create_area(:custom1_tree, 'map/dota/dota.jpg', nil, dota_text)
 dota_area.scroll_background = true
 
 
-create_map(:dota, 'Dota', MapType::VILLAGE, [dota_area])
+dota_map = create_map(:dota, 'Dota', MapType::VILLAGE, [dota_area])
+
+lambda {
+  dota_service = DotaService.new
+  dota_map.player_hit_success_proc = lambda {
+    dota_service.kill
+  }
+  dota_map.player_be_battered_proc = lambda {
+    dota_service.die
+  }
+}.call
 

@@ -189,21 +189,23 @@ class PlayerViewModel
     return @role.x, @role.y + hit_range/2.5 if Direction.is_direct_to_down(@role.direction)
   end
 
-  def check_hit_battered(hit_type, hit_x, hit_y)
+  def check_hit_battered(hit_type, hit_x, hit_y, from_user_id=nil)
     return unless @hit_service.is_hit? hit_type
     return if battered
     return if @role_vm.driving_dragon?
     if @hit_service.in_hit_range? hit_type, @role.x, @role.y, hit_x, hit_y
       if @role_vm.try_miss
         # …¡±‹≥…π¶
-        return
+        return false
       end
       discard
       battered_cost_hp = @hit_service.get_battered_cost_hp hit_type
       @role.dec_hp(battered_cost_hp)
       @role_vm.being_battered hit_type
-      remote_being_battered get_user_id, hit_type
+      remote_being_battered get_user_id, hit_type, from_user_id
+      return true
     end
+    false
   end
 
   def battered
@@ -387,8 +389,8 @@ class PlayerViewModel
     @communication_service.send_hit_message user_id, area_id, hit_type, target_x, target_y
   end
 
-  def remote_being_battered(user_id, hit_type)
-    @communication_service.send_being_battered_message user_id, hit_type
+  def remote_being_battered(user_id, hit_type, from_user_id)
+    @communication_service.send_being_battered_message user_id, hit_type, from_user_id
   end
 
   def remote_collect_rubbish(rubbish)
