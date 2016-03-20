@@ -68,4 +68,10 @@ TILES
 area = create_area(:vegetable_field, 'map/vegetable_filed/VegetableField_0.jpg', nil, tiles_text)
 area.scroll_background = true
 
+area.add_visual_element(image_path: 'map/vegetable_filed/VegetableField_1.bmp', left: 0, top: 0, y: 170)
+area.add_visual_element(image_path: 'map/vegetable_filed/VegetableField_2.bmp', left: 580, top: 0, y: 172) # 3西瓜
+area.add_visual_element(image_path: 'map/vegetable_filed/VegetableField_3.bmp', left: 1230, top: 140, y: 198) # 耙子
+area.add_visual_element(image_path: 'map/vegetable_filed/VegetableField_4.bmp', left: 680, top: 50, y: 225) # 单个西瓜
+area.add_visual_element(image_path: 'map/vegetable_filed/VegetableField_5.bmp', left: 440, top: 170, y: 237) # 单个黄瓜
+
 create_map(:vegetable_field, '秀娟家的瓜田', MapType::VILLAGE, [area])

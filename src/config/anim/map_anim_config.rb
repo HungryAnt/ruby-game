@@ -244,4 +244,28 @@ lambda {
 
   pattern_colliery_5 = 'map/colliery/colliery5/Colliery5_${num}.bmp'
   new_map_covering_anim(:colliery_5_traffic_light, pattern_colliery_5, 5, 6, 400, false)
+
+  # hunting
+  pattern_hunting_0 = 'map/hunting/hunting_0/Hunting_0_${num}.bmp'
+  new_map_covering_anim(:hunting_0_water_1, pattern_hunting_0, 9, 11, 200, false)
+  new_map_covering_anim(:hunting_0_water_2, pattern_hunting_0, 12, 14, 200, false)
+
+  pattern_hunting_1 = 'map/hunting/hunting_1/Hunting_1_${num}.bmp'
+  new_map_covering_anim(:hunting_1_fire_1, pattern_hunting_1, 7, 9, 200, false)
+  new_map_covering_anim(:hunting_1_fire_2, pattern_hunting_1, 10, 15, 200, false)
+  new_map_covering_anim(:hunting_1_fire_3, pattern_hunting_1, 16, 21, 200, false)
+  new_map_covering_anim(:hunting_1_lamp, pattern_hunting_1, 22, 27, 200, false)
+
+  pattern_hunting_2 = 'map/hunting/hunting_2/Hunting_2_${num}.bmp'
+  new_map_covering_anim(:hunting_2_fire, pattern_hunting_2, 4, 9, 200, false)
+
+  # circus
+  pattern_circus_0 = 'map/circus/circus_0/Circus_0_${num}.bmp'
+  new_map_covering_anim(:circus_0_flag, pattern_circus_0, 5, 7, 200, false)
+
+  pattern_circus_1 = 'map/circus/circus_1/Circus_1_${num}.bmp'
+  new_map_covering_anim(:circus_1_fire_1, pattern_circus_1, 6, 15, 200, false)
+  new_map_covering_anim(:circus_1_fire_2, pattern_circus_1, 16, 25, 200, false)
+  new_map_covering_anim(:circus_1_fire_3, pattern_circus_1, 26, 35, 200, false)
+
 }.call

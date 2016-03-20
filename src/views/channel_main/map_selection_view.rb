@@ -39,7 +39,7 @@ class MapItemControl < AntGui::Control
   end
 end
 
-class VillageMapSelectionView
+class MapSelectionView
   ITEM_HEIGHT = 50
   ITEM_WIDTH = 270
   PADDING = 8
