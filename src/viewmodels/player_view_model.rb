@@ -59,6 +59,9 @@ class PlayerViewModel
   def equip(equipment_vm, remote_sync=true)
     return if equipment_vm.nil?
     @role_vm.equip_vm = equipment_vm
+    if equipment_vm.type == Equipment::Type::VEHICLE
+      @role_vm.role.update_vehicle_speed
+    end
     sync_role_appear if remote_sync
   end
 

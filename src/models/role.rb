@@ -51,6 +51,7 @@ class Role
   include Hp
   include Exp
   include Mana
+  include VehicleSpeed
 
   attr_accessor :state, :durable_state, :direction, :role_type,
                 :hp, :vehicle, :battered, :battered_by_hit_type
@@ -64,6 +65,7 @@ class Role
     init_hp
     init_exp
     init_mana
+    init_vehicle_speed
 
     init_packages
 
@@ -89,6 +91,10 @@ class Role
 
   def un_equip(equipment_type)
     equip equipment_type, nil
+  end
+
+  def update_vehicle_speed
+    update_speed(@equipment_packages[Equipment::Type::VEHICLE].items)
   end
 
   def init_wearing_equipments
@@ -149,8 +155,12 @@ class Role
     speed_rate -= 0.25 if @battered || eating?
     @wearing_equipments.values.each do |equipment|
       next if equipment.nil? || equipment.speed_up.nil?
+      next if equipment.type == Equipment::Type::VEHICLE # 更改，车辆速度计算方式调整
       speed_rate += equipment.speed_up
     end
+
+    speed_rate += @vehicle_speed
+
     @speed * speed_rate
   end
 
