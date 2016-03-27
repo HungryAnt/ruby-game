@@ -86,6 +86,10 @@ module GameRole
     @player_view_model.cast
   end
 
+  def quick_switch_vehicle
+    @player_view_model.quick_switch_vehicle
+  end
+
   private
 
   def process_role_vms

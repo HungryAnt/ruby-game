@@ -17,6 +17,7 @@ class PlayerViewModel
     @smashing_enemy_vm = nil
     @pets_vms = []
     init_wears
+    @tmp_vehicle_equipment = nil
   end
 
   def actual_role_location
@@ -68,6 +69,16 @@ class PlayerViewModel
   def un_equip(equipment_type)
     @role_vm.un_equip equipment_type
     sync_role_appear
+  end
+
+  def quick_switch_vehicle
+    current_vehicle_equipment = @role_vm.get_equip_vm(Equipment::Type::VEHICLE)
+    if current_vehicle_equipment.nil?
+      equip @tmp_vehicle_equipment unless @tmp_vehicle_equipment.nil?
+    else
+      @tmp_vehicle_equipment = current_vehicle_equipment
+      un_equip Equipment::Type::VEHICLE
+    end
   end
 
   def pick_up(item_vms, item_vm)

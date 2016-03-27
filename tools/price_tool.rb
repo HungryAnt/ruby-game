@@ -340,62 +340,62 @@ hat_166
 hat_170
 hat_171
 hat_423
-hat_175
-hat_176
-hat_180
-hat_183
-hat_184
-hat_187
-hat_189
-hat_190
-hat_193
-hat_197
-hat_201
-hat_202
-hat_205
-hat_209
-hat_210
-hat_214
-hat_219
-hat_223
-hat_227
-hat_231
-hat_233
-hat_236
-hat_238
-hat_242
-hat_243
-hat_247
-hat_248
-hat_257
-hat_258
-hat_262
-hat_263
-hat_267
-hat_268
+hat_175, 1800
+hat_176, 1800
+hat_180, 1800
+hat_183, 1800
+hat_184, 1800
+hat_187, 1800
+hat_189, 1800
+hat_190, 1800
+hat_193, 1800
+hat_197, 1800
+hat_201, 1800
+hat_202, 1800
+hat_205, 1800
+hat_209, 1800
+hat_210, 1800
+hat_214, 1800
+hat_219, 1800
+hat_223, 1800
+hat_227, 1800
+hat_231, 1800
+hat_233, 1800
+hat_236, 1800
+hat_238, 1800
+hat_242, 1800
+hat_243, 1800
+hat_247, 1800
+hat_248, 1800
+hat_257, 1800
+hat_258, 1800
+hat_262, 1800
+hat_263, 1800
+hat_267, 1800
+hat_268, 1800
 hat2_12, 1000
 hat2_23, 1000
 hat2_25, 1000
 hat2_42, 1000
 hat2_47, 1000
 hat2_49, 1000
-hat2_2
-hat2_5
-hat2_9
-hat2_14
-hat2_28
-hat2_30
-hat2_37
-hat2_38
-hat2_40
-hat2_45
-hat2_48
-hat2_51
-hat2_54
-hat2_59
-hat2_68
-hat2_72
-hat2_130
+hat2_2, 1800
+hat2_5, 1800
+hat2_9, 1800
+hat2_14, 1800
+hat2_28, 1800
+hat2_30, 1800
+hat2_37, 1800
+hat2_38, 1800
+hat2_40, 1800
+hat2_45, 1800
+hat2_48, 1800
+hat2_51, 1800
+hat2_54, 1800
+hat2_59, 1800
+hat2_68, 1800
+hat2_72, 1800
+hat2_130, 1800
 underpan_13, 2500
 underpan_17, 2500
 underpan_102, 2500
@@ -600,6 +600,5 @@ def main
     insert_equipment key, price
   end
 end
-
 
 main
