@@ -74,10 +74,10 @@ class PlayerService
     #   @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, vehicle_key)
     # end
 
-    # %w(DragonRed DragonBlack DragonBlue).each do |dragon|
-    #   dragon_key = "dragon_#{dragon}".to_sym
-    #   @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, dragon_key)
-    # end
+    %w(DragonRed DragonBlack DragonBlue).each do |dragon|
+      dragon_key = "dragon_#{dragon}".to_sym
+      @role.add_equipment Equipment.new(Equipment::Type::VEHICLE, dragon_key)
+    end
 
     PetTypeInfo.all_pet_types.each do |pet_type|
       @role.pet_package << Pet.new(SecureRandom.uuid, pet_type, 200, 200)

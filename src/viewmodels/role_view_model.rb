@@ -261,7 +261,7 @@ class RoleViewModel
   end
 
   def driving_dragon?
-    driving? && @equipment_vms[Equipment::Type::VEHICLE].key.to_s.start_with?('dragon')
+    driving? && @equipment_vms[Equipment::Type::VEHICLE].equipment.is_dragon?
   end
 
   def add_chat_content(content)

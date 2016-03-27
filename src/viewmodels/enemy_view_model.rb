@@ -51,6 +51,6 @@ class EnemyViewModel
   end
 
   def enemy_target_y
-    @enemy.y - 42
+    @enemy.y - 10
   end
 end

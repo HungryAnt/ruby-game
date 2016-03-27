@@ -33,4 +33,8 @@ class Equipment
     @height = props[:height] # 高度
     @is_cloak = props[:is_cloak] # 是否是披风
   end
+
+  def is_dragon?
+    @key.to_s.start_with?('dragon')
+  end
 end

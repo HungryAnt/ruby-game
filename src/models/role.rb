@@ -159,7 +159,14 @@ class Role
       speed_rate += equipment.speed_up
     end
 
-    speed_rate += @vehicle_speed
+    vehicle_equipment = @wearing_equipments[Equipment::Type::VEHICLE]
+    unless vehicle_equipment.nil?
+      if vehicle_equipment.is_dragon? # ÔØ¾ßÎªÁú
+        speed_rate += vehicle_equipment.speed_up
+      else
+        speed_rate += @vehicle_speed
+      end
+    end
 
     @speed * speed_rate
   end
@@ -277,21 +284,13 @@ class Role
         lv: @lv,
         state: @state.to_s,
         durable_state: @durable_state.to_s,
-        direction: @direction
+        direction: @direction,
+        vehicle_speed: @vehicle_speed
     }
     Equipment.role_equipment_types.each do |equipment_type|
       equipment = @wearing_equipments[equipment_type]
       map[equipment_type] = equipment.nil? ? '' : equipment.key.to_s
     end
     map
-  end
-
-  def from_map(map)
-    role = Role(map['name'], map['role_type'].to_sym, map['x'].to_i, map['y'].to_i)
-    role.hp = map['hp'].to_i
-    role.update_lv(map['lv'].to_i, 0)
-    role.state = map['state'].to_sym
-    role.direction = map['direction'].to_i
-    # role.speed = map['speed'].to_f
   end
 end

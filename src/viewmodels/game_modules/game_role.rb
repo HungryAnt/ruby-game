@@ -159,6 +159,7 @@ module GameRole
           role_vm.set_state role_map['state'].to_sym
           role_vm.set_durable_state role_map['durable_state'].to_sym
           role_vm.set_direction role_map['direction'].to_i
+          role_vm.role.set_vehicle_speed role_map['vehicle_speed'].to_f
 
           Equipment.role_equipment_types.each do |equipment_type|
             equip_vm = check_and_generate_equipment_vm role_map, equipment_type

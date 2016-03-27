@@ -38,19 +38,19 @@ lambda {
     MonsterTypeInfo.put monster_type_id, monster_type_info
   end
 
-  add_wild_monster.call '0001', '幼年期精灵', 60, 'MiniMongk'
-  add_wild_monster.call '0002', '成年期精灵', 110, 'Mongk'
-  add_wild_monster.call '0003', '神秘精灵', 80, 'RedFling'
+  add_wild_monster.call '0001', '猴子精灵', 60, 'MiniMongk'
+  add_wild_monster.call '0002', '胖胖龙', 110, 'Mongk'
+  add_wild_monster.call '0003', '红色普林', 80, 'RedFling'
   add_wild_monster.call '0004', '地牢守卫', 180, 'StoneDoorman'
-  add_wild_monster.call '0005', '肥龙', 220, 'DarkDragon'
-  add_wild_monster.call '0006', '大嘴怪', 180, 'PumpKin'
-  add_wild_monster.call '0007', '死神', 220, 'Cranium'
-  add_wild_monster.call '0008', '小调皮', 240, 'GreatDevil' # 大恶魔
-  add_wild_monster.call '0009', '稻草人', 120, 'Scarecrow'
+  add_wild_monster.call '0005', '黑暗龙', 220, 'DarkDragon'
+  add_wild_monster.call '0006', '独角兽', 180, 'PumpKin'
+  add_wild_monster.call '0007', '地牢骷髅', 220, 'Cranium'
+  add_wild_monster.call '0008', '地牢魔王', 240, 'GreatDevil'
+  add_wild_monster.call '0009', '假人精灵', 120, 'Scarecrow'
   add_wild_monster.call '0010', '西瓜虫', 50, 'WatermelonBug'
-  add_wild_monster.call '0011', '大型螳螂', 130, 'Mantis'
+  add_wild_monster.call '0011', '螳螂', 130, 'Mantis'
   add_wild_monster.call '0012', '骷髅头', 120, 'BlindnessBone'
   add_wild_monster.call '0013', '邪恶的发明家酒桶', 170, 'OrcLog'
-  add_wild_monster.call '0014', '马戏团小丑', 200, 'CircusGhost'
-  add_wild_monster.call '0015', '法老王', 250, 'PharaohGreatDevil'
+  add_wild_monster.call '0014', '小丑皇', 200, 'CircusGhost'
+  add_wild_monster.call '0015', '法里欧', 250, 'PharaohGreatDevil'
 }.call
