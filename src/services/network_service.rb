@@ -41,9 +41,17 @@ class NetworkService
   def start_msg_loop
     Thread.new {
       begin
-        while (line = @s.gets("\n"))
+        line_fragment = ''
+        while (line = line_fragment + @s.gets("\n"))
           begin
-            next if line.nil?
+            line_fragment = ''
+            # next if line.nil?
+            unless line.include? "\n"
+              line_fragment = line
+              puts "catching line_fragment: #{line_fragment}"
+              next
+            end
+
             line = line.chomp.gsub /\n|\r/, ''
             next if line == ''
             if @des_service.waiting_for_password?
