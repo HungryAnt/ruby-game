@@ -17,10 +17,12 @@ class Pet
 
   include Location
   include Movable
+  include LevelExp
 
   def initialize(pet_id, pet_type, x, y)
     init_location x, y
     init_movable 5, false
+    init_level_exp 1, 0, 100
     @pet_id = pet_id
     @pet_type = pet_type
     @state = State::STAND

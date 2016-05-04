@@ -1,4 +1,8 @@
 class GraphicsUtil
+  def self.fill_rect(x, y, width, height, c, z = 0)
+    Gosu::draw_rect x, y, width, height, c, z
+  end
+
   def self.draw_rect_border(x, y, width, height, c, z = 0, mode = :default)
     Gosu::draw_line(x, y, c, x+width, y, c, z, mode)
     Gosu::draw_line(x+width, y, c, x+width, y+height, c, z, mode)

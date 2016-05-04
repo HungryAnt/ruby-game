@@ -9,12 +9,15 @@ class PetViewModel
   def initialize(pet)
     init_auto_scale
     @pet = pet
-    @height = PetTypeInfo.get(pet.pet_type).height
+    pet_type_info = PetTypeInfo.get(pet.pet_type)
+    @height = pet_type_info.height
+    @name = pet_type_info.name
     init_animations
     reset_durable_state
     @update_times = 0
     @attack_begin_time = 0
     @sound_smash = MediaUtil.get_sample 'smash.wav'
+    @font = Gosu::Font.new(15)
   end
 
   def pet_id
@@ -42,6 +45,8 @@ class PetViewModel
   def draw(auto_scale_info)
     update_scale auto_scale_info, y
     draw_anim
+    draw_exp
+    draw_level_and_name
   end
 
   def attack(quiet=false)
@@ -89,6 +94,27 @@ class PetViewModel
     x, y = get_actual_pet_location
     @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp,
                        scale_x:scale_value, scale_y:scale_value)
+  end
+
+  def draw_exp
+    exp_bar_width = 50
+    exp_bar_height = 4
+    exp_bar_left = x - exp_bar_width / 2
+    exp_bar_top = y + 8
+    exp_width = exp_bar_width * @pet.exp_in_lv / @pet.max_exp_in_lv
+    GraphicsUtil.fill_rect exp_bar_left, exp_bar_top, exp_bar_width, exp_bar_height, 0xFF_000000, ZOrder::Player
+    GraphicsUtil.fill_rect exp_bar_left, exp_bar_top, exp_width, exp_bar_height, 0xFF_FFD400, ZOrder::Player
+  end
+
+  def draw_level_and_name
+    name_width = @font.text_width(@name)
+    lv_img_width = 15
+    whole_width = lv_img_width + 2 + name_width
+    level_left = x - whole_width / 2
+    level_top = y + 14
+    GraphicsUtil.draw_text_with_border(@name, @font, level_left + lv_img_width + 2, level_top,
+                                       ZOrder::Player, 1, 1, 0xFF_EFE2DC, 0xFF_251B00)
+    LevelUtil.pet_lv_image(@pet.lv).draw(level_left, level_top + 2, ZOrder::Player)
   end
 
   def anim_goto_begin

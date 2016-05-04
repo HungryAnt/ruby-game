@@ -66,6 +66,7 @@ class NetworkService
           rescue Exception => e
             puts "line: #{line}"
             puts 'get_messages process line exception'
+            # puts e.message
             puts e.backtrace.inspect
           end
         end

@@ -2,6 +2,7 @@ module GamePet
   def init_pets
     @pet_vm_dict = {}
     register_update_pet_callback
+    register_update_pet_lv_callback
   end
 
   def pet_move_to(mouse_x, mouse_y)
@@ -29,6 +30,15 @@ module GamePet
           update_pet pet_msg.area_id.to_sym, pet_msg.pet_id, pet_msg.pet_type.to_sym,
                      pet_msg.action, pet_msg.pet_map, destination
         end
+      end
+    end
+  end
+
+  def register_update_pet_lv_callback
+    @pet_communication_handler.register_update_pet_lv_callback do |update_pet_lv_msg|
+      pet_vm = @player_view_model.get_pet update_pet_lv_msg.pet_id
+      unless pet_vm.nil?
+        pet_vm.pet.update_lv_exp update_pet_lv_msg.lv, update_pet_lv_msg.exp_in_lv, update_pet_lv_msg.max_exp_in_lv
       end
     end
   end

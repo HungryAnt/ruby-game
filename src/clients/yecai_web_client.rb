@@ -13,7 +13,10 @@ class YecaiWebClient
     return [] if user_pets_list.nil? || user_pets_list.length == 0
     pets = []
     user_pets_list.each do |user_pet|
-      pets << Pet.new(user_pet['petId'], user_pet['petType'].to_sym, 200, 200)
+      pet = Pet.new(user_pet['petId'], user_pet['petType'].to_sym, 200, 200)
+      level = user_pet['level']
+      pet.update_lv_exp level['lv'].to_i, level['expInLv'].to_i, level['maxExpInLv'].to_i
+      pets << pet
     end
     pets
   end

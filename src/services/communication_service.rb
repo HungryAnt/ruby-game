@@ -273,6 +273,11 @@ class CommunicationService
       msg = ShitMineMessage.from_map msg_map
       @shit_mine_message_handler.bomb msg
     end
+
+    @network_service.register('update_pet_lv_message') do |msg_map, params|
+      msg = UpdatePetLvMessage.from_map msg_map
+      @pet_communication_handler.update_pet_lv msg
+    end
   end
 
   def send(msg)
