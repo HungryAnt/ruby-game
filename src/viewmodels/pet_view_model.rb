@@ -92,7 +92,7 @@ class PetViewModel
 
   def draw_anim
     x, y = get_actual_pet_location
-    @current_anim.draw(x, y, ZOrder::Player, init_timestamp:@anim_init_timestamp,
+    @current_anim.draw(x, y + @anim_offset, ZOrder::Player, init_timestamp:@anim_init_timestamp,
                        scale_x:scale_value, scale_y:scale_value)
   end
 
@@ -141,6 +141,12 @@ class PetViewModel
     end
 
     @current_anim = self.instance_variable_get("@anim_#{state}_#{direction}")
+
+    pet_type_info = PetTypeInfo.get(pet.pet_type)
+    offset_key = "offset_#{direction}_#{state}".to_sym
+    offset = pet_type_info.options[offset_key]
+    offset = 0 if offset.nil?
+    @anim_offset = offset
   end
 
   def get_state

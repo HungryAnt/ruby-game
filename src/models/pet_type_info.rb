@@ -19,9 +19,9 @@ class PetTypeInfo
     @@pets.each { |pet| puts pet }
   end
 
-  attr_reader :pet_type, :name, :height
+  attr_reader :pet_type, :name, :height, :options
 
-  def initialize(pet_type, name, height)
-    @pet_type, @name, @height = pet_type, name, height
+  def initialize(pet_type, name, height, options)
+    @pet_type, @name, @height, @options = pet_type, name, height, options
   end
 end

@@ -168,6 +168,7 @@ class MainWindow < Gosu::Window
           load 'config/equipment_ear_wear_config.rb'
           load 'config/equipment_background_config.rb'
           load 'config/equipment_foreground_config.rb'
+          load 'config/pet_config.rb'
           @player_service.refresh_all_equipments
 
           load 'config/monster_config.rb'
