@@ -187,6 +187,7 @@ require 'views/shopping_view'
 require 'views/main_window'
 require 'views/startup_loading_window'
 require 'views/startup_args_error_window'
+require 'views/pet_union_view'
 
 require 'application'
 app = Application.new
@@ -223,6 +224,7 @@ else
     require 'config/role_config'
     require 'config/pet_config'
     require 'config/monster_config'
+    require 'config/anim/pet_union_anim_config'
   end
 
   if GameConfig::USER_DEBUG

@@ -71,3 +71,11 @@ def new_anim(key, pattern, num_pair, interval)
     AnimationUtil.get_animation images, interval
   }
 end
+
+def new_map_covering_anim(key, pattern, first_num, last_num, interval=200, reverse_anim=true)
+  AnimationManager.new_anim(key) do
+    nums = reverse_anim ? to_anim_nums(first_num, last_num): [*(first_num..last_num)]
+    images = AnimationUtil.get_images(pattern, nums)
+    AnimationUtil.get_animation images, interval
+  end
+end

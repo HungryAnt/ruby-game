@@ -33,6 +33,7 @@ class MainWindow < Gosu::Window
     @game_map_view = GameMapView.new(self)
     @map_editor_view = MapEditorView.new(self)
     @shopping_view = ShoppingView.new(self)
+    @pet_union_view = PetUnionView.new(self)
 
     @ready_for_game = false
 
@@ -62,8 +63,10 @@ class MainWindow < Gosu::Window
     end
 
     @channel_main_view.on_shop do
-      @current_view = @shopping_view
-      @shopping_view.active
+      # @current_view = @shopping_view
+      # @shopping_view.active
+
+      @current_view = @pet_union_view
     end
 
     @shopping_view.on_exit do
